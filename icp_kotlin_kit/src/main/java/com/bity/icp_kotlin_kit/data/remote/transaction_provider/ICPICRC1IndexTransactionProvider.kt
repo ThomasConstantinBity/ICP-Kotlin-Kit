@@ -5,6 +5,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister.GetAccou
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
+import com.bity.icp_kotlin_kit.domain.model.error.TransactionException
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
@@ -28,7 +29,8 @@ class ICPICRC1IndexTransactionProvider(
         val transactions = ICRC1IndexCanister.ICRC1IndexCanisterService(indexCanister)
             .get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
-            is ICRC1IndexCanister.GetTransactionsResult.Err -> TODO()
+            is ICRC1IndexCanister.GetTransactionsResult.Err ->
+                throw TransactionException.ICRC1GetAllTransactionsException(transactions.getTransactionsErr.message)
             is ICRC1IndexCanister.GetTransactionsResult.Ok ->
                 transactions.getTransactions.transactions.mapNotNull { it.toDataModel() }
         }
