@@ -6,7 +6,7 @@ IcpKit aims at facilitating the interaction with the ICP blockchain.
 For more information about ICP Development, we recommend starting from https://internetcomputer.org/docs/current/references/
 
 ## Contributors
-This package has been developed by [Thomas Constantin](https://github.com/0xTommy). All code and functionality are the result of my work.
+This package has been developed by [Thomas Constantin](https://github.com/0xTommy). All code and functionality are the result of his work.
 
 ## Acknowledgments
 I would like to express my gratitude to [Konstantinos Gaitanis](https://github.com/kgaitanis) for his support during the initial project study and other contributions that helped shape this library.
