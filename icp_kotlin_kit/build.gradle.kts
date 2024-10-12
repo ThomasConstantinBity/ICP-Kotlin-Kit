@@ -14,7 +14,6 @@ java {
 dependencies {
     implementation(tegralLibs.niwen.lexer)
     implementation(tegralLibs.niwen.parser)
-    implementation(gradleApi())
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.bouncycastle:bcpkix-jdk15on:1.67")
