@@ -4,9 +4,3 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
 }
-
-buildscript {
-    dependencies {
-        classpath("gradle.plugin.com.github.willir.rust:plugin:0.3.4")
-    }
-}
