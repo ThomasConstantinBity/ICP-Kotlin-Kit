@@ -20,10 +20,7 @@ class KotlinFileGeneratorTest {
             val filePath = it.path
             val fileName = it.name.replace(".did", "")
             val outputFilePath = "src/test/resources/generated_candid_file/${fileName}.kt"
-            KotlinFileGenerator(
-                didFilePath = filePath,
-                outputFilePath = outputFilePath
-            ).generateKotlinFile()
+            TODO()
         }
     }
 

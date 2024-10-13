@@ -7,7 +7,7 @@ class ICPTokenTransaction(
     val blockIndex: BigInteger,
     val operation: ICPTokenTransactionOperation,
     val memo: BigInteger?,
-    val icrc1_memo: ByteArray?,
+    val icrc1Memo: ByteArray?,
     val amount: BigInteger,
     val fee: BigInteger,
     val created: Long?,

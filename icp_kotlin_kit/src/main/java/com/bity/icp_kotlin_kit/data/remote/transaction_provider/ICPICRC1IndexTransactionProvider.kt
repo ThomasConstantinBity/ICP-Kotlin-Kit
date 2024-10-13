@@ -98,6 +98,7 @@ class ICPICRC1IndexTransactionProvider(
         return ICPTokenTransaction(
             blockIndex = id,
             operation = operation,
+            icrc1Memo = null,
             memo = null,
             amount = amount,
             fee = fee,

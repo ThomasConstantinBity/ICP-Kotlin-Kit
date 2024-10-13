@@ -39,7 +39,7 @@ internal class ICPIndexTransactionProvider(
 
         val timestamp = transaction.timestamp?.timestamp_nanos?.toLong()
         val created = transaction.created_at_time?.timestamp_nanos?.toLong()
-        val icrc1_memo = transaction.icrc1_memo
+        val icrc1Memo = transaction.icrc1_memo
             ?.map { it.toByte() }
             ?.toByteArray()
 
@@ -95,7 +95,7 @@ internal class ICPIndexTransactionProvider(
         return ICPTokenTransaction(
             blockIndex = BigInteger(id.toString()),
             operation = operation,
-            icrc1_memo = icrc1_memo,
+            icrc1Memo = icrc1Memo,
             memo = null,
             amount = amount,
             fee = fee,
