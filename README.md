@@ -164,16 +164,16 @@ val blockIndex = when (transferResult) {
 You can use `KotlinFileGenerator` class inside gradle tasks. Here is a **demo** example
 ```kotlin
 tasks.register("parseCandidFiles") {
-    val inputFolder = file("./candid_files")
+    val inputFolder = file("./candid/files/path")
     require(inputFolder.isDirectory)
     inputFolder.listFiles { it -> it.extension == "did" }?.forEach { file ->
         val fileName = file.name.removeSuffix(".did")
         val kotlinFileGenerator = KotlinFileGenerator(
             fileName = fileName,
-            packageName = "com.bity.demo_app.generated_files",
+            packageName = "com.your.package.name",
             didFileContent = file.readText(Charsets.UTF_8)
         )
-        val outputFile = file("./src/main/java/com/bity/demo_app/generated_files/${fileName}.kt")
+        val outputFile = file("./src/main/path/to/your/folder/${fileName}.kt")
         outputFile.writeText(kotlinFileGenerator.generateKotlinFile())
     }
 }
