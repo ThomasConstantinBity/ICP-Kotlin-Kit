@@ -1,3 +1,5 @@
+import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinFileGenerator
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -82,7 +84,7 @@ tasks.register("parseCandidFiles") {
             packageName = "com.bity.demo_app.generated_files",
             didFileContent = file.readText(Charsets.UTF_8)
         )
-        val outputFile = file("./src/main/java/com/bity/demo_app/generated_files/${fileName}.kt")
+        val outputFile = file("./src/main/java/com/bity/app/generated_files/${fileName}.kt")
         outputFile.writeText(kotlinFileGenerator.generateKotlinFile())
     }
 }
