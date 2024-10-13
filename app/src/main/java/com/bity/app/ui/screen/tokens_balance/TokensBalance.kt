@@ -45,7 +45,7 @@ fun TokensBalance(
     viewModel: TokensBalanceViewModel = koinViewModel()
 ) {
     val state = viewModel.state
-    var principal by rememberSaveable { mutableStateOf("") }
+    var principal by rememberSaveable { mutableStateOf("mi5lp-tjcms-b77vo-qbfgp-cjzyc-imkew-uowpv-ca7f4-l5fzx-yy6ba-qqe") }
 
     Scaffold(
         topBar = {
