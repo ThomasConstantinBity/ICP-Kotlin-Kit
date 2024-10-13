@@ -10,6 +10,7 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import com.bity.icp_kotlin_kit.domain.usecase.token.GetTokenBalanceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TokensBalanceViewModel(
     private val getTokenBalanceUseCase: GetTokenBalanceUseCase
@@ -20,11 +21,13 @@ class TokensBalanceViewModel(
 
     fun getTokens(principal: String) {
         state = TokensBalanceState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
-                val tokens = getTokenBalanceUseCase(
-                    ICPPrincipal(principal)
-                )
+                val tokens = withContext(Dispatchers.IO) {
+                    getTokenBalanceUseCase(
+                        ICPPrincipal(principal)
+                    )
+                }
                 state = TokensBalanceState.TokenWithBalance(
                     tokens.filter { it.token.standard != ICPTokenStandard.ICP }
                 )
