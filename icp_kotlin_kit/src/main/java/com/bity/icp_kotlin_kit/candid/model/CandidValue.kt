@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.candid.model
 
 import java.math.BigInteger
 
-internal sealed class CandidValue(
+sealed class CandidValue(
     val candidType: CandidType
 ) {
 

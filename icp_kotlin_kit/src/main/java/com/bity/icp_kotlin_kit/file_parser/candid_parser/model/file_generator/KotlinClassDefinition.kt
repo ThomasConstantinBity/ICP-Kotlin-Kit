@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator
 
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLComment
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType.Query
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType.*
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinCommentGenerator
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper

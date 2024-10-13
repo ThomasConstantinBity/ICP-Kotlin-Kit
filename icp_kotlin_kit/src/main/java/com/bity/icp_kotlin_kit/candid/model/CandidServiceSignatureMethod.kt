@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal class CandidServiceSignatureMethod(
+class CandidServiceSignatureMethod(
     val name: String,
     private val functionSignature: FunctionSignatureType
 ) {

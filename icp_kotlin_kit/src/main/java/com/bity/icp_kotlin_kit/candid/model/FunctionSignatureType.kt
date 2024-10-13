@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal sealed class FunctionSignatureType {
+sealed class FunctionSignatureType {
 
     class Concrete(
         val candidFunctionSignature: CandidFunctionSignature

@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.candid.model
 
 import com.bity.icp_kotlin_kit.data.model.CandidVectorError
 
-internal data class CandidVector(
+data class CandidVector(
     val values: List<CandidValue>,
     val containedType: CandidType
 ) {

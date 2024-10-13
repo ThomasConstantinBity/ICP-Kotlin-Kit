@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal enum class CandidPrimitiveType(
+enum class CandidPrimitiveType(
     val value: Int
 ) {
     NULL(-1),

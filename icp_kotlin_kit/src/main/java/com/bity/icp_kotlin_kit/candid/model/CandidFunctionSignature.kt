@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal class CandidFunctionSignature(
+class CandidFunctionSignature(
     val arguments: List<CandidFunctionSignatureParameter>,
     private val results: List<CandidFunctionSignatureParameter>,
     private val annotations: CandidFunctionSignatureAnnotation

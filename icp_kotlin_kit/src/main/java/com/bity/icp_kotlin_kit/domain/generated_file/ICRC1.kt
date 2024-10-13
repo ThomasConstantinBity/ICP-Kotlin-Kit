@@ -15,7 +15,7 @@ import java.math.BigInteger
 /**
  * type Subaccount = blob;
  */
-typealias Subaccount = ByteArray
+typealias ICRC1Subaccount = ByteArray
 
 object ICRC1 {
 
@@ -24,7 +24,7 @@ object ICRC1 {
      */
     class Account(
         val owner: ICPPrincipal,
-        val subaccount: Subaccount?
+        val subaccount: ICRC1Subaccount?
     )
 
     /**
@@ -53,7 +53,7 @@ object ICRC1 {
      * };
      */
     class TransferArgs(
-        val from_subaccount: Subaccount?,
+        val from_subaccount: ICRC1Subaccount?,
         val to: Account,
         val amount: BigInteger,
         val fee: BigInteger?,

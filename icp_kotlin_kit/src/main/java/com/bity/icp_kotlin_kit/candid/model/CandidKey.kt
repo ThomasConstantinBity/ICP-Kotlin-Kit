@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal data class CandidKey(
+data class CandidKey(
     val longValue: Long,
     val stringValue: String? = null
 ) : Comparable<CandidKey> {

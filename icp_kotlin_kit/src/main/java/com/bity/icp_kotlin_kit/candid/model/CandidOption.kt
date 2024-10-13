@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal sealed class CandidOption(
+sealed class CandidOption(
     val value: CandidValue?,
     val containedType: CandidType
 ) {

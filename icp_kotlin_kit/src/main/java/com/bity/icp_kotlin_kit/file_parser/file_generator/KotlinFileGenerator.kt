@@ -10,41 +10,40 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeN
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHelper
-import java.io.File
 
-internal class KotlinFileGenerator(
-    private val didFilePath: String,
-    outputFilePath: String,
+class KotlinFileGenerator(
+    private val fileName: String,
+    packageName: String,
+    didFileContent: String,
 ) {
+    private val header = """
+        package $packageName
+        import java.math.BigInteger
+        import com.bity.icp_kotlin_kit.candid.CandidDecoder
+        import com.bity.icp_kotlin_kit.domain.ICPQuery
+        import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+        import com.bity.icp_kotlin_kit.domain.request.PollingValues
+        import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
+        import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
+        /**
+         * File generated using ICP Kotlin Kit Plugin
+         */
+    """
 
-    private val idlFileDeclaration: IDLFileDeclaration
-    private val fileName = didFilePath.split("/")
-        .last()
-        .removeSuffix(".did")
-    private val outputFile = File(outputFilePath)
+    private val idlFileDeclaration: IDLFileDeclaration =
+        CandidParser.parseFile(didFileContent)
+    private val kotlinFileText = StringBuilder(header)
 
-    private val fileText = StringBuilder(HEADER)
-
-    init {
-        val inputFile = File(didFilePath)
-        assert(inputFile.exists()) {
-            throw IllegalStateException("file $didFilePath not found")
-        }
-
-        idlFileDeclaration = CandidParser.parseFile(inputFile.readText())
-    }
-
-    fun generateKotlinFile() {
+    fun generateKotlinFile(): String {
 
         // TypeAliases must be declared before object declaration
         writeTypeAliases()
-        fileText.appendLine("\n")
 
-        fileText.appendLine("object $fileName {")
+        kotlinFileText.appendLine("object $fileName {")
         writeClasses()
         writeService()
-        fileText.appendLine("}")
-        outputFile.writeText(formatKotlinCode(fileText))
+        kotlinFileText.appendLine("}")
+        return formatKotlinCode(kotlinFileText)
     }
 
     private fun writeTypeAliases() {
@@ -75,14 +74,14 @@ internal class KotlinFileGenerator(
                     else -> throw Error("$type can't be a typealias")
                 }
             }
-            .forEach { fileText.appendLine(it.kotlinDefinition()) }
+            .forEach { kotlinFileText.appendLine(it.kotlinDefinition()) }
     }
 
     private fun writeClasses() {
         idlFileDeclaration.types
             .filter { it !is IDLTypeCustom && it !is IDLTypeVec }
             .map { it.getKotlinClassDefinition() }
-            .forEach { fileText.appendLine(it.kotlinDefinition()) }
+            .forEach { kotlinFileText.appendLine(it.kotlinDefinition()) }
     }
 
     private fun writeService() {
@@ -106,7 +105,7 @@ internal class KotlinFileGenerator(
                 icpQuery.outputArgs.addAll(outputParam)
                 icpQuery
             }
-        fileText.appendLine(
+        kotlinFileText.appendLine(
             """
                 class ${fileName}Service(
                     private val canister: ICPPrincipal
@@ -172,24 +171,5 @@ internal class KotlinFileGenerator(
             }
 
         return indentedCode.toString()
-    }
-
-    companion object {
-        private const val HEADER = """
-                // TODO, add package name
-            
-                import java.math.BigInteger
-                import com.bity.icp_kotlin_kit.candid.CandidDecoder
-                import com.bity.icp_kotlin_kit.domain.ICPQuery
-                import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-                import com.bity.icp_kotlin_kit.domain.request.PollingValues
-                import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
-                import com.bity.icp_kotlin_kit.plugin.candid_parser.util.shared.*
-                import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
-               
-                /**
-                 * File generated using ICP Kotlin Kit Plugin
-                 */
-             """
     }
 }

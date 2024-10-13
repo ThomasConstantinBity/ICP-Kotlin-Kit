@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal data class CandidKeyedType(
+data class CandidKeyedType(
     val key: CandidKey,
     val type: CandidType
 ) {

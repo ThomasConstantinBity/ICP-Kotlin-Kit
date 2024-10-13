@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.candid.model
 
 import com.bity.icp_kotlin_kit.cryptography.ICPCryptography
 
-internal class CandidPrincipal(
+class CandidPrincipal(
     val bytes: ByteArray,
     private val string: String
 ) {

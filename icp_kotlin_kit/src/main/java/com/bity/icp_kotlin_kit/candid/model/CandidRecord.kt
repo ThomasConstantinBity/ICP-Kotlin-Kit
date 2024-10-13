@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.candid.model
 
-internal data class CandidRecord(
+data class CandidRecord(
     val candidSortedItems: List<CandidKeyedValue>
 ) {
 

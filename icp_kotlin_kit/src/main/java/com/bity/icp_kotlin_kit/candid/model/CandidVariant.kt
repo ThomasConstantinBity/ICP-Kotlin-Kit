@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.candid.model
 
 import com.bity.icp_kotlin_kit.data.model.CandidVariantError
 
-internal class CandidVariant {
+class CandidVariant {
     val value: CandidValue
     val valueIndex: ULong
     val candidTypes: List<CandidKeyedType>

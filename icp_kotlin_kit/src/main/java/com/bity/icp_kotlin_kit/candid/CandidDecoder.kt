@@ -16,7 +16,7 @@ import kotlin.reflect.KType
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
 
-internal object CandidDecoder {
+object CandidDecoder {
 
     inline fun <reified T : Any>decodeNotNull(candidValue: CandidValue): T =
         decode<T>(candidValue) ?: throw RuntimeException("Value cannot be null")
@@ -78,7 +78,7 @@ internal object CandidDecoder {
         return res as T
     }
 
-    private fun getOptionValue(
+    fun getOptionValue(
         candidValue: CandidValue?,
         constructor: KFunction<*>?
     ): Any? {
@@ -112,7 +112,7 @@ internal object CandidDecoder {
         }
     }
 
-    private fun <T> buildObject(
+    fun <T> buildObject(
         candidRecord: CandidRecord,
         constructor: KFunction<T>,
     ): T {
@@ -123,7 +123,7 @@ internal object CandidDecoder {
         return constructor.callBy(params)
     }
 
-    private fun getValueForParam(
+    fun getValueForParam(
         param: KParameter,
         candidRecord: CandidRecord,
         index: Int,
@@ -136,7 +136,7 @@ internal object CandidDecoder {
         return decode(value, param.type)
     }
 
-    private fun decode(candidValue: CandidValue, type: KType): Any? {
+    fun decode(candidValue: CandidValue, type: KType): Any? {
          return when(candidValue) {
             is CandidValue.Blob -> candidValue.data
             is CandidValue.Bool -> candidValue.bool
@@ -221,7 +221,7 @@ internal object CandidDecoder {
             else -> TODO()
         }
 
-    private fun buildSealedClass(
+    fun buildSealedClass(
         candidVariant: CandidVariant,
         subclasses: List<KClass<out Any>>
     ): Any {
@@ -399,7 +399,7 @@ internal object CandidDecoder {
         return constructor.callBy(params)
     }
 
-    private fun buildArray (
+    fun buildArray (
         candidVector: CandidVector,
         componentType: KClass<*>
     ): Any? {

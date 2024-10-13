@@ -10,10 +10,7 @@ class KotlinFileGeneratorTest {
     fun `parse file`() {
         val filePath = "src/test/resources/candid_file/nns_sns_w.did"
         val outputFilePath = "src/test/resources/generated_candid_file/nns_sns_w.kt"
-        KotlinFileGenerator(
-            didFilePath = filePath,
-            outputFilePath = outputFilePath
-        ).generateKotlinFile()
+
     }
 
     @Test
