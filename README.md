@@ -1,7 +1,7 @@
 ![IcpKit](readme_utils/IcpKit.png)
 
 A comprehensive kotlin package for writing applications that interact with the Internet Computer Protocol (ICP).
-IcpKit aims at facilitating the interaction with the ICP blockchain.
+Icp Kotlin Kit aims at facilitating the interaction with the ICP blockchain.
 
 For more information about ICP Development, we recommend starting from https://internetcomputer.org/docs/current/references/
 
