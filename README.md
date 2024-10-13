@@ -14,7 +14,7 @@ I would like to express my gratitude to [Konstantinos Gaitanis](https://github.c
 This Package has been built by [Bity SA](https://bity.com) with the help of the [DFinity Foundation Developer Grant Program](https://dfinity.org/grants).
 
 ## License
-**MIT License** is applicable for all Swift Code (see [LICENSE](LICENSE)).
+**MIT License** is applicable for all Kotlin Code (see [LICENSE](LICENSE)).
 
 BLS12381 Rust Library is licensed by Levi Feldman (see [LICENSE](readme_utils/bls12381_LICENSE)).
 
