@@ -1,5 +1,6 @@
 package com.bity.app.ui.screen.tokens_balance
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -31,9 +32,14 @@ class TokensBalanceViewModel(
                 state = TokensBalanceState.TokenWithBalance(
                     tokens.filter { it.token.standard != ICPTokenStandard.ICP }
                 )
-            } catch (ex: Exception) {
-                state = TokensBalanceState.Error(ex.message)
+            } catch (t: Throwable) {
+                Log.e(TAG, "getTokens: ", t)
+                state = TokensBalanceState.Error(t.message)
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "TokensBalanceViewModel"
     }
 }

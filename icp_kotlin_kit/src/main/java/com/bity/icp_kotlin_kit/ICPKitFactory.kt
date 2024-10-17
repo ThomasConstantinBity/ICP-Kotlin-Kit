@@ -2,7 +2,9 @@ package com.bity.icp_kotlin_kit
 
 import com.bity.icp_kotlin_kit.data.datasource.api.service.ICPRetrofitService
 import com.bity.icp_kotlin_kit.data.repository.ICPCanisterRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.LedgerCanisterRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
+import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
 import com.bity.icp_kotlin_kit.domain.generated_file.Tokens
@@ -47,6 +49,12 @@ private fun provideICPRetrofitService(): ICPRetrofitService =
 internal fun provideTokenRepository() = TokenRepositoryImpl(
     tokensService = Tokens.TokensService(
         canister = ICPPrincipal("b7hhy-tyaaa-aaaah-abbja-cai")
+    )
+)
+
+internal fun provideLedgerCanisterRepository() = LedgerCanisterRepositoryImpl(
+    ledgerCanisterService = LedgerCanister.LedgerCanisterService(
+        canister = ICPSystemCanisters.Ledger.icpPrincipal
     )
 )
 

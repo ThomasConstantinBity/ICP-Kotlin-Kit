@@ -30,6 +30,14 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -74,6 +82,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 }
 
+/*
 tasks.register("parseCandidFiles") {
     val inputFolder = file("./candid_files")
     require(inputFolder.isDirectory)
@@ -87,4 +96,4 @@ tasks.register("parseCandidFiles") {
         val outputFile = file("./src/main/java/com/bity/app/generated_files/${fileName}.kt")
         outputFile.writeText(kotlinFileGenerator.generateKotlinFile())
     }
-}
+}*/

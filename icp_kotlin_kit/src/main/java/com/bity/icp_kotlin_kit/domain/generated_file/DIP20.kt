@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -182,7 +182,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -204,7 +204,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -226,7 +226,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -248,7 +248,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -270,7 +270,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -293,7 +293,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -317,7 +317,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -339,7 +339,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -361,7 +361,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -385,7 +385,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -411,7 +411,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -439,7 +439,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -462,7 +462,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -485,7 +485,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -511,7 +511,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -536,7 +536,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }

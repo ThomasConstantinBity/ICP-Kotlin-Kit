@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -366,7 +366,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun deploy_new_sns (
@@ -383,7 +383,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_allowed_principals (
@@ -402,7 +402,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass0()
@@ -423,7 +423,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_latest_sns_version_pretty (
@@ -441,7 +441,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass1(
@@ -465,7 +465,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_proposal_id_that_added_wasm (
@@ -484,7 +484,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_sns_subnet_ids (
@@ -503,7 +503,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass2()
@@ -524,7 +524,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_wasm_metadata (
@@ -543,7 +543,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun insert_upgrade_path_entries (
@@ -560,7 +560,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun list_deployed_snses (
@@ -578,7 +578,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         class EmptyClass
@@ -599,7 +599,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun update_allowed_principals (
@@ -616,7 +616,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun update_sns_subnet_list (
@@ -633,7 +633,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }

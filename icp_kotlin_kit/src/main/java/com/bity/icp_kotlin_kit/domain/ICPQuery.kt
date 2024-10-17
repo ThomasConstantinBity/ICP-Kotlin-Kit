@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain
 
-import com.bity.icp_kotlin_kit.candid.CandidEncoder
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.CandidEncoder
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal

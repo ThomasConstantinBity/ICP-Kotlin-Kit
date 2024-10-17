@@ -96,7 +96,7 @@ internal class ICPIndexTransactionProvider(
             blockIndex = BigInteger(id.toString()),
             operation = operation,
             icrc1Memo = icrc1Memo,
-            memo = null,
+            memo = BigInteger(transaction.memo.toString()),
             amount = amount,
             fee = fee,
             created = created,

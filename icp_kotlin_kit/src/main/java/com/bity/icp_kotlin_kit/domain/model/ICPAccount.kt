@@ -22,7 +22,7 @@ class ICPAccount(
 
     companion object {
 
-        private const val SUB_ACCOUNT_ID_LENGTH = 32
+        const val SUB_ACCOUNT_ID_LENGTH = 32
         val DEFAULT_SUB_ACCOUNT_ID = ByteArray(SUB_ACCOUNT_ID_LENGTH) { 0 }
 
         fun mainAccount(principal: ICPPrincipal): ICPAccount =

@@ -19,7 +19,7 @@ fun ByteArray.toShort(): Short {
 }
 
 fun ByteArray.toInt(): Int =
-    ByteBuffer.wrap(this).int
+    toHexString().toInt(16)
 
 fun ByteArray?.toLong(): Long =
     if (this == null || this.isEmpty()) 0 else

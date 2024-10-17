@@ -12,7 +12,6 @@ import com.bity.icp_kotlin_kit.provideTokenRepository
 class GetTokenTransactionsUseCase private constructor(
     private val repository: TokenRepository
 ){
-
     constructor(): this(provideTokenRepository())
 
     suspend operator fun invoke(

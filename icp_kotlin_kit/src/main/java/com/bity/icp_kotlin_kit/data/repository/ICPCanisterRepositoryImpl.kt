@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.candid.deserializer.CandidDeserializer
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.deserializer.CandidDeserializer
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPRequestApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPStateTreePathApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPStateTreePathComponentApiModel

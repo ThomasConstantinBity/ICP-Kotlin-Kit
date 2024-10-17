@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import java.math.BigInteger
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
@@ -210,7 +210,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
         }
 
         suspend fun icrc37_max_revoke_approvals (
@@ -228,7 +228,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
         }
 
         suspend fun icrc37_approve_tokens (
@@ -245,7 +245,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_approve_collection (
@@ -262,7 +262,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_revoke_token_approvals (
@@ -279,7 +279,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_revoke_collection_approvals (
@@ -296,7 +296,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_is_approved (
@@ -315,7 +315,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_get_token_approvals (
@@ -336,7 +336,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_get_collection_approvals (
@@ -357,7 +357,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_transfer_from (
@@ -374,7 +374,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }

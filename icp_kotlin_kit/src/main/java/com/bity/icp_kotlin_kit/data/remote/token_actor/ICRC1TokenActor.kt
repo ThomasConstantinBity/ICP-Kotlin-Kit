@@ -8,6 +8,7 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.ICRC1TokenException
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
+import com.bity.icp_kotlin_kit.util.ext_function.toICPTimestamp
 import java.math.BigInteger
 
 internal class ICRC1TokenActor(
@@ -40,8 +41,8 @@ internal class ICRC1TokenActor(
             ),
             amount = args.amount,
             fee = args.fee,
-            memo = args.memo?.toByteArray(Charsets.UTF_8),
-            created_at_time = args.createdAtTime?.toULong()
+            memo = args.icrc1Memo,
+            created_at_time = args.createdAt?.toICPTimestamp()
         )
         val transferResult = service.icrc1_transfer(
             transferArgs = transferArgs,

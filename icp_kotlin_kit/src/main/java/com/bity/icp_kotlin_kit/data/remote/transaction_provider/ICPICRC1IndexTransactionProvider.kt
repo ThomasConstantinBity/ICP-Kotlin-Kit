@@ -17,6 +17,7 @@ class ICPICRC1IndexTransactionProvider(
     private val indexCanister: ICPPrincipal
 ): ICPTransactionProvider {
 
+    // TODO, need to update
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = GetAccountTransactionsArgs(
             account = ICRC1IndexCanister.Account(
@@ -43,6 +44,7 @@ class ICPICRC1IndexTransactionProvider(
         val fee: BigInteger
         val spender: ICPTokenTransactionDestination?
         val created: Long?
+        val icrc1Memo: ByteArray?
 
         when {
             transaction.burn != null -> {
@@ -54,6 +56,7 @@ class ICPICRC1IndexTransactionProvider(
                 fee = BigInteger.ZERO
                 spender = burn.spender?.let { getDestinationAccount(it) }
                 created = burn.created_at_time?.toLong()
+                icrc1Memo = burn.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.approve != null -> {
@@ -67,6 +70,7 @@ class ICPICRC1IndexTransactionProvider(
                 fee = BigInteger.ZERO
                 spender = getDestinationAccount(approve.spender)
                 created = approve.created_at_time?.toLong()
+                icrc1Memo = approve.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.transfer != null -> {
@@ -79,6 +83,7 @@ class ICPICRC1IndexTransactionProvider(
                 fee = transfer.fee ?: BigInteger.ZERO
                 spender = transfer.spender?.let { getDestinationAccount(it) }
                 created = transfer.created_at_time?.toLong()
+                icrc1Memo = transfer.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.mint != null -> {
@@ -90,6 +95,7 @@ class ICPICRC1IndexTransactionProvider(
                 fee = BigInteger.ZERO
                 spender = null
                 created = mint.created_at_time?.toLong()
+                icrc1Memo = mint.memo?.map { it.toByte() }?.toByteArray()
             }
 
             else -> return null
@@ -98,7 +104,7 @@ class ICPICRC1IndexTransactionProvider(
         return ICPTokenTransaction(
             blockIndex = id,
             operation = operation,
-            icrc1Memo = null,
+            icrc1Memo = icrc1Memo,
             memo = null,
             amount = amount,
             fee = fee,
