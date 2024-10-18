@@ -43,7 +43,7 @@ class ICPICRC1IndexTransactionProvider(
         val amount: BigInteger
         val fee: BigInteger
         val spender: ICPTokenTransactionDestination?
-        val created: Long?
+        val created: ULong?
         val icrc1Memo: ByteArray?
 
         when {
@@ -55,7 +55,7 @@ class ICPICRC1IndexTransactionProvider(
                 amount = burn.amount
                 fee = BigInteger.ZERO
                 spender = burn.spender?.let { getDestinationAccount(it) }
-                created = burn.created_at_time?.toLong()
+                created = burn.created_at_time
                 icrc1Memo = burn.memo?.map { it.toByte() }?.toByteArray()
             }
 
@@ -69,7 +69,7 @@ class ICPICRC1IndexTransactionProvider(
                 amount = approve.amount
                 fee = BigInteger.ZERO
                 spender = getDestinationAccount(approve.spender)
-                created = approve.created_at_time?.toLong()
+                created = approve.created_at_time
                 icrc1Memo = approve.memo?.map { it.toByte() }?.toByteArray()
             }
 
@@ -82,7 +82,7 @@ class ICPICRC1IndexTransactionProvider(
                 amount = transfer.amount
                 fee = transfer.fee ?: BigInteger.ZERO
                 spender = transfer.spender?.let { getDestinationAccount(it) }
-                created = transfer.created_at_time?.toLong()
+                created = transfer.created_at_time
                 icrc1Memo = transfer.memo?.map { it.toByte() }?.toByteArray()
             }
 
@@ -94,7 +94,7 @@ class ICPICRC1IndexTransactionProvider(
                 amount = mint.amount
                 fee = BigInteger.ZERO
                 spender = null
-                created = mint.created_at_time?.toLong()
+                created = mint.created_at_time
                 icrc1Memo = mint.memo?.map { it.toByte() }?.toByteArray()
             }
 
@@ -108,8 +108,8 @@ class ICPICRC1IndexTransactionProvider(
             memo = null,
             amount = amount,
             fee = fee,
-            created = created,
-            timeStamp = transaction.timestamp.toLong(),
+            createdNanos = created,
+            timeStampNanos = transaction.timestamp,
             spender = spender,
             token = icpToken
         )

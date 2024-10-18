@@ -13,7 +13,7 @@ sealed class ICPBlockTransactionOperation(
         val allowance: BigInteger,
         val expectedAllowance: BigInteger?,
         fee: BigInteger,
-        val expiresAt: Date?,
+        val expiresAtNanos: ULong?,
         val spender: ByteArray
     ): ICPBlockTransactionOperation(
         amount = allowance,

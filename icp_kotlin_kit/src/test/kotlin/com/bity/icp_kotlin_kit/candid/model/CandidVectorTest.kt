@@ -1,6 +1,9 @@
 package com.bity.icp_kotlin_kit.candid.model
 
 import com.bity.icp_kotlin_kit.data.model.CandidVectorError
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

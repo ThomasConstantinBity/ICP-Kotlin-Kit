@@ -36,9 +36,6 @@ internal class ICPIndexTransactionProvider(
     }
 
     private fun NNSICPIndexCanister.TransactionWithId.toDomainModel(): ICPTokenTransaction {
-
-        val timestamp = transaction.timestamp?.timestamp_nanos?.toLong()
-        val created = transaction.created_at_time?.timestamp_nanos?.toLong()
         val icrc1Memo = transaction.icrc1_memo
             ?.map { it.toByte() }
             ?.toByteArray()
@@ -99,8 +96,8 @@ internal class ICPIndexTransactionProvider(
             memo = BigInteger(transaction.memo.toString()),
             amount = amount,
             fee = fee,
-            created = created,
-            timeStamp = timestamp,
+            createdNanos = transaction.created_at_time?.timestamp_nanos,
+            timeStampNanos = transaction.timestamp?.timestamp_nanos,
             spender = spender,
             token = icpToken
         )

@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.usecase.token
+package com.bity.icp_kotlin_kit.domain.usecase.ledger
 
 import com.bity.icp_kotlin_kit.domain.model.error.ICPLedgerCanisterError
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository

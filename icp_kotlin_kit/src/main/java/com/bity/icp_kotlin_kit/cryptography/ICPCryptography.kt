@@ -87,7 +87,7 @@ private val objectMapper = ObjectMapper(CBORFactory())
 private val ICPBlockTransaction.cborHexString: String
     get() = "a300a1${operation.cbor}" +
             "01${UnsignedNumberCBORSerializer.serialize(memo)}" +
-            "02a100${UnsignedNumberCBORSerializer.serialize(createdNanos)}"
+            "02a100${UnsignedNumberCBORSerializer.serialize(createdNanos ?: 0UL)}"
 
 @OptIn(ExperimentalStdlibApi::class)
 private val ICPBlockTransactionOperation.cbor

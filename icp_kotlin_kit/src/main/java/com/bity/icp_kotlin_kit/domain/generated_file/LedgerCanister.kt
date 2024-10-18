@@ -156,7 +156,7 @@ object LedgerCanister {
                     sender = sender,
                     pollingValues = pollingValues
                 ).getOrThrow()
-                return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+                return CandidDecoder.decodeNotNull(result)
             }
         }
     }
@@ -192,7 +192,7 @@ object LedgerCanister {
                     sender = sender,
                     pollingValues = pollingValues
                 ).getOrThrow()
-                return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+                return CandidDecoder.decodeNotNull(result)
             }
         }
     }
@@ -819,7 +819,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -841,7 +841,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -863,7 +863,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -884,7 +884,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -905,7 +905,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -926,7 +926,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -948,7 +948,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -969,7 +969,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -990,7 +990,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1011,7 +1011,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass0(
@@ -1058,7 +1058,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1079,7 +1079,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1100,7 +1100,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1121,7 +1121,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1142,7 +1142,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1163,7 +1163,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1185,7 +1185,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1206,7 +1206,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1227,7 +1227,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1248,7 +1248,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1270,7 +1270,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1292,7 +1292,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1313,7 +1313,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1334,7 +1334,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1355,7 +1355,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -1377,7 +1377,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass1()
