@@ -42,7 +42,7 @@ internal class ICRC1TokenActor(
             amount = args.amount,
             fee = args.fee,
             memo = args.icrc1Memo,
-            created_at_time = args.createdAt?.toICPTimestamp()
+            created_at_time = args.createdAtMillis?.toICPTimestamp()
         )
         val transferResult = service.icrc1_transfer(
             transferArgs = transferArgs,
