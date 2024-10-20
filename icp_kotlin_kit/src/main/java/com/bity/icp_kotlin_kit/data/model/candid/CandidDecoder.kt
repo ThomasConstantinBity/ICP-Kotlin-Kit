@@ -123,7 +123,7 @@ object CandidDecoder {
         return constructor.callBy(params)
     }
 
-    fun getValueForParam(
+    private fun getValueForParam(
         param: KParameter,
         candidRecord: CandidRecord,
         index: Int,
