@@ -36,6 +36,9 @@ fun AppFeatures(
         MainButton(text = "ICP Tokens") {
             navController.navigate(Screen.ICPTokens.route)
         }
+        MainButton(text = "ICP NFTs") {
+            navController.navigate(Screen.ICPNFTs.route)
+        }
     }
 }
 

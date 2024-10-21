@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bity.app.ui.screen.app_feature.AppFeatures
+import com.bity.app.ui.screen.icp_nfts.ICPNFTsScreen
 import com.bity.app.ui.screen.icp_tokens.ICPTokensScreen
 import com.bity.app.ui.screen.tokens_balance.TokensBalance
 import com.bity.app.ui.theme.ICPKotlinKitTheme
@@ -27,6 +28,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = Screen.ICPTokens.route) {
                         ICPTokensScreen()
+                    }
+                    composable(route = Screen.ICPNFTs.route) {
+                        ICPNFTsScreen()
                     }
                 }
             }
