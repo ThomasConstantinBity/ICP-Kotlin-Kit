@@ -1,4 +1,4 @@
-import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinFileGenerator
+// import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinFileGenerator
 
 plugins {
     alias(libs.plugins.androidApplication)
