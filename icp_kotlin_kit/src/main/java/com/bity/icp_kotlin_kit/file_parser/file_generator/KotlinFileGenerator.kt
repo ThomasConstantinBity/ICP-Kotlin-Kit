@@ -19,7 +19,7 @@ class KotlinFileGenerator(
     private val header = """
         package $packageName
         import java.math.BigInteger
-        package com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
+        import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
         import com.bity.icp_kotlin_kit.domain.ICPQuery
         import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
         import com.bity.icp_kotlin_kit.domain.request.PollingValues
