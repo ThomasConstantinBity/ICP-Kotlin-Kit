@@ -3,7 +3,9 @@ package com.bity.icp_kotlin_kit
 import com.bity.icp_kotlin_kit.data.datasource.api.service.ICPRetrofitService
 import com.bity.icp_kotlin_kit.data.repository.ICPCanisterRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.LedgerCanisterRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.NFTRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
+import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
@@ -48,7 +50,7 @@ private fun provideICPRetrofitService(): ICPRetrofitService =
  */
 internal fun provideTokenRepository() = TokenRepositoryImpl(
     tokensService = Tokens.TokensService(
-        canister = ICPPrincipal("b7hhy-tyaaa-aaaah-abbja-cai")
+        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
     )
 )
 
@@ -68,3 +70,13 @@ internal val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by 
         canister = ICPSystemCanisters.Index.icpPrincipal
     )
 }
+
+/**
+ * NFT Repository
+ */
+internal fun provideNFTRepository() =
+    NFTRepositoryImpl(
+        nftService = DABNFT.DABNFTService(
+            canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
+        )
+    )
