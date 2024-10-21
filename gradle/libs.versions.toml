@@ -10,7 +10,6 @@ compose = "1.7.1"
 
 kotlinx-coroutines-core = "1.8.0-RC2"
 
-navigationCompose = "2.8.0"
 retrofit = "2.9.0"
 retrofitConverter = "2.7.2"
 jackson-dataformat-cbor = "2.13.3"
@@ -24,7 +23,6 @@ kotlin = "1.9.0"
 coreKtx = "1.13.1"
 jetbrainsKotlinJvm = "1.9.0"
 uiTooling = "1.7.4"
-uiToolingPreview = "1.7.4"
 uiToolingPreviewAndroid = "1.7.1"
 lifecycleRuntimeKtx = "2.8.5"
 activityCompose = "1.9.2"
@@ -36,8 +34,6 @@ navigationComposeVersion = "2.8.2"
 navigationRuntime = "2.8.0"
 
 [libraries]
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-ui-tooling-preview-v174 = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 commons-codec = { module = "commons-codec:commons-codec", version.ref = "commons-codec-version" }
 bouncycastle = { module = "org.bouncycastle:bcpkix-jdk15on", version.ref = "bouncycastle-version" }
@@ -75,7 +71,6 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigationRuntime" }
-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
 
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]

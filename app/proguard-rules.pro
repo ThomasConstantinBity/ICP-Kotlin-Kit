@@ -16,21 +16,11 @@
  # is used.
  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
-# Keep the classes, constructors, and methods in the com.bity.icp_kotlin_kit.domain.generated_file package
-# because reflection is used on them from the candid package.
--keep class com.bity.icp_kotlin_kit.domain.generated_file.** {
-    public <init>(...);  # Keep constructors as reflection calls them.
-    public *;            # Keep all public methods and fields as reflection might use them.
-}
-
-# You can still obfuscate the candid package because reflection is only happening inside it
-# (but not on itself), so you don't need to protect that package.
-
-# Prevent any code shrinking or optimizations for both packages.
+# Prevent any code shrinking or optimizations
 -keepnames class com.bity.icp_kotlin_kit.candid.**
 -keepnames class com.bity.icp_kotlin_kit.domain.generated_file.**
 -dontoptimize
-# Keep all fields in the candid package (if reflection accesses fields directly).
+# Keep all fields in the candid package
 -keepclassmembers class com.bity.icp_kotlin_kit.domain.generated_file.** {
     <fields>;
 }
@@ -52,9 +42,6 @@
     public *;            # Keep public methods/fields to avoid any obfuscation issues.
 }
 
-# Keep Kotlin metadata and annotations (important for Kotlin reflection and synthetic parameters).
--keepattributes *Annotation*
--keepattributes KotlinMetadata
 
 # Keep synthetic classes and members (especially for Kotlin classes with default parameters).
 -keepclasseswithmembers class kotlin.** {
