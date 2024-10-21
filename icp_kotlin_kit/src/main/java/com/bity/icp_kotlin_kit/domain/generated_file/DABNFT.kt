@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -39,7 +40,7 @@ object DABNFT {
         ): detail_value()
 
         class Principal(
-            val iCPPrincipal: ICPPrincipal
+            val iCPPrincipal: ICPPrincipalApiModel
         ): detail_value()
 
     }
@@ -49,7 +50,7 @@ object DABNFT {
         val description: String,
         val thumbnail: String,
         val frontend: String?,
-        val principal_id: ICPPrincipal,
+        val principal_id: ICPPrincipalApiModel,
         val details: kotlin.Array<add_nft_inputDetails>
     ) {
 
@@ -65,9 +66,9 @@ object DABNFT {
         val description: String,
         val thumbnail: String,
         val frontend: String?,
-        val principal_id: ICPPrincipal,
-        val submitter: ICPPrincipal,
-        val last_updated_by: ICPPrincipal,
+        val principal_id: ICPPrincipalApiModel,
+        val submitter: ICPPrincipalApiModel,
+        val last_updated_by: ICPPrincipalApiModel,
         val last_updated_at: ULong,
         val details: kotlin.Array<nft_canisterDetails>
     ) {
@@ -127,7 +128,7 @@ object DABNFT {
         }
 
         suspend fun get                    (
-            nft_id: ICPPrincipal,
+            nft_id: ICPPrincipalApiModel,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -149,7 +150,7 @@ object DABNFT {
         }
 
         suspend fun add                    (
-            trusted_source: ICPPrincipal?,
+            trusted_source: ICPPrincipalApiModel?,
             nft: add_nft_input,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -170,8 +171,8 @@ object DABNFT {
         }
 
         suspend fun remove                    (
-            trusted_source: ICPPrincipal?,
-            nft_id: ICPPrincipal,
+            trusted_source: ICPPrincipalApiModel?,
+            nft_id: ICPPrincipalApiModel,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
         ): operation_response {
@@ -213,7 +214,7 @@ object DABNFT {
         }
 
         suspend fun add_admin                    (
-            admin: ICPPrincipal,
+            admin: ICPPrincipalApiModel,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
         ): operation_response {

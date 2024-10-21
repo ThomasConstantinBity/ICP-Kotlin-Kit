@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.model
+package com.bity.icp_kotlin_kit.data.model.error
 
 sealed class RemoteClientError(errorMessage: String? = null): Error(errorMessage) {
     class HttpError(errorCode: Int, errorMessage: String?): RemoteClientError("$errorCode - ${errorMessage ?: ""}")

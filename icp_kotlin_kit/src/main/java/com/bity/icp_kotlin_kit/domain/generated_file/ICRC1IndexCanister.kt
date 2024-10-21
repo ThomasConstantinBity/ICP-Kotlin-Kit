@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import java.math.BigInteger
-import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
@@ -21,7 +21,7 @@ typealias SubAccount = ByteArray
 object ICRC1IndexCanister {
 
     class InitArg(
-        val ledger_id: ICPPrincipal,
+        val ledger_id: ICPPrincipalApiModel,
         // The interval in seconds in which to retrieve blocks from the ledger. A lower value makes the index more
         // responsive in showing new blocks, but increases the consumption of cycles of both the index and ledger canisters.
         // A higher values means that it takes longer for new blocks to show up in the index.
@@ -29,7 +29,7 @@ object ICRC1IndexCanister {
     )
 
     class UpgradeArg(
-        val ledger_id: ICPPrincipal?,
+        val ledger_id: ICPPrincipalApiModel?,
         // The interval in seconds in which to retrieve blocks from the ledger. A lower value makes the index more
         // responsive in showing new blocks, but increases the consumption of cycles of both the index and ledger canisters.
         // A higher values means that it takes longer for new blocks to show up in the index.
@@ -87,7 +87,7 @@ object ICRC1IndexCanister {
     )
 
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: SubAccount?
     )
 
@@ -172,7 +172,7 @@ object ICRC1IndexCanister {
     }
 
     class ListSubaccountsArgs(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val start: SubAccount?
     )
 
@@ -281,7 +281,7 @@ object ICRC1IndexCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): ICPPrincipal {
+        ): ICPPrincipalApiModel {
             val icpQuery = ICPQuery(
                 methodName = "ledger_id",
                 canister = canister

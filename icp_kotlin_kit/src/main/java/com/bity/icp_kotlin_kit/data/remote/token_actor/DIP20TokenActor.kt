@@ -7,6 +7,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPTokenMetadata
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer
 import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
 import java.math.BigInteger
@@ -16,7 +17,7 @@ internal class DIP20TokenActor(
 ): ICPTokenActor {
 
     override suspend fun getBalance(principal: ICPPrincipal): BigInteger =
-        service.balanceOf(principal)
+        service.balanceOf(principal.toDataModel())
 
     override suspend fun fee(): BigInteger =
         metadata().fee
@@ -28,7 +29,7 @@ internal class DIP20TokenActor(
 
     override suspend fun transfer(args: ICPTokenTransferArgs): ICPTokenTransfer {
         val txReceipt = service.transfer(
-            to = args.to.principal,
+            to = args.to.principal.toDataModel(),
             value = args.amount,
             sender = args.sender
         )

@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
@@ -28,7 +29,7 @@ private fun DABNFT.nft_canister.toDomainModel(): ICPNftCollection? {
         name = name,
         description = description,
         iconURL = thumbnail,
-        canister = principal_id
+        canister = principal_id.toDomainModel()
     )
 }
 

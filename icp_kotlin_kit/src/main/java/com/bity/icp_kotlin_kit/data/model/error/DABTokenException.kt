@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.model
+package com.bity.icp_kotlin_kit.data.model.error
 
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 

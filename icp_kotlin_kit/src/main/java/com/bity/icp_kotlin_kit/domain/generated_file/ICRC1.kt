@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -23,7 +24,7 @@ object ICRC1 {
      * type Account = record { owner : principal; subaccount : opt Subaccount; };
      */
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: ICRC1Subaccount?
     )
 
@@ -98,7 +99,7 @@ object ICRC1 {
     /**
      * type MetadataField = record { text; Value };
      */
-    class MetadataField(
+    data class MetadataField(
         val string: String,
         val value: Value
     )

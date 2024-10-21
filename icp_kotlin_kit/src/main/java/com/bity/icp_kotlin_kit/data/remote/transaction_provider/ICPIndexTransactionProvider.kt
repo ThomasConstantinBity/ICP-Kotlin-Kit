@@ -4,6 +4,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.error.GetAllTransactionsException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
@@ -18,7 +19,7 @@ internal class ICPIndexTransactionProvider(
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = NNSICPIndexCanister.GetAccountTransactionsArgs(
             account = NNSICPIndexCanister.Account(
-                owner = account.principal,
+                owner = account.principal.toDataModel(),
                 subaccount = account.subAccountId.map { it.toUByte() }.toTypedArray()
             ),
             start = null,

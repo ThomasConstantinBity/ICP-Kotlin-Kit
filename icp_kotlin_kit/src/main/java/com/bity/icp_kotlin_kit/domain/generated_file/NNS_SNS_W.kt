@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
-import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -26,7 +26,7 @@ object NNS_SNS_W {
     )
 
     class Canister(
-        val id: ICPPrincipal?
+        val id: ICPPrincipalApiModel?
     )
 
     class Countries(
@@ -49,17 +49,17 @@ object NNS_SNS_W {
 
     class DeployNewSnsResponse(
         val dapp_canisters_transfer_result: DappCanistersTransferResult?,
-        val subnet_id: ICPPrincipal?,
+        val subnet_id: ICPPrincipalApiModel?,
         val error: SnsWasmError?,
         val canisters: SnsCanisterIds?
     )
 
     class DeployedSns(
-        val root_canister_id: ICPPrincipal?,
-        val governance_canister_id: ICPPrincipal?,
-        val index_canister_id: ICPPrincipal?,
-        val swap_canister_id: ICPPrincipal?,
-        val ledger_canister_id: ICPPrincipal?
+        val root_canister_id: ICPPrincipalApiModel?,
+        val governance_canister_id: ICPPrincipalApiModel?,
+        val index_canister_id: ICPPrincipalApiModel?,
+        val swap_canister_id: ICPPrincipalApiModel?,
+        val ledger_canister_id: ICPPrincipalApiModel?
     )
 
     class DeveloperDistribution(
@@ -74,7 +74,7 @@ object NNS_SNS_W {
     )
 
     class GetAllowedPrincipalsResponse(
-        val allowed_principals: kotlin.Array<ICPPrincipal>
+        val allowed_principals: kotlin.Array<ICPPrincipalApiModel>
     )
 
     class GetDeployedSnsByProposalIdRequest(
@@ -95,7 +95,7 @@ object NNS_SNS_W {
     }
 
     class GetNextSnsVersionRequest(
-        val governance_canister_id: ICPPrincipal?,
+        val governance_canister_id: ICPPrincipalApiModel?,
         val current_version: SnsVersion?
     )
 
@@ -112,7 +112,7 @@ object NNS_SNS_W {
     )
 
     class GetSnsSubnetIdsResponse(
-        val sns_subnet_ids: kotlin.Array<ICPPrincipal>
+        val sns_subnet_ids: kotlin.Array<ICPPrincipalApiModel>
     )
 
     class GetWasmMetadataRequest(
@@ -143,7 +143,7 @@ object NNS_SNS_W {
 
     class InsertUpgradePathEntriesRequest(
         val upgrade_path: kotlin.Array<SnsUpgrade>,
-        val sns_governance_canister_id: ICPPrincipal?
+        val sns_governance_canister_id: ICPPrincipalApiModel?
     )
 
     class InsertUpgradePathEntriesResponse(
@@ -170,7 +170,7 @@ object NNS_SNS_W {
     class ListUpgradeStepsRequest(
         val limit: UInt,
         val starting_at: SnsVersion?,
-        val sns_governance_canister_id: ICPPrincipal?
+        val sns_governance_canister_id: ICPPrincipalApiModel?
     )
 
     class ListUpgradeStepsResponse(
@@ -189,7 +189,7 @@ object NNS_SNS_W {
     )
 
     class NeuronDistribution(
-        val controller: ICPPrincipal?,
+        val controller: ICPPrincipalApiModel?,
         val dissolve_delay_seconds: ULong,
         val memo: ULong,
         val stake_e8s: ULong,
@@ -235,11 +235,11 @@ object NNS_SNS_W {
     }
 
     class SnsCanisterIds(
-        val root: ICPPrincipal?,
-        val swap: ICPPrincipal?,
-        val ledger: ICPPrincipal?,
-        val index: ICPPrincipal?,
-        val governance: ICPPrincipal?
+        val root: ICPPrincipalApiModel?,
+        val swap: ICPPrincipalApiModel?,
+        val ledger: ICPPrincipalApiModel?,
+        val index: ICPPrincipalApiModel?,
+        val governance: ICPPrincipalApiModel?
     )
 
     class SnsInitPayload(
@@ -304,9 +304,9 @@ object NNS_SNS_W {
     )
 
     class SnsWasmCanisterInitPayload(
-        val allowed_principals: kotlin.Array<ICPPrincipal>,
+        val allowed_principals: kotlin.Array<ICPPrincipalApiModel>,
         val access_controls_enabled: Boolean,
-        val sns_subnet_ids: kotlin.Array<ICPPrincipal>
+        val sns_subnet_ids: kotlin.Array<ICPPrincipalApiModel>
     )
 
     class SnsWasmError(
@@ -323,8 +323,8 @@ object NNS_SNS_W {
     )
 
     class UpdateAllowedPrincipalsRequest(
-        val added_principals: kotlin.Array<ICPPrincipal>,
-        val removed_principals: kotlin.Array<ICPPrincipal>
+        val added_principals: kotlin.Array<ICPPrincipalApiModel>,
+        val removed_principals: kotlin.Array<ICPPrincipalApiModel>
     )
 
     class UpdateAllowedPrincipalsResponse(
@@ -341,8 +341,8 @@ object NNS_SNS_W {
     }
 
     class UpdateSnsSubnetListRequest(
-        val sns_subnet_ids_to_add: kotlin.Array<ICPPrincipal>,
-        val sns_subnet_ids_to_remove: kotlin.Array<ICPPrincipal>
+        val sns_subnet_ids_to_add: kotlin.Array<ICPPrincipalApiModel>,
+        val sns_subnet_ids_to_remove: kotlin.Array<ICPPrincipalApiModel>
     )
 
     class UpdateSnsSubnetListResponse(

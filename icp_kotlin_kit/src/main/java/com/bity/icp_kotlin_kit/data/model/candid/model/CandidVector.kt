@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.model.candid.model
 
-import com.bity.icp_kotlin_kit.data.model.CandidVectorError
+import com.bity.icp_kotlin_kit.data.model.error.CandidVectorError
 
 data class CandidVector(
     val values: List<CandidValue>,

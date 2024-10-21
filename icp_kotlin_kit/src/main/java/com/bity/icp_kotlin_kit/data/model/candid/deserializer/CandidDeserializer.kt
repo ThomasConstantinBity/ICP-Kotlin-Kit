@@ -12,7 +12,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
 import com.bity.icp_kotlin_kit.data.model.candid.model.ServiceMethod
 import com.bity.icp_kotlin_kit.data.model.candid.serializer.CandidSerializer
 import com.bity.icp_kotlin_kit.cryptography.LEB128
-import com.bity.icp_kotlin_kit.data.model.CandidDeserializationError
+import com.bity.icp_kotlin_kit.data.model.error.CandidDeserializationError
 import com.bity.icp_kotlin_kit.util.ext_function.readFrom
 import com.bity.icp_kotlin_kit.util.ext_function.readNextBytes
 import java.io.ByteArrayInputStream

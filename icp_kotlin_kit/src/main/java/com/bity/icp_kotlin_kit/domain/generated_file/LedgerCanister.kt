@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -17,7 +18,7 @@ object LedgerCanister {
      * type Account = record { owner : principal; subaccount : opt blob };
      */
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: ByteArray?
     )
 
@@ -99,7 +100,7 @@ object LedgerCanister {
      * type ArchiveInfo = record { canister_id : principal };
      */
     class ArchiveInfo(
-        val canister_id: ICPPrincipal
+        val canister_id: ICPPrincipalApiModel
     )
 
     /**
@@ -118,11 +119,11 @@ object LedgerCanister {
         val num_blocks_to_archive: ULong,
         val max_transactions_per_response: ULong?,
         val trigger_threshold: ULong,
-        val more_controller_ids: kotlin.Array<ICPPrincipal>?,
+        val more_controller_ids: kotlin.Array<ICPPrincipalApiModel>?,
         val max_message_size_bytes: ULong?,
         val cycles_for_archive_creation: ULong?,
         val node_max_memory_size_bytes: ULong?,
-        val controller_id: ICPPrincipal
+        val controller_id: ICPPrincipalApiModel
     )
 
     /**
@@ -460,7 +461,7 @@ object LedgerCanister {
      * };
      */
     class InitArgs(
-        val send_whitelist: kotlin.Array<ICPPrincipal>,
+        val send_whitelist: kotlin.Array<ICPPrincipalApiModel>,
         val token_symbol: String?,
         val transfer_fee: Tokens?,
         val minting_account: String,

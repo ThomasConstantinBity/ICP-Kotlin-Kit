@@ -1,11 +1,13 @@
 package com.bity.icp_kotlin_kit.data.remote.transaction_provider
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister.GetAccountTransactionsArgs
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.error.TransactionException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
@@ -21,7 +23,7 @@ class ICPICRC1IndexTransactionProvider(
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = GetAccountTransactionsArgs(
             account = ICRC1IndexCanister.Account(
-                owner = account.principal,
+                owner = account.principal.toDataModel(),
                 subaccount = account.subAccountId
             ),
             start = null,
@@ -118,7 +120,7 @@ class ICPICRC1IndexTransactionProvider(
     private fun getDestinationAccount(account: ICRC1IndexCanister.Account): ICPTokenTransactionDestination.Account {
         return ICPTokenTransactionDestination.Account(
             icpAccount = ICPAccount(
-                principal = account.owner,
+                principal = account.owner.toDomainModel(),
                 subAccountId = account.subaccount ?: ICPAccount.DEFAULT_SUB_ACCOUNT_ID
             )
         )

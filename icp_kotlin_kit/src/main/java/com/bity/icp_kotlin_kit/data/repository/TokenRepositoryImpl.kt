@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.data.model.RemoteClientError
+import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.factory.ICPTokenActorFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.Tokens
+import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer
@@ -16,7 +16,7 @@ import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
 class TokenRepositoryImpl(
-    private val tokensService: Tokens.TokensService
+    private val tokensService: TokensService
 ): TokenRepository {
 
     private var cachedTokens: List<ICPToken>? = null

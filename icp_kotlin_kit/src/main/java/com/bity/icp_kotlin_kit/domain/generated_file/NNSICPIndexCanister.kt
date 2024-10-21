@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.domain.ICPQuery
@@ -14,7 +15,7 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 object NNSICPIndexCanister {
 
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: Array<UByte>?
     )
 
@@ -78,7 +79,7 @@ object NNSICPIndexCanister {
     }
 
     class InitArg(
-        val ledger_id: ICPPrincipal
+        val ledger_id: ICPPrincipalApiModel
     )
 
     sealed class Operation {
@@ -256,7 +257,7 @@ object NNSICPIndexCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): ICPPrincipal {
+        ): ICPPrincipalApiModel {
             val icpQuery = ICPQuery(
                 methodName = "ledger_id",
                 canister = canister

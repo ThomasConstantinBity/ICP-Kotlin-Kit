@@ -1,12 +1,12 @@
 package com.bity.icp_kotlin_kit.data.model.candid
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidKey
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import java.lang.RuntimeException
 import java.math.BigInteger
 import kotlin.reflect.KClass
@@ -120,7 +120,8 @@ object CandidDecoder {
             val res = getValueForParam(param, candidRecord, index)
             param to res
         }.toMap()
-        return constructor.callBy(params)
+        val res = constructor.callBy(params)
+        return res
     }
 
     private fun getValueForParam(
@@ -145,7 +146,7 @@ object CandidDecoder {
             is CandidValue.Float64 -> candidValue.double
             is CandidValue.Function -> {
                 val name = candidValue.function.method?.name
-                val principalId = candidValue.function.method?.principal?.bytes?.let { ICPPrincipal(it) }
+                val principalId = candidValue.function.method?.principal?.bytes?.let { ICPPrincipalApiModel(it) }
                 val constructor = (type.classifier as KClass<*>).primaryConstructor
                 requireNotNull(constructor)
                 return constructor.call(name!!, principalId)
@@ -174,7 +175,7 @@ object CandidDecoder {
 
             is CandidValue.Principal ->
                 candidValue.candidPrincipal?.bytes?.let {
-                    ICPPrincipal(it)
+                    ICPPrincipalApiModel(it)
                 }
             is CandidValue.Record -> {
                 buildObject(
@@ -189,7 +190,7 @@ object CandidDecoder {
                 // TODO, should have a name
                 val kClass = type.classifier as? KClass<*>
                 requireNotNull(kClass)
-                require(kClass.isSealed)
+                // require(kClass.isSealed)
                 buildSealedClass(
                     candidVariant = candidValue.variant,
                     subclasses = kClass.sealedSubclasses

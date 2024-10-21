@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.model.candid.model
 
-import com.bity.icp_kotlin_kit.data.model.CandidVariantError
+import com.bity.icp_kotlin_kit.data.model.error.CandidVariantError
 
 class CandidVariant {
     val value: CandidValue

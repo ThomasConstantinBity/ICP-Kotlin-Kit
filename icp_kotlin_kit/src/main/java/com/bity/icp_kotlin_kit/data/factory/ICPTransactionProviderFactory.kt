@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.factory
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.remote.transaction_provider.ICPICRC1IndexTransactionProvider
 import com.bity.icp_kotlin_kit.data.remote.transaction_provider.ICPIndexTransactionProvider
 import com.bity.icp_kotlin_kit.data.remote.url_provider.ICPExplorerURLProvider
@@ -25,6 +26,7 @@ internal class ICPTransactionProviderFactory private constructor(
         if(token.canister == ICPSystemCanisters.Ledger.icpPrincipal)
             return ICPIndexTransactionProvider(token)
         val index = findSNS(token.canister)?.index_canister_id
+            ?.toDomainModel()
             ?: return null
         return ICPICRC1IndexTransactionProvider(
             icpToken = token,
@@ -37,17 +39,17 @@ internal class ICPTransactionProviderFactory private constructor(
             return ICPExplorerURLProvider()
         val rootCanisterId = findSNS(token.canister)?.root_canister_id
             ?: return null
-        return ICPTokenExplorerURLProvider(rootCanisterId)
+        return ICPTokenExplorerURLProvider(rootCanisterId.toDomainModel())
     }
 
     private suspend fun findSNS(tokenCanister: ICPPrincipal): NNS_SNS_W.DeployedSns? {
         val deployed = deployedSNSes()
         return deployed.firstOrNull {
-            it.root_canister_id == tokenCanister
-                    || it.governance_canister_id == tokenCanister
-                    || it.index_canister_id == tokenCanister
-                    || it.swap_canister_id == tokenCanister
-                    || it.ledger_canister_id == tokenCanister
+            it.root_canister_id?.toDomainModel() == tokenCanister
+                    || it.governance_canister_id?.toDomainModel() == tokenCanister
+                    || it.index_canister_id?.toDomainModel() == tokenCanister
+                    || it.swap_canister_id?.toDomainModel() == tokenCanister
+                    || it.ledger_canister_id?.toDomainModel() == tokenCanister
         }
     }
 

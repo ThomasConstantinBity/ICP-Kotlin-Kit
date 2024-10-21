@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.model.candid.deserializer
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrimitiveType
 import com.bity.icp_kotlin_kit.data.model.candid.model.KeyedContainerRowData
 import com.bity.icp_kotlin_kit.cryptography.LEB128
-import com.bity.icp_kotlin_kit.data.model.CandidDeserializationError
+import com.bity.icp_kotlin_kit.data.model.error.CandidDeserializationError
 import java.io.ByteArrayInputStream
 
 internal sealed class CandidTypeTableData {

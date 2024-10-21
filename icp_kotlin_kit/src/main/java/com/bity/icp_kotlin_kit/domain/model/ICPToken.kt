@@ -1,7 +1,9 @@
 package com.bity.icp_kotlin_kit.domain.model
 
-import com.bity.icp_kotlin_kit.data.model.DABTokenException
-import com.bity.icp_kotlin_kit.domain.generated_file.Tokens
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
+import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
+import com.bity.icp_kotlin_kit.domain.generated_file.detail_value
+import com.bity.icp_kotlin_kit.domain.generated_file.token
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -19,9 +21,9 @@ data class ICPToken(
     val websiteUrl: String?
 ) {
 
-    internal constructor(token: Tokens.token): this(
+    internal constructor(token: token): this(
         standard = token.standard,
-        canister = token.principal_id,
+        canister = token.principal_id.toDomainModel(),
         name = token.name,
         decimals = token.decimals,
         symbol = token.symbol,
@@ -58,37 +60,37 @@ data class ICPToken(
     }
 }
 
-private fun Tokens.token.textValue(key: String): String =
-    (details.find { it.string == key }?.detail_value as? Tokens.detail_value.Text)
+private fun token.textValue(key: String): String =
+    (details.find { it.string == key }?.detail_value as? detail_value.Text)
         ?.string
         ?: throw DABTokenException.InvalidType(key)
 
-private fun Tokens.token.uLongValue(key: String): ULong =
-    (details.find { it.string == key }?.detail_value as? Tokens.detail_value.U64)
+private fun token.uLongValue(key: String): ULong =
+    (details.find { it.string == key }?.detail_value as? detail_value.U64)
         ?.uLong
         ?: throw DABTokenException.InvalidType("decimals")
 
-private val Tokens.token.standard: ICPTokenStandard
+private val token.standard: ICPTokenStandard
     get() {
         val stringValue = textValue("standard")
         return ICPTokenStandard.valueFromString(stringValue)
     }
 
-private val Tokens.token.symbol: String
+private val token.symbol: String
     get() = textValue("symbol")
 
-private val Tokens.token.decimals: Int
+private val token.decimals: Int
     get() = uLongValue("decimals").toInt()
 
-private val Tokens.token.totalSupply: ULong
+private val token.totalSupply: ULong
     get() = uLongValue("total_supply")
 
-private val Tokens.token.verified: Boolean
+private val token.verified: Boolean
     get() {
         val detailValue = details.find { it.string == "verified" }?.detail_value
         return when(detailValue) {
-            Tokens.detail_value.True -> true
-            Tokens.detail_value.False -> false
+            detail_value.True -> true
+            detail_value.False -> false
             else -> throw DABTokenException.InvalidType("verified")
         }
     }

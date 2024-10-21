@@ -7,7 +7,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidServiceSignature
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidServiceSignatureMethod
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.cryptography.LEB128
-import com.bity.icp_kotlin_kit.data.model.CandidDeserializationError
+import com.bity.icp_kotlin_kit.data.model.error.CandidDeserializationError
 import java.io.ByteArrayInputStream
 
 internal class CandidDecodableTypeTable(stream: ByteArrayInputStream) {

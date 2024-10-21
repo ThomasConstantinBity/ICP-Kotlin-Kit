@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.usecase
 
 import com.bity.icp_kotlin_kit.data.factory.ICPTransactionProviderFactory
-import com.bity.icp_kotlin_kit.data.model.DABTokenException
+import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
 import com.bity.icp_kotlin_kit.provideTokenRepository
