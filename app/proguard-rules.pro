@@ -1,3 +1,5 @@
+-verbose
+
 -keep class com.bity.icp_kotlin_kit.data.** { *; }
 -keepclassmembers class com.bity.icp_kotlin_kit.data**$* { *; }
 -keepclassmembernames class com.bity.icp_kotlin_kit.data**$* { *; }
@@ -12,10 +14,10 @@
 -keepattributes KotlinMetadata
 -keepattributes RuntimeVisibleAnnotations
 
- # With R8 full mode generic signatures are stripped for classes that are not
- # kept. Suspend functions are wrapped in continuations where the type argument
- # is used.
- -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+# With R8 full mode generic signatures are stripped for classes that are not
+# kept. Suspend functions are wrapped in continuations where the type argument
+# is used.
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
 # Prevent any code shrinking or optimizations
 -keepnames class com.bity.icp_kotlin_kit.candid.**
@@ -31,10 +33,7 @@
 }
 
 # Keep all classes in com.bity.icp_kotlin_kit.domain.generated_file as they are used via reflection.
--keep class com.bity.icp_kotlin_kit.domain.generated_file.** {
-    public <init>(...);  # Keep constructors.
-    public *;            # Keep all public methods and fields.
-}
+-keep class com.bity.icp_kotlin_kit.domain.generated_file.** { *; }
 
 # Ensure constructor parameters are not obfuscated, keeping them in their original form
 # (especially important for Kotlin default parameters).
