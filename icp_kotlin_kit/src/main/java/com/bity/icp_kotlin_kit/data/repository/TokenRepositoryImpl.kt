@@ -1,7 +1,8 @@
 package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
-import com.bity.icp_kotlin_kit.data.factory.ICPTokenActorFactory
+import com.bity.icp_kotlin_kit.data.factory.TokenActorFactoryImpl
+import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
@@ -15,8 +16,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
-class TokenRepositoryImpl(
-    private val tokensService: TokensService
+internal class TokenRepositoryImpl (
+    private val tokensService: TokensService,
+    private val actorFactory: TokenActorFactory
 ): TokenRepository {
 
     private var cachedTokens: List<ICPToken>? = null
@@ -38,7 +40,7 @@ class TokenRepositoryImpl(
     private suspend fun getICPToken(): ICPToken {
         val standard = ICPTokenStandard.ICP
         val canister = ICPSystemCanisters.Ledger.icpPrincipal
-        val actor = ICPTokenActorFactory.createActor(
+        val actor = actorFactory.createActor(
             standard = standard,
             canister = canister
         ) ?: throw TokenActorException.NullActorException(
@@ -59,7 +61,7 @@ class TokenRepositoryImpl(
         canister: ICPPrincipal,
         principal: ICPPrincipal
     ): BigInteger? {
-        val actor = ICPTokenActorFactory.createActor(standard, canister)
+        val actor = actorFactory.createActor(standard, canister)
             ?: return null
         return try {
             actor.getBalance(principal)
@@ -67,7 +69,7 @@ class TokenRepositoryImpl(
     }
 
     override suspend fun fee(token: ICPToken): BigInteger {
-        val actor = ICPTokenActorFactory.createActor(
+        val actor = actorFactory.createActor(
             standard = token.standard,
             canister = token.canister
         ) ?: throw TokenActorException.NullActorException(
@@ -78,7 +80,7 @@ class TokenRepositoryImpl(
     }
 
     override suspend fun send(transferArgs: ICPTokenTransferArgs): ICPTokenTransfer {
-        val actor = ICPTokenActorFactory.createActor(
+        val actor = actorFactory.createActor(
             standard = transferArgs.token.standard,
             canister = transferArgs.token.canister
         ) ?: throw TokenActorException.NullActorException(

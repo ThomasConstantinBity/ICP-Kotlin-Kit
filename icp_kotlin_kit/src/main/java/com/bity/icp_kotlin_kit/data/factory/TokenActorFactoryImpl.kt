@@ -3,14 +3,15 @@ package com.bity.icp_kotlin_kit.data.factory
 import com.bity.icp_kotlin_kit.data.remote.token_actor.DIP20TokenActor
 import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
 import com.bity.icp_kotlin_kit.data.remote.token_actor.ICRC1TokenActor
+import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 
-internal object ICPTokenActorFactory {
+internal class TokenActorFactoryImpl: TokenActorFactory {
 
-    fun createActor(
+    override fun createActor(
         standard: ICPTokenStandard,
         canister: ICPPrincipal
     ): ICPTokenActor? =

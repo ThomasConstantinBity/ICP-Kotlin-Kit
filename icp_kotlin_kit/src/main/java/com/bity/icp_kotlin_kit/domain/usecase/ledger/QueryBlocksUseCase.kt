@@ -1,16 +1,15 @@
 package com.bity.icp_kotlin_kit.domain.usecase.ledger
 
+import com.bity.icp_kotlin_kit.di.ledgerCanisterRepository
 import com.bity.icp_kotlin_kit.domain.model.error.QueryBlockError
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlock
-import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransaction
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
-import com.bity.icp_kotlin_kit.provideLedgerCanisterRepository
 
-class QueryBlocksUseCase private constructor(
+class QueryBlocksUseCase internal constructor(
     private val repository: LedgerCanisterRepository
 ) {
 
-    constructor(): this(provideLedgerCanisterRepository())
+    constructor(): this(ledgerCanisterRepository)
 
     suspend operator fun invoke(
         startIndex: ULong,

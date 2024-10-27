@@ -1,26 +1,24 @@
 package com.bity.icp_kotlin_kit.domain.usecase.token
 
+import com.bity.icp_kotlin_kit.di.tokenRepository
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenBalance
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
-import com.bity.icp_kotlin_kit.provideTokenRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
 class GetTokenBalanceUseCase internal constructor(
-    private val tokenRepository: TokenRepository
+    private val repository: TokenRepository
 ) {
 
-    constructor(): this(
-        tokenRepository = provideTokenRepository()
-    )
+    constructor(): this(tokenRepository)
 
     suspend operator fun invoke(principal: ICPPrincipal): List<ICPTokenBalance> = coroutineScope {
-        val tokens = tokenRepository.getAllTokens()
+        val tokens = repository.getAllTokens()
         tokens.map { token ->
             token to async {
-                tokenRepository.getTokenBalance(
+                repository.getTokenBalance(
                     standard = token.standard,
                     canister = token.canister,
                     principal = principal

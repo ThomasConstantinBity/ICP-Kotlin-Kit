@@ -1,15 +1,15 @@
 package com.bity.icp_kotlin_kit.domain.usecase.nft
 
+import com.bity.icp_kotlin_kit.di.nftRepository
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
-import com.bity.icp_kotlin_kit.provideNFTRepository
 
 class GetAllNFTCollectionsUseCase internal constructor(
-    private val nftRepository: NFTRepository
+    private val repository: NFTRepository
 ){
 
-    constructor(): this(provideNFTRepository())
+    constructor(): this(nftRepository)
 
     suspend operator fun invoke(): List<ICPNftCollection> =
-        nftRepository.getAllNFTsCollections()
+        repository.getAllNFTsCollections()
 }

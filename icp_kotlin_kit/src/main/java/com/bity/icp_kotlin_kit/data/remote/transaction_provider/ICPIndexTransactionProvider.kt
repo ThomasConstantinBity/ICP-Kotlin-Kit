@@ -9,11 +9,11 @@ import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactio
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
 import com.bity.icp_kotlin_kit.domain.provider.ICPTransactionProvider
-import com.bity.icp_kotlin_kit.icpIndexService
 import java.math.BigInteger
 
 internal class ICPIndexTransactionProvider(
-    private val icpToken: ICPToken
+    private val icpToken: ICPToken,
+    private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
 ): ICPTransactionProvider {
 
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
@@ -25,7 +25,7 @@ internal class ICPIndexTransactionProvider(
             start = null,
             max_results = BigInteger("1000000")
         )
-        val transactions = icpIndexService.get_account_transactions(getAccountTransactionsArgs)
+        val transactions = indexService.get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
             is NNSICPIndexCanister.GetAccountIdentifierTransactionsResult.Err ->
                 throw transactions.getAccountIdentifierTransactionsError.toDataModel()
