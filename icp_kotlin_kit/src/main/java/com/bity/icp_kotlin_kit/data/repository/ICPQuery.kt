@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain
+package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.model.candid.CandidEncoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
