@@ -19,9 +19,10 @@ class KotlinFileGenerator(
     private val header = """
         package $packageName
         import java.math.BigInteger
-        import com.bity.icp_kotlin_kit.candid.CandidDecoder
-        import com.bity.icp_kotlin_kit.domain.ICPQuery
+        import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
+        import com.bity.icp_kotlin_kit.data.repository.ICPQuery
         import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+        import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
         import com.bity.icp_kotlin_kit.domain.request.PollingValues
         import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
         import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
@@ -38,11 +39,8 @@ class KotlinFileGenerator(
 
         // TypeAliases must be declared before object declaration
         writeTypeAliases()
-
-        kotlinFileText.appendLine("object $fileName {")
         writeClasses()
         writeService()
-        kotlinFileText.appendLine("}")
         return formatKotlinCode(kotlinFileText)
     }
 

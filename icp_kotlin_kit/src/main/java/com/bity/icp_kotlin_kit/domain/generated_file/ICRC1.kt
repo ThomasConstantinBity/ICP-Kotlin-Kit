@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
-import com.bity.icp_kotlin_kit.domain.ICPQuery
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
@@ -23,7 +23,7 @@ object ICRC1 {
      * type Account = record { owner : principal; subaccount : opt Subaccount; };
      */
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: ICRC1Subaccount?
     )
 
@@ -98,7 +98,7 @@ object ICRC1 {
     /**
      * type MetadataField = record { text; Value };
      */
-    class MetadataField(
+    data class MetadataField(
         val string: String,
         val value: Value
     )
@@ -132,7 +132,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -153,7 +153,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -174,7 +174,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -195,7 +195,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -216,7 +216,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -237,7 +237,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -258,7 +258,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
         }
 
         /**
@@ -280,7 +280,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -301,7 +301,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -322,7 +322,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }

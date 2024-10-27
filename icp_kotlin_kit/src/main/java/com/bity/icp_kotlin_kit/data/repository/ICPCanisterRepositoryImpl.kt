@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.candid.deserializer.CandidDeserializer
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.deserializer.CandidDeserializer
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPRequestApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPStateTreePathApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPStateTreePathComponentApiModel
@@ -9,8 +9,8 @@ import com.bity.icp_kotlin_kit.data.datasource.api.request.ICPRequest
 import com.bity.icp_kotlin_kit.data.datasource.api.response.model.enum.RejectCodeApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.response.model.enum.StatusCodeApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.service.ICPRetrofitService
-import com.bity.icp_kotlin_kit.data.model.PollingError
-import com.bity.icp_kotlin_kit.data.model.RemoteClientError
+import com.bity.icp_kotlin_kit.data.model.error.PollingError
+import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal

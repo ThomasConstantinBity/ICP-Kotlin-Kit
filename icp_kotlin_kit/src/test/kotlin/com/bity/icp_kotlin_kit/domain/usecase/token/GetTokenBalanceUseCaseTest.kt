@@ -36,7 +36,7 @@ class GetTokenBalanceUseCaseTest {
     fun setUp() {
         tokenRepository = mockk()
         getTokenBalancesUseCase = GetTokenBalanceUseCase(
-            tokenRepository = tokenRepository
+            repository = tokenRepository
         )
     }
 

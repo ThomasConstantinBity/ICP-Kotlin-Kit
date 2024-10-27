@@ -1,4 +1,4 @@
-import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinFileGenerator
+// import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinFileGenerator
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -24,7 +24,15 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        debug {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -74,6 +82,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 }
 
+/*
 tasks.register("parseCandidFiles") {
     val inputFolder = file("./candid_files")
     require(inputFolder.isDirectory)
@@ -87,4 +96,4 @@ tasks.register("parseCandidFiles") {
         val outputFile = file("./src/main/java/com/bity/app/generated_files/${fileName}.kt")
         outputFile.writeText(kotlinFileGenerator.generateKotlinFile())
     }
-}
+}*/

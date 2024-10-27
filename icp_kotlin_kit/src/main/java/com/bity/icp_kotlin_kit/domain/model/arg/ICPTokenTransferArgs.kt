@@ -12,6 +12,6 @@ class ICPTokenTransferArgs(
     val to: ICPAccount,
     val amount: BigInteger,
     val fee: BigInteger?,
-    val memo: String?,
-    val createdAtTime: Long?
+    val icrc1Memo: ByteArray?,
+    val createdAtMillis: Long?
 )

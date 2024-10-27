@@ -6,11 +6,12 @@ import java.math.BigInteger
 class ICPTokenTransaction(
     val blockIndex: BigInteger,
     val operation: ICPTokenTransactionOperation,
-    val memo: ByteArray?,
+    val memo: BigInteger?,
+    val icrc1Memo: ByteArray?,
     val amount: BigInteger,
     val fee: BigInteger,
-    val created: Long?,
-    val timeStamp: Long?,
+    val createdNanos: ULong?,
+    val timeStampNanos: ULong?,
     val spender: ICPTokenTransactionDestination?,
     val token: ICPToken
 ) {

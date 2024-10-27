@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.cryptography
 import java.nio.ByteBuffer
 import java.util.zip.CRC32
 
-internal object CRC32 {
+object CRC32 {
 
     /**
      * CRC32 is a four byte check sequence, calculated as defined by ISO 3309, ITU-T V.42,

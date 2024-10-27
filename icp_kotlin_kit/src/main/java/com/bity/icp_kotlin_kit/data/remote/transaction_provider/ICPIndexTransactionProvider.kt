@@ -4,27 +4,28 @@ import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.error.GetAllTransactionsException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
 import com.bity.icp_kotlin_kit.domain.provider.ICPTransactionProvider
-import com.bity.icp_kotlin_kit.icpIndexService
 import java.math.BigInteger
 
 internal class ICPIndexTransactionProvider(
-    private val icpToken: ICPToken
+    private val icpToken: ICPToken,
+    private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
 ): ICPTransactionProvider {
 
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = NNSICPIndexCanister.GetAccountTransactionsArgs(
             account = NNSICPIndexCanister.Account(
-                owner = account.principal,
+                owner = account.principal.toDataModel(),
                 subaccount = account.subAccountId.map { it.toUByte() }.toTypedArray()
             ),
             start = null,
             max_results = BigInteger("1000000")
         )
-        val transactions = icpIndexService.get_account_transactions(getAccountTransactionsArgs)
+        val transactions = indexService.get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
             is NNSICPIndexCanister.GetAccountIdentifierTransactionsResult.Err ->
                 throw transactions.getAccountIdentifierTransactionsError.toDataModel()
@@ -36,10 +37,7 @@ internal class ICPIndexTransactionProvider(
     }
 
     private fun NNSICPIndexCanister.TransactionWithId.toDomainModel(): ICPTokenTransaction {
-
-        val timestamp = transaction.timestamp?.timestamp_nanos?.toLong()
-        val created = transaction.created_at_time?.timestamp_nanos?.toLong()
-        val memo = transaction.icrc1_memo
+        val icrc1Memo = transaction.icrc1_memo
             ?.map { it.toByte() }
             ?.toByteArray()
 
@@ -95,11 +93,12 @@ internal class ICPIndexTransactionProvider(
         return ICPTokenTransaction(
             blockIndex = BigInteger(id.toString()),
             operation = operation,
-            memo = memo,
+            icrc1Memo = icrc1Memo,
+            memo = BigInteger(transaction.memo.toString()),
             amount = amount,
             fee = fee,
-            created = created,
-            timeStamp = timestamp,
+            createdNanos = transaction.created_at_time?.timestamp_nanos,
+            timeStampNanos = transaction.timestamp?.timestamp_nanos,
             spender = spender,
             token = icpToken
         )

@@ -8,9 +8,15 @@ class KotlinFileGeneratorTest {
 
     @Test
     fun `parse file`() {
-        val filePath = "src/test/resources/candid_file/nns_sns_w.did"
-        val outputFilePath = "src/test/resources/generated_candid_file/nns_sns_w.kt"
-
+        val filePath = "src/test/resources/candid_file/DABNFT.did"
+        val outputFilePath = "src/test/resources/generated_candid_file/DABNFT.kt"
+        println(
+            KotlinFileGenerator(
+                fileName = "DBANFT",
+                packageName = "",
+                didFileContent = File(filePath).readText()
+            ).generateKotlinFile()
+        )
     }
 
     @Test
@@ -20,10 +26,7 @@ class KotlinFileGeneratorTest {
             val filePath = it.path
             val fileName = it.name.replace(".did", "")
             val outputFilePath = "src/test/resources/generated_candid_file/${fileName}.kt"
-            KotlinFileGenerator(
-                didFilePath = filePath,
-                outputFilePath = outputFilePath
-            ).generateKotlinFile()
+            TODO()
         }
     }
 

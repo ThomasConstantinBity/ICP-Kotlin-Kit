@@ -1,5 +1,7 @@
 package com.bity.icp_kotlin_kit.candid.model
 
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import java.math.BigInteger
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
-import com.bity.icp_kotlin_kit.domain.ICPQuery
+import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -14,7 +14,7 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 object NNSICPIndexCanister {
 
     class Account(
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
         val subaccount: Array<UByte>?
     )
 
@@ -78,7 +78,7 @@ object NNSICPIndexCanister {
     }
 
     class InitArg(
-        val ledger_id: ICPPrincipal
+        val ledger_id: ICPPrincipalApiModel
     )
 
     sealed class Operation {
@@ -173,7 +173,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_account_identifier_transactions (
@@ -192,7 +192,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_account_transactions (
@@ -211,7 +211,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_blocks (
@@ -230,7 +230,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun http_request (
@@ -249,14 +249,14 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun ledger_id (
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): ICPPrincipal {
+        ): ICPPrincipalApiModel {
             val icpQuery = ICPQuery(
                 methodName = "ledger_id",
                 canister = canister
@@ -267,7 +267,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun status (
@@ -285,7 +285,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc1_balance_of (
@@ -304,7 +304,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }
