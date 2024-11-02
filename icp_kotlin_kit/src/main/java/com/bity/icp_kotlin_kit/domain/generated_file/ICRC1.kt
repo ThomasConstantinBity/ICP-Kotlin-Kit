@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -132,7 +133,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -153,7 +154,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -174,7 +175,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -195,7 +196,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -205,7 +206,7 @@ object ICRC1 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<MetadataField> {
+        ): Array<MetadataField> {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_metadata",
                 canister = canister
@@ -216,7 +217,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -237,7 +238,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -258,7 +259,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
+            return CandidDecoder.decode(result)
         }
 
         /**
@@ -280,7 +281,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -301,7 +302,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -311,7 +312,7 @@ object ICRC1 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<SupportedStandard> {
+        ): Array<SupportedStandard> {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_supported_standards",
                 canister = canister
@@ -322,7 +323,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }

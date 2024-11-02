@@ -11,6 +11,7 @@ import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
 import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
+import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
 import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W

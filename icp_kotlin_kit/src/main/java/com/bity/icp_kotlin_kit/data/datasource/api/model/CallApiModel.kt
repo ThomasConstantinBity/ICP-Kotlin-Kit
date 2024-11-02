@@ -5,16 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 // Need to use sneak case because of order independent hash
 internal class CallApiModel(
-    requestType: ContentRequestType,
-    sender: ByteArray,
-    nonce: ByteArray,
-    ingressExpiry: Long,
-    val method_name: String,
-    val canister_id: ByteArray,
-    val arg: ByteArray
-): ContentApiModel(
-    request_type = requestType,
-    sender = sender,
-    nonce = nonce,
-    ingress_expiry = ingressExpiry
-)
+    @JsonProperty("request_type") override val request_type: ContentRequestType,
+    @JsonProperty("sender") override val sender: ByteArray,
+    @JsonProperty("nonce") override val nonce: ByteArray,
+    @JsonProperty("ingress_expiry") override val ingress_expiry: Long,
+    @JsonProperty("method_name") val method_name: String,
+    @JsonProperty("canister_id") val canister_id: ByteArray,
+    @JsonProperty("arg") val arg: ByteArray
+): ContentApiModel()

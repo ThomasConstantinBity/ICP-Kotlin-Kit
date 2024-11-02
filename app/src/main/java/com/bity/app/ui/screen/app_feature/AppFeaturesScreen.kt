@@ -39,6 +39,9 @@ fun AppFeatures(
         MainButton(text = "ICP NFTs") {
             navController.navigate(Screen.ICPNFTs.route)
         }
+        MainButton(text = "Account Balance") {
+            navController.navigate(Screen.AccountBalance.route)
+        }
     }
 }
 
@@ -50,7 +53,7 @@ private fun MainButton(
 ) {
     Button(
         modifier = modifier
-            .width(150.dp),
+            .width(180.dp),
         onClick = { onClick() }
     ) {
         Text(text = text)
@@ -61,7 +64,7 @@ private fun MainButton(
 @Preview(showBackground = true)
 fun PreviewMainButton() {
     MainButton(
-        text = "ICP Tokens",
+        text = "Account Balance",
         onClick = { }
     )
 }

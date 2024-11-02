@@ -30,10 +30,10 @@ internal object ICPRequestUtil {
             is ICPRequestApiModel.ReadState -> {
                 val encodedPaths = request.paths.map { it.encodedComponents() }
                 ReadStateApiModel(
-                    requestType = ContentRequestType.ReadState,
+                    request_type = ContentRequestType.ReadState,
                     sender = senderBytes,
                     nonce = nonce,
-                    ingressExpiry = ingressExpiry,
+                    ingress_expiry = ingressExpiry,
                     paths = encodedPaths
                 )
             }
@@ -42,10 +42,10 @@ internal object ICPRequestUtil {
                 val method = request.method
                 val serializedArgs = CandidSerializer.encode(method.args)
                 CallApiModel(
-                    requestType = ContentRequestType.fromICPRequestApiModel(request),
+                    request_type = ContentRequestType.fromICPRequestApiModel(request),
                     sender = senderBytes,
                     nonce = nonce,
-                    ingressExpiry = ingressExpiry,
+                    ingress_expiry = ingressExpiry,
                     method_name = method.methodName,
                     canister_id = method.canister.bytes,
                     arg = serializedArgs

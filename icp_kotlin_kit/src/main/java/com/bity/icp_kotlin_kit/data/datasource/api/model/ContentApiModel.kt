@@ -5,11 +5,12 @@ import com.bity.icp_kotlin_kit.util.OrderIndependentHash
 import com.fasterxml.jackson.annotation.JsonProperty
 
 // Need to use sneak case because of order independent hash
-internal abstract class ContentApiModel(
-    val request_type: ContentRequestType,
-    val sender: ByteArray,
-    val nonce: ByteArray,
-    val ingress_expiry: Long
-) {
+internal abstract class ContentApiModel {
+
+    abstract val request_type: ContentRequestType
+    abstract val sender: ByteArray
+    abstract val nonce: ByteArray
+    abstract val ingress_expiry: Long
+
     fun calculateRequestId(): ByteArray = OrderIndependentHash(this)
 }

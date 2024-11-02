@@ -123,7 +123,7 @@ internal object IDLTypeHelper {
             is IDLTypeFloat64 -> "Double"
 
             is IDLTypeNull -> TODO()
-            is IDLTypePrincipal -> "ICPPrincipal"
+            is IDLTypePrincipal -> "ICPPrincipalApiModel"
             is IDLRecord -> className
                 ?: throw RuntimeException("className is required for record declaration '${type}'")
 

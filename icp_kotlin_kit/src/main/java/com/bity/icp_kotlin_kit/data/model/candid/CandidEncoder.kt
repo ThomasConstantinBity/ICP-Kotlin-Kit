@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.model.candid
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrincipal
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
@@ -64,12 +65,13 @@ internal object CandidEncoder {
                 } else TODO()
             }
 
-            is ICPPrincipal -> CandidValue.Principal(
+            is ICPPrincipalApiModel -> CandidValue.Principal(
                 candidPrincipal = CandidPrincipal(
                     string = arg.string,
                     bytes = arg.bytes
                 )
             )
+            is ICPPrincipal -> throw Exception("ICP Principal no longer supported")
 
             else -> {
                 val dictionary = arg::class.memberProperties.associate {
