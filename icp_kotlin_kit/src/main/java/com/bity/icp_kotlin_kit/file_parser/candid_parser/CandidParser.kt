@@ -229,6 +229,10 @@ internal object CandidParser {
             } or {
                 expect(Token.Id) storeIn IDLRecord::recordName
                 expect(Token.Colon)
+                optional {
+                    expect(Token.Opt)
+                    emit(true) storeIn IDLRecord::isOptional
+                }
                 expect(Token.Record)
                 expect(Token.LBrace)
             } or {
@@ -255,9 +259,15 @@ internal object CandidParser {
                 expect(IDLComment) storeIn IDLTypeVariant::comment
             }
 
-            expect(Token.Type)
-            expect(Token.Id) storeIn IDLTypeVariant::variantDeclaration
-            expect(Token.Equals)
+            either {
+                expect(Token.Type)
+                expect(Token.Id) storeIn IDLTypeVariant::variantDeclaration
+                expect(Token.Equals)
+            } or {
+                expect(Token.Id) storeIn IDLTypeVariant::id
+                expect(Token.Colon)
+            }
+
             expect(Token.Variant)
             expect(Token.LBrace)
             repeated(min = 1) {
@@ -529,11 +539,23 @@ internal object CandidParser {
                 expect(IDLComment) storeIn IDLTypeInt::comment
             }
 
-            expect(Token.Id) storeIn IDLTypeInt::id
-            expect(Token.Colon)
-            expect(Token.Int)
-            optional {
-                expect(Token.Semi)
+            either {
+                expect(Token.Id) storeIn IDLTypeInt::id
+                expect(Token.Colon)
+                optional {
+                    expect(Token.Opt)
+                    emit(true) storeIn IDLTypeInt::isOptional
+                }
+                expect(Token.Int)
+                optional {
+                    expect(Token.Semi)
+                }
+            } or {
+                optional {
+                    expect(Token.Opt)
+                    emit(true) storeIn IDLTypeInt::isOptional
+                }
+                expect(Token.Int)
             }
         }
 
