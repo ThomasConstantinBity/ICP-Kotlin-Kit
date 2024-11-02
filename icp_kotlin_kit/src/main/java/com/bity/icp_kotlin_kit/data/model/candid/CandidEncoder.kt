@@ -19,7 +19,7 @@ internal object CandidEncoder {
     operator fun invoke(
         arg: Any?,
         expectedClass: KClass<*>? = null,
-        expectedClassNullable: Boolean = false
+        expectedClassNullable: Boolean = true
     ): CandidValue {
 
         if(arg == null) {

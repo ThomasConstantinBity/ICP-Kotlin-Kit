@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.di
 
 import com.bity.icp_kotlin_kit.data.datasource.api.service.ICPRetrofitService
+import com.bity.icp_kotlin_kit.data.factory.NFTActorFactoryImpl
 import com.bity.icp_kotlin_kit.data.factory.TokenActorFactoryImpl
 import com.bity.icp_kotlin_kit.data.factory.TransactionProviderFactoryImpl
 import com.bity.icp_kotlin_kit.data.repository.ICPCanisterRepositoryImpl
@@ -10,6 +11,7 @@ import com.bity.icp_kotlin_kit.data.repository.NFTRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.SNSCachedServiceImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.TokensCachedServiceImpl
+import com.bity.icp_kotlin_kit.domain.factory.NFTActorFactory
 import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
@@ -64,6 +66,7 @@ internal val ledgerCanisterRepository: LedgerCanisterRepository by lazy {
 
 internal val nftRepository: NFTRepository by lazy {
     NFTRepositoryImpl(
+        nftActorFactory = nftActorFactory,
         nftCachedService = nftCachedService
     )
 }
@@ -125,8 +128,12 @@ private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by l
 /**
  * Factory
  */
-internal val tokenActorFactory: TokenActorFactory by lazy {
+private val tokenActorFactory: TokenActorFactory by lazy {
     TokenActorFactoryImpl()
+}
+
+private val nftActorFactory: NFTActorFactory by lazy {
+    NFTActorFactoryImpl()
 }
 
 internal val transactionProviderFactory: TransactionProviderFactory by lazy {

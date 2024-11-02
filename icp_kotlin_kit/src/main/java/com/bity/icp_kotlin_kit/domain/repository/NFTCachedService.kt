@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.repository
 
-import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
+import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 
 internal interface NFTCachedService {
-    suspend fun getAllNFTsCollections(): List<DABNFT.nft_canister>
+    suspend fun getAllNFTsCollections(): List<ICPNftCollection>
 }
