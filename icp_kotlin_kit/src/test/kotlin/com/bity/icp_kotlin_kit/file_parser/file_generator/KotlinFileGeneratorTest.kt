@@ -8,8 +8,8 @@ class KotlinFileGeneratorTest {
 
     @Test
     fun `parse file`() {
-        val filePath = "src/test/resources/candid_file/ICRC7.did"
-        val outputFilePath = "src/test/resources/generated_candid_file/ICRC7.kt"
+        val filePath = "src/test/resources/candid_file/OrigynNFT.did"
+        // val outputFilePath = "src/test/resources/generated_candid_file/EXT.kt"
         println(
             KotlinFileGenerator(
                 fileName = "DBANFT",
