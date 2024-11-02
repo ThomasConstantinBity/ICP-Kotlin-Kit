@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -204,13 +206,13 @@ object ICRC37 {
                 methodName = "icrc37_max_approvals_per_token_or_collection",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
+            return CandidDecoder.decode(result)
         }
 
         suspend fun icrc37_max_revoke_approvals (
@@ -222,100 +224,130 @@ object ICRC37 {
                 methodName = "icrc37_max_revoke_approvals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
+            return CandidDecoder.decode(result)
         }
 
         suspend fun icrc37_approve_tokens (
-            approveTokenArg: kotlin.Array<ApproveTokenArg>,
+            approveTokenArg: Array<ApproveTokenArg>,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<ApproveTokenResult> {
+        ): Array<ApproveTokenResult> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_approve_tokens",
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(approveTokenArg),
+                values = listOf(
+                    ValueToEncode(
+                        arg = approveTokenArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_approve_collection (
-            approveCollectionArg: kotlin.Array<ApproveCollectionArg>,
+            approveCollectionArg: Array<ApproveCollectionArg>,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<ApproveCollectionError> {
+        ): Array<ApproveCollectionError> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_approve_collection",
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(approveCollectionArg),
+                values = listOf(
+                    ValueToEncode(
+                        arg = approveCollectionArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_revoke_token_approvals (
-            revokeTokenApprovalArg: kotlin.Array<RevokeTokenApprovalArg>,
+            revokeTokenApprovalArg: Array<RevokeTokenApprovalArg>,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<RevokeTokenApprovalResponse> {
+        ): Array<RevokeTokenApprovalResponse> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_revoke_token_approvals",
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(revokeTokenApprovalArg),
+                values = listOf(
+                    ValueToEncode(
+                        arg = revokeTokenApprovalArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_revoke_collection_approvals (
-            revokeCollectionApprovalArg: kotlin.Array<RevokeCollectionApprovalArg>,
+            revokeCollectionApprovalArg: Array<RevokeCollectionApprovalArg>,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<RevokeCollectionApprovalResult> {
+        ): Array<RevokeCollectionApprovalResult> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_revoke_collection_approvals",
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(revokeCollectionApprovalArg),
+                values = listOf(
+                    ValueToEncode(
+                        arg = revokeCollectionApprovalArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_is_approved (
-            isApprovedArg: kotlin.Array<IsApprovedArg>,
+            isApprovedArg: Array<IsApprovedArg>,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<Boolean> {
+        ): Array<Boolean> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_is_approved",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(isApprovedArg),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = isApprovedArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_get_token_approvals (
@@ -325,18 +357,34 @@ object ICRC37 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<TokenApproval> {
+        ): Array<TokenApproval> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_get_token_approvals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(token_id, prev, take),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = token_id,
+                        expectedClass = BigInteger::class,
+                        expectedClassNullable = false
+                    ),
+                    ValueToEncode(
+                        arg = prev,
+                        expectedClass = TokenApproval::class,
+                        expectedClassNullable = true
+                    ),
+                    ValueToEncode(
+                        arg = take,
+                        expectedClass = BigInteger::class,
+                        expectedClassNullable = true
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_get_collection_approvals (
@@ -346,35 +394,57 @@ object ICRC37 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<CollectionApproval> {
+        ): Array<CollectionApproval> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_get_collection_approvals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(owner, prev, take),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = owner,
+                        expectedClass = Account::class,
+                        expectedClassNullable = false
+                    ),
+                    ValueToEncode(
+                        arg = prev,
+                        expectedClass = CollectionApproval::class,
+                        expectedClassNullable = true
+                    ),
+                    ValueToEncode(
+                        arg = take,
+                        expectedClass = BigInteger::class,
+                        expectedClassNullable = true
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc37_transfer_from (
-            transferFromArg: kotlin.Array<TransferFromArg>,
+            transferFromArg: Array<TransferFromArg>,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<TransferFromResult> {
+        ): Array<TransferFromResult> {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_transfer_from",
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(transferFromArg),
+                values = listOf(
+                    ValueToEncode(
+                        arg = transferFromArg,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }

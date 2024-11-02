@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidEncoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
@@ -16,41 +17,41 @@ open class ICPQuery(
 ) {
     private val canisterRepository: ICPCanisterRepository = icpCanisterRepository
 
-    suspend operator fun invoke(
-        args: List<Any?>?,
+    suspend fun invoke(
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues,
         certification: ICPRequestCertification
     ): Result<CandidValue> =
         when(certification) {
-            ICPRequestCertification.Uncertified -> query(args)
+            ICPRequestCertification.Uncertified -> query(values)
             ICPRequestCertification.Certified -> callAndPoll(
-                args = args,
+                values = values,
                 sender = sender,
                 pollingValues = pollingValues
             )
         }
 
     private suspend fun query(
-        args: List<Any?>?,
+        values: List<ValueToEncode>?,
     ): Result<CandidValue> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,
-            args = args?.map { CandidEncoder(it) }
+            args = values?.map { CandidEncoder(it) }
         )
         return canisterRepository.query(icpMethod)
     }
 
     suspend fun callAndPoll(
-        args: List<Any?>?,
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal?,
         pollingValues: PollingValues
     ): Result<CandidValue> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,
-            args = args?.map { CandidEncoder(it) }
+            args = values?.map { CandidEncoder(it) }
         )
         val requestId = canisterRepository.call(
             method = icpMethod,

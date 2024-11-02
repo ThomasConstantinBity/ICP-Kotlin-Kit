@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -151,8 +152,14 @@ object LedgerCanister {
                 sender: ICPSigningPrincipal? = null,
                 pollingValues: PollingValues = PollingValues()
             ): Result_4 {
-                val result = this(
-                    args = listOf(getBlocksArgs),
+                val result = this.invoke(
+                    values = listOf(
+                        ValueToEncode(
+                            arg = getBlocksArgs,
+                            expectedClass = GetBlocksArgs::class,
+                            expectedClassNullable = false
+                        )
+                    ),
                     certification = certification,
                     sender = sender,
                     pollingValues = pollingValues
@@ -187,8 +194,14 @@ object LedgerCanister {
                 sender: ICPSigningPrincipal? = null,
                 pollingValues: PollingValues = PollingValues()
             ): Result_5 {
-                val result = this(
-                    args = listOf(getBlocksArgs),
+                val result = this.invoke(
+                    values = listOf(
+                        ValueToEncode(
+                            arg = getBlocksArgs,
+                            expectedClass = GetBlocksArgs::class,
+                            expectedClassNullable = false
+                        )
+                    ),
                     certification = certification,
                     sender = sender,
                     pollingValues = pollingValues
@@ -814,8 +827,14 @@ object LedgerCanister {
                 methodName = "account_balance",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(binaryAccountBalanceArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = binaryAccountBalanceArgs,
+                        expectedClass = BinaryAccountBalanceArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -836,8 +855,14 @@ object LedgerCanister {
                 methodName = "account_balance_dfx",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(accountBalanceArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = accountBalanceArgs,
+                        expectedClass = AccountBalanceArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -858,8 +883,10 @@ object LedgerCanister {
                 methodName = "account_identifier",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(account),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(account)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -879,8 +906,8 @@ object LedgerCanister {
                 methodName = "archives",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -900,8 +927,8 @@ object LedgerCanister {
                 methodName = "decimals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -921,8 +948,8 @@ object LedgerCanister {
                 methodName = "icrc10_supported_standards",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -943,8 +970,10 @@ object LedgerCanister {
                 methodName = "icrc1_balance_of",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(account),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(account)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -964,8 +993,8 @@ object LedgerCanister {
                 methodName = "icrc1_decimals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -985,8 +1014,8 @@ object LedgerCanister {
                 methodName = "icrc1_fee",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1006,8 +1035,8 @@ object LedgerCanister {
                 methodName = "icrc1_metadata",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1032,13 +1061,13 @@ object LedgerCanister {
                 methodName = "icrc1_minting_account",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
+            return CandidDecoder.decode(result)
         }
 
         /**
@@ -1053,8 +1082,8 @@ object LedgerCanister {
                 methodName = "icrc1_name",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1074,8 +1103,8 @@ object LedgerCanister {
                 methodName = "icrc1_supported_standards",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1095,8 +1124,8 @@ object LedgerCanister {
                 methodName = "icrc1_symbol",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1116,8 +1145,8 @@ object LedgerCanister {
                 methodName = "icrc1_total_supply",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1137,8 +1166,10 @@ object LedgerCanister {
                 methodName = "icrc1_transfer",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(transferArg),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(transferArg)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1158,8 +1189,10 @@ object LedgerCanister {
                 methodName = "icrc21_canister_call_consent_message",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(consentMessageRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(consentMessageRequest)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1180,8 +1213,14 @@ object LedgerCanister {
                 methodName = "icrc2_allowance",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(allowanceArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = allowanceArgs,
+                        expectedClass = AllowanceArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1201,8 +1240,14 @@ object LedgerCanister {
                 methodName = "icrc2_approve",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(approveArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = approveArgs,
+                        expectedClass = ApproveArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1222,8 +1267,14 @@ object LedgerCanister {
                 methodName = "icrc2_transfer_from",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(transferFromArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = transferFromArgs,
+                        expectedClass = TransferFromArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1243,8 +1294,8 @@ object LedgerCanister {
                 methodName = "name",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1265,8 +1316,14 @@ object LedgerCanister {
                 methodName = "query_blocks",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getBlocksArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getBlocksArgs,
+                        expectedClass = GetBlocksArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1287,8 +1344,14 @@ object LedgerCanister {
                 methodName = "query_encoded_blocks",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getBlocksArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getBlocksArgs,
+                        expectedClass = GetBlocksArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1308,8 +1371,14 @@ object LedgerCanister {
                 methodName = "send_dfx",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(sendArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = sendArgs,
+                        expectedClass = SendArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1329,8 +1398,8 @@ object LedgerCanister {
                 methodName = "symbol",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -1350,8 +1419,14 @@ object LedgerCanister {
                 methodName = "transfer",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(transferArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = transferArgs,
+                        expectedClass = TransferArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -1372,8 +1447,14 @@ object LedgerCanister {
                 methodName = "transfer_fee",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(unnamedClass1),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = unnamedClass1,
+                        expectedClass = UnnamedClass1::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification

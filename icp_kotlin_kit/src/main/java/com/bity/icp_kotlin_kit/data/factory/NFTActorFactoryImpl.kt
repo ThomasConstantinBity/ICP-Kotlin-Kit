@@ -14,17 +14,18 @@ internal class NFTActorFactoryImpl: NFTActorFactory {
         return when(collection.standard) {
 
             ICPNftStandard.EXT ->
-                EXTNFTActor()
+                null
 
             ICPNftStandard.ICRC7 ->
                 ICRC7NFTActor(
                     service = DBANFTService(
-                        canister = collection.canister
-                    )
+                        canister = collection.canister,
+                    ),
+                    tmp = collection.canister.string
                 )
 
             ICPNftStandard.ORIGYN_NFT ->
-                OrigynNFTActor()
+                null
             else -> null
         }
     }

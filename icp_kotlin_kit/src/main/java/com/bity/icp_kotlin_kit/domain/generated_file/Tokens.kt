@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -132,13 +134,13 @@ class TokensService(
             methodName = "name",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(),
+        val result = icpQuery.invoke(
+            values = listOf(),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result)
     }
 
     /**
@@ -154,13 +156,19 @@ class TokensService(
             methodName = "get",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(token_id),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = token_id,
+                    expectedClass = ICPPrincipalApiModel::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(result)
+        return CandidDecoder.decode(result)
     }
 
     /**
@@ -176,13 +184,24 @@ class TokensService(
             methodName = "add",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(trusted_source, token),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = trusted_source,
+                    expectedClass = ICPPrincipalApiModel::class,
+                    expectedClassNullable = true
+                ),
+                ValueToEncode(
+                    arg = token,
+                    expectedClass = add_token_input::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result)
     }
 
     /**
@@ -198,13 +217,24 @@ class TokensService(
             methodName = "remove",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(trusted_source, token_id),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = trusted_source,
+                    expectedClass = ICPPrincipalApiModel::class,
+                    expectedClassNullable = true
+                ),
+                ValueToEncode(
+                    arg = token_id,
+                    expectedClass = ICPPrincipalApiModel::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result)
     }
 
 
@@ -217,18 +247,18 @@ class TokensService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<token> {
+    ): Array<token> {
         val icpQuery = ICPQuery(
             methodName = "get_all",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(),
+        val result = icpQuery.invoke(
+            values = listOf(),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result)
     }
 
     /**
@@ -243,12 +273,18 @@ class TokensService(
             methodName = "add_admin",
             canister = canister
         )
-        val result = icpQuery(
-            args = listOf(admin),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = admin,
+                    expectedClass = ICPPrincipalApiModel::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result)
     }
 }

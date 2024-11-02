@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -362,11 +364,17 @@ object NNS_SNS_W {
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(addWasmRequest),
+                values = listOf(
+                    ValueToEncode(
+                        arg = addWasmRequest,
+                        expectedClass = AddWasmRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun deploy_new_sns (
@@ -379,11 +387,17 @@ object NNS_SNS_W {
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(deployNewSnsRequest),
+                values = listOf(
+                    ValueToEncode(
+                        arg = deployNewSnsRequest,
+                        expectedClass = DeployNewSnsRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_allowed_principals (
@@ -396,13 +410,19 @@ object NNS_SNS_W {
                 methodName = "get_allowed_principals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(unnamedClass0),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = unnamedClass0,
+                        expectedClass = UnnamedClass0::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass0()
@@ -417,13 +437,19 @@ object NNS_SNS_W {
                 methodName = "get_deployed_sns_by_proposal_id",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getDeployedSnsByProposalIdRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getDeployedSnsByProposalIdRequest,
+                        expectedClass = GetDeployedSnsByProposalIdRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_latest_sns_version_pretty (
@@ -435,13 +461,13 @@ object NNS_SNS_W {
                 methodName = "get_latest_sns_version_pretty",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass1(
@@ -459,13 +485,19 @@ object NNS_SNS_W {
                 methodName = "get_next_sns_version",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getNextSnsVersionRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getNextSnsVersionRequest,
+                        expectedClass = GetNextSnsVersionRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_proposal_id_that_added_wasm (
@@ -478,13 +510,19 @@ object NNS_SNS_W {
                 methodName = "get_proposal_id_that_added_wasm",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getProposalIdThatAddedWasmRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getProposalIdThatAddedWasmRequest,
+                        expectedClass = GetProposalIdThatAddedWasmRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_sns_subnet_ids (
@@ -497,13 +535,19 @@ object NNS_SNS_W {
                 methodName = "get_sns_subnet_ids",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(unnamedClass2),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = unnamedClass2,
+                        expectedClass = UnnamedClass2::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class UnnamedClass2()
@@ -518,13 +562,19 @@ object NNS_SNS_W {
                 methodName = "get_wasm",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getWasmRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getWasmRequest,
+                        expectedClass = GetWasmRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_wasm_metadata (
@@ -537,13 +587,19 @@ object NNS_SNS_W {
                 methodName = "get_wasm_metadata",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getWasmMetadataRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getWasmMetadataRequest,
+                        expectedClass = GetWasmMetadataRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun insert_upgrade_path_entries (
@@ -556,11 +612,17 @@ object NNS_SNS_W {
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(insertUpgradePathEntriesRequest),
+                values = listOf(
+                    ValueToEncode(
+                        arg = insertUpgradePathEntriesRequest,
+                        expectedClass = InsertUpgradePathEntriesRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun list_deployed_snses (
@@ -572,13 +634,19 @@ object NNS_SNS_W {
                 methodName = "list_deployed_snses",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(EmptyClass()),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = EmptyClass(),
+                        expectedClass = EmptyClass::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         class EmptyClass
@@ -593,13 +661,19 @@ object NNS_SNS_W {
                 methodName = "list_upgrade_steps",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(listUpgradeStepsRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = listUpgradeStepsRequest,
+                        expectedClass = ListUpgradeStepsRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun update_allowed_principals (
@@ -612,11 +686,17 @@ object NNS_SNS_W {
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(updateAllowedPrincipalsRequest),
+                values = listOf(
+                    ValueToEncode(
+                        arg = updateAllowedPrincipalsRequest,
+                        expectedClass = UpdateAllowedPrincipalsRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun update_sns_subnet_list (
@@ -629,11 +709,17 @@ object NNS_SNS_W {
                 canister = canister
             )
             val result = icpQuery.callAndPoll(
-                args = listOf(updateSnsSubnetListRequest),
+                values = listOf(
+                    ValueToEncode(
+                        arg = updateSnsSubnetListRequest,
+                        expectedClass = UpdateSnsSubnetListRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }

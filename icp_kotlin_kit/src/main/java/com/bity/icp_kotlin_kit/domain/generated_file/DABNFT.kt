@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -117,8 +118,8 @@ object DABNFT {
                 canister = canister
             )
 
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -139,8 +140,10 @@ object DABNFT {
                 canister = canister
             )
 
-            val result = icpQuery(
-                args = listOf(nft_id),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(nft_id)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -162,7 +165,14 @@ object DABNFT {
             )
 
             val result = icpQuery.callAndPoll(
-                args = listOf(trusted_source, nft),
+                values = listOf(
+                    ValueToEncode(
+                        arg = trusted_source,
+                        expectedClass = ICPPrincipalApiModel::class,
+                        expectedClassNullable = true
+                    ),
+                    ValueToEncode(nft)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
@@ -183,7 +193,13 @@ object DABNFT {
             )
 
             val result = icpQuery.callAndPoll(
-                args = listOf(trusted_source, nft_id),
+                values = listOf(
+                    ValueToEncode(
+                        arg = trusted_source,
+                        expectedClass = ICPPrincipalApiModel::class,
+                        expectedClassNullable = true
+                    ),
+                    ValueToEncode(nft_id)),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
@@ -196,15 +212,15 @@ object DABNFT {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<nft_canister> {
+        ): Array<nft_canister> {
 
             val icpQuery = ICPQuery(
                 methodName = "get_all",
                 canister = canister
             )
 
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -225,7 +241,9 @@ object DABNFT {
             )
 
             val result = icpQuery.callAndPoll(
-                args = listOf(admin),
+                values = listOf(
+                    ValueToEncode(admin)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()

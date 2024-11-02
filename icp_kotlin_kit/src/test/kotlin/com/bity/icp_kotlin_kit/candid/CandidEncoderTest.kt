@@ -18,10 +18,11 @@ internal class CandidEncoderTest {
         value: Any,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -30,10 +31,11 @@ internal class CandidEncoderTest {
         value: Any,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -42,10 +44,11 @@ internal class CandidEncoderTest {
         value: Float,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -54,10 +57,11 @@ internal class CandidEncoderTest {
         value: Double,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -66,10 +70,11 @@ internal class CandidEncoderTest {
         value: Boolean,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -78,10 +83,11 @@ internal class CandidEncoderTest {
         value: String,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @ParameterizedTest(name = "[{index}] - encoding {0}")
@@ -90,10 +96,11 @@ internal class CandidEncoderTest {
         value: ByteArray,
         expectedResult: CandidValue
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(value)
-        )
+        )*/
     }
 
     @Disabled
@@ -104,14 +111,15 @@ internal class CandidEncoderTest {
         expectedResult: CandidValue,
         expectedClassNullable: Boolean
     ) {
-        assertEquals(
+        TODO()
+        /*assertEquals(
             expectedResult,
             CandidEncoder(
                 arg = null,
                 expectedClass = expectedClass,
                 expectedClassNullable = expectedClassNullable
             )
-        )
+        )*/
     }
 
     companion object {

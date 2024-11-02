@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -212,13 +214,15 @@ object ICRC1IndexCanister {
                 methodName = "get_account_transactions",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getAccountTransactionsArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(getAccountTransactionsArgs)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_blocks (
@@ -231,13 +235,15 @@ object ICRC1IndexCanister {
                 methodName = "get_blocks",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getBlocksRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(getBlocksRequest)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_fee_collectors_ranges (
@@ -249,13 +255,13 @@ object ICRC1IndexCanister {
                 methodName = "get_fee_collectors_ranges",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc1_balance_of (
@@ -268,13 +274,15 @@ object ICRC1IndexCanister {
                 methodName = "icrc1_balance_of",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(account),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(account)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun ledger_id (
@@ -286,13 +294,13 @@ object ICRC1IndexCanister {
                 methodName = "ledger_id",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun list_subaccounts (
@@ -305,13 +313,15 @@ object ICRC1IndexCanister {
                 methodName = "list_subaccounts",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(listSubaccountsArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(listSubaccountsArgs)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun status (
@@ -323,13 +333,13 @@ object ICRC1IndexCanister {
                 methodName = "status",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }

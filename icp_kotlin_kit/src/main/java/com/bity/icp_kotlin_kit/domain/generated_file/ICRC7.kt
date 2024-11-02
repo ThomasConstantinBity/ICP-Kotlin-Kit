@@ -5,6 +5,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
@@ -76,11 +77,12 @@ class DBANFTService(
     ): Array<UnnamedClass0> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_collection_metadata", canister = canister
+            methodName = "icrc7_collection_metadata",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -101,11 +103,12 @@ class DBANFTService(
     ): String {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_symbol", canister = canister
+            methodName = "icrc7_symbol",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -121,11 +124,12 @@ class DBANFTService(
     ): String {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_name", canister = canister
+            methodName = "icrc7_name",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -141,11 +145,12 @@ class DBANFTService(
     ): String? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_description", canister = canister
+            methodName = "icrc7_description",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -161,11 +166,12 @@ class DBANFTService(
     ): String? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_logo", canister = canister
+            methodName = "icrc7_logo",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -181,11 +187,12 @@ class DBANFTService(
     ): BigInteger {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_total_supply", canister = canister
+            methodName = "icrc7_total_supply",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -201,11 +208,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_supply_cap", canister = canister
+            methodName = "icrc7_supply_cap",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -221,11 +229,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_max_query_batch_size", canister = canister
+            methodName = "icrc7_max_query_batch_size",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -241,11 +250,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_max_update_batch_size", canister = canister
+            methodName = "icrc7_max_update_batch_size",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -261,11 +271,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_default_take_value", canister = canister
+            methodName = "icrc7_default_take_value",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -281,11 +292,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_max_take_value", canister = canister
+            methodName = "icrc7_max_take_value",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -301,11 +313,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_max_memo_size", canister = canister
+            methodName = "icrc7_max_memo_size",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -321,11 +334,12 @@ class DBANFTService(
     ): Boolean? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_atomic_batch_transfers", canister = canister
+            methodName = "icrc7_atomic_batch_transfers",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -341,11 +355,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_tx_window", canister = canister
+            methodName = "icrc7_tx_window",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -361,11 +376,12 @@ class DBANFTService(
     ): BigInteger? {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_permitted_drift", canister = canister
+            methodName = "icrc7_permitted_drift",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = null,
+        val result = icpQuery.invoke(
+            values = null,
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -375,18 +391,25 @@ class DBANFTService(
     }
 
     suspend fun icrc7_token_metadata(
-        token_ids: kotlin.Array<BigInteger>,
+        token_ids: Array<BigInteger>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<UnnamedClass1> {
+    ): Array<UnnamedClass1> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_token_metadata", canister = canister
+            methodName = "icrc7_token_metadata",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = listOf(token_ids),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = token_ids,
+                    expectedClass = Array::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -396,28 +419,37 @@ class DBANFTService(
     }
 
     class UnnamedClass1(
-        val bigInteger: BigInteger, val unnamedClass2: UnnamedClass2?
+        val bigInteger: BigInteger,
+        val unnamedClass2: UnnamedClass2?
     ) {
 
         class UnnamedClass2(
-            val string: String, val value: Value
+            val string: String,
+            val value: Value
         )
 
     }
 
     suspend fun icrc7_owner_of(
-        token_ids: kotlin.Array<BigInteger>,
+        token_ids: Array<BigInteger>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<Account> {
+    ): Array<Account> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_owner_of", canister = canister
+            methodName = "icrc7_owner_of",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = listOf(token_ids),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = token_ids,
+                    expectedClass = Array::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -427,18 +459,25 @@ class DBANFTService(
     }
 
     suspend fun icrc7_balance_of(
-        account: kotlin.Array<Account>,
+        account: Array<Account>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<BigInteger> {
+    ): Array<BigInteger> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_balance_of", canister = canister
+            methodName = "icrc7_balance_of",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = listOf(account),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = account,
+                    expectedClass = Array::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -453,14 +492,26 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<BigInteger> {
+    ): Array<BigInteger> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_tokens", canister = canister
+            methodName = "icrc7_tokens",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = listOf(prev, take),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = prev,
+                    expectedClass = BigInteger::class,
+                    expectedClassNullable = true
+                ),
+                ValueToEncode(
+                    arg = take,
+                    expectedClass = BigInteger::class,
+                    expectedClassNullable = true
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -479,11 +530,28 @@ class DBANFTService(
     ): Array<BigInteger> {
 
         val icpQuery = ICPQuery(
-            methodName = "icrc7_tokens_of", canister = canister
+            methodName = "icrc7_tokens_of",
+            canister = canister
         )
 
-        val result = icpQuery(
-            args = listOf(account, prev, take),
+        val result = icpQuery.invoke(
+            values = listOf(
+                ValueToEncode(
+                    arg = account,
+                    expectedClass = Account::class,
+                    expectedClassNullable = false
+                ),
+                ValueToEncode(
+                    arg = prev,
+                    expectedClass = BigInteger::class,
+                    expectedClassNullable = true
+                ),
+                ValueToEncode(
+                    arg = take,
+                    expectedClass = BigInteger::class,
+                    expectedClassNullable = true
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
             certification = certification
@@ -503,7 +571,13 @@ class DBANFTService(
         )
 
         val result = icpQuery.callAndPoll(
-            args = listOf(transferArg),
+            values = listOf(
+                ValueToEncode(
+                    arg = transferArg,
+                    expectedClass = Array::class,
+                    expectedClassNullable = false
+                )
+            ),
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()

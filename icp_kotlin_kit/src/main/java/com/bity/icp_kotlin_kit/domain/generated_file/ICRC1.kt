@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -127,8 +128,8 @@ object ICRC1 {
                 methodName = "icrc1_name",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -148,8 +149,8 @@ object ICRC1 {
                 methodName = "icrc1_symbol",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -169,8 +170,8 @@ object ICRC1 {
                 methodName = "icrc1_decimals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -190,8 +191,8 @@ object ICRC1 {
                 methodName = "icrc1_fee",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -211,8 +212,8 @@ object ICRC1 {
                 methodName = "icrc1_metadata",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -232,8 +233,8 @@ object ICRC1 {
                 methodName = "icrc1_total_supply",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -253,8 +254,8 @@ object ICRC1 {
                 methodName = "icrc1_minting_account",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -275,8 +276,10 @@ object ICRC1 {
                 methodName = "icrc1_balance_of",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(account),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(account)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
@@ -296,8 +299,10 @@ object ICRC1 {
                 methodName = "icrc1_transfer",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(transferArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(transferArgs)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
@@ -317,8 +322,8 @@ object ICRC1 {
                 methodName = "icrc1_supported_standards",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification

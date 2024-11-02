@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.data.model.candid
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrincipal
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
@@ -16,22 +17,17 @@ import kotlin.reflect.jvm.jvmErasure
 
 internal object CandidEncoder {
 
-    operator fun invoke(
-        arg: Any?,
-        expectedClass: KClass<*>? = null,
-        expectedClassNullable: Boolean = true
-    ): CandidValue {
+    operator fun invoke(valueToEncode: ValueToEncode): CandidValue {
 
-        if(arg == null) {
-            requireNotNull(expectedClass)
+        if(valueToEncode.arg == null) {
             return CandidValue.Option(
                 option = CandidOption.None(
-                    type = candidPrimitiveTypeForClass(expectedClass)
+                    type = candidPrimitiveTypeForClass(valueToEncode.expectedClass)
                 )
             )
         }
 
-        val candidValue = when(arg) {
+        val candidValue = when(val arg = valueToEncode.arg) {
 
             // Unsigned value
             is UByte -> CandidValue.Natural8(arg)
@@ -58,7 +54,14 @@ internal object CandidEncoder {
                 if(firstArg != null) {
                     CandidValue.Vector(
                         CandidVector(
-                            values = arg.map { CandidEncoder(it) },
+                            values = arg.map { CandidEncoder(
+                                TODO()
+                                /* ValueToEncode(
+                                    arg = it,
+                                    expectedClass = ,
+                                    expectedClassNullable = false
+                                ) */
+                            ) },
                             containedType = candidPrimitiveTypeForClass(firstArg::class)
                         )
                     )
@@ -78,15 +81,17 @@ internal object CandidEncoder {
                     // Required if obfuscation is enabled
                     it.isAccessible = true
                     it.name to CandidEncoder(
-                        arg = it.getter.call(arg),
-                        expectedClass = it.returnType.jvmErasure,
-                        expectedClassNullable = it.returnType.isMarkedNullable
+                        ValueToEncode(
+                            arg = it.getter.call(arg),
+                            expectedClass = it.returnType.jvmErasure,
+                            expectedClassNullable = it.returnType.isMarkedNullable
+                        )
                     )
                 }.toMap()
                 CandidValue.Record(CandidRecord.init(dictionary))
             }
         }
-        return if(expectedClassNullable)
+        return if(valueToEncode.expectedClassNullable)
             CandidValue.Option(CandidOption.Some(candidValue))
         else
             candidValue

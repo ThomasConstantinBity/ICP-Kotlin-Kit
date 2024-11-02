@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -176,13 +178,13 @@ object DIP20 {
                 methodName = "logo",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -198,13 +200,13 @@ object DIP20 {
                 methodName = "name",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -220,13 +222,13 @@ object DIP20 {
                 methodName = "symbol",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -242,13 +244,13 @@ object DIP20 {
                 methodName = "decimals",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -264,13 +266,13 @@ object DIP20 {
                 methodName = "totalSupply",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -287,13 +289,15 @@ object DIP20 {
                 methodName = "balanceOf",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(who),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(who)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -311,13 +315,16 @@ object DIP20 {
                 methodName = "allowance",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(owner, spender),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(owner),
+                    ValueToEncode(spender)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -333,13 +340,13 @@ object DIP20 {
                 methodName = "getMetadata",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -355,13 +362,13 @@ object DIP20 {
                 methodName = "historySize",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(),
+            val result = icpQuery.invoke(
+                values = listOf(),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -379,13 +386,15 @@ object DIP20 {
                 methodName = "getTransaction",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(index),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(index)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -405,13 +414,16 @@ object DIP20 {
                 methodName = "getTransactions",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(start, limit),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(start),
+                    ValueToEncode(limit)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -433,13 +445,17 @@ object DIP20 {
                 methodName = "getUserTransactions",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(who, start, limit),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(who),
+                    ValueToEncode(start),
+                    ValueToEncode(limit)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -456,13 +472,15 @@ object DIP20 {
                 methodName = "getUserTransactionAmount",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(who),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(who)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -479,13 +497,16 @@ object DIP20 {
                 methodName = "transfer",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(to, value),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(to),
+                    ValueToEncode(value)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -505,13 +526,17 @@ object DIP20 {
                 methodName = "transferFrom",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(from, to, value),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(from),
+                    ValueToEncode(to),
+                    ValueToEncode(value)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -530,13 +555,16 @@ object DIP20 {
                 methodName = "approve",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(spender, value),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(spender),
+                    ValueToEncode(value)
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }

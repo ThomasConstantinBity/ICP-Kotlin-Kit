@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -167,13 +169,19 @@ object NNSICPIndexCanister {
                 methodName = "get_account_identifier_balance",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(string),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = string,
+                        expectedClass = String::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_account_identifier_transactions (
@@ -186,13 +194,19 @@ object NNSICPIndexCanister {
                 methodName = "get_account_identifier_transactions",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getAccountIdentifierTransactionsArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getAccountIdentifierTransactionsArgs,
+                        expectedClass = GetAccountIdentifierTransactionsArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_account_transactions (
@@ -205,13 +219,19 @@ object NNSICPIndexCanister {
                 methodName = "get_account_transactions",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getAccountTransactionsArgs),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getAccountTransactionsArgs,
+                        expectedClass = GetAccountTransactionsArgs::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun get_blocks (
@@ -224,13 +244,19 @@ object NNSICPIndexCanister {
                 methodName = "get_blocks",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(getBlocksRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = getBlocksRequest,
+                        expectedClass = GetBlocksRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun http_request (
@@ -243,13 +269,19 @@ object NNSICPIndexCanister {
                 methodName = "http_request",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(httpRequest),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = httpRequest,
+                        expectedClass = HttpRequest::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun ledger_id (
@@ -261,13 +293,13 @@ object NNSICPIndexCanister {
                 methodName = "ledger_id",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun status (
@@ -279,13 +311,13 @@ object NNSICPIndexCanister {
                 methodName = "status",
                 canister = canister
             )
-            val result = icpQuery(
-                args = null,
+            val result = icpQuery.invoke(
+                values = null,
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
 
         suspend fun icrc1_balance_of (
@@ -298,13 +330,19 @@ object NNSICPIndexCanister {
                 methodName = "icrc1_balance_of",
                 canister = canister
             )
-            val result = icpQuery(
-                args = listOf(account),
+            val result = icpQuery.invoke(
+                values = listOf(
+                    ValueToEncode(
+                        arg = account,
+                        expectedClass = Account::class,
+                        expectedClassNullable = false
+                    )
+                ),
                 sender = sender,
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result)
         }
     }
 }
