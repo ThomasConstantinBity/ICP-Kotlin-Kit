@@ -8,6 +8,7 @@ import com.bity.icp_kotlin_kit.data.repository.LedgerCanisterRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.NFTRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.SNSCachedServiceImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.TokensCachedServiceImpl
 import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
@@ -21,6 +22,7 @@ import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.domain.repository.SNSCachedService
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
+import com.bity.icp_kotlin_kit.domain.repository.TokensCachedService
 import com.bity.icp_kotlin_kit.util.jackson.CborConverterFactory
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -66,7 +68,7 @@ internal val nftRepository: NFTRepository by lazy {
 
 internal val tokenRepository: TokenRepository by lazy {
     TokenRepositoryImpl(
-        tokensService = tokenService,
+        tokensCachedService = tokensCachedService,
         actorFactory = tokenActorFactory
     )
 }
@@ -84,9 +86,15 @@ private val dabNFTService: DABNFT.DABNFTService by lazy {
         canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
     )
 }
-private val tokenService: TokensService by lazy {
+private val tokensService: TokensService by lazy {
     TokensService(
         canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
+    )
+}
+private val tokensCachedService: TokensCachedService by lazy {
+    TokensCachedServiceImpl(
+        tokensService = tokensService,
+        actorFactory = tokenActorFactory
     )
 }
 private val snsCachedService: SNSCachedService by lazy {
