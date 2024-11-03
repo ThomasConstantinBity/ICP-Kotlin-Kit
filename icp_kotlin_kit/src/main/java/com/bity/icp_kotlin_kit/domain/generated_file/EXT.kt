@@ -292,7 +292,7 @@ sealed class Result_1 {
     ): Result_1()
 
     class ok(
-        val values: kotlin.Array<_ArrayClass>
+        val values: Array<_ArrayClass>
     ): Result_1() {
 
         class _ArrayClass(

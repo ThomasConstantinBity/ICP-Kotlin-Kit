@@ -13,8 +13,10 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.KType
+import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
+import kotlin.reflect.jvm.jvmErasure
 
 object CandidDecoder {
 
@@ -285,7 +287,22 @@ object CandidDecoder {
                     )
                 )
             }
-            is CandidValue.Vector -> TODO()
+            is CandidValue.Vector -> {
+                val candidValue = candidVariant.value
+                require(candidValue is CandidValue.Vector)
+                val componentType = targetClass
+                    .memberProperties.first()
+                    .returnType
+                    .arguments.first()
+                    .type
+                    ?.jvmErasure
+                requireNotNull(componentType)
+                val array = buildArray(
+                    candidVector = candidValue.vector,
+                    componentType = componentType
+                )
+                targetClass.primaryConstructor?.call(array)!!
+            }
         }
     }
 

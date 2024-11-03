@@ -407,6 +407,7 @@ class DBANFTService(
                 ValueToEncode(
                     arg = token_ids,
                     expectedClass = Array::class,
+                    arrayType = BigInteger::class,
                     expectedClassNullable = false
                 )
             ),

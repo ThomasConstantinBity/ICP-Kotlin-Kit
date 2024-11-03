@@ -50,8 +50,9 @@ internal object CandidEncoder {
             is ByteArray -> CandidValue.Blob(arg)
 
             is Array<*> -> {
-                val firstArg = arg.first()
-                if(firstArg != null) {
+                if(arg.isNotEmpty()) {
+                    val firstArg = arg.first()
+                    requireNotNull(firstArg)
                     CandidValue.Vector(
                         CandidVector(
                             values = arg.map { CandidEncoder(
@@ -65,7 +66,16 @@ internal object CandidEncoder {
                             containedType = candidPrimitiveTypeForClass(firstArg::class)
                         )
                     )
-                } else TODO()
+                } else {
+                    val arrayType = valueToEncode.arrayType
+                    requireNotNull(arrayType)
+                    CandidValue.Vector(
+                        CandidVector(
+                            values = emptyList(),
+                            containedType = candidPrimitiveTypeForClass(arrayType)
+                        )
+                    )
+                }
             }
 
             is ICPPrincipalApiModel -> CandidValue.Principal(

@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
+import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.factory.NFTActorFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
@@ -22,10 +23,14 @@ internal class NFTRepositoryImpl(
         return@coroutineScope nftCachedService.getAllNFTsCollections()
             .map {
                 async {
-                    getHoldingForNFTCollection(
-                        icpPrincipal = icpPrincipal,
-                        collection = it
-                    )
+                    try {
+                        getHoldingForNFTCollection(
+                            icpPrincipal = icpPrincipal,
+                            collection = it
+                        )
+                    } catch (_: RemoteClientError) {
+                        emptyList<ICPNFTDetails>()
+                    }
                 }
             }
             .awaitAll()

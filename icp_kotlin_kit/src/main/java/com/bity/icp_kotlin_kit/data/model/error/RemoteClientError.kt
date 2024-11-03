@@ -4,10 +4,10 @@ sealed class RemoteClientError(errorMessage: String? = null): Error(errorMessage
     class HttpError(errorCode: Int, errorMessage: String?): RemoteClientError("$errorCode - ${errorMessage ?: ""}")
     class MissingBody: RemoteClientError()
     class CanisterError(
-        val rejectCode: String?,
-        val rejectMessage: String?,
-        val errorCode: String?,
-        val errorBody: String?
+        rejectCode: String?,
+        rejectMessage: String?,
+        errorCode: String?,
+        errorBody: String?
     ): RemoteClientError(
         """
             Canister error: 
@@ -15,8 +15,8 @@ sealed class RemoteClientError(errorMessage: String? = null): Error(errorMessage
             errorCode: ${errorCode ?: ""}, errorBody: ${errorBody ?: ""}
         """.trimIndent()
     )
-    @OptIn(ExperimentalStdlibApi::class)
-    class ParsingError(arg: ByteArray): RemoteClientError("Unable to parse arg: ${arg.toHexString()}")
-
-    class RosettaParsingError(errorMessage: String? = null): RemoteClientError(errorMessage)
+    class InvalidToken(
+        tokenAddress: String
+    ): RemoteClientError("Invalid token; $tokenAddress")
+    class GetUserNFTHoldingsGenericError(message: String): RemoteClientError(message)
 }
