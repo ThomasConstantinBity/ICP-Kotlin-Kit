@@ -134,7 +134,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -155,7 +155,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -176,7 +176,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -197,7 +197,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -218,7 +218,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -239,7 +239,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -260,7 +260,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return CandidDecoder.decode(result.first())
         }
 
         /**
@@ -284,7 +284,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -307,7 +307,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -328,7 +328,7 @@ object ICRC1 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

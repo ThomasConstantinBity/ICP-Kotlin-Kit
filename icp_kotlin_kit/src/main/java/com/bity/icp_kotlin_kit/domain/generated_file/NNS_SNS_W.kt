@@ -374,7 +374,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun deploy_new_sns (
@@ -397,7 +397,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_allowed_principals (
@@ -422,7 +422,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class UnnamedClass0()
@@ -449,7 +449,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_latest_sns_version_pretty (
@@ -467,7 +467,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class UnnamedClass1(
@@ -497,7 +497,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_proposal_id_that_added_wasm (
@@ -522,7 +522,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_sns_subnet_ids (
@@ -547,7 +547,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class UnnamedClass2()
@@ -574,7 +574,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_wasm_metadata (
@@ -599,7 +599,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun insert_upgrade_path_entries (
@@ -622,7 +622,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun list_deployed_snses (
@@ -646,7 +646,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class EmptyClass
@@ -673,7 +673,7 @@ object NNS_SNS_W {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun update_allowed_principals (
@@ -696,7 +696,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun update_sns_subnet_list (
@@ -719,7 +719,7 @@ object NNS_SNS_W {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

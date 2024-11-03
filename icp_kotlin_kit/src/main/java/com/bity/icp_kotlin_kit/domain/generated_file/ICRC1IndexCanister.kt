@@ -18,7 +18,7 @@ typealias ICRC1IndexCanisterTokens = BigInteger
 typealias ICRC1IndexCanisterMap = Array<ICRC1IndexCanister>
 typealias Block = ICRC1IndexCanister.Value
 typealias BlockIndex = BigInteger
-typealias SubAccount = ByteArray
+private typealias SubAccount = ByteArray
 
 object ICRC1IndexCanister {
 
@@ -222,7 +222,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_blocks (
@@ -243,7 +243,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_fee_collectors_ranges (
@@ -261,7 +261,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc1_balance_of (
@@ -282,7 +282,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun ledger_id (
@@ -300,7 +300,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun list_subaccounts (
@@ -321,7 +321,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun status (
@@ -339,7 +339,7 @@ object ICRC1IndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

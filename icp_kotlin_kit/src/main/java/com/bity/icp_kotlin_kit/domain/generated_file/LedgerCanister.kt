@@ -164,7 +164,7 @@ object LedgerCanister {
                     sender = sender,
                     pollingValues = pollingValues
                 ).getOrThrow()
-                return CandidDecoder.decodeNotNull(result)
+                return CandidDecoder.decodeNotNull(result.first())
             }
         }
     }
@@ -206,7 +206,7 @@ object LedgerCanister {
                     sender = sender,
                     pollingValues = pollingValues
                 ).getOrThrow()
-                return CandidDecoder.decodeNotNull(result)
+                return CandidDecoder.decodeNotNull(result.first())
             }
         }
     }
@@ -839,7 +839,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -867,7 +867,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -891,7 +891,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -912,7 +912,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -933,7 +933,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -954,7 +954,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -978,7 +978,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -999,7 +999,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1020,7 +1020,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1041,7 +1041,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class UnnamedClass0(
@@ -1067,7 +1067,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return CandidDecoder.decode(result.first())
         }
 
         /**
@@ -1088,7 +1088,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1109,7 +1109,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1130,7 +1130,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1151,7 +1151,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1174,7 +1174,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1197,7 +1197,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1225,7 +1225,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1252,7 +1252,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1279,7 +1279,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1300,7 +1300,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1328,7 +1328,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1356,7 +1356,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1383,7 +1383,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1404,7 +1404,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1431,7 +1431,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -1459,7 +1459,7 @@ object LedgerCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         class UnnamedClass1()

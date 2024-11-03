@@ -184,7 +184,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -206,7 +206,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -228,7 +228,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -250,7 +250,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -272,7 +272,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -297,7 +297,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -324,7 +324,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -346,7 +346,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -368,7 +368,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -394,7 +394,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -423,7 +423,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -455,7 +455,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -480,7 +480,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -506,7 +506,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -536,7 +536,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         /**
@@ -564,7 +564,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

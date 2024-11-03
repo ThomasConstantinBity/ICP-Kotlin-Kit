@@ -125,7 +125,7 @@ object DABNFT {
                 certification = certification
             ).getOrThrow()
 
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get                    (
@@ -149,7 +149,7 @@ object DABNFT {
                 certification = certification
             ).getOrThrow()
 
-            return CandidDecoder.decode(result)
+            return CandidDecoder.decode(result.first())
         }
 
         suspend fun add                    (
@@ -177,7 +177,7 @@ object DABNFT {
                 pollingValues = pollingValues,
             ).getOrThrow()
 
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun remove                    (
@@ -204,7 +204,7 @@ object DABNFT {
                 pollingValues = pollingValues,
             ).getOrThrow()
 
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         // Canister methods
@@ -226,7 +226,7 @@ object DABNFT {
                 certification = certification
             ).getOrThrow()
 
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun add_admin                    (
@@ -248,7 +248,7 @@ object DABNFT {
                 pollingValues = pollingValues,
             ).getOrThrow()
 
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

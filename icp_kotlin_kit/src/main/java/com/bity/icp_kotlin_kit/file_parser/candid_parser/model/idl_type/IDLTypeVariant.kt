@@ -19,9 +19,9 @@ internal data class IDLTypeVariant(
     companion object : ParserNodeDeclaration<IDLTypeVariant> by reflective()
 
     override fun getKotlinClassDefinition(): KotlinClassDefinition {
-        requireNotNull(variantDeclaration)
+        require(variantDeclaration != null || id != null)
         val kotlinClass = KotlinClassDefinition.SealedClass(
-            className = variantDeclaration
+            className = variantDeclaration ?: id!!.uppercase()
         )
         val innerClasses = types.map {
             val innerClass = it.getKotlinClassDefinition()

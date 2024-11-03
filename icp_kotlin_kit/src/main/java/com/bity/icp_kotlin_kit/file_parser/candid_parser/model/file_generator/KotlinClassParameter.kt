@@ -24,4 +24,16 @@ internal data class KotlinClassParameter(
     }
 
     fun functionInputArgument(): String = "$id: $typeDeclaration"
+
+    fun valueToEncodeDefinition(): String {
+        return if(isOptional)
+            """
+                ValueToEncode(
+                    arg = $id,
+                    expectedClass = ${typeVariable}::class,
+                    expectedClassNullable = true
+                )
+            """.trimIndent() else
+            "ValueToEncode($id)"
+    }
 }

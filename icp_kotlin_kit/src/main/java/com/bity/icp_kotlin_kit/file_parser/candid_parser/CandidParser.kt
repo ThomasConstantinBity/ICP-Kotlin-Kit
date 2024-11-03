@@ -73,7 +73,7 @@ internal object CandidParser {
 
             "func" isToken Token.Func
             "vec" isToken Token.Vec
-            "record" isToken Token.Record
+            matches("""\brecord\b""") isToken Token.Record
             "variant" isToken Token.Variant
 
             "bool" isToken Token.Boolean
@@ -95,6 +95,7 @@ internal object CandidParser {
 
             matches("""\bprincipal\b""") isToken Token.Principal
             matches("""\bquery\b(?!_)""") isToken Token.Query
+            matches("""\boneway\b(?!_)""") isToken Token.Oneway
             matches("""(")?[a-zA-Z_][a-zA-Z0-9_]*(")?""") isToken Token.Id
 
             matches("[ \t\r\n]+").ignore
@@ -794,8 +795,13 @@ internal object CandidParser {
             expect(Token.RParen)
 
             optional {
-                expect(Token.Query)
-                emit(FunType.Query) storeIn IDLFun::funType
+                either {
+                    expect(Token.Query)
+                    emit(FunType.Query) storeIn IDLFun::funType
+                } or {
+                    expect(Token.Oneway)
+                    emit(FunType.OneWay) storeIn IDLFun::funType
+                }
             }
             expect(Token.Semi)
         }

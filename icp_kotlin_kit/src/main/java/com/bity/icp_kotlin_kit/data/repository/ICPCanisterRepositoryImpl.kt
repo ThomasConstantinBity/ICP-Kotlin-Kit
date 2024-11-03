@@ -27,7 +27,7 @@ internal class ICPCanisterRepositoryImpl(
 
     override suspend fun query(
         method: ICPMethod
-    ): Result<CandidValue> {
+    ): Result<List<CandidValue>> {
         val request = ICPRequest.init(
             requestType = ICPRequestApiModel.Query(
                 icpMethod = method.toDataModel()
@@ -58,8 +58,7 @@ internal class ICPCanisterRepositoryImpl(
                     )
                 }
                 ?: return Result.failure(RemoteClientError.MissingBody())
-            val candidValue = CandidDeserializer.decode(arg).firstOrNull()
-                ?: return Result.failure(RemoteClientError.ParsingError(arg))
+            val candidValue = CandidDeserializer.decode(arg)
             return Result.success(candidValue)
         }
     }
@@ -94,7 +93,7 @@ internal class ICPCanisterRepositoryImpl(
         sender: ICPSigningPrincipal?,
         durationSeconds: Long,
         waitDurationSeconds: Long
-    ): Result<CandidValue> {
+    ): Result<List<CandidValue>> {
         val endTime = Date(System.currentTimeMillis() + durationSeconds * 1000).time
 
         val paths: List<ICPStateTreePathApiModel> = listOf(
@@ -138,8 +137,7 @@ internal class ICPCanisterRepositoryImpl(
                     StatusCodeApiModel.Replied -> {
                         val replyData = rawValueForPath(status, "reply")
                             ?: return Result.failure(PollingError.ParsingError("Unable to read replyData"))
-                        val result = CandidDeserializer.decode(replyData).firstOrNull()
-                            ?: return Result.failure(PollingError.ParsingError("Unable to deserialize replyData"))
+                        val result = CandidDeserializer.decode(replyData)
                         return Result.success(result)
                     }
                     StatusCodeApiModel.Rejected -> {

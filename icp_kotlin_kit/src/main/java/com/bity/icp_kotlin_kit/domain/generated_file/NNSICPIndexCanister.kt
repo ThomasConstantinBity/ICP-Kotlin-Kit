@@ -181,7 +181,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_account_identifier_transactions (
@@ -206,7 +206,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_account_transactions (
@@ -231,7 +231,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun get_blocks (
@@ -256,7 +256,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun http_request (
@@ -281,7 +281,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun ledger_id (
@@ -299,7 +299,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun status (
@@ -317,7 +317,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc1_balance_of (
@@ -342,7 +342,7 @@ object NNSICPIndexCanister {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

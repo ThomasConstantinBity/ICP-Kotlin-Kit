@@ -140,7 +140,7 @@ class TokensService(
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     /**
@@ -168,7 +168,7 @@ class TokensService(
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     /**
@@ -201,7 +201,7 @@ class TokensService(
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     /**
@@ -234,7 +234,7 @@ class TokensService(
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
 
@@ -258,7 +258,7 @@ class TokensService(
             pollingValues = pollingValues,
             certification = certification
         ).getOrThrow()
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     /**
@@ -285,6 +285,6 @@ class TokensService(
             pollingValues = pollingValues,
             certification = ICPRequestCertification.Certified
         ).getOrThrow()
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 }

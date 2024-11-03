@@ -212,7 +212,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return CandidDecoder.decode(result.first())
         }
 
         suspend fun icrc37_max_revoke_approvals (
@@ -230,7 +230,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decode(result)
+            return CandidDecoder.decode(result.first())
         }
 
         suspend fun icrc37_approve_tokens (
@@ -253,7 +253,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_approve_collection (
@@ -276,7 +276,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_revoke_token_approvals (
@@ -299,7 +299,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_revoke_collection_approvals (
@@ -322,7 +322,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_is_approved (
@@ -347,7 +347,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_get_token_approvals (
@@ -384,7 +384,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_get_collection_approvals (
@@ -421,7 +421,7 @@ object ICRC37 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
 
         suspend fun icrc37_transfer_from (
@@ -444,7 +444,7 @@ object ICRC37 {
                 sender = sender,
                 pollingValues = pollingValues,
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return CandidDecoder.decodeNotNull(result.first())
         }
     }
 }

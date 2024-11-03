@@ -17,12 +17,12 @@ open class ICPQuery(
 ) {
     private val canisterRepository: ICPCanisterRepository = icpCanisterRepository
 
-    suspend fun invoke(
+    suspend operator fun invoke(
         values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues,
         certification: ICPRequestCertification
-    ): Result<CandidValue> =
+    ): Result<List<CandidValue>> =
         when(certification) {
             ICPRequestCertification.Uncertified -> query(values)
             ICPRequestCertification.Certified -> callAndPoll(
@@ -34,7 +34,7 @@ open class ICPQuery(
 
     private suspend fun query(
         values: List<ValueToEncode>?,
-    ): Result<CandidValue> {
+    ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,
@@ -47,7 +47,7 @@ open class ICPQuery(
         values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal?,
         pollingValues: PollingValues
-    ): Result<CandidValue> {
+    ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,

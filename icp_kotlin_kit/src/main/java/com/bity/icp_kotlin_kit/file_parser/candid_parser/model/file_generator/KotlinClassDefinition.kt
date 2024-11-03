@@ -21,7 +21,7 @@ internal sealed class KotlinClassDefinition(
         val typeClassName: String?
     ): KotlinClassDefinition(typeAliasId) {
         override fun kotlinDefinition(): String =
-            "typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
+            "private typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
     }
 
     class Function(
@@ -62,7 +62,7 @@ internal sealed class KotlinClassDefinition(
             val callingArgs = if(inputArgs.isNotEmpty()) {
                 "listOf(${inputArgs.joinToString(", ") { it.id }})"
             } else "null"
-
+TODO()
             return when(funType) {
                 Query -> """
                     suspend operator fun invoke($invokeFunArgs
@@ -79,6 +79,7 @@ internal sealed class KotlinClassDefinition(
                         return CandidDecoder.decodeNotNull(result)
                     }
                 """.trimIndent()
+                OneWay,
                 null -> """
                     suspend operator fun invoke($invokeFunArgs
 			            sender: ICPSigningPrincipal? = null,
@@ -126,8 +127,6 @@ internal sealed class KotlinClassDefinition(
         var params: MutableList<KotlinClassParameter> = mutableListOf()
 
         override fun kotlinDefinition(): String {
-            if(className == "TransferArgs")
-                println()
             val constructor = if(params.isNotEmpty()) {
                 params.joinToString(
                     prefix = "(\n",
@@ -143,7 +142,7 @@ internal sealed class KotlinClassDefinition(
                     postfix = "\n}\n"
                 ) { it.kotlinDefinition() }
             } else ""
-            return "class ${className}${constructor}${inheritedClassDefinition}$innerClassesDefinition"
+            return "class ${className.replace("\"", "")}${constructor}${inheritedClassDefinition}$innerClassesDefinition"
         }
     }
 
@@ -160,7 +159,7 @@ internal sealed class KotlinClassDefinition(
             val returnParam = when (outputArgs.size) {
                 0 -> ""
                 1 -> ": ${outputArgs.first().typeDeclaration}"
-                else -> TODO()
+                else -> "TODO()"
             }
             val kotlinComment = KotlinCommentGenerator.getNullableKotlinComment(comment) ?: ""
             return """
@@ -198,6 +197,7 @@ internal sealed class KotlinClassDefinition(
 			        pollingValues: PollingValues = PollingValues()
                 )
                 """.trimIndent()
+                OneWay,
                 null -> """
                     $input
 			        sender: ICPSigningPrincipal? = null,
@@ -209,22 +209,23 @@ internal sealed class KotlinClassDefinition(
 
         private fun callQueryFun(): String {
             val argsList = if(inputArgs.isNotEmpty()) {
-                "listOf(${inputArgs.joinToString(", ") { it.id }})"
+                "listOf(${inputArgs.joinToString(", ") { it.valueToEncodeDefinition() }})"
             } else "null"
             return when(funType) {
                 Query ->
                     """
                         val result = icpQuery(
-                            args = $argsList,
+                            values = $argsList,
                             sender = sender,
                             pollingValues = pollingValues,
                             certification = certification
                         ).getOrThrow()
                     """.trimIndent()
+                OneWay,
                 null ->
                     """
                         val result = icpQuery.callAndPoll(
-                            args = $argsList,
+                            values = $argsList,
                             sender = sender,
                             pollingValues = pollingValues,
                         ).getOrThrow()
@@ -232,13 +233,13 @@ internal sealed class KotlinClassDefinition(
             }
         }
 
-        private fun returnStatement(): String {
+        private fun returnStatement(): String {TODO()
             return when (outputArgs.size) {
                 0 -> ""
                 1 -> if (outputArgs.first().isOptional)
                     "return CandidDecoder.decode(result)" else
                         "return CandidDecoder.decodeNotNull(result)"
-                else -> TODO()
+                else -> "TODO()"
             }
         }
     }

@@ -18,12 +18,25 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeT
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 internal class CandidFileParserTest {
+
+    @Test
+    fun `parse mixed`() {
+        val input = """
+            type EXTTokensResponse = record {
+              nat32;
+              opt record { locked : opt int; seller : principal; price : nat64 };
+              opt vec nat8;
+            };
+        """.trimIndent()
+        val fileDeclaration = CandidParser.parseFile(input)
+    }
 
     @MethodSource("func")
     @ParameterizedTest

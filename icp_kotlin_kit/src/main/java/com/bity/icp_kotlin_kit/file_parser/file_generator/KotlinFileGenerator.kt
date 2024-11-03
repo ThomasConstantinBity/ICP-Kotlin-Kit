@@ -21,6 +21,7 @@ class KotlinFileGenerator(
         import java.math.BigInteger
         import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
         import com.bity.icp_kotlin_kit.data.repository.ICPQuery
+        import com.bity.icp_kotlin_kit.data.model.ValueToEncode
         import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
         import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
         import com.bity.icp_kotlin_kit.domain.request.PollingValues

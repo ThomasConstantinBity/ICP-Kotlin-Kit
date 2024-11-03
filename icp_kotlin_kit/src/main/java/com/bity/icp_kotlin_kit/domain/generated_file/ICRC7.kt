@@ -88,7 +88,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     class UnnamedClass0(
@@ -114,7 +114,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_name(
@@ -135,7 +135,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_description(
@@ -156,7 +156,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_logo(
@@ -177,7 +177,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_total_supply(
@@ -198,7 +198,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_supply_cap(
@@ -219,7 +219,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_max_query_batch_size(
@@ -240,7 +240,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_max_update_batch_size(
@@ -261,7 +261,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_default_take_value(
@@ -282,7 +282,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_max_take_value(
@@ -303,7 +303,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_max_memo_size(
@@ -324,7 +324,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_atomic_batch_transfers(
@@ -345,7 +345,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_tx_window(
@@ -366,7 +366,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_permitted_drift(
@@ -387,7 +387,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decode(result)
+        return CandidDecoder.decode(result.first())
     }
 
     suspend fun icrc7_token_metadata(
@@ -415,7 +415,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     class UnnamedClass1(
@@ -455,7 +455,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_balance_of(
@@ -483,7 +483,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_tokens(
@@ -517,7 +517,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_tokens_of(
@@ -557,7 +557,7 @@ class DBANFTService(
             certification = certification
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 
     suspend fun icrc7_transfer(
@@ -582,6 +582,6 @@ class DBANFTService(
             pollingValues = pollingValues,
         ).getOrThrow()
 
-        return CandidDecoder.decodeNotNull(result)
+        return CandidDecoder.decodeNotNull(result.first())
     }
 }
