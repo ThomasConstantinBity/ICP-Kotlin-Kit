@@ -12,6 +12,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeI
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt16
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt32
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt8
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat16
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat32
@@ -110,6 +111,7 @@ internal object IDLTypeHelper {
             }
 
             is IDLTypeInt -> "BigInteger"
+            is IDLTypeInt8 -> "Byte"
             is IDLTypeInt16 -> "Short"
             is IDLTypeInt32 -> "Int"
             is IDLTypeInt64 -> "Long"

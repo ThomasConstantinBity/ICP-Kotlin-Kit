@@ -27,6 +27,7 @@ internal enum class Token: TokenType {
     Type,
     Import,
     Opt,
+    DoubleOpt,
     Principal,
     Id,
     Text,

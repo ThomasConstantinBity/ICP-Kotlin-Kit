@@ -8,11 +8,12 @@ class KotlinFileGeneratorTest {
 
     @Test
     fun `parse file`() {
-        val filePath = "src/test/resources/candid_file/EXT.did"
+        val fileName = "OrigynNFT"
+        val filePath = "src/test/resources/candid_file/$fileName.did"
         // val outputFilePath = "src/test/resources/generated_candid_file/EXT.kt"
         println(
             KotlinFileGenerator(
-                fileName = "EXT",
+                fileName = fileName,
                 packageName = "com.bity.icp_kotlin_kit.domain.generated_file",
                 didFileContent = File(filePath).readText()
             ).generateKotlinFile()
