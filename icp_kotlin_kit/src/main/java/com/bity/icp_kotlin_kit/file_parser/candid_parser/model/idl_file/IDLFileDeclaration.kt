@@ -9,9 +9,9 @@ import guru.zoroark.tegral.niwen.parser.reflective
 // TODO, add support for service constructor
 internal data class IDLFileDeclaration(
     val comment: IDLComment? = null,
-    val types: List<IDLType> = emptyList(),
+    val types: List<IDLType> = mutableListOf(),
     val serviceConstructors: List<IDLType> = emptyList(),
-    val services: List<IDLFun> = emptyList()
+    val services: List<IDLFun> = mutableListOf()
 ) {
     companion object : ParserNodeDeclaration<IDLFileDeclaration> by reflective()
 }

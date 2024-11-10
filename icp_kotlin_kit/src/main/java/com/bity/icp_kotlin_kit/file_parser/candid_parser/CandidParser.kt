@@ -7,6 +7,18 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileD
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_service.IDLServiceType
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidType
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeCustom
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeDefinition
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeFloat
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeInt64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeNat64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeNat8
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypePrincipal
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeRecord
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeText
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVariant
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVec
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLFun
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLRecord
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
@@ -31,8 +43,11 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeT
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.util.ext_fun.trimCommentLine
+import guru.zoroark.tegral.niwen.lexer.Lexer
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
+import guru.zoroark.tegral.niwen.lexer.matchers.repeated
 import guru.zoroark.tegral.niwen.lexer.niwenLexer
+import guru.zoroark.tegral.niwen.parser.NiwenParser
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
 import guru.zoroark.tegral.niwen.parser.dsl.expect
@@ -75,15 +90,16 @@ internal object CandidParser {
             matches("""\btype\b""") isToken  Token.Type
             matches("""\bservice\b""") isToken Token.Service
 
-            matches("""\bfunc\b""") isToken Token.Func
             matches("""\bvec\b""") isToken Token.Vec
+            matches("""\bfunc\b""") isToken Token.Func
             matches("""\brecord\b""") isToken Token.Record
             matches("""\bvariant\b""") isToken Token.Variant
 
+            matches("""\bnull\b""") isToken Token.Null
             matches("""\bbool\b""") isToken Token.Boolean
             matches("""\btext\b""") isToken Token.Text
-            matches("""\bnull\b""") isToken Token.Null
             matches("""\bblob\b""") isToken Token.Blob
+
             matches("""\bint\b""") isToken Token.Int
             matches("""\bint8\b""") isToken Token.Int8
             matches("""\bint16\b""") isToken Token.Int16
@@ -108,124 +124,228 @@ internal object CandidParser {
         }
     }
 
-    private val fileParser = niwenParser {
-        IDLFileDeclaration root {
+    private val typeParser = niwenParser {
 
-            // TODO, need to add imports
+        CandidTypeDefinition root {
+            expect(Token.Type)
+            expect(Token.Id) storeIn CandidTypeDefinition::id
+            expect(Token.Equals)
+            expect(CandidType) storeIn CandidTypeDefinition::candidType
+        }
 
-            optional {
-                expect(IDLComment) storeIn IDLFileDeclaration::comment
+        CandidType {
+            either {
+                expect(CandidTypeVariant) storeIn self()
+            } or {
+                expect(CandidTypeRecord) storeIn self()
+            } or {
+                expect(CandidTypeCustom) storeIn self()
+            } or {
+                expect(CandidTypeText) storeIn self()
+            } or {
+                expect(CandidTypePrincipal) storeIn self()
+            } or {
+                expect(CandidTypeInt64) storeIn self()
+            } or {
+                expect(CandidTypeNat8) storeIn self()
+            } or {
+                expect(CandidTypeNat64) storeIn self()
+            } or {
+                expect(CandidTypeFloat) storeIn self()
+            } or {
+                expect(CandidTypeVec) storeIn self()
             }
+        }
 
-            optional {
-                repeated<IDLFileDeclaration, IDLType>(min = 1) {
-                    expect(IDLType) storeIn item
-                } storeIn IDLFileDeclaration::types
+        CandidTypeCustom {
+            // TODO, add optional type
+            either {
+                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
             }
-
-            optional {
-                expect(Token.Service)
-                expect(Token.Colon)
+            lookahead {
                 either {
-                    optional {
-                        expect(Token.LParen)
-                        repeated<IDLFileDeclaration, IDLType> {
-                            expect(IDLType) storeIn item
-                        } storeIn IDLFileDeclaration::serviceConstructors
-                        expect(Token.RParen)
-                        expect(Token.Arrow)
-                    }
-                    expect(Token.LBrace)
-                    repeated<IDLFileDeclaration, IDLFun>(min = 1) {
-                        expect(IDLFun) storeIn item
-                    } storeIn IDLFileDeclaration::services
-                    expect(Token.RBrace)
+                    expect(Token.Semi)
                 } or {
-                    expect(Token.Id)
+                    expect(Token.RBrace)
                 }
             }
-            optional{
+        }
+
+        CandidTypeText {
+            either {
+                expect(Token.Id) storeIn CandidTypeText::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                    }
+                }
+                expect(Token.Text)
+            } or {
+                expect(Token.Text)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypePrincipal {
+            either {
+                expect(Token.Id) storeIn CandidTypePrincipal::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
+                    }
+                }
+                expect(Token.Principal)
+            }
+        }
+
+        CandidTypeVariant {
+            expect(Token.Variant)
+            expect(Token.LBrace)
+            repeated(min = 1) {
+                expect(CandidType) storeIn item
+                expect(Token.Semi)
+            } storeIn CandidTypeVariant::candidTypes
+            expect(Token.RBrace)
+            expect(Token.Semi)
+        }
+
+        CandidTypeRecord {
+            expect(Token.Record)
+            expect(Token.LBrace)
+            repeated(min = 1) {
+                expect(CandidType) storeIn item
+                optional {
+                    expect(Token.Semi)
+                }
+            } storeIn CandidTypeRecord::candidTypes
+            expect(Token.RBrace)
+            optional {
                 expect(Token.Semi)
             }
         }
 
-        IDLService {
-            optional {
-                expect(IDLComment) storeIn IDLService::comment
+        CandidTypeInt64 {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt64::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    }
+                }
+                expect(Token.Int64)
             }
-            expect(Token.Id) storeIn IDLService::id
-            expect(Token.Colon)
-            expect(Token.ServiceArgs) storeIn IDLService::inputParamsDeclaration
-            expect(Token.Arrow)
-            expect(Token.ServiceArgs) storeIn IDLService::outputParamsDeclaration
-            optional {
-                expect(Token.Query)
-                emit(IDLServiceType.Query) storeIn IDLService::serviceType
-            }
-            expect(Token.Semi)
         }
 
-        /**
-         * Comment
-         */
-        IDLComment {
-            // TODO, add different comment support
+        CandidTypeNat8 {
             either {
-                expect(IDLSingleLineComment) storeIn self()
+                expect(Token.Id) storeIn CandidTypeNat8::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    }
+                }
+                expect(Token.Nat8)
             }
-        }
-        IDLSingleLineComment {
-            repeated(min = 1) {
-                expect(Token.SingleLineComment) transform { it.trimCommentLine() } storeIn item
-            } storeIn IDLSingleLineComment::commentLines
         }
 
-        IDLType {
+        CandidTypeNat64 {
             either {
-                expect(IDLRecord) storeIn self()
+                expect(Token.Id) storeIn CandidTypeNat64::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    }
+                }
+                expect(Token.Nat64)
             } or {
-                expect(IDLTypeNat64) storeIn self()
-            } or {
-                expect(IDLTypeBlob) storeIn self()
-            } or {
-                expect(IDLTypeCustom) storeIn self()
-            } or {
-                expect(IDLTypeVariant) storeIn self()
-            } or {
-                expect(IDLTypeVec) storeIn self()
-            } or {
-                expect(IDLTypeNull) storeIn self()
-            } or {
-                expect(IDLFun) storeIn self()
-            } or {
-                expect(IDLTypePrincipal) storeIn self()
-            } or {
-                expect(IDLTypeText) storeIn self()
-            } or {
-                expect(IDLTypeNat) storeIn self()
-            } or {
-                expect(IDLTypeInt) storeIn self()
-            } or {
-                expect(IDLTypeBoolean) storeIn self()
-            } or {
-                expect(IDLTypeInt64) storeIn self()
-            } or {
-                expect(IDLTypeNat8) storeIn self()
-            } or {
-                expect(IDLTypeFloat64) storeIn self()
-            } or {
-                expect(IDLTypeInt8) storeIn self()
-            } or {
-                expect(IDLTypeInt16) storeIn self()
-            } or {
-                expect(IDLTypeNat16) storeIn self()
-            } or {
-                expect(IDLTypeNat32) storeIn self()
-            } or {
-                expect(IDLTypeInt32) storeIn self()
-            } or {
-                expect(IDLTypeService) storeIn self()
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    }
+                }
+                expect(Token.Nat8)
+                lookahead {
+                    expect(Token.Semi)
+                }
             }
+        }
+
+        CandidTypeFloat {
+            either {
+                expect(Token.Id) storeIn CandidTypeFloat::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat::optionalType
+                    }
+                }
+                expect(Token.Float64)
+            }
+        }
+
+        CandidTypeVec {
+            either {
+                expect(Token.Id) storeIn CandidTypeVec::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
+                    }
+                }
+                expect(Token.Vec)
+                expect(CandidType) storeIn CandidTypeVec::vecType
+            }
+        }
+    }
+
+    /* private val typeParser = niwenParser {
+        IDLType root {
+            // TODO, comment
+            expect(Token.Type)
+            expect(Token.Id) storeIn
         }
 
         IDLRecord {
@@ -902,11 +1022,55 @@ internal object CandidParser {
             expect(Token.RBrace)
             expect(Token.Semi)
         }
-    }
+    } */
 
     fun parseFile(input: String): IDLFileDeclaration {
-        debug(input)
-        return fileParser.parse(fileLexer.tokenize(input))
+
+        var string = input.trimStart()
+        val comments: List<String> = mutableListOf()
+        while (string.isNotEmpty()) {
+            when {
+
+                string.startsWith("type") -> {
+                    val typeDefinitionEndIndex = getEndDeclarationIndex(string)
+                    val typeDefinition = string.substring(0, typeDefinitionEndIndex)
+                    parseCandidType(typeDefinition)
+                    string = string.substring(typeDefinitionEndIndex).trimStart()
+                }
+
+                string.startsWith("service") -> {
+                    val serviceDefinitionEndIndex = getEndDeclarationIndex(string)
+                    val serviceDeclaration = string.substring(0, serviceDefinitionEndIndex)
+                    string = string.substring(serviceDefinitionEndIndex).trimStart()
+                }
+
+                else -> throw RuntimeException("Unable to parse $string")
+            }
+
+        }
+
+        TODO()
+
+        // debug(input)
+        // return fileParser.parse(fileLexer.tokenize(input))
+    }
+
+    private fun parseCandidType(typeDefinition: String) {
+        debug(typeDefinition)
+        val result = typeParser.parse(fileLexer.tokenize(typeDefinition))
+        println(result.getKotlinClassDefinition())
+    }
+    private fun getEndDeclarationIndex(string: String): Int {
+        var brackets = 0
+        string.forEachIndexed { index, char ->
+            when {
+                char == ';' && brackets == 0 -> return index + 1
+                char == '{' -> brackets++
+                char == '}' -> brackets--
+                else -> { }
+            }
+        }
+        return string.length
     }
 
     // TODO delete
