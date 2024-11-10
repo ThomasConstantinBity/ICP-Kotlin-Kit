@@ -161,13 +161,17 @@ internal object CandidParser {
             // TODO, add optional type
             either {
                 expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
-            }
-            lookahead {
-                either {
-                    expect(Token.Semi)
-                } or {
-                    expect(Token.RBrace)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
                 }
+            } or {
+                expect(Token.Id) storeIn CandidTypeCustom::typeId
+                expect(Token.Colon)
+                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
             }
         }
 

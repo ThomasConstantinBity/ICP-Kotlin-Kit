@@ -94,7 +94,9 @@ internal sealed class CandidType {
             OptionalType.DoubleOptional -> "List<List<${getKotlinVariableType()}?>>"
         }
 
-        return "$typeId(val ${variableName}: $variableType): $className()"
+        if(variableName == "ok")
+            println()
+        return "class $typeId(val ${variableName}: $variableType): $className()"
     }
 
     fun getKotlinClassDefinition(className: String): String {
@@ -127,14 +129,15 @@ internal sealed class CandidType {
                 }
                 dataClassDefinition.append(")")
 
+                // TODO, extract and reuse
                 val innerClassToDeclare = candidTypes
                     .map { it.getInnerClassesToDeclare() }
                     .flatten()
                 if(innerClassToDeclare.isNotEmpty()) {
                     dataClassDefinition.appendLine(" {")
                     val kotlinInnerClasses = innerClassToDeclare.joinToString("\n") {
-                        val className = it.typeName ?: TODO()
-                        it.getKotlinClassDefinition(className)
+                        val innerClassName = it.typeName ?: TODO()
+                        it.getKotlinClassDefinition(innerClassName)
                     }
                     dataClassDefinition.appendLine("\t$kotlinInnerClasses")
                     dataClassDefinition.appendLine("}")
@@ -209,7 +212,7 @@ internal data class CandidTypeCustom(
     override fun getKotlinDefinitionForSealedClass(className: String): String {
         return when {
             typeId == null -> "object $typeDefinition: $className()"
-            else -> TODO()
+            else -> "class $typeId(val $typeDefinition : $typeDefinition): $className()"
         }
     }
 
