@@ -3,6 +3,7 @@ package com.bity.icp_kotlin_kit.file_parser.file_generator.helper
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLFun
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLRecord
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeBlob
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeBoolean
@@ -20,6 +21,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeN
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat8
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypePrincipal
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeText
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
@@ -130,8 +132,10 @@ internal object IDLTypeHelper {
                 ?: throw RuntimeException("className is required for record declaration '${type}'")
 
             is IDLTypeText -> "String"
-            is IDLTypeVariant -> TODO()
+            is IDLTypeVariant -> "TODO()"
             is IDLTypeVec -> "Array<${kotlinTypeVariable(type.vecType, className)}${if(type.isOptional) "?" else ""}>"
+            is IDLService -> "TODO()"
+            is IDLTypeService -> "TODO()"
         }
 
     private fun mapInputFunTypeVariable(idlFun: IDLFun, className: String?): String =

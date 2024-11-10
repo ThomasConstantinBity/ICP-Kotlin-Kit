@@ -5,7 +5,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLCo
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLSingleLineComment
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_service.IDLService
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_service.IDLServiceType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLFun
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLRecord
@@ -26,6 +26,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeN
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat8
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypePrincipal
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeText
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
@@ -67,22 +68,22 @@ internal object CandidParser {
             "," isToken Token.Comma
 
             matches("""\bopt\s+opt\b""") isToken Token.DoubleOpt
-            "opt" isToken Token.Opt
+            matches("""\bopt\b""") isToken Token.Opt
 
-            "import" isToken Token.Import
+            matches("""\bimport\b""") isToken Token.Import
 
-            "type" isToken  Token.Type
-            "service" isToken Token.Service
+            matches("""\btype\b""") isToken  Token.Type
+            matches("""\bservice\b""") isToken Token.Service
 
-            "func" isToken Token.Func
-            "vec" isToken Token.Vec
+            matches("""\bfunc\b""") isToken Token.Func
+            matches("""\bvec\b""") isToken Token.Vec
             matches("""\brecord\b""") isToken Token.Record
-            "variant" isToken Token.Variant
+            matches("""\bvariant\b""") isToken Token.Variant
 
-            "bool" isToken Token.Boolean
-            "text" isToken Token.Text
-            "null" isToken Token.Null
-            "blob" isToken Token.Blob
+            matches("""\bbool\b""") isToken Token.Boolean
+            matches("""\btext\b""") isToken Token.Text
+            matches("""\bnull\b""") isToken Token.Null
+            matches("""\bblob\b""") isToken Token.Blob
             matches("""\bint\b""") isToken Token.Int
             matches("""\bint8\b""") isToken Token.Int8
             matches("""\bint16\b""") isToken Token.Int16
@@ -125,19 +126,23 @@ internal object CandidParser {
             optional {
                 expect(Token.Service)
                 expect(Token.Colon)
-                optional {
-                    expect(Token.LParen)
-                    repeated<IDLFileDeclaration, IDLType> {
-                        expect(IDLType) storeIn item
-                    } storeIn IDLFileDeclaration::serviceConstructors
-                    expect(Token.RParen)
-                    expect(Token.Arrow)
+                either {
+                    optional {
+                        expect(Token.LParen)
+                        repeated<IDLFileDeclaration, IDLType> {
+                            expect(IDLType) storeIn item
+                        } storeIn IDLFileDeclaration::serviceConstructors
+                        expect(Token.RParen)
+                        expect(Token.Arrow)
+                    }
+                    expect(Token.LBrace)
+                    repeated<IDLFileDeclaration, IDLFun>(min = 1) {
+                        expect(IDLFun) storeIn item
+                    } storeIn IDLFileDeclaration::services
+                    expect(Token.RBrace)
+                } or {
+                    expect(Token.Id)
                 }
-                expect(Token.LBrace)
-                repeated<IDLFileDeclaration, IDLFun>(min = 1) {
-                    expect(IDLFun) storeIn item
-                } storeIn IDLFileDeclaration::services
-                expect(Token.RBrace)
             }
             optional{
                 expect(Token.Semi)
@@ -218,6 +223,8 @@ internal object CandidParser {
                 expect(IDLTypeNat32) storeIn self()
             } or {
                 expect(IDLTypeInt32) storeIn self()
+            } or {
+                expect(IDLTypeService) storeIn self()
             }
         }
 
@@ -519,6 +526,10 @@ internal object CandidParser {
                     expect(IDLComment) storeIn IDLTypeNat32::comment
                 }
             } or {
+                optional {
+                    expect(Token.Opt)
+                    emit(true) storeIn IDLTypeNat32::isOptional
+                }
                 expect(Token.Nat32)
             }
         }
@@ -819,7 +830,9 @@ internal object CandidParser {
             expect(Token.LParen)
             repeated {
                 expect(IDLType) storeIn item
-                optional { expect(Token.Comma) }
+                optional {
+                    expect(Token.Comma)
+                }
             } storeIn IDLFun::inputArgs
             expect(Token.RParen)
 
@@ -829,7 +842,9 @@ internal object CandidParser {
             expect(Token.LParen)
             repeated {
                 expect(IDLType) storeIn item
-                optional { expect(Token.Comma) }
+                optional {
+                    expect(Token.Comma)
+                }
             } storeIn IDLFun::outputArgs
             expect(Token.RParen)
 
@@ -874,16 +889,31 @@ internal object CandidParser {
                 expect(Token.Semi)
             }
         }
+
+        IDLTypeService {
+            expect(Token.Type)
+            expect(Token.Id) storeIn IDLTypeService::id
+            expect(Token.Equals)
+            expect(Token.Service)
+            expect(Token.LBrace)
+
+            repeated(min = 1) {
+                expect(IDLFun) storeIn item
+            }
+
+            expect(Token.RBrace)
+            expect(Token.Semi)
+        }
     }
 
     fun parseFile(input: String): IDLFileDeclaration {
-        debug(input)
+        // debug(input)
         return fileParser.parse(fileLexer.tokenize(input))
     }
 
     // TODO delete
     private fun debug(input: String) {
-        println(input)
+        // println(input)
         fileLexer.tokenize(input).forEachIndexed { i, t ->
             println("[$i] - ${t.tokenType} '${t.string}'")
         }

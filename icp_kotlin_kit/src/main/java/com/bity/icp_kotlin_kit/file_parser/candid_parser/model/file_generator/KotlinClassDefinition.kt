@@ -7,21 +7,20 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinCommentGenerator
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 
-internal sealed class KotlinClassDefinition(
-    val name: String
-) {
+internal sealed class KotlinClassDefinition(val name: String) {
 
     var inheritedClass: KotlinClassDefinition? = null
     val innerClasses: MutableList<KotlinClassDefinition> = mutableListOf()
 
-    // TODO, use private to restrict access?
+    abstract fun kotlinDefinition(): String
+
     class TypeAlias(
         val typeAliasId: String,
         val type: IDLType,
         val typeClassName: String?
     ): KotlinClassDefinition(typeAliasId) {
         override fun kotlinDefinition(): String =
-            "private typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
+            "typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
     }
 
     class Function(
@@ -62,7 +61,6 @@ internal sealed class KotlinClassDefinition(
             val callingArgs = if(inputArgs.isNotEmpty()) {
                 "listOf(${inputArgs.joinToString(", ") { it.id }})"
             } else "null"
-TODO()
             return when(funType) {
                 Query -> """
                     suspend operator fun invoke($invokeFunArgs
@@ -243,6 +241,4 @@ TODO()
             }
         }
     }
-
-    abstract fun kotlinDefinition(): String
 }
