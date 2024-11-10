@@ -2,6 +2,7 @@ package com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type
 
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLComment
+import com.bity.icp_kotlin_kit.util.ext_function.idToClassName
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
@@ -19,38 +20,20 @@ internal data class IDLTypeVariant(
     companion object : ParserNodeDeclaration<IDLTypeVariant> by reflective()
 
     override fun getKotlinClassDefinition(): KotlinClassDefinition {
-        require(variantDeclaration != null || id != null)
-        val kotlinClass = KotlinClassDefinition.SealedClass(
-            className = variantDeclaration ?: id!!.uppercase()
+        val className = when {
+            variantDeclaration != null -> variantDeclaration
+            id != null -> id.idToClassName()
+            else -> throw RuntimeException("Unable to define sealed class name")
+        }
+        val kotlinSealedClass = KotlinClassDefinition.SealedClass(
+            className = className
         )
         val innerClasses = types.map {
             val innerClass = it.getKotlinClassDefinition()
-            innerClass.inheritedClass = kotlinClass
+            innerClass.inheritedClass = kotlinSealedClass
             innerClass
         }
-        kotlinClass.innerClasses.addAll(innerClasses)
-        return kotlinClass
+        kotlinSealedClass.innerClasses.addAll(innerClasses)
+        return kotlinSealedClass
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as IDLTypeVariant
-
-        if (variantDeclaration != other.variantDeclaration) return false
-        if (types != other.types) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + (variantDeclaration?.hashCode() ?: 0)
-        result = 31 * result + types.hashCode()
-        return result
-    }
-
-
 }

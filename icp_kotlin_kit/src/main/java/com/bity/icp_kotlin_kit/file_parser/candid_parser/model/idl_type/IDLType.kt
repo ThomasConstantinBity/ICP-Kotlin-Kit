@@ -18,10 +18,11 @@ internal sealed class IDLType(
 ) {
     companion object : ParserNodeDeclaration<IDLType> by subtype()
 
-    // TODO, make fun abstract
-    open fun typeVariable(className: String? = null): String =
-        IDLTypeHelper.kotlinTypeVariable(this, className)
-    open fun getKotlinClassDefinition(): KotlinClassDefinition {
+    open fun typeVariable(className: String? = null): String = """TODO("need to implement typeVariable for $this")"""
+
+    open fun getKotlinClassDefinition(): KotlinClassDefinition = TODO("Not implemented for $this")
+
+    /**{
         val objectName = id
         requireNotNull(objectName)
         val kotlinClass = KotlinClassDefinition.Class(
@@ -38,34 +39,15 @@ internal sealed class IDLType(
             )
         )
         return kotlinClass
-    }
+    } **/
+
     open fun getKotlinClassParameter(className: String? = null): KotlinClassParameter {
-        val varId = id ?: IDLTypeHelper.kotlinVariableName(this, className)
+        val varId = id ?: "TODO()"
         return KotlinClassParameter(
             comment = comment,
             id = varId,
             isOptional = isOptional,
             typeVariable = typeVariable(className)
         )
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as IDLType
-
-        if (comment != other.comment) return false
-        if (isOptional != other.isOptional) return false
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = comment?.hashCode() ?: 0
-        result = 31 * result + isOptional.hashCode()
-        result = 31 * result + (id?.hashCode() ?: 0)
-        return result
     }
 }

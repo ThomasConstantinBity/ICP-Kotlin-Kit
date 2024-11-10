@@ -273,15 +273,13 @@ internal object CandidParser {
                 expect(IDLComment) storeIn IDLTypeVariant::comment
             }
 
-            optional {
-                either {
-                    expect(Token.Type)
-                    expect(Token.Id) storeIn IDLTypeVariant::variantDeclaration
-                    expect(Token.Equals)
-                } or {
-                    expect(Token.Id) storeIn IDLTypeVariant::id
-                    expect(Token.Colon)
-                }
+            either {
+                expect(Token.Type)
+                expect(Token.Id) storeIn IDLTypeVariant::variantDeclaration
+                expect(Token.Equals)
+            } or {
+                expect(Token.Id) storeIn IDLTypeVariant::id
+                expect(Token.Colon)
             }
 
             expect(Token.Variant)
@@ -907,7 +905,7 @@ internal object CandidParser {
     }
 
     fun parseFile(input: String): IDLFileDeclaration {
-        // debug(input)
+        debug(input)
         return fileParser.parse(fileLexer.tokenize(input))
     }
 

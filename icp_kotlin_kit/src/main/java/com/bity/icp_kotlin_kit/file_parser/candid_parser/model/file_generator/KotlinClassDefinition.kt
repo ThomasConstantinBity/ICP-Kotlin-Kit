@@ -5,22 +5,44 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_fun.FunType.*
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.file_generator.KotlinCommentGenerator
-import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 
-internal sealed class KotlinClassDefinition(val name: String) {
+internal sealed class KotlinClassDefinition(
+    // TODO, remove init
+    val className: String = "TODO"
+) {
 
     var inheritedClass: KotlinClassDefinition? = null
     val innerClasses: MutableList<KotlinClassDefinition> = mutableListOf()
 
     abstract fun kotlinDefinition(): String
 
+    class Primitive(
+        val variableName: String,
+        className: String,
+    ): KotlinClassDefinition(className) {
+
+        override fun kotlinDefinition(): String {
+            val inheritedClassName = inheritedClass?.className
+            return if(inheritedClassName != null) {
+                """
+                    class ${variableName}(
+                        val $variableName: $className
+                    ): $inheritedClassName()
+                """.trimIndent()
+            } else {
+                "$variableName: $className"
+            }
+        }
+
+    }
+
     class TypeAlias(
         val typeAliasId: String,
         val type: IDLType,
         val typeClassName: String?
-    ): KotlinClassDefinition(typeAliasId) {
+    ): KotlinClassDefinition() {
         override fun kotlinDefinition(): String =
-            "typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
+            TODO() //"typealias $typeAliasId = ${IDLTypeHelper.kotlinTypeVariable(type, typeClassName)}"
     }
 
     class Function(
@@ -28,9 +50,10 @@ internal sealed class KotlinClassDefinition(val name: String) {
         private val inputArgs: List<KotlinClassParameter>,
         private val outputArgs: List<KotlinClassParameter>,
         private val funType: FunType?
-    ): KotlinClassDefinition(functionName) {
+    ): KotlinClassDefinition() {
 
         override fun kotlinDefinition(): String {
+            TODO()
             return """
                 class $functionName(
                         methodName: String,
@@ -94,8 +117,8 @@ internal sealed class KotlinClassDefinition(val name: String) {
         }
     }
 
-    data class SealedClass(
-        val className: String,
+    class SealedClass(
+        className: String,
     ): KotlinClassDefinition(className) {
 
         override fun kotlinDefinition(): String {
@@ -109,38 +132,44 @@ internal sealed class KotlinClassDefinition(val name: String) {
 
     class Object(
         val objectName: String,
-    ): KotlinClassDefinition(objectName) {
+    ): KotlinClassDefinition() {
 
         override fun kotlinDefinition(): String {
             return inheritedClass?.let {
-                "data object $objectName : ${it.name}()"
+                "data object $objectName : ${objectName}()"
             } ?: "object $objectName"
         }
     }
 
-    data class Class(
-        val className: String,
-    ): KotlinClassDefinition(className) {
+    class Class(className: String, ): KotlinClassDefinition(className) {
 
         var params: MutableList<KotlinClassParameter> = mutableListOf()
 
         override fun kotlinDefinition(): String {
-            val constructor = if(params.isNotEmpty()) {
+            val classDefinition = StringBuilder("class $className")
+            classDefinition.append(getConstructorDefinition())
+            inheritedClass?.let {
+                classDefinition.append(": ${it.className}()")
+            }
+            if(innerClasses.isNotEmpty()) {
+                val innerClassesDefinition = innerClasses.joinToString(
+                    prefix = " {\n",
+                    separator = "\n",
+                    postfix = "\n}"
+                ) { it.kotlinDefinition() }
+                classDefinition.appendLine(innerClassesDefinition)
+            }
+            return classDefinition.toString()
+        }
+
+        private fun getConstructorDefinition(): String {
+            return if(params.isNotEmpty()) {
                 params.joinToString(
                     prefix = "(\n",
                     separator = ",\n",
                     postfix = "\n)"
                 ) { it.constructorDefinition() }
             } else "()"
-            val inheritedClassDefinition = inheritedClass?.let { ": ${it.name}()" } ?: ""
-            val innerClassesDefinition = if(innerClasses.isNotEmpty()) {
-                innerClasses.joinToString(
-                    prefix = " {\n",
-                    separator = "\n",
-                    postfix = "\n}\n"
-                ) { it.kotlinDefinition() }
-            } else ""
-            return "class ${className.replace("\"", "")}${constructor}${inheritedClassDefinition}$innerClassesDefinition"
         }
     }
 
@@ -148,12 +177,13 @@ internal sealed class KotlinClassDefinition(val name: String) {
         private val comment: IDLComment? = null,
         private val queryName: String,
         private val funType: FunType?
-    ) : KotlinClassDefinition(queryName) {
+    ) : KotlinClassDefinition() {
 
         val inputArgs = mutableListOf<KotlinClassParameter>()
         val outputArgs = mutableListOf<KotlinClassParameter>()
 
         override fun kotlinDefinition(): String {
+            TODO()
             val returnParam = when (outputArgs.size) {
                 0 -> ""
                 1 -> ": ${outputArgs.first().typeDeclaration}"

@@ -7,6 +7,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileD
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeCustom
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHelper
@@ -38,9 +39,9 @@ class KotlinFileGenerator(
 
     fun generateKotlinFile(): String {
 
-        // TypeAliases must be declared before object declaration
-        writeTypeAliases()
-        writeClasses()
+        idlFileDeclaration.types.forEach {
+            kotlinFileText.appendLine(it.getKotlinClassDefinition().kotlinDefinition())
+        }
         writeService()
         return formatKotlinCode(kotlinFileText)
     }

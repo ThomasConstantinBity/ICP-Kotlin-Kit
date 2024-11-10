@@ -36,16 +36,6 @@ internal object IDLTypeHelper {
         }
     }
 
-    fun kotlinVariableName(
-        type: IDLType,
-        className: String?
-    ): String {
-        return kotlinTypeVariable(
-            type = type,
-            className = className
-        ).replaceFirstChar { it.lowercase() }
-    }
-
     fun kotlinDefinition(
         idlType: IDLType,
         className: String

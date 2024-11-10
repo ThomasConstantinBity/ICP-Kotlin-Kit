@@ -1,6 +1,9 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type
 
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassParameter
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLComment
+import com.bity.icp_kotlin_kit.util.ext_function.idToVariableName
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
@@ -15,13 +18,20 @@ internal class IDLTypeText(
 ) {
     companion object : ParserNodeDeclaration<IDLTypeText> by reflective()
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return true
+    override fun typeVariable(className: String?): String = "String"
+
+    override fun getKotlinClassDefinition(): KotlinClassDefinition {
+        val variableName = when {
+            id != null -> id
+            else -> "text"
+        }
+        return KotlinClassDefinition.Primitive(
+            variableName = variableName,
+            className = "String"
+        )
     }
 
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
+    override fun getKotlinClassParameter(className: String?): KotlinClassParameter {
+        return super.getKotlinClassParameter(className)
     }
 }

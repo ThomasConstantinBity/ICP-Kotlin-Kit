@@ -72,24 +72,4 @@ internal data class IDLTypeCustom(
             }
         }
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as IDLTypeCustom
-
-        if (typeDef != other.typeDef) return false
-        if (type != other.type) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + typeDef.hashCode()
-        result = 31 * result + type.hashCode()
-        return result
-    }
 }
