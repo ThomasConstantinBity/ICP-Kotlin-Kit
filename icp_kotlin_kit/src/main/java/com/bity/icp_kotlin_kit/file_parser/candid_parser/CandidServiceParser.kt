@@ -154,6 +154,22 @@ internal object CandidServiceParser {
                 expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
                 expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    }
+                }
+                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+                lookahead {
+                    either {
+                        expect(Token.RParen)
+                    }
+                }
             }
         }
 
@@ -323,6 +339,9 @@ internal object CandidServiceParser {
                         emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
                     }
                 }
+                expect(Token.Vec)
+                expect(CandidType) storeIn CandidTypeVec::vecType
+            } or {
                 expect(Token.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
             }

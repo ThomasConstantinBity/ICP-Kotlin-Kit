@@ -310,6 +310,7 @@ internal data class CandidService(
         return """
             class Service(private val canister: ICPPrincipal) {
                 TODO()
+                ${functions.joinToString { it.functionName }}
             }
         """.trimIndent()
     }

@@ -76,6 +76,22 @@ internal object CandidTypeParser {
                 expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
                 expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    }
+                }
+                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+                lookahead {
+                    either {
+                        expect(Token.RParen)
+                    }
+                }
             }
         }
 
