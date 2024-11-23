@@ -93,9 +93,6 @@ internal sealed class CandidType {
             OptionalType.Optional -> "${getKotlinVariableType()}?"
             OptionalType.DoubleOptional -> "List<List<${getKotlinVariableType()}?>>"
         }
-
-        if(variableName == "ok")
-            println()
         return "class $typeId(val ${variableName}: $variableType): $className()"
     }
 
@@ -303,4 +300,34 @@ internal data class CandidTypeVec(
     }
 
     companion object : ParserNodeDeclaration<CandidTypeVec> by reflective()
+}
+
+internal data class CandidService(
+    val functions: List<CandidServiceFunction>
+) {
+
+    fun getKotlinClassDefinition(): String {
+        return """
+            class Service(private val canister: ICPPrincipal) {
+                TODO()
+            }
+        """.trimIndent()
+    }
+
+    companion object : ParserNodeDeclaration<CandidService> by reflective()
+}
+
+internal data class CandidServiceFunction(
+    val comment: IDLComment? = null,
+    val functionName: String,
+    val inputArgs: List<CandidType> = emptyList(),
+    val outputArgs: List<CandidType> = emptyList(),
+    val functionType: CandidServiceFunctionType = CandidServiceFunctionType.Query
+) {
+    companion object : ParserNodeDeclaration<CandidServiceFunction> by reflective()
+}
+
+enum class CandidServiceFunctionType {
+    Query,
+    OneWay
 }

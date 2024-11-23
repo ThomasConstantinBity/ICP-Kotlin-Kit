@@ -1,13 +1,12 @@
 package com.bity.icp_kotlin_kit.file_parser.file_generator
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParser
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileParser
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassParameter
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeCustom
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHelper
@@ -34,7 +33,7 @@ class KotlinFileGenerator(
     """
 
     private val idlFileDeclaration: IDLFileDeclaration =
-        CandidParser.parseFile(didFileContent)
+        CandidFileParser.parseFile(didFileContent)
     private val kotlinFileText = StringBuilder(header)
 
     fun generateKotlinFile(): String {
