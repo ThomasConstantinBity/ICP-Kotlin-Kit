@@ -348,10 +348,9 @@ internal object CandidServiceParser {
         }
     }
 
-    fun parseCandidService(serviceDefinition: String) {
-        debug(serviceDefinition)
-        val result = serviceParser.parse(fileLexer.tokenize(serviceDefinition))
-        println(result.getKotlinClassDefinition())
+    fun parseCandidService(serviceDefinition: String): CandidService {
+        // debug(serviceDefinition)
+        return serviceParser.parse(fileLexer.tokenize(serviceDefinition))
     }
 
 }

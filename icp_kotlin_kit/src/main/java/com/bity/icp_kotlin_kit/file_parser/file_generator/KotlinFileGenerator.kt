@@ -4,6 +4,9 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileParser
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassParameter
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidType
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeRecord
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeCustom
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
@@ -13,109 +16,73 @@ import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHel
 
 class KotlinFileGenerator(
     private val fileName: String,
-    packageName: String,
+    private val packageName: String,
     didFileContent: String,
 ) {
-    private val header = """
-        package $packageName
-        import java.math.BigInteger
-        import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
-        import com.bity.icp_kotlin_kit.data.repository.ICPQuery
-        import com.bity.icp_kotlin_kit.data.model.ValueToEncode
-        import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-        import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
-        import com.bity.icp_kotlin_kit.domain.request.PollingValues
-        import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
-        import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
-        /**
-         * File generated using ICP Kotlin Kit Plugin
-         */
-    """
 
-    private val idlFileDeclaration: IDLFileDeclaration =
-        CandidFileParser.parseFile(didFileContent)
-    private val kotlinFileText = StringBuilder(header)
+    var indent = 0
+    val indentString: String
+        get()  = "\t".repeat(indent)
+
+    private val kotlinFileText = StringBuilder()
+    private val idlFileDeclaration: IDLFileDeclaration = CandidFileParser.parseFile(didFileContent)
 
     fun generateKotlinFile(): String {
+        writeFileHeader()
+        writeTypeAliases()
+        kotlinFileText.appendLine("object $fileName {")
+        kotlinFileText.appendLine()
+        indent++
+        writeKotlinClasses()
+        kotlinFileText.appendLine()
+        kotlinFileText.append("}")
+        return kotlinFileText.toString()
+    }
 
-        idlFileDeclaration.types.forEach {
-            kotlinFileText.appendLine(it.getKotlinClassDefinition().kotlinDefinition())
-        }
-        writeService()
-        return formatKotlinCode(kotlinFileText)
+    private fun writeFileHeader() {
+        kotlinFileText.appendLine(
+            """
+                package $packageName
+                import java.math.BigInteger
+                import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
+                import com.bity.icp_kotlin_kit.data.repository.ICPQuery
+                import com.bity.icp_kotlin_kit.data.model.ValueToEncode
+                import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+                import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+                import com.bity.icp_kotlin_kit.domain.request.PollingValues
+                import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
+                import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
+            """.trimIndent()
+        )
+        kotlinFileText.appendLine("\n/**\n * File generated using ICP Kotlin Kit Plugin\n */")
     }
 
     private fun writeTypeAliases() {
-        idlFileDeclaration.types
-            .filter {
-                it is IDLTypeCustom
-                        || it is IDLTypeVec
-            }
-            .map { type ->
-                when(type) {
-                    is IDLTypeCustom -> {
-                        requireNotNull(type.typeDef)
-                        requireNotNull(type.type)
-                        KotlinClassDefinition.TypeAlias(
-                            typeAliasId = type.typeDef,
-                            type = type.type,
-                            typeClassName = fileName
-                        )
-                    }
-                    is IDLTypeVec -> {
-                        requireNotNull(type.vecDeclaration)
-                        KotlinClassDefinition.TypeAlias(
-                            typeAliasId = type.vecDeclaration,
-                            type = type,
-                            typeClassName = fileName
-                        )
-                    }
-                    else -> throw Error("$type can't be a typealias")
-                }
-            }
-            .forEach { kotlinFileText.appendLine(it.kotlinDefinition()) }
+
+
     }
 
-    private fun writeClasses() {
-        idlFileDeclaration.types
-            .filter { it !is IDLTypeCustom && it !is IDLTypeVec }
-            .map { it.getKotlinClassDefinition() }
-            .forEach { kotlinFileText.appendLine(it.kotlinDefinition()) }
+    private fun writeKotlinClasses() {
+        idlFileDeclaration.candidParsedTypes
+            // TODO, filter
+            /* .filter {
+                it.candidTypeDefinition.candidType !is CandidTypeVariant
+                        || it.candidTypeDefinition.candidType !is CandidTypeRecord
+            } */
+            .forEach {
+                writeCandidDefinition(it.candidDefinition)
+                kotlinFileText.appendLine(
+                    "${indentString}${it.candidTypeDefinition.candidType.getKotlinClassDefinition(fileName)}"
+                )
+            }
     }
 
-    private fun writeService() {
-        val serviceFunctions = idlFileDeclaration.services
-            .map {
-                requireNotNull(it.id)
-                val icpQuery = KotlinClassDefinition.ICPQuery(
-                    comment = it.comment,
-                    queryName = it.id,
-                    funType = it.funType
-                )
-                val inputParams = generateFunctionParams(
-                    icpQuery = icpQuery,
-                    idlTypes = it.inputArgs
-                )
-                val outputParam = generateFunctionParams(
-                    icpQuery = icpQuery,
-                    idlTypes = it.outputArgs
-                )
-                icpQuery.inputArgs.addAll(inputParams)
-                icpQuery.outputArgs.addAll(outputParam)
-                icpQuery
-            }
-        kotlinFileText.appendLine(
-            """
-                class ${fileName}Service(
-                    private val canister: ICPPrincipal
-                ) {
-                    ${serviceFunctions.joinToString(
-                        prefix = "\n",
-                        separator = "\n\n"
-                    ) { it.kotlinDefinition() }}
-                }
-            """.trimIndent()
-        )
+    private fun writeCandidDefinition(candidDefinition: String) {
+        kotlinFileText.appendLine("$indentString/**")
+        candidDefinition.split("\n").forEach {
+            kotlinFileText.appendLine("$indentString * $it")
+        }
+        kotlinFileText.appendLine("$indentString*/")
     }
 
     private fun generateFunctionParams(

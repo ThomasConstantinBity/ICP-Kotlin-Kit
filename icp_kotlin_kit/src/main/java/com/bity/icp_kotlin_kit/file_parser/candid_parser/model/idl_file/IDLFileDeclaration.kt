@@ -1,18 +1,14 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLComment
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLFun
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
-import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
-import guru.zoroark.tegral.niwen.parser.reflective
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidService
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeDefinition
 
-// TODO, add support for service constructor
-internal data class
-IDLFileDeclaration(
-    val comment: IDLComment? = null,
-    val types: List<IDLType> = mutableListOf(),
-    val serviceConstructors: List<IDLType> = emptyList(),
-    val services: List<IDLFun> = mutableListOf()
-) {
-    companion object : ParserNodeDeclaration<IDLFileDeclaration> by reflective()
-}
+internal data class IDLFileDeclaration(
+    val candidParsedTypes: List<CandidParsedType>,
+    val service: CandidService?
+)
+
+internal data class CandidParsedType(
+    val candidDefinition: String,
+    val candidTypeDefinition: CandidTypeDefinition
+)

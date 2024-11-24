@@ -1,6 +1,8 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser
 
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.CandidParsedType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidService
 
 // TODO, add support for end of line comment in order to support multiple comment
 // type QueryArchiveResult = variant {
@@ -15,24 +17,30 @@ internal object CandidFileParser {
 
     fun parseFile(input: String): IDLFileDeclaration {
 
-        // TODO check if input starts with comment
+        var service: CandidService? = null
+        val candidParsedTypes = mutableListOf<CandidParsedType>()
 
         var string = input.trimStart()
-        val comments: List<String> = mutableListOf()
         while (string.isNotEmpty()) {
             when {
 
                 string.startsWith("type") -> {
                     val typeDefinitionEndIndex = getEndDeclarationIndex(string)
                     val typeDefinition = string.substring(0, typeDefinitionEndIndex)
-                    CandidTypeParser.parseCandidType(typeDefinition)
+                    val candidTypeDefinition = CandidTypeParser.parseCandidType(typeDefinition)
+                    candidParsedTypes.add(
+                        CandidParsedType(
+                            candidTypeDefinition = candidTypeDefinition,
+                            candidDefinition = typeDefinition
+                        )
+                    )
                     string = string.substring(typeDefinitionEndIndex).trimStart()
                 }
 
                 string.startsWith("service") -> {
                     val serviceDefinitionEndIndex = getEndDeclarationIndex(string)
                     val serviceDeclaration = string.substring(0, serviceDefinitionEndIndex)
-                    CandidServiceParser.parseCandidService(serviceDeclaration)
+                    service = CandidServiceParser.parseCandidService(serviceDeclaration)
                     string = string.substring(serviceDefinitionEndIndex).trimStart()
                 }
 
@@ -41,10 +49,10 @@ internal object CandidFileParser {
 
         }
 
-        TODO()
-
-        // debug(input)
-        // return fileParser.parse(fileLexer.tokenize(input))
+        return IDLFileDeclaration(
+            candidParsedTypes = candidParsedTypes,
+            service = service
+        )
     }
 
     private fun getEndDeclarationIndex(string: String): Int {

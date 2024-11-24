@@ -267,10 +267,9 @@ internal object CandidTypeParser {
         }
     }
 
-    fun parseCandidType(typeDefinition: String) {
-        debug(typeDefinition)
-        val result = typeParser.parse(fileLexer.tokenize(typeDefinition))
-        println(result.getKotlinClassDefinition())
+    fun parseCandidType(typeDefinition: String): CandidTypeDefinition {
+        // debug(typeDefinition)
+        return typeParser.parse(fileLexer.tokenize(typeDefinition))
     }
 
 }
