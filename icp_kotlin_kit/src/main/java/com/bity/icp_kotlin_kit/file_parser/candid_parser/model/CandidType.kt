@@ -11,6 +11,7 @@ internal sealed class CandidType {
 
     open fun getInnerClassesToDeclare(): List<CandidType> = emptyList()
     abstract fun getKotlinVariableType(): String
+
     open fun getVariableName(): String {
 
         return when {
@@ -25,15 +26,7 @@ internal sealed class CandidType {
         requireNotNull(typeId) {
             throw RuntimeException("Unable to define sealed class for $className for $this")
         }
-
-        val variableName = typeName ?: getVariableName()
-
-        val variableType = when(optionalType) {
-            OptionalType.None -> getKotlinVariableType()
-            OptionalType.Optional -> "${getKotlinVariableType()}?"
-            OptionalType.DoubleOptional -> "List<List<${getKotlinVariableType()}?>>"
-        }
-        return "data class $typeId(val ${variableName}: $variableType): $className()"
+        return "data class $typeId(val ${getKotlinValueDefinition()}): $className()"
     }
 
     fun getKotlinClassDefinition(className: String): String {
@@ -44,6 +37,16 @@ internal sealed class CandidType {
 
             else -> TODO()
         }
+    }
+
+    fun getKotlinValueDefinition(): String {
+        val variableName = typeName ?: getVariableName()
+        val variableType = when(optionalType) {
+            OptionalType.None -> getKotlinVariableType()
+            OptionalType.Optional -> "${getKotlinVariableType()}?"
+            OptionalType.DoubleOptional -> "List<List<${getKotlinVariableType()}?>>"
+        }
+        return "${variableName}: $variableType"
     }
 
     companion object : ParserNodeDeclaration<CandidType> by subtype()

@@ -17,6 +17,7 @@ open class ICPQuery(
 ) {
     private val canisterRepository: ICPCanisterRepository = icpCanisterRepository
 
+    // TODO, this will be removed
     suspend operator fun invoke(
         values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal? = null,
@@ -32,7 +33,8 @@ open class ICPQuery(
             )
         }
 
-    private suspend fun query(
+    // TODO, values could be not null
+    suspend fun query(
         values: List<ValueToEncode>?,
     ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(

@@ -7,13 +7,19 @@ internal data class CandidService(
     val functions: List<CandidServiceFunction>
 ) {
 
-    fun getKotlinClassDefinition(): String {
-        return """
-            class Service(private val canister: ICPPrincipal) {
-                TODO()
-                ${functions.joinToString { it.functionName }}
+    fun getKotlinClassDefinition(serviceName: String): String {
+        val serviceDefinition = StringBuilder("class ${serviceName}Service(private val canister: ICPPrincipal){")
+        serviceDefinition.appendLine("\n")
+
+        functions.forEach { function ->
+            val functionDefinition = function.getKotlinFunctionDefinition()
+            functionDefinition.split("\n").forEach {
+                serviceDefinition.appendLine("\t$it")
             }
-        """.trimIndent()
+        }
+
+        serviceDefinition.appendLine("}")
+        return serviceDefinition.toString()
     }
 
     companion object : ParserNodeDeclaration<CandidService> by reflective()

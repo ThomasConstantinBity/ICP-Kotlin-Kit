@@ -20,7 +20,7 @@ internal data class CandidTypePrincipal(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun getKotlinVariableType(): String = "ICPPrincipal"
+    override fun getKotlinVariableType(): String = "ICPPrincipalApiModel"
 
     companion object : ParserNodeDeclaration<CandidTypePrincipal> by reflective()
 }

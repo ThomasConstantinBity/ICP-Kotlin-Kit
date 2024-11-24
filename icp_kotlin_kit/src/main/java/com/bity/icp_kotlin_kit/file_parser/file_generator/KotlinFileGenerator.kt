@@ -14,10 +14,6 @@ class KotlinFileGenerator(
     didFileContent: String,
 ) {
 
-    private var indent = 0
-    private val indentString: String
-        get()  = "\t".repeat(indent)
-
     private val kotlinFileText = StringBuilder()
     private val idlFileDeclaration: IDLFileDeclaration = CandidFileParser.parseFile(didFileContent)
 
@@ -26,8 +22,8 @@ class KotlinFileGenerator(
         writeTypeAliases()
         kotlinFileText.appendLine("object $fileName {")
         kotlinFileText.appendLine()
-        indent++
         writeKotlinClasses()
+        writeServiceClass()
         kotlinFileText.append("}")
         return kotlinFileText.toString()
     }
@@ -69,17 +65,26 @@ class KotlinFileGenerator(
                     .candidType.getKotlinClassDefinition(fileName)
                 kotlinClassDefinition.split("\n")
                     .forEach { line ->
-                        kotlinFileText.appendLine("${indentString}$line")
+                        kotlinFileText.appendLine("\t$line")
                     }
             }
     }
 
-    private fun writeCandidDefinition(candidDefinition: String) {
-        kotlinFileText.appendLine("$indentString/**")
-        candidDefinition.split("\n").forEach {
-            kotlinFileText.appendLine("$indentString * $it")
+    private fun writeServiceClass() {
+        idlFileDeclaration.service ?: return
+        val serviceDefinition = idlFileDeclaration.service
+            .getKotlinClassDefinition(fileName)
+        serviceDefinition.split("\n").forEach {
+            kotlinFileText.appendLine("\t$it")
         }
-        kotlinFileText.appendLine("$indentString */")
+    }
+
+    private fun writeCandidDefinition(candidDefinition: String) {
+        kotlinFileText.appendLine("\t/**")
+        candidDefinition.split("\n").forEach {
+            kotlinFileText.appendLine("\t * $it")
+        }
+        kotlinFileText.appendLine("\t */")
     }
 
     private fun generateFunctionParams(
