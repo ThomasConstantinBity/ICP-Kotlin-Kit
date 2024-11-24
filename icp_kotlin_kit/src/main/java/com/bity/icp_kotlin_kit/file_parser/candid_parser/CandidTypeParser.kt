@@ -1,20 +1,9 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParserCommon.debug
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParserCommon.fileLexer
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.OptionalType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeCustom
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeDefinition
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeFloat
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeInt64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeNat64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeNat8
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypePrincipal
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeRecord
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeText
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVariant
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVec
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.*
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
 import guru.zoroark.tegral.niwen.parser.dsl.expect

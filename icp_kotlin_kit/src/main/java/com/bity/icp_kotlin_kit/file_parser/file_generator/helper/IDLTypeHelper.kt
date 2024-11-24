@@ -1,30 +1,7 @@
 package com.bity.icp_kotlin_kit.file_parser.file_generator.helper
 
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLFun
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLRecord
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeBlob
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeBoolean
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeCustom
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeFloat64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt16
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt32
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeInt8
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat16
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat32
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNat8
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypePrincipal
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeText
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVariant
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.*
 
 internal object IDLTypeHelper {
 
@@ -102,7 +79,6 @@ internal object IDLTypeHelper {
                 }
             }
 
-            is IDLTypeInt -> "BigInteger"
             is IDLTypeInt8 -> "Byte"
             is IDLTypeInt16 -> "Short"
             is IDLTypeInt32 -> "Int"
@@ -112,16 +88,13 @@ internal object IDLTypeHelper {
             is IDLTypeNat8 -> "UByte"
             is IDLTypeNat16 -> "UShort"
             is IDLTypeNat32 -> "UInt"
-            is IDLTypeNat64 -> "ULong"
 
             is IDLTypeFloat64 -> "Double"
 
-            is IDLTypeNull -> TODO()
             is IDLTypePrincipal -> "ICPPrincipalApiModel"
             is IDLRecord -> className
                 ?: throw RuntimeException("className is required for record declaration '${type}'")
 
-            is IDLTypeText -> "String"
             is IDLTypeVariant -> "TODO()"
             is IDLTypeVec -> "Array<${kotlinTypeVariable(type.vecType, className)}${if(type.isOptional) "?" else ""}>"
             is IDLService -> "TODO()"

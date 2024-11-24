@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser
 
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.CandidParsedType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidService
 
 // TODO, add support for end of line comment in order to support multiple comment
 // type QueryArchiveResult = variant {

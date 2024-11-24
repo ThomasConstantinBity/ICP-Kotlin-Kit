@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeDefinition
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidService
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeDefinition
 
 internal data class IDLFileDeclaration(
     val candidParsedTypes: List<CandidParsedType>,

@@ -4,13 +4,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileParser
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.file_generator.KotlinClassParameter
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeRecord
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.CandidTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeCustom
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeNull
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_type.IDLTypeVec
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.IDLTypeHelper
 import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHelper
 
@@ -20,8 +14,8 @@ class KotlinFileGenerator(
     didFileContent: String,
 ) {
 
-    var indent = 0
-    val indentString: String
+    private var indent = 0
+    private val indentString: String
         get()  = "\t".repeat(indent)
 
     private val kotlinFileText = StringBuilder()
@@ -34,7 +28,6 @@ class KotlinFileGenerator(
         kotlinFileText.appendLine()
         indent++
         writeKotlinClasses()
-        kotlinFileText.appendLine()
         kotlinFileText.append("}")
         return kotlinFileText.toString()
     }
@@ -43,6 +36,7 @@ class KotlinFileGenerator(
         kotlinFileText.appendLine(
             """
                 package $packageName
+                
                 import java.math.BigInteger
                 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
                 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
@@ -54,7 +48,7 @@ class KotlinFileGenerator(
                 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
             """.trimIndent()
         )
-        kotlinFileText.appendLine("\n/**\n * File generated using ICP Kotlin Kit Plugin\n */")
+        kotlinFileText.appendLine("\n/**\n * File generated using ICP Kotlin Kit Library\n */")
     }
 
     private fun writeTypeAliases() {
@@ -69,11 +63,14 @@ class KotlinFileGenerator(
                 it.candidTypeDefinition.candidType !is CandidTypeVariant
                         || it.candidTypeDefinition.candidType !is CandidTypeRecord
             } */
-            .forEach {
-                writeCandidDefinition(it.candidDefinition)
-                kotlinFileText.appendLine(
-                    "${indentString}${it.candidTypeDefinition.candidType.getKotlinClassDefinition(fileName)}"
-                )
+            .forEach { candidParsedType ->
+                writeCandidDefinition(candidParsedType.candidDefinition)
+                val kotlinClassDefinition = candidParsedType.candidTypeDefinition
+                    .candidType.getKotlinClassDefinition(fileName)
+                kotlinClassDefinition.split("\n")
+                    .forEach { line ->
+                        kotlinFileText.appendLine("${indentString}$line")
+                    }
             }
     }
 
@@ -82,7 +79,7 @@ class KotlinFileGenerator(
         candidDefinition.split("\n").forEach {
             kotlinFileText.appendLine("$indentString * $it")
         }
-        kotlinFileText.appendLine("$indentString*/")
+        kotlinFileText.appendLine("$indentString */")
     }
 
     private fun generateFunctionParams(
@@ -90,7 +87,7 @@ class KotlinFileGenerator(
         idlTypes: List<IDLType>
     ): List<KotlinClassParameter> {
         return idlTypes
-            .filter { it !is IDLTypeNull }
+            /* .filter { it !is IDLTypeNull } */
             .map { idlType ->
             var className: String? = null
             val innerType = IDLTypeHelper.getInnerTypeToDeclare(idlType)
