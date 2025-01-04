@@ -26,7 +26,7 @@ internal sealed class CandidType {
         requireNotNull(typeId) {
             throw RuntimeException("Unable to define sealed class for $className for $this")
         }
-        return "data class $typeId(val ${getKotlinValueDefinition()}): $className()"
+        return "data class ${typeId!!.replace("\"", "")}(val ${getKotlinValueDefinition()}): $className()"
     }
 
     fun getKotlinClassDefinition(className: String): String {

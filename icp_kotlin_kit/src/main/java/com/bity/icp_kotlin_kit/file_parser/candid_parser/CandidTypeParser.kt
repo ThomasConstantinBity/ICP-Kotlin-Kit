@@ -141,17 +141,34 @@ internal object CandidTypeParser {
         }
 
         CandidTypeRecord {
-            expect(Token.Record)
-            expect(Token.LBrace)
-            repeated(min = 1) {
-                expect(CandidType) storeIn item
+            either {
+                expect(Token.Record)
+                expect(Token.LBrace)
+                repeated(min = 1) {
+                    expect(CandidType) storeIn item
+                    optional {
+                        expect(Token.Semi)
+                    }
+                } storeIn CandidTypeRecord::candidTypes
+                expect(Token.RBrace)
                 optional {
                     expect(Token.Semi)
                 }
-            } storeIn CandidTypeRecord::candidTypes
-            expect(Token.RBrace)
-            optional {
-                expect(Token.Semi)
+            } or {
+                expect(Token.Id) storeIn CandidTypeRecord::typeId
+                expect(Token.Colon)
+                expect(Token.Record)
+                expect(Token.LBrace)
+                repeated(min = 1) {
+                    expect(CandidType) storeIn item
+                    optional {
+                        expect(Token.Semi)
+                    }
+                } storeIn CandidTypeRecord::candidTypes
+                expect(Token.RBrace)
+                lookahead {
+                    expect(Token.Semi)
+                }
             }
         }
 
@@ -186,6 +203,24 @@ internal object CandidTypeParser {
                     }
                 }
                 expect(Token.Nat8)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    }
+                }
+                expect(Token.Nat8)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
             }
         }
 
@@ -213,9 +248,13 @@ internal object CandidTypeParser {
                         emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
                     }
                 }
-                expect(Token.Nat8)
+                expect(Token.Nat64)
                 lookahead {
-                    expect(Token.Semi)
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
                 }
             }
         }
@@ -257,7 +296,7 @@ internal object CandidTypeParser {
     }
 
     fun parseCandidType(typeDefinition: String): CandidTypeDefinition {
-        // debug(typeDefinition)
+        CandidParserCommon.debug(typeDefinition)
         return typeParser.parse(fileLexer.tokenize(typeDefinition))
     }
 
