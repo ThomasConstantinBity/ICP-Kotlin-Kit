@@ -58,16 +58,7 @@ internal object CandidTypeParser {
         }
 
         CandidTypeCustom {
-            either {
-                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
-            } or {
+             either {
                 expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
                 optional {
@@ -94,6 +85,10 @@ internal object CandidTypeParser {
                 lookahead {
                     either {
                         expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
                     }
                 }
             }
@@ -179,6 +174,15 @@ internal object CandidTypeParser {
                 }
                 expect(Token.Principal)
             } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
+                    }
+                }
                 expect(Token.Principal)
                 lookahead {
                     expect(Token.Semi)
@@ -187,14 +191,27 @@ internal object CandidTypeParser {
         }
 
         CandidTypeVariant {
-            expect(Token.Variant)
-            expect(Token.LBrace)
-            repeated(min = 1) {
-                expect(CandidType) storeIn item
+            either {
+                expect(Token.Variant)
+                expect(Token.LBrace)
+                repeated(min = 1) {
+                    expect(CandidType) storeIn item
+                    optional { expect(Token.Semi) }
+                } storeIn CandidTypeVariant::candidTypes
+                expect(Token.RBrace)
                 expect(Token.Semi)
-            } storeIn CandidTypeVariant::candidTypes
-            expect(Token.RBrace)
-            expect(Token.Semi)
+            } or {
+                expect(Token.Id)
+                expect(Token.Colon)
+                expect(Token.Variant)
+                expect(Token.LBrace)
+                repeated(min = 1) {
+                    expect(CandidType) storeIn item
+                    optional { expect(Token.Semi) }
+                } storeIn CandidTypeVariant::candidTypes
+                expect(Token.RBrace)
+                expect(Token.Semi)
+            }
         }
 
         CandidTypeRecord {
@@ -407,6 +424,18 @@ internal object CandidTypeParser {
             either {
                 expect(Token.Id) storeIn CandidTypeVec::typeId
                 expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
+                    }
+                }
+                expect(Token.Vec)
+                expect(CandidType) storeIn CandidTypeVec::vecType
+            } or {
                 optional {
                     either {
                         expect(Token.Opt)
