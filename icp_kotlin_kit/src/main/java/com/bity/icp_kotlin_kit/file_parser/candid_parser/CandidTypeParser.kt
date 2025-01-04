@@ -24,6 +24,7 @@ internal object CandidTypeParser {
             expect(Token.Id) storeIn CandidTypeDefinition::id
             expect(Token.Equals)
             expect(CandidType) storeIn CandidTypeDefinition::candidType
+            optional { expect(Token.Semi) }
         }
 
         CandidType {
@@ -36,9 +37,13 @@ internal object CandidTypeParser {
             } or {
                 expect(CandidTypeText) storeIn self()
             } or {
+                expect(CandidTypeBool) storeIn self()
+            } or {
                 expect(CandidTypePrincipal) storeIn self()
             } or {
                 expect(CandidTypeInt64) storeIn self()
+            } or {
+                expect(CandidTypeInt) storeIn self()
             } or {
                 expect(CandidTypeNat) storeIn self()
             } or {
@@ -122,6 +127,43 @@ internal object CandidTypeParser {
             }
         }
 
+        CandidTypeBool {
+            either {
+                expect(Token.Id) storeIn CandidTypeBool::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    }
+                }
+                expect(Token.Boolean)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    }
+                }
+                expect(Token.Boolean)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    }
+                }
+            }
+        }
+
         CandidTypePrincipal {
             either {
                 expect(Token.Id) storeIn CandidTypePrincipal::typeId
@@ -136,6 +178,11 @@ internal object CandidTypeParser {
                     }
                 }
                 expect(Token.Principal)
+            } or {
+                expect(Token.Principal)
+                lookahead {
+                    expect(Token.Semi)
+                }
             }
         }
 
@@ -196,6 +243,41 @@ internal object CandidTypeParser {
                     }
                 }
                 expect(Token.Int64)
+            }
+        }
+
+        CandidTypeInt {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    }
+                }
+                expect(Token.Int)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    }
+                }
+                expect(Token.Int)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
             }
         }
 

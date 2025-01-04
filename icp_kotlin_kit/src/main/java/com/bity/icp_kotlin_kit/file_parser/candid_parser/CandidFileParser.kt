@@ -3,6 +3,7 @@ package com.bity.icp_kotlin_kit.file_parser.candid_parser
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.CandidParsedType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileDeclaration
+import guru.zoroark.tegral.niwen.parser.NiwenParserException
 
 // TODO, add support for end of line comment in order to support multiple comment
 // type QueryArchiveResult = variant {
@@ -27,13 +28,18 @@ internal object CandidFileParser {
                 string.startsWith("type") -> {
                     val typeDefinitionEndIndex = getEndDeclarationIndex(string)
                     val typeDefinition = string.substring(0, typeDefinitionEndIndex)
-                    val candidTypeDefinition = CandidTypeParser.parseCandidType(typeDefinition)
-                    candidParsedTypes.add(
-                        CandidParsedType(
-                            candidTypeDefinition = candidTypeDefinition,
-                            candidDefinition = typeDefinition
+                    try {
+                        val candidTypeDefinition = CandidTypeParser.parseCandidType(typeDefinition)
+                        candidParsedTypes.add(
+                            CandidParsedType(
+                                candidTypeDefinition = candidTypeDefinition,
+                                candidDefinition = typeDefinition
+                            )
                         )
-                    )
+                    } catch (ex: NiwenParserException) {
+                        println("Error for $typeDefinition")
+                        // TODO
+                    }
                     string = string.substring(typeDefinitionEndIndex).trimStart()
                 }
 
