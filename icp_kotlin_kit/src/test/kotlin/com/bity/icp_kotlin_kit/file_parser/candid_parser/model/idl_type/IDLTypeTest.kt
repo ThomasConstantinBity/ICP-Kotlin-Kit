@@ -40,27 +40,7 @@ internal class IDLTypeTest {
              *     e8s : nat64;
              * };
              */
-            Arguments.of(
-                IDLRecord(
-                    recordName = "Tokens",
-                    types = listOf(
-                        IDLTypeNat64(
-                            id = "e8s"
-                        )
-                    )
-                ),
-                KotlinClassDefinition.Class(
-                    className = "Tokens",
-                ).apply {
-                    params.add(
-                        KotlinClassParameter(
-                            id = "e8s",
-                            isOptional = false,
-                            typeVariable = "ULong"
-                        )
-                    )
-                }
-            )
+            TODO()
         )
 
         @JvmStatic
