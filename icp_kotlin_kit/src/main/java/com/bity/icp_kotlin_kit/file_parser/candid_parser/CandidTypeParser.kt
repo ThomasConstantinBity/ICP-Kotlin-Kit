@@ -216,6 +216,15 @@ internal object CandidTypeParser {
 
         CandidTypeRecord {
             either {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    }
+                }
                 expect(Token.Record)
                 expect(Token.LBrace)
                 repeated(min = 1) {
@@ -231,6 +240,15 @@ internal object CandidTypeParser {
             } or {
                 expect(Token.Id) storeIn CandidTypeRecord::typeId
                 expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    }
+                }
                 expect(Token.Record)
                 expect(Token.LBrace)
                 repeated(min = 1) {

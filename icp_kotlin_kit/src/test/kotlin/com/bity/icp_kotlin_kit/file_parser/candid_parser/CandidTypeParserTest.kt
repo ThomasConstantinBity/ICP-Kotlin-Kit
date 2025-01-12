@@ -94,8 +94,7 @@ class CandidTypeParserTest {
     fun `AskSubscribeRequest from OrigynNFT file`() {
         val input = """
             type AskSubscribeRequest = variant {
-                subscribe : r
-                ecord {
+                subscribe : record {
                     stake : record { principal; nat };
                     filter : opt record {
                         tokens : opt vec TokenSpecFilter;
