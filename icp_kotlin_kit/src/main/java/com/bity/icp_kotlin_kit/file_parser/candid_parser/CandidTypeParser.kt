@@ -45,13 +45,25 @@ internal object CandidTypeParser {
             } or {
                 expect(CandidTypeInt) storeIn self()
             } or {
+                expect(CandidTypeInt8) storeIn self()
+            } or {
+                expect(CandidTypeInt16) storeIn self()
+            } or {
+                expect(CandidTypeInt32) storeIn self()
+            } or {
                 expect(CandidTypeNat) storeIn self()
             } or {
                 expect(CandidTypeNat8) storeIn self()
             } or {
+                expect(CandidTypeNat16) storeIn self()
+            } or {
+                expect(CandidTypeNat32) storeIn self()
+            } or {
                 expect(CandidTypeNat64) storeIn self()
             } or {
                 expect(CandidTypeFloat) storeIn self()
+            } or {
+                expect(CandidTypeFloat64) storeIn self()
             } or {
                 expect(CandidTypeVec) storeIn self()
             }
@@ -264,23 +276,6 @@ internal object CandidTypeParser {
             }
         }
 
-        CandidTypeInt64 {
-            either {
-                expect(Token.Id) storeIn CandidTypeInt64::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    }
-                }
-                expect(Token.Int64)
-            }
-        }
-
         CandidTypeInt {
             either {
                 expect(Token.Id) storeIn CandidTypeInt::typeId
@@ -316,6 +311,146 @@ internal object CandidTypeParser {
             }
         }
 
+        CandidTypeInt8 {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt8::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
+                    }
+                }
+                expect(Token.Int8)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
+                    }
+                }
+                expect(Token.Int8)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypeInt16 {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt16::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
+                    }
+                }
+                expect(Token.Int16)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
+                    }
+                }
+                expect(Token.Int16)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypeInt32 {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt32::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                    }
+                }
+                expect(Token.Int32)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                    }
+                }
+                expect(Token.Int32)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypeInt64 {
+            either {
+                expect(Token.Id) storeIn CandidTypeInt64::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    }
+                }
+                expect(Token.Int64)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
+                    }
+                }
+                expect(Token.Int64)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
         CandidTypeNat8 {
             either {
                 expect(Token.Id) storeIn CandidTypeNat8::typeId
@@ -341,6 +476,76 @@ internal object CandidTypeParser {
                     }
                 }
                 expect(Token.Nat8)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypeNat16 {
+            either {
+                expect(Token.Id) storeIn CandidTypeNat16::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    }
+                }
+                expect(Token.Nat16)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    }
+                }
+                expect(Token.Nat16)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
+            }
+        }
+
+        CandidTypeNat32 {
+            either {
+                expect(Token.Id) storeIn CandidTypeNat32::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
+                    }
+                }
+                expect(Token.Nat32)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
+                    }
+                }
+                expect(Token.Nat32)
                 lookahead {
                     either {
                         expect(Token.Semi)
@@ -435,6 +640,41 @@ internal object CandidTypeParser {
                     }
                 }
                 expect(Token.Float64)
+            }
+        }
+
+        CandidTypeFloat64 {
+            either {
+                expect(Token.Id) storeIn CandidTypeFloat64::typeId
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    }
+                }
+                expect(Token.Float64)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    }
+                }
+                expect(Token.Float64)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RBrace)
+                    }
+                }
             }
         }
 

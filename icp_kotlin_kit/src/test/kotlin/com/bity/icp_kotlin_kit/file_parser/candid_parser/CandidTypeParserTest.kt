@@ -107,40 +107,86 @@ class CandidTypeParserTest {
         CandidTypeParser.parseCandidType(input)
     }
 
+    @Test
+    fun `AuctionConfig from OrigynNFT file`() {
+        val input = """
+            type AuctionConfig = record {
+             start_price : nat;
+             token : TokenSpec;
+             reserve : opt nat;
+             start_date : int;
+             min_increase : MinIncreaseType;
+             allow_list : opt vec principal;
+             buy_now : opt nat;
+             ending : variant {
+                date : int;
+                wait_for_quiet : record {
+                    max : nat;
+                    date : int;
+                    fade : float64;
+                    extension : nat64;
+                    };
+                };
+             };
+        """.trimIndent()
+        CandidTypeParser.parseCandidType(input)
+    }
+
+    @Test
+    fun `AuctionStateShared from OrigynNFT file`() {
+        val input = """
+            type AuctionStateShared = record {
+                status : variant { closed; open; not_started };
+                participants : vec record { principal; int };
+                token : TokenSpec__1;
+                current_bid_amount : nat;
+                winner : opt Account;
+                end_date : int;
+                current_config : BidConfigShared;
+                start_date : int;
+                wait_for_quiet_count : opt nat;
+                current_escrow : opt EscrowReceipt;
+                allow_list : opt vec record { principal; bool };
+                min_next_bid : nat;
+                config : PricingConfigShared__1;
+            };
+        """.trimIndent()
+        CandidTypeParser.parseCandidType(input)
+    }
+
+    @Test
+    fun `CandyShared from OrigynNFT file`() {
+        val input = """
+            type CandyShared = variant {
+                Int : int;
+                Map : vec record { CandyShared; CandyShared };
+                Nat : nat;
+                Set : vec CandyShared;
+                Nat16 : nat16;
+                Nat32 : nat32;
+                Nat64 : nat64;
+                Blob : vec nat8;
+                Bool : bool;
+                Int8 : int8;
+                Ints : vec int;
+                Nat8 : nat8;
+                Nats : vec nat;
+                Text : text;
+                Bytes : vec nat8;
+                Int16 : int16;
+                Int32 : int32;
+                Int64 : int64;
+                Option : opt CandyShared;
+                Floats : vec float64;
+                Float : float64;
+                Principal : principal;
+                Array : vec CandyShared;
+                Class : vec PropertyShared;
+            };
+        """.trimIndent()
+        CandidTypeParser.parseCandidType(input)
+    }
     /**
-     * Error for type AuctionConfig = record {
-     *   start_price : nat;
-     *   token : TokenSpec;
-     *   reserve : opt nat;
-     *   start_date : int;
-     *   min_increase : MinIncreaseType;
-     *   allow_list : opt vec principal;
-     *   buy_now : opt nat;
-     *   ending : variant {
-     *     date : int;
-     *     wait_for_quiet : record {
-     *       max : nat;
-     *       date : int;
-     *       fade : float64;
-     *       extension : nat64;
-     *     };
-     *   };
-     * };
-     * Error for type AuctionStateShared = record {
-     *   status : variant { closed; open; not_started };
-     *   participants : vec record { principal; int };
-     *   token : TokenSpec__1;
-     *   current_bid_amount : nat;
-     *   winner : opt Account;
-     *   end_date : int;
-     *   current_config : BidConfigShared;
-     *   start_date : int;
-     *   wait_for_quiet_count : opt nat;
-     *   current_escrow : opt EscrowReceipt;
-     *   allow_list : opt vec record { principal; bool };
-     *   min_next_bid : nat;
-     *   config : PricingConfigShared__1;
-     * };
      * Error for type BidResponse = record {
      *   token_id : text;
      *   txn_type : variant {
@@ -259,32 +305,6 @@ class CandidTypeParserTest {
      *   };
      *   timestamp : int;
      *   index : nat;
-     * };
-     * Error for type CandyShared = variant {
-     *   Int : int;
-     *   Map : vec record { CandyShared; CandyShared };
-     *   Nat : nat;
-     *   Set : vec CandyShared;
-     *   Nat16 : nat16;
-     *   Nat32 : nat32;
-     *   Nat64 : nat64;
-     *   Blob : vec nat8;
-     *   Bool : bool;
-     *   Int8 : int8;
-     *   Ints : vec int;
-     *   Nat8 : nat8;
-     *   Nats : vec nat;
-     *   Text : text;
-     *   Bytes : vec nat8;
-     *   Int16 : int16;
-     *   Int32 : int32;
-     *   Int64 : int64;
-     *   Option : opt CandyShared;
-     *   Floats : vec float64;
-     *   Float : float64;
-     *   Principal : principal;
-     *   Array : vec CandyShared;
-     *   Class : vec PropertyShared;
      * };
      * Error for type CanisterCyclesAggregatedData = vec nat64;
      * Error for type CanisterHeapMemoryAggregatedData = vec nat64;
