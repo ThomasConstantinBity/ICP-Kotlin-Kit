@@ -22,5 +22,14 @@ internal data class CandidTypePrincipal(
 
     override fun getKotlinVariableType(): String = "ICPPrincipalApiModel"
 
+    override fun getTypealiasDefinition(className: String): String {
+        val typeasliasDefinition = "typealias $className = ICPPrincipal"
+        return when(optionalType) {
+            OptionalType.None -> typeasliasDefinition
+            OptionalType.Optional -> "${typeasliasDefinition}?"
+            OptionalType.DoubleOptional -> TODO()
+        }
+    }
+
     companion object : ParserNodeDeclaration<CandidTypePrincipal> by reflective()
 }

@@ -25,6 +25,18 @@ internal object CandidFileParser {
         while (string.isNotEmpty()) {
             when {
 
+                Regex("""^(type\s+\w+\s*=\s*service)""").find(string) != null ||
+                string.startsWith("service") -> {
+                    val serviceDefinitionEndIndex = getEndDeclarationIndex(string)
+                    val serviceDeclaration = string.substring(0, serviceDefinitionEndIndex)
+                    try {
+                        service = CandidServiceParser.parseCandidService(serviceDeclaration)
+                    } catch (ex: NiwenParserException) {
+                        // TODO
+                    }
+                    string = string.substring(serviceDefinitionEndIndex).trimStart()
+                }
+
                 string.startsWith("type") -> {
                     val typeDefinitionEndIndex = getEndDeclarationIndex(string)
                     val typeDefinition = string.substring(0, typeDefinitionEndIndex)
@@ -41,13 +53,6 @@ internal object CandidFileParser {
                         // TODO
                     }
                     string = string.substring(typeDefinitionEndIndex).trimStart()
-                }
-
-                string.startsWith("service") -> {
-                    val serviceDefinitionEndIndex = getEndDeclarationIndex(string)
-                    val serviceDeclaration = string.substring(0, serviceDefinitionEndIndex)
-                    service = CandidServiceParser.parseCandidService(serviceDeclaration)
-                    string = string.substring(serviceDefinitionEndIndex).trimStart()
                 }
 
                 else -> throw RuntimeException("Unable to parse $string")

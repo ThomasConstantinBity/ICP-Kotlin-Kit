@@ -213,7 +213,7 @@ internal object CandidTypeParser {
                 expect(Token.RBrace)
                 expect(Token.Semi)
             } or {
-                expect(Token.Id)
+                expect(Token.Id) storeIn CandidTypeVariant::typeId
                 expect(Token.Colon)
                 expect(Token.Variant)
                 expect(Token.LBrace)
@@ -710,7 +710,7 @@ internal object CandidTypeParser {
     }
 
     fun parseCandidType(typeDefinition: String): CandidTypeDefinition {
-        CandidParserCommon.debug(typeDefinition)
+        // CandidParserCommon.debug(typeDefinition)
         return typeParser.parse(fileLexer.tokenize(typeDefinition))
     }
 

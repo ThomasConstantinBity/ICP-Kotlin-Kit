@@ -12,6 +12,10 @@ internal sealed class CandidType {
     open fun getInnerClassesToDeclare(): List<CandidType> = emptyList()
     abstract fun getKotlinVariableType(): String
 
+    open fun getTypealiasDefinition(className: String): String {
+        TODO("Not implemented for $this")
+    }
+
     open fun getVariableName(): String {
 
         return when {
@@ -33,11 +37,37 @@ internal sealed class CandidType {
         return when(this) {
 
             is CandidTypeVariant -> getKotlinSealedClassDefinition(className)
-            is CandidTypeRecord -> getClassDefinition(className)
+            is CandidTypeRecord -> getTypeAliasDefinition(className)
+            is CandidTypeCustom -> getTypeAliasDefinition(className)
+            is CandidTypeVec -> getTypeAliasDefinition(className)
+            is CandidTypePrincipal -> getTypealiasDefinition(className)
 
-            else -> TODO()
+            else -> TODO("Not defined for $this")
         }
     }
+
+    fun getKotlinClassName(): String =
+        when(this) {
+            is CandidTypeBool -> TODO()
+            is CandidTypeCustom -> typeDefinition
+            is CandidTypeFloat -> TODO()
+            is CandidTypeFloat64 -> TODO()
+            is CandidTypeInt -> TODO()
+            is CandidTypeInt16 -> TODO()
+            is CandidTypeInt32 -> TODO()
+            is CandidTypeInt64 -> TODO()
+            is CandidTypeInt8 -> TODO()
+            is CandidTypeNat -> TODO()
+            is CandidTypeNat16 -> TODO()
+            is CandidTypeNat32 -> TODO()
+            is CandidTypeNat64 -> TODO()
+            is CandidTypeNat8 -> TODO()
+            is CandidTypePrincipal -> TODO()
+            is CandidTypeRecord -> TODO()
+            is CandidTypeText -> TODO()
+            is CandidTypeVariant -> TODO()
+            is CandidTypeVec -> TODO()
+        }
 
     fun getKotlinValueDefinition(): String {
         val variableName = typeName ?: getVariableName()
@@ -67,7 +97,25 @@ private fun CandidTypeVariant.getKotlinSealedClassDefinition(
     return sealedClassDefinition.toString()
 }
 
-private fun CandidTypeRecord.getClassDefinition(
+private fun CandidTypeCustom.getTypeAliasDefinition(className: String): String {
+    val typeAliasDefinition = "typealias $className = ${typeDefinition.replace("\"", "")}"
+    return when(optionalType) {
+        OptionalType.None -> typeAliasDefinition
+        OptionalType.Optional -> "${typeAliasDefinition}?"
+        OptionalType.DoubleOptional -> TODO()
+    }
+}
+
+private fun CandidTypeVec.getTypeAliasDefinition(className: String) : String {
+    val arrayDefinition = "typealias $className = Array<${vecType.getKotlinClassName()}>"
+    return when(optionalType) {
+        OptionalType.None -> arrayDefinition
+        OptionalType.Optional -> "${arrayDefinition}?"
+        OptionalType.DoubleOptional -> TODO()
+    }
+}
+
+private fun CandidTypeRecord.getTypeAliasDefinition(
     className: String
 ): String {
 
@@ -81,7 +129,7 @@ private fun CandidTypeRecord.getClassDefinition(
             OptionalType.Optional -> "${it.getKotlinVariableType()}?"
             OptionalType.DoubleOptional -> "List<List<${it.getKotlinVariableType()}?>>"
         }
-        "\t$variableName : $variableType"
+        "\tval $variableName: $variableType"
     }
     dataClassDefinition.appendLine(classVariables)
     dataClassDefinition.append(")")

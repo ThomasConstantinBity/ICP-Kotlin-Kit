@@ -15,7 +15,7 @@ internal data class CandidTypeCustom(
     override fun getKotlinDefinitionForSealedClass(className: String): String {
         return when {
             typeId == null -> "object $typeDefinition: $className()"
-            else -> "data class $typeId(val $typeDefinition : $typeDefinition): $className()"
+            else -> "data class $typeId(val ${typeDefinition.replaceFirstChar { it.lowercase() }}: $typeDefinition): $className()"
         }
     }
 

@@ -14,11 +14,13 @@ internal data class CandidTypeVariant(
         throw RuntimeException("Unable to generate sealed class for CandidTypeVariant")
 
     override fun getKotlinVariableType(): String {
-        TODO("Not yet implemented")
+        requireNotNull(typeId)
+        return typeId
     }
 
     override fun getVariableName(): String {
-        TODO("Not yet implemented")
+        requireNotNull(typeId)
+        return typeId.replaceFirstChar { it.lowercase() }
     }
 
     companion object : ParserNodeDeclaration<CandidTypeVariant> by reflective()
