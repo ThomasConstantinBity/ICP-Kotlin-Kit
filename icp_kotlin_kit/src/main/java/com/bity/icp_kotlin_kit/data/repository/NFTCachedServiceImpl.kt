@@ -4,7 +4,7 @@ import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
-import com.bity.icp_kotlin_kit.domain.repository.NFTCachedService
+import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 
 internal class NFTCachedServiceImpl(
     private val nftService: DABNFT.DABNFTService

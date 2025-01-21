@@ -1,11 +1,11 @@
-package com.bity.icp_kotlin_kit.data.remote.url_provider
+package com.bity.icp_kotlin_kit.data.service.url
 
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.provider.ExplorerURLProvider
+import com.bity.icp_kotlin_kit.domain.service.ExplorerURLService
 
-class ICPTokenExplorerURLProvider(
+class ICPTokenExplorerURLService(
     private val rootCanisterId: ICPPrincipal
-): ExplorerURLProvider {
+): ExplorerURLService {
     override fun getExplorerURL(transactionId: String): String =
         "https://dashboard.internetcomputer.org/sns/${rootCanisterId.string}/transaction/$transactionId"
 }

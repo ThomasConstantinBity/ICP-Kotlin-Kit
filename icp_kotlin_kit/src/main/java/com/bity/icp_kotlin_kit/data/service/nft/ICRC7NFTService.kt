@@ -1,17 +1,15 @@
-package com.bity.icp_kotlin_kit.data.remote.nft_actor
+package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.domain.generated_file.Account
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
-import com.bity.icp_kotlin_kit.domain.provider.NFTActor
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.bity.icp_kotlin_kit.domain.service.NFTService
 
-internal class ICRC7NFTActor(
+internal class ICRC7NFTService(
     private val service: DBANFTService,
-): NFTActor {
+): NFTService {
 
     override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
 

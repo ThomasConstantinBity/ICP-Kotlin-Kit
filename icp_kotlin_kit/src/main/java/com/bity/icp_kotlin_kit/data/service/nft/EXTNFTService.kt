@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.remote.nft_actor
+package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.generated_file.CommonError
@@ -6,11 +6,11 @@ import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
 import com.bity.icp_kotlin_kit.domain.generated_file.Result_1
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.provider.NFTActor
+import com.bity.icp_kotlin_kit.domain.service.NFTService
 
-internal class EXTNFTActor(
+internal class EXTNFTService(
     private val service: EXTService
-): NFTActor {
+): NFTService {
 
     override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> =
         service.tokens_ext(principal.string)

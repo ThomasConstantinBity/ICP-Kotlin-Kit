@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.remote.token_actor
+package com.bity.icp_kotlin_kit.data.service.token
 
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -8,13 +8,13 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.ICRC1TokenException
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
-import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
+import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
 import com.bity.icp_kotlin_kit.util.ext_function.toICPTimestamp
 import java.math.BigInteger
 
-internal class ICRC1TokenActor(
+internal class ICRC1TokenService(
     private val service: ICRC1.ICRC1Service
-): ICPTokenActor {
+): ICPTokenService {
 
     override suspend fun getBalance(principal: ICPPrincipal): BigInteger {
         val account = ICRC1.Account(

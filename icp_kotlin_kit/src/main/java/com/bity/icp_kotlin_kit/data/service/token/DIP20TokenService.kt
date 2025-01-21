@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.remote.token_actor
+package com.bity.icp_kotlin_kit.data.service.token
 
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20.TxError
@@ -9,12 +9,12 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.toDomainModel
-import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
+import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
 import java.math.BigInteger
 
-internal class DIP20TokenActor(
+internal class DIP20TokenService(
     private val service: DIP20.DIP20Service
-): ICPTokenActor {
+): ICPTokenService {
 
     override suspend fun getBalance(principal: ICPPrincipal): BigInteger =
         service.balanceOf(principal.toDataModel())

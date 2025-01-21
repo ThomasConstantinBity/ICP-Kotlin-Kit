@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.remote.transaction_provider
+package com.bity.icp_kotlin_kit.data.service.transaction
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister
@@ -11,13 +11,13 @@ import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
-import com.bity.icp_kotlin_kit.domain.provider.ICPTransactionProvider
+import com.bity.icp_kotlin_kit.domain.service.ICPTransactionService
 import java.math.BigInteger
 
-class ICPICRC1IndexTransactionProvider(
+class ICPICRC1IndexTransactionService(
     private val icpToken: ICPToken,
     private val indexCanister: ICPPrincipal
-): ICPTransactionProvider {
+): ICPTransactionService {
 
     // TODO, need to update
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {

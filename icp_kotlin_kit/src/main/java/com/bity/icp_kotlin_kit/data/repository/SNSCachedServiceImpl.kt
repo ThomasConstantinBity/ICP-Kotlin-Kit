@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
-import com.bity.icp_kotlin_kit.domain.repository.SNSCachedService
+import com.bity.icp_kotlin_kit.domain.service.SNSCachedService
 
 internal class SNSCachedServiceImpl (
     private val service: NNS_SNS_W.nns_sns_wService

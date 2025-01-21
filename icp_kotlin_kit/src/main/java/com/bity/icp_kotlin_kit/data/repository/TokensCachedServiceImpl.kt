@@ -1,18 +1,18 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
+import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import com.bity.icp_kotlin_kit.domain.model.error.TokenActorException
-import com.bity.icp_kotlin_kit.domain.repository.TokensCachedService
+import com.bity.icp_kotlin_kit.domain.service.TokensCachedService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 internal class TokensCachedServiceImpl(
     private val tokensService: TokensService,
-    private val actorFactory: TokenActorFactory
+    private val actorFactory: TokenServiceFactory
 ): TokensCachedService {
 
     private var cachedTokens: List<ICPToken>? = null

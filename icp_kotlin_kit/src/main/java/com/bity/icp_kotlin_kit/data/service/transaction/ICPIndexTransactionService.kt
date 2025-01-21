@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.remote.transaction_provider
+package com.bity.icp_kotlin_kit.data.service.transaction
 
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
@@ -8,13 +8,13 @@ import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
-import com.bity.icp_kotlin_kit.domain.provider.ICPTransactionProvider
+import com.bity.icp_kotlin_kit.domain.service.ICPTransactionService
 import java.math.BigInteger
 
-internal class ICPIndexTransactionProvider(
+internal class ICPIndexTransactionService(
     private val icpToken: ICPToken,
     private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
-): ICPTransactionProvider {
+): ICPTransactionService {
 
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = NNSICPIndexCanister.GetAccountTransactionsArgs(

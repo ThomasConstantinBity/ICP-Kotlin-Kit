@@ -1,18 +1,18 @@
 package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
-import com.bity.icp_kotlin_kit.domain.factory.NFTActorFactory
+import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.repository.NFTCachedService
+import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 internal class NFTRepositoryImpl(
-    private val nftActorFactory: NFTActorFactory,
+    private val nftActorFactory: NFTServiceFactory,
     private val nftCachedService: NFTCachedService
 ): NFTRepository {
 
