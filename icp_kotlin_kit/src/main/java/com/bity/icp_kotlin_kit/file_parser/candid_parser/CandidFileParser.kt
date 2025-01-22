@@ -38,7 +38,8 @@ internal object CandidFileParser {
                 }
 
                 string.startsWith("type") -> {
-                    val typeDefinitionEndIndex = getEndDeclarationIndex(string)
+                    TODO()
+                    /*val typeDefinitionEndIndex = getEndDeclarationIndex(string)
                     val typeDefinition = string.substring(0, typeDefinitionEndIndex)
                     try {
                         val candidTypeDefinition = CandidTypeParser.parseCandidType(typeDefinition)
@@ -52,7 +53,7 @@ internal object CandidFileParser {
                         println("Error for $typeDefinition")
                         // TODO
                     }
-                    string = string.substring(typeDefinitionEndIndex).trimStart()
+                    string = string.substring(typeDefinitionEndIndex).trimStart()*/
                 }
 
                 else -> throw RuntimeException("Unable to parse $string")

@@ -9,6 +9,8 @@ internal class CandidTypeNat(
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
+    override fun shouldDeclareInnerClass(): Boolean = false
+
     override fun getKotlinVariableType(): String = "BigInteger"
 
     companion object : ParserNodeDeclaration<CandidTypeNat> by reflective()

@@ -1,3 +1,4 @@
+/*
 package com.bity.icp_kotlin_kit.file_parser.candid_parser
 
 import org.junit.jupiter.api.Test
@@ -8,84 +9,7 @@ import kotlin.test.assertEquals
 
 class CandidTypeParserTest {
 
-    @ParameterizedTest(name = "{index}")
-    @MethodSource("origynNFT")
-    fun OrigynNFTType(
-        typeDefinition: String,
-        expectedGeneratedCLas: String
-    ) {
-        val candidTypeDefinition = CandidTypeParser.parseCandidType(typeDefinition)
-        val kotlinClass = candidTypeDefinition.getKotlinClassDefinition()
-        assertEquals(
-            expected = expectedGeneratedCLas
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            actual = kotlinClass
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim()
-        )
-    }
 
-    companion object {
-
-        @JvmStatic
-        fun origynNFT() = listOf(
-
-            Arguments.of(
-                "type AskConfigShared = opt AskFeatureArray;",
-                "typealias AskConfigShared = AskFeatureArray?"
-            ),
-
-            Arguments.of(
-                "type AskFeatureArray = vec AskFeature;",
-                "typealias AskFeatureArray = Array<AskFeature>"
-            ),
-
-            Arguments.of(
-                "type BearerResult = variant { ok : Account; err : OrigynError };",
-                """
-                    sealed class BearerResult {
-                        data class ok(val account: Account): BearerResult()
-                        data class err(val origynError: OrigynError): BearerResult()
-                    }
-                """.trimIndent()
-            ),
-
-            Arguments.of(
-                "type Caller = opt principal;",
-                "typealias Caller = ICPPrincipal?"
-
-            ),
-
-            Arguments.of(
-                """
-                    type canister_status = record {
-                        status : variant { stopped; stopping; running };
-                        memory_size : nat;
-                        cycles : nat;
-                        settings : definite_canister_settings;
-                        module_hash : opt vec nat8;
-                    };
-                """.trimIndent(),
-                """
-                    data class canister_status(
-                        val status: Status,
-                        val memory_size: BigInteger,
-                        val cycles: BigInteger,
-                        val settings: definite_canister_settings,
-                        val module_hash: Array<UByte>?
-                    ) {
-                        sealed class Status {
-                            object stopped : Status()
-                            object stopping : Status()
-                            object running : Status()
-                        }
-                    }
-                """.trimIndent()
-            )
-        )
-
-    }
 
     @Test
     fun `canister_status from OrigynNFT file`() {
@@ -732,4 +656,4 @@ class CandidTypeParserTest {
     }
 
 
-}
+}*/

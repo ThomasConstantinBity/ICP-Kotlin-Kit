@@ -10,6 +10,19 @@ internal data class CandidTypeVec(
     val vecType: CandidType
 ): CandidType() {
 
+    override fun shouldDeclareInnerClass(): Boolean =
+        vecType.shouldDeclareInnerClass()
+
+    override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
+        val typealiasDefinition = "typealias $candidTypeDefinitionId = "
+        val className = vecType.getKotlinClassName()
+        return when(optionalType) {
+            OptionalType.None -> "$typealiasDefinition Array<$className>"
+            OptionalType.Optional -> "$typealiasDefinition Array<${className}>?"
+            OptionalType.DoubleOptional -> TODO()
+        }
+    }
+
     override fun getKotlinVariableType(): String {
         val arrayDefinition = if(typeId == "Array") "kotlin.Array" else "Array"
         return "$arrayDefinition<${vecType.getKotlinVariableType()}>"

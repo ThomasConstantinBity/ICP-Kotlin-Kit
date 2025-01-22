@@ -10,17 +10,30 @@ internal data class CandidTypeVariant(
     val candidTypes: List<CandidType>
 ): CandidType() {
 
+    override fun getKotlinClassName(): String {
+        requireNotNull(typeId)
+        return typeId.replaceFirstChar { it.uppercase() }
+    }
+
+    override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
+        val sealedClassDefinition = StringBuilder("sealed class $candidTypeDefinitionId {")
+        val innerClassesDefinition = candidTypes.joinToString(
+            separator = "\n\t",
+            prefix = "\n\t"
+        ) { it.getKotlinDefinitionForSealedClass(candidTypeDefinitionId) }
+        sealedClassDefinition.appendLine(innerClassesDefinition)
+        sealedClassDefinition.appendLine("}")
+        return sealedClassDefinition.toString()
+    }
+
+    override fun shouldDeclareInnerClass(): Boolean = true
+
     override fun getKotlinDefinitionForSealedClass(className: String): String =
         throw RuntimeException("Unable to generate sealed class for CandidTypeVariant")
 
     override fun getKotlinVariableType(): String {
         requireNotNull(typeId)
-        return typeId
-    }
-
-    override fun getVariableName(): String {
-        requireNotNull(typeId)
-        return typeId.replaceFirstChar { it.lowercase() }
+        return typeId.replaceFirstChar { it.uppercase() }
     }
 
     companion object : ParserNodeDeclaration<CandidTypeVariant> by reflective()

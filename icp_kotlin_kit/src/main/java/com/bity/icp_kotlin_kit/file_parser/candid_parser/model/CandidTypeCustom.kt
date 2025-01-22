@@ -10,6 +10,18 @@ internal data class CandidTypeCustom(
     val typeDefinition: String
 ): CandidType() {
 
+    override fun shouldDeclareInnerClass(): Boolean = false
+
+    override fun getKotlinClassName(): String = typeDefinition
+
+    override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
+        val typealiasDefinition = "typealias $candidTypeDefinitionId = "
+        return when(optionalType) {
+            OptionalType.None -> "$typealiasDefinition $typeDefinition"
+            OptionalType.Optional -> "$typealiasDefinition $typeDefinition?"
+            OptionalType.DoubleOptional -> TODO()
+        }
+    }
     override fun getKotlinVariableType(): String = typeDefinition
 
     override fun getKotlinDefinitionForSealedClass(className: String): String {

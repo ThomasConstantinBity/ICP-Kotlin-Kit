@@ -9,28 +9,61 @@ internal sealed class CandidType {
     abstract val typeName: String?
     abstract val optionalType: OptionalType
 
-    open fun getInnerClassesToDeclare(): List<CandidType> = emptyList()
+    /**
+     * Called from CandidTypeDefinition
+     * type <candidTYpeDefinitionId> = <candidType>
+     */
+    // TODO: make it abstract
+    open fun getKotlinDefinition(candidTypeDefinitionId: String): String =
+        TODO("Not implemented for $this")
+
+    // TODO: make it abstract
+    open fun getKotlinDefinitionForSealedClass(className: String): String =
+        TODO("Not implemented for $this")
+
+    // TODO: make it abstract
+    open fun shouldDeclareInnerClass(): Boolean = TODO("Not implemented for $this")
+
     abstract fun getKotlinVariableType(): String
+
+    fun getVariableName(): String =
+        typeId ?: throw RuntimeException("Unable to get variable name for $this")
+
+    fun getKotlinVariableTypeWithOptionalDefinition(): String {
+        val variableType = getKotlinVariableType()
+        return when(optionalType) {
+            OptionalType.None -> variableType
+            OptionalType.Optional -> "$variableType?"
+            OptionalType.DoubleOptional -> "List<List<${variableType}?>>"
+        }
+    }
+
+    // TODO: throw error if not required for type
+    open fun getKotlinClassName(): String = TODO("Not implemented for $this")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    open fun getInnerClassesToDeclare(): List<CandidType> = emptyList()
 
     open fun getTypealiasDefinition(className: String): String {
         TODO("Not implemented for $this")
-    }
-
-    open fun getVariableName(): String {
-
-        return when {
-            typeId != null -> typeId!!.replace("\"", "")
-                .replaceFirstChar { it.lowercase() }
-            else -> getKotlinVariableType().replaceFirstChar { it.lowercase() }
-        }
-    }
-
-    open fun getKotlinDefinitionForSealedClass(className: String): String {
-
-        requireNotNull(typeId) {
-            throw RuntimeException("Unable to define sealed class for $className for $this")
-        }
-        return "data class ${typeId!!.replace("\"", "")}(val ${getKotlinValueDefinition()}): $className()"
     }
 
     fun getKotlinClassDefinition(className: String): String {
@@ -45,29 +78,6 @@ internal sealed class CandidType {
             else -> TODO("Not defined for $this")
         }
     }
-
-    fun getKotlinClassName(): String =
-        when(this) {
-            is CandidTypeBool -> TODO()
-            is CandidTypeCustom -> typeDefinition
-            is CandidTypeFloat -> TODO()
-            is CandidTypeFloat64 -> TODO()
-            is CandidTypeInt -> TODO()
-            is CandidTypeInt16 -> TODO()
-            is CandidTypeInt32 -> TODO()
-            is CandidTypeInt64 -> TODO()
-            is CandidTypeInt8 -> TODO()
-            is CandidTypeNat -> TODO()
-            is CandidTypeNat16 -> TODO()
-            is CandidTypeNat32 -> TODO()
-            is CandidTypeNat64 -> TODO()
-            is CandidTypeNat8 -> TODO()
-            is CandidTypePrincipal -> TODO()
-            is CandidTypeRecord -> TODO()
-            is CandidTypeText -> TODO()
-            is CandidTypeVariant -> TODO()
-            is CandidTypeVec -> TODO()
-        }
 
     fun getKotlinValueDefinition(): String {
         val variableName = typeName ?: getVariableName()

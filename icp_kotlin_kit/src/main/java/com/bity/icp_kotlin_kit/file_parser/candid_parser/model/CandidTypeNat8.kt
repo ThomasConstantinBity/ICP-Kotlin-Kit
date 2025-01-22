@@ -9,6 +9,8 @@ internal data class CandidTypeNat8(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
+    override fun shouldDeclareInnerClass(): Boolean = false
+
     override fun getKotlinVariableType(): String = "UByte"
 
 

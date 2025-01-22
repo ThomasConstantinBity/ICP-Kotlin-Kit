@@ -13,23 +13,3 @@ internal data class CandidTypeText(
 
     companion object : ParserNodeDeclaration<CandidTypeText> by reflective()
 }
-
-internal data class CandidTypePrincipal(
-    override val typeId: String? = null,
-    override val typeName: String? = null,
-    override val optionalType: OptionalType = OptionalType.None,
-): CandidType() {
-
-    override fun getKotlinVariableType(): String = "ICPPrincipalApiModel"
-
-    override fun getTypealiasDefinition(className: String): String {
-        val typeasliasDefinition = "typealias $className = ICPPrincipal"
-        return when(optionalType) {
-            OptionalType.None -> typeasliasDefinition
-            OptionalType.Optional -> "${typeasliasDefinition}?"
-            OptionalType.DoubleOptional -> TODO()
-        }
-    }
-
-    companion object : ParserNodeDeclaration<CandidTypePrincipal> by reflective()
-}

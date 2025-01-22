@@ -1,9 +1,30 @@
-package com.bity.icp_kotlin_kit.file_parser.candid_parser
+package com.bity.icp_kotlin_kit.data.service.candid
 
+import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParserCommon.fileLexer
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeDefinition
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.Token
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBool
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeCustom
+import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidTypeDefinition
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt16
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt32
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt8
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat16
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat32
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat64
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat8
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypePrincipal
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeRecord
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeText
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVariant
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVec
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.OptionalType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.*
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
 import guru.zoroark.tegral.niwen.parser.dsl.expect
@@ -15,7 +36,7 @@ import guru.zoroark.tegral.niwen.parser.dsl.or
 import guru.zoroark.tegral.niwen.parser.dsl.repeated
 import guru.zoroark.tegral.niwen.parser.dsl.self
 
-internal object CandidTypeParser {
+internal class CandidTypeParserServiceImpl : CandidTypeParserService {
 
     private val typeParser = niwenParser {
 
@@ -70,7 +91,7 @@ internal object CandidTypeParser {
         }
 
         CandidTypeCustom {
-             either {
+            either {
                 expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
                 optional {
@@ -709,9 +730,10 @@ internal object CandidTypeParser {
         }
     }
 
-    fun parseCandidType(typeDefinition: String): CandidTypeDefinition {
-        // CandidParserCommon.debug(typeDefinition)
-        return typeParser.parse(fileLexer.tokenize(typeDefinition))
-    }
+    override fun isCandidTypeDefinition(content: String): Boolean =
+        content.matches("""type\s+\w+\s*=\s*(?!service\b)\w+""".toRegex())
+
+    override fun parseCandidType(candidType: String): CandidTypeDefinition =
+        typeParser.parse(fileLexer.tokenize(candidType))
 
 }
