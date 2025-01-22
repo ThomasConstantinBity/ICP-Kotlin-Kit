@@ -12,7 +12,7 @@ internal data class CandidTypeCustom(
 
     override fun shouldDeclareInnerClass(): Boolean = false
 
-    override fun getKotlinClassName(): String = typeDefinition
+    override fun getKotlinClassName(candidTypeDefinitionId: String?): String = typeDefinition
 
     override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
         val typealiasDefinition = "typealias $candidTypeDefinitionId = "

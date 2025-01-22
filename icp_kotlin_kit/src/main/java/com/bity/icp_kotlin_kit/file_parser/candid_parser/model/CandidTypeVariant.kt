@@ -10,7 +10,7 @@ internal data class CandidTypeVariant(
     val candidTypes: List<CandidType>
 ): CandidType() {
 
-    override fun getKotlinClassName(): String {
+    override fun getKotlinClassName(candidTypeDefinitionId: String?): String {
         requireNotNull(typeId)
         return typeId.replaceFirstChar { it.uppercase() }
     }

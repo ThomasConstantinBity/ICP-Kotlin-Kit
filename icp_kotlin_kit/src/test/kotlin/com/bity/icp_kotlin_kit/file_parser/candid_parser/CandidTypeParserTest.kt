@@ -9,16 +9,6 @@ import kotlin.test.assertEquals
 
 class CandidTypeParserTest {
 
-
-
-    @Test
-    fun `canister_status from OrigynNFT file`() {
-        val input = """
-            
-        """.trimIndent()
-        CandidTypeParser.parseCandidType(input)
-    }
-
     @Test
     fun `AskFeature from OrigynNFT file`() {
         val input = """
@@ -45,18 +35,9 @@ class CandidTypeParserTest {
     }
 
     @Test
-    fun `AskSubscribeResponse from OrigynNFT file`() {
-        val input = "type AskSubscribeResponse = bool;"
-        CandidTypeParser.parseCandidType(input)
-    }
-
-    @Test
     fun `ApprovalResult from OrigynNFT file`() {
         val input = """
-            type ApprovalResult = vec record {
-              token_id : nat;
-              approval_result : variant { Ok : nat; Err : ApprovalError };
-            };
+
         """.trimIndent()
         CandidTypeParser.parseCandidType(input)
     }

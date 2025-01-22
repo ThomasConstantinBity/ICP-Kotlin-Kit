@@ -14,13 +14,17 @@ internal data class CandidTypeVec(
         vecType.shouldDeclareInnerClass()
 
     override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
-        val typealiasDefinition = "typealias $candidTypeDefinitionId = "
-        val className = vecType.getKotlinClassName()
-        return when(optionalType) {
-            OptionalType.None -> "$typealiasDefinition Array<$className>"
-            OptionalType.Optional -> "$typealiasDefinition Array<${className}>?"
+        val typealiasBaseDefinition = "typealias $candidTypeDefinitionId = "
+        val className = vecType.getKotlinClassName(candidTypeDefinitionId)
+        val typealiasDefinition = when(optionalType) {
+            OptionalType.None -> "$typealiasBaseDefinition Array<$className>"
+            OptionalType.Optional -> "$typealiasBaseDefinition Array<${className}>?"
             OptionalType.DoubleOptional -> TODO()
         }
+        return if(vecType.shouldDeclareInnerClass()) {
+            val classDefinition = vecType.getKotlinDefinition(className)
+            return "$typealiasDefinition\n$classDefinition"
+        } else typealiasDefinition
     }
 
     override fun getKotlinVariableType(): String {

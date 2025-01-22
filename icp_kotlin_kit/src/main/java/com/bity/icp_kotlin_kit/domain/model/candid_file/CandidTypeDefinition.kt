@@ -11,7 +11,7 @@ internal data class CandidTypeDefinition(
 
     fun getKotlinDefinition(): String = candidType.getKotlinDefinition(id)
 
-    fun getKotlinClassDefinition(): String = candidType.getKotlinClassDefinition(id)
+    fun getKotlinClassDefinition(): String = candidType.getKotlinDefinition(id)
 
     companion object : ParserNodeDeclaration<CandidTypeDefinition> by reflective()
 }

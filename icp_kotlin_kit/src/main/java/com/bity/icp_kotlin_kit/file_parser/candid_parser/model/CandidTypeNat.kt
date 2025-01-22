@@ -13,5 +13,11 @@ internal class CandidTypeNat(
 
     override fun getKotlinVariableType(): String = "BigInteger"
 
+    override fun getKotlinDefinitionForSealedClass(className: String): String {
+        val sealedClassName = typeId ?: throw RuntimeException("Unable to get sealed class name for $this")
+        val variableName = if(typeName != null) TODO() else "natValue"
+        return "data class ${sealedClassName}(val $variableName: BigInteger): $className()"
+    }
+
     companion object : ParserNodeDeclaration<CandidTypeNat> by reflective()
 }

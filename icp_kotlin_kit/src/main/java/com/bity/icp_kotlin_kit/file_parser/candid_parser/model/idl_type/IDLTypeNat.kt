@@ -13,7 +13,7 @@ internal class IDLTypeNat(
     id = id,
     isOptional = isOptional
 ) {
-    companion object : ParserNodeDeclaration<IDLTypeNat> by reflective()
-
     override fun typeVariable(className: String?): String = "BigInteger"
+
+    companion object : ParserNodeDeclaration<IDLTypeNat> by reflective()
 }

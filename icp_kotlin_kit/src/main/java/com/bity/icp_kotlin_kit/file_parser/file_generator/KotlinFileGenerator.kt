@@ -62,7 +62,7 @@ class KotlinFileGenerator(
             .forEach { candidParsedType ->
                 writeCandidDefinition(candidParsedType.candidDefinition)
                 val kotlinClassDefinition = candidParsedType.candidTypeDefinition
-                    .candidType.getKotlinClassDefinition(candidParsedType.candidTypeDefinition.id)
+                    .candidType.getKotlinDefinition(candidParsedType.candidTypeDefinition.id)
                 kotlinClassDefinition.split("\n")
                     .forEach { line ->
                         kotlinFileText.appendLine("\t$line")

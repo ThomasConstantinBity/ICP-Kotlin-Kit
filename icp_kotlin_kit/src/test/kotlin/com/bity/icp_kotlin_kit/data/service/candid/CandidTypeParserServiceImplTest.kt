@@ -13,17 +13,24 @@ class CandidTypeParserServiceImplTest {
     @MethodSource("origynNFT")
     fun origynNFTType(
         typeDefinition: String,
-        expectedGeneratedCLas: String
+        expectedGeneratedClass: String
     ) {
         val candidTypeDefinition = candidTypeParserService.parseCandidType(typeDefinition)
         val kotlinDefinition = candidTypeDefinition.getKotlinDefinition()
         assertEquals(
-            expected = expectedGeneratedCLas
+            expected = expectedGeneratedClass
                 .replace("""\s+|\t+""".toRegex(), " ")
                 .trim(),
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
-                .trim()
+                .trim(),
+            message = """
+                Expected:
+                $expectedGeneratedClass
+                
+                Actual:
+                $kotlinDefinition
+            """.trimIndent()
         )
     }
 
@@ -80,6 +87,32 @@ class CandidTypeParserServiceImplTest {
                             object stopped: Status()
                             object stopping: Status()
                             object running: Status()
+                        }
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                "type AskSubscribeResponse = bool;",
+                "typealias AskSubscribeResponse = Boolean"
+            ),
+
+            Arguments.of(
+                """
+                    type ApprovalResult = vec record {
+                        token_id : nat;
+                        approval_result : variant { Ok : nat; Err : ApprovalError };
+                    };
+                """.trimIndent(),
+                """
+                    typealias ApprovalResult = Array<ApprovalResultValue>
+                    data class ApprovalResultValue(
+                        val token_id: BigInteger,
+                        val approval_result: Approval_result
+                    ) {
+                        sealed class Approval_result {
+                            data class Ok(val natValue: BigInteger): Approval_result()
+                            data class Err(val approvalError: ApprovalError): Approval_result()
                         }
                     }
                 """.trimIndent()

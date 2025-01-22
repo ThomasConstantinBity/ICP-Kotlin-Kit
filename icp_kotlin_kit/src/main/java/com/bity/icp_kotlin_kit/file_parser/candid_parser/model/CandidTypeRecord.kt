@@ -11,6 +11,11 @@ internal data class CandidTypeRecord(
     val candidTypes: List<CandidType>
 ): CandidType() {
 
+    override fun shouldDeclareInnerClass(): Boolean = true
+
+    override fun getKotlinClassName(candidTypeDefinitionId: String?): String =
+        if(typeId != null) TODO() else "${candidTypeDefinitionId}Value"
+
     override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
         val dataClassDefinition = StringBuilder("data class $candidTypeDefinitionId(")
         val classVariables = candidTypes.joinToString(
@@ -29,7 +34,7 @@ internal data class CandidTypeRecord(
             val innerClassesDefinition = innerClassesToDeclare.joinToString(
                 prefix = "\n\t\t",
                 separator = "\n\t\t"
-            ) { it.getKotlinClassDefinition(it.getKotlinClassName()) }
+            ) { it.getKotlinDefinition(it.getKotlinClassName()) }
             dataClassDefinition.appendLine(innerClassesDefinition)
             dataClassDefinition.appendLine("}")
         } else {
