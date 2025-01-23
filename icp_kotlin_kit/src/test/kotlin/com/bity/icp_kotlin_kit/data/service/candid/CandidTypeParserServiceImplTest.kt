@@ -116,6 +116,11 @@ class CandidTypeParserServiceImplTest {
                         }
                     }
                 """.trimIndent()
+            ),
+
+            Arguments.of(
+                "type BidConfigShared = opt vec BidFeature;",
+                "typealias BidConfigShared = Array<BidFeature>?"
             )
         )
 

@@ -35,20 +35,6 @@ class CandidTypeParserTest {
     }
 
     @Test
-    fun `ApprovalResult from OrigynNFT file`() {
-        val input = """
-
-        """.trimIndent()
-        CandidTypeParser.parseCandidType(input)
-    }
-
-    @Test
-    fun `BidConfigShared from OrigynNFT file`() {
-        val input = "type BidConfigShared = opt vec BidFeature;"
-        CandidTypeParser.parseCandidType(input)
-    }
-
-    @Test
     fun `AskSubscribeRequest from OrigynNFT file`() {
         val input = """
             type AskSubscribeRequest = variant {
