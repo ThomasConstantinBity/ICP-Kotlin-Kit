@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.cryptography
 
+import com.bity.icp_kotlin_kit.domain.model.ICPDomainSeparator
 import org.bouncycastle.asn1.sec.SECNamedCurves
 import org.bouncycastle.asn1.x9.X9IntegerConverter
 import org.bouncycastle.crypto.digests.SHA256Digest
@@ -24,10 +25,27 @@ object EllipticSign {
         HALF_CURVE_ORDER = params.n.shiftRight(1)
     }
 
-    operator fun invoke(messageToSign: ByteArray, privateKey: BigInteger): ByteArray {
+    operator fun invoke(
+        message: ByteArray,
+        domain: String,
+        key: BigInteger
+    ): ByteArray {
+        val icpDomain = ICPDomainSeparator(domain)
+        val domainSeparatedData = icpDomain.domainSeparatedData(message)
+        val hashedMessage = SHA256.sha256(domainSeparatedData)
+        return signMessage(
+            messageToSign = hashedMessage,
+            privateKey = key
+        )
+    }
+
+    private fun signMessage(
+        messageToSign: ByteArray,
+        privateKey: BigInteger
+    ): ByteArray {
         val signer = ECDSASigner(HMacDSAKCalculator(SHA256Digest()))
-        val privKeyParams = ECPrivateKeyParameters(privateKey, CURVE)
-        signer.init(true, privKeyParams)
+        val privateKeyParams = ECPrivateKeyParameters(privateKey, CURVE)
+        signer.init(true, privateKeyParams)
         val components = signer.generateSignature(messageToSign)
 
         val r = components[0]

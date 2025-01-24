@@ -8,5 +8,5 @@ sealed class ICPTokenTransactionDestination(
     data class AccountId(val accountId: String):
             ICPTokenTransactionDestination(accountId)
     data class Account(val icpAccount: ICPAccount):
-            ICPTokenTransactionDestination(icpAccount.textualRepresentation())
+            ICPTokenTransactionDestination(icpAccount.getTextualRepresentation())
 }
