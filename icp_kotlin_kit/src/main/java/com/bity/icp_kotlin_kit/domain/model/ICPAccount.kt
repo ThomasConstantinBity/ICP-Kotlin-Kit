@@ -37,6 +37,5 @@ class ICPAccount(
                 principal = principal,
                 subAccountId = DEFAULT_SUB_ACCOUNT_ID
             )
-        
     }
 }
