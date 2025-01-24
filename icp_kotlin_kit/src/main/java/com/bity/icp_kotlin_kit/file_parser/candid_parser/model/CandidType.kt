@@ -5,9 +5,11 @@ import guru.zoroark.tegral.niwen.parser.dsl.subtype
 
 internal sealed class CandidType {
 
-    abstract val typeId: String?
+    abstract val typeId: String
     abstract val typeName: String?
     abstract val optionalType: OptionalType
+
+    open fun isTypealiasDefinition(): Boolean = true
 
     /**
      * Called from CandidTypeDefinition

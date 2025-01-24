@@ -6,7 +6,6 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.Token
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBool
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeCustom
-import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidTypeDefinition
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat64
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt
@@ -40,15 +39,10 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
 
     private val typeParser = niwenParser {
 
-        CandidTypeDefinition root {
+        CandidType root {
             expect(Token.Type)
-            expect(Token.Id) storeIn CandidTypeDefinition::id
+            expect(Token.Id) storeIn CandidType::typeId
             expect(Token.Equals)
-            expect(CandidType) storeIn CandidTypeDefinition::candidType
-            optional { expect(Token.Semi) }
-        }
-
-        CandidType {
             either {
                 expect(CandidTypeVariant) storeIn self()
             } or {
@@ -731,9 +725,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
     }
 
     override fun isCandidTypeDefinition(content: String): Boolean =
-        content.matches("""type\s+\w+\s*=\s*(?!service\b)\w+""".toRegex())
+        content.startsWith(prefix = "type", ignoreCase = true)
 
-    override fun parseCandidType(candidType: String): CandidTypeDefinition =
+    override fun parseCandidType(candidType: String): CandidType =
         typeParser.parse(fileLexer.tokenize(candidType))
 
 }

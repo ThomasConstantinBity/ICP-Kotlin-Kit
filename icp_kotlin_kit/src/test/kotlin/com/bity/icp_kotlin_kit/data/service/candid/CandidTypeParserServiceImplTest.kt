@@ -15,7 +15,8 @@ class CandidTypeParserServiceImplTest {
         typeDefinition: String,
         expectedGeneratedClass: String
     ) {
-        val candidTypeDefinition = candidTypeParserService.parseCandidType(typeDefinition)
+        TODO()
+       /* val candidTypeDefinition = candidTypeParserService.parseCandidType(typeDefinition)
         val kotlinDefinition = candidTypeDefinition.getKotlinDefinition()
         assertEquals(
             expected = expectedGeneratedClass
@@ -31,7 +32,7 @@ class CandidTypeParserServiceImplTest {
                 Actual:
                 $kotlinDefinition
             """.trimIndent()
-        )
+        )*/
     }
 
     companion object {

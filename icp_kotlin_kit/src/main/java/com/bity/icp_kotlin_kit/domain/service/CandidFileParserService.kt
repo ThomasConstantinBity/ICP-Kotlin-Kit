@@ -1,7 +1,5 @@
 package com.bity.icp_kotlin_kit.domain.service
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_file.IDLFileType
-
-internal interface CandidFileParserService {
-
+interface CandidFileParserService {
+    fun parseCandidFile(candidContent: String): String
 }

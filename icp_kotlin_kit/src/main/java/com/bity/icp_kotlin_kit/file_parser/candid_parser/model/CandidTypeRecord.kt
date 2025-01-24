@@ -5,7 +5,7 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeRecord(
-    override val typeId: String? = null,
+    override val typeId: String,
     override var typeName: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
     val candidTypes: List<CandidType>

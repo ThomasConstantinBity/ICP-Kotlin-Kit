@@ -59,7 +59,7 @@ class KotlinFileGenerator(
                 it.candidTypeDefinition.candidType !is CandidTypeVariant
                         || it.candidTypeDefinition.candidType !is CandidTypeRecord
             } */
-            .forEach { candidParsedType ->
+            /*.forEach { candidParsedType ->
                 writeCandidDefinition(candidParsedType.candidDefinition)
                 val kotlinClassDefinition = candidParsedType.candidTypeDefinition
                     .candidType.getKotlinDefinition(candidParsedType.candidTypeDefinition.id)
@@ -67,7 +67,7 @@ class KotlinFileGenerator(
                     .forEach { line ->
                         kotlinFileText.appendLine("\t$line")
                     }
-            }
+            }*/
     }
 
     private fun writeServiceClass() {
