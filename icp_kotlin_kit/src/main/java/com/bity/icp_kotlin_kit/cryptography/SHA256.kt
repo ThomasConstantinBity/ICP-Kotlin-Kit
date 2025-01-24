@@ -7,6 +7,7 @@ object SHA256 {
     private const val SHA_256_ALGORITHM_NAME = "SHA-256"
 
     private val messageDigest = MessageDigest.getInstance(SHA_256_ALGORITHM_NAME)
+
     fun sha256(data: ByteArray): ByteArray =
         messageDigest.digest(data)
 
