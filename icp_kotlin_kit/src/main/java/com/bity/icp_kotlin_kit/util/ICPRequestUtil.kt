@@ -58,14 +58,12 @@ internal object ICPRequestUtil {
         content: ContentApiModel,
         sender: ICPSigningPrincipal?
     ): ICPRequestEnvelope {
-
-        requireNotNull(sender) {
-            return ICPRequestEnvelope(content)
-        }
-
+        sender ?: return ICPRequestEnvelope(content)
         val requestId = content.calculateRequestId()
-        val domainSeparatedData = ICPDomainSeparator("ic-request").domainSeparatedData(requestId)
-        val senderSignature = sender.sign(domainSeparatedData)
+        val senderSignature = sender.sign(
+            message = requestId,
+            domain = "ic-request"
+        )
         val senderPublicKey = DER.serialise(sender.rawPublicKey)
         return ICPRequestEnvelope(
             content,
