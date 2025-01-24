@@ -1,12 +1,12 @@
 package com.bity.icp_kotlin_kit.candid
 
-import com.bity.icp_kotlin_kit.candid.deserializer.CandidDeserializer
-import com.bity.icp_kotlin_kit.candid.model.CandidRecord
-import com.bity.icp_kotlin_kit.candid.model.CandidType
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
-import com.bity.icp_kotlin_kit.candid.model.CandidVariant
-import com.bity.icp_kotlin_kit.candid.model.CandidVector
-import com.bity.icp_kotlin_kit.candid.serializer.CandidSerializer
+import com.bity.icp_kotlin_kit.data.model.candid.deserializer.CandidDeserializer
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
+import com.bity.icp_kotlin_kit.data.model.candid.serializer.CandidSerializer
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest

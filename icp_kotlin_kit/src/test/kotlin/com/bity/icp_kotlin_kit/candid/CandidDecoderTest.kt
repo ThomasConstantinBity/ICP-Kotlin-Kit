@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.candid
 
-import com.bity.icp_kotlin_kit.candid.model.CandidRecord
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
-import com.bity.icp_kotlin_kit.candid.model.CandidVector
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -20,7 +20,7 @@ internal class CandidDecoderTest {
     ) {
         assertEquals(
             expectedResult,
-            CandidDecoder.decode(candidValue)
+            com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(candidValue)
         )
     }
 
@@ -32,7 +32,7 @@ internal class CandidDecoderTest {
     ) {
         assertEquals(
             expectedResult,
-            CandidDecoder.decode(candidValue)
+            com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode(candidValue)
         )
     }
 
@@ -44,7 +44,7 @@ internal class CandidDecoderTest {
                 listOf(CandidValue.Bool(true))
             )
         )
-        val list = CandidDecoder.decode<Array<Boolean>>(vector)
+        val list = com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode<Array<Boolean>>(vector)
         assertEquals(1, list?.size)
         assertTrue(list?.first() == true)
     }
@@ -63,7 +63,7 @@ internal class CandidDecoderTest {
                 )
             )
         )
-        val decoded = CandidDecoder.decode<QueryBlocksResponse>(candidValue)
+        val decoded = com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decode<QueryBlocksResponse>(candidValue)
         assertEquals(
             13786000UL,
             decoded?.chain_length

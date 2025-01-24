@@ -6,7 +6,7 @@ import com.bity.icp_kotlin_kit.cryptography.SHA224
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 
 // Source:  from https://internetcomputer.org/docs/current/references/ic-interface-spec/#principal
-class ICPPrincipal private constructor(
+class ICPPrincipal internal constructor(
     val bytes: ByteArray,
     val string: String
 ) {

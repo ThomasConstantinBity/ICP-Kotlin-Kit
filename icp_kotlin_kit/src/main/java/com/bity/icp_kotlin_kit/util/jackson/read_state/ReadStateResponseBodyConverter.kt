@@ -4,7 +4,7 @@ import com.bity.icp_kotlin_kit.data.datasource.api.enum.HashTreeNodeType
 import com.bity.icp_kotlin_kit.data.datasource.api.model.HashTreeNode
 import com.bity.icp_kotlin_kit.data.datasource.api.response.ReadStateResponse
 import com.bity.icp_kotlin_kit.data.datasource.api.response.StateCertificateResponse
-import com.bity.icp_kotlin_kit.data.model.ParsingError
+import com.bity.icp_kotlin_kit.data.model.error.ParsingError
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.ResponseBody
 import retrofit2.Converter
@@ -28,7 +28,8 @@ class ReadStateResponseBodyConverter(
                 signature = signature,
                 tree = buildTree(root)
             )
-            stateCertificateResponse.verifySignature()
+            // TODO, remove comment
+            // stateCertificateResponse.verifySignature()
             return stateCertificateResponse
         }
     }

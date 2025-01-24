@@ -17,3 +17,6 @@ fun Long.Companion.readFrom(stream: InputStream): Long {
     byteArray.reverse()
     return byteArray.toLong()
 }
+
+internal fun Long.toICPTimestamp(): ULong =
+    toULong().times(1_000_000UL)

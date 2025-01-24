@@ -1,15 +1,15 @@
 package com.bity.icp_kotlin_kit.domain.usecase.token
 
+import com.bity.icp_kotlin_kit.di.tokenRepository
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
-import com.bity.icp_kotlin_kit.provideTokenRepository
 
-class GetAllTokensUseCase private constructor(
-    private val tokenRepository: TokenRepository
+class GetAllTokensUseCase internal constructor(
+    private val repository: TokenRepository
 ) {
 
-    constructor(): this(provideTokenRepository())
+    constructor(): this(tokenRepository)
 
     suspend operator fun invoke(): List<ICPToken> =
-        tokenRepository.getAllTokens()
+        repository.getAllTokens()
 }

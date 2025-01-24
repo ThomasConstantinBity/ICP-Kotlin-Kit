@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.candid.deserializer
 
-import com.bity.icp_kotlin_kit.candid.serializer.CandidSerializer
+import com.bity.icp_kotlin_kit.data.model.candid.deserializer.CandidDeserializer
+import com.bity.icp_kotlin_kit.data.model.candid.serializer.CandidSerializer
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

@@ -1,15 +1,15 @@
 package com.bity.icp_kotlin_kit.domain.usecase.token
 
+import com.bity.icp_kotlin_kit.di.tokenRepository
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
-import com.bity.icp_kotlin_kit.provideTokenRepository
 import java.math.BigInteger
 
-class GetTokenFeeUseCase private constructor(
-    private val tokenRepository: TokenRepository
+class GetTokenFeeUseCase internal constructor(
+    private val repository: TokenRepository
 ){
-    constructor(): this(provideTokenRepository())
+    constructor(): this(tokenRepository)
 
     suspend operator fun invoke(token: ICPToken): BigInteger =
-        tokenRepository.fee(token)
+        repository.fee(token)
 }

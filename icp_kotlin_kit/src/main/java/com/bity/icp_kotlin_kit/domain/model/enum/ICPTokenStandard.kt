@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model.enum
 
-import com.bity.icp_kotlin_kit.data.model.DABTokenException
+import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
 
 enum class ICPTokenStandard {
     DIP20,

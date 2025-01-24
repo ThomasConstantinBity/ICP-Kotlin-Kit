@@ -1,10 +1,13 @@
 package com.bity.icp_kotlin_kit.data.remote.transaction_provider
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1IndexCanister.GetAccountTransactionsArgs
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
+import com.bity.icp_kotlin_kit.domain.model.error.TransactionException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
@@ -16,10 +19,11 @@ class ICPICRC1IndexTransactionProvider(
     private val indexCanister: ICPPrincipal
 ): ICPTransactionProvider {
 
+    // TODO, need to update
     override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = GetAccountTransactionsArgs(
             account = ICRC1IndexCanister.Account(
-                owner = account.principal,
+                owner = account.principal.toDataModel(),
                 subaccount = account.subAccountId
             ),
             start = null,
@@ -28,7 +32,8 @@ class ICPICRC1IndexTransactionProvider(
         val transactions = ICRC1IndexCanister.ICRC1IndexCanisterService(indexCanister)
             .get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
-            is ICRC1IndexCanister.GetTransactionsResult.Err -> TODO()
+            is ICRC1IndexCanister.GetTransactionsResult.Err ->
+                throw TransactionException.ICRC1GetAllTransactionsException(transactions.getTransactionsErr.message)
             is ICRC1IndexCanister.GetTransactionsResult.Ok ->
                 transactions.getTransactions.transactions.mapNotNull { it.toDataModel() }
         }
@@ -40,7 +45,8 @@ class ICPICRC1IndexTransactionProvider(
         val amount: BigInteger
         val fee: BigInteger
         val spender: ICPTokenTransactionDestination?
-        val created: Long?
+        val created: ULong?
+        val icrc1Memo: ByteArray?
 
         when {
             transaction.burn != null -> {
@@ -51,7 +57,8 @@ class ICPICRC1IndexTransactionProvider(
                 amount = burn.amount
                 fee = BigInteger.ZERO
                 spender = burn.spender?.let { getDestinationAccount(it) }
-                created = burn.created_at_time?.toLong()
+                created = burn.created_at_time
+                icrc1Memo = burn.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.approve != null -> {
@@ -64,7 +71,8 @@ class ICPICRC1IndexTransactionProvider(
                 amount = approve.amount
                 fee = BigInteger.ZERO
                 spender = getDestinationAccount(approve.spender)
-                created = approve.created_at_time?.toLong()
+                created = approve.created_at_time
+                icrc1Memo = approve.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.transfer != null -> {
@@ -76,7 +84,8 @@ class ICPICRC1IndexTransactionProvider(
                 amount = transfer.amount
                 fee = transfer.fee ?: BigInteger.ZERO
                 spender = transfer.spender?.let { getDestinationAccount(it) }
-                created = transfer.created_at_time?.toLong()
+                created = transfer.created_at_time
+                icrc1Memo = transfer.memo?.map { it.toByte() }?.toByteArray()
             }
 
             transaction.mint != null -> {
@@ -87,7 +96,8 @@ class ICPICRC1IndexTransactionProvider(
                 amount = mint.amount
                 fee = BigInteger.ZERO
                 spender = null
-                created = mint.created_at_time?.toLong()
+                created = mint.created_at_time
+                icrc1Memo = mint.memo?.map { it.toByte() }?.toByteArray()
             }
 
             else -> return null
@@ -96,11 +106,12 @@ class ICPICRC1IndexTransactionProvider(
         return ICPTokenTransaction(
             blockIndex = id,
             operation = operation,
+            icrc1Memo = icrc1Memo,
             memo = null,
             amount = amount,
             fee = fee,
-            created = created,
-            timeStamp = transaction.timestamp.toLong(),
+            createdNanos = created,
+            timeStampNanos = transaction.timestamp,
             spender = spender,
             token = icpToken
         )
@@ -109,7 +120,7 @@ class ICPICRC1IndexTransactionProvider(
     private fun getDestinationAccount(account: ICRC1IndexCanister.Account): ICPTokenTransactionDestination.Account {
         return ICPTokenTransactionDestination.Account(
             icpAccount = ICPAccount(
-                principal = account.owner,
+                principal = account.owner.toDomainModel(),
                 subAccountId = account.subaccount ?: ICPAccount.DEFAULT_SUB_ACCOUNT_ID
             )
         )

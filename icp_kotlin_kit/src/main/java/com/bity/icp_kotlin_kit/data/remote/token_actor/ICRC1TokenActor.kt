@@ -7,7 +7,9 @@ import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer
 import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.ICRC1TokenException
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
+import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.provider.ICPTokenActor
+import com.bity.icp_kotlin_kit.util.ext_function.toICPTimestamp
 import java.math.BigInteger
 
 internal class ICRC1TokenActor(
@@ -16,7 +18,7 @@ internal class ICRC1TokenActor(
 
     override suspend fun getBalance(principal: ICPPrincipal): BigInteger {
         val account = ICRC1.Account(
-            owner = principal,
+            owner = principal.toDataModel(),
             subaccount = null
         )
         return service.icrc1_balance_of(account)
@@ -35,13 +37,13 @@ internal class ICRC1TokenActor(
         val transferArgs = ICRC1.TransferArgs(
             from_subaccount = args.from.subAccountId,
             to = ICRC1.Account(
-                owner = args.to.principal,
+                owner = args.to.principal.toDataModel(),
                 subaccount = args.to.subAccountId
             ),
             amount = args.amount,
             fee = args.fee,
-            memo = args.memo?.toByteArray(Charsets.UTF_8),
-            created_at_time = args.createdAtTime?.toULong()
+            memo = args.icrc1Memo,
+            created_at_time = args.createdAtMillis?.toICPTimestamp()
         )
         val transferResult = service.icrc1_transfer(
             transferArgs = transferArgs,

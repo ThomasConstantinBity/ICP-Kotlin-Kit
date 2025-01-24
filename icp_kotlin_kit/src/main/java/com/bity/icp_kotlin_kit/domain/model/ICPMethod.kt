@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model
 
-import com.bity.icp_kotlin_kit.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPMethodApiModel
 
 internal class ICPMethod(

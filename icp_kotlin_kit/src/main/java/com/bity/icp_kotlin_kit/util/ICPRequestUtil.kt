@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.util
 
-import com.bity.icp_kotlin_kit.candid.serializer.CandidSerializer
 import com.bity.icp_kotlin_kit.domain.model.ICPDomainSeparator
 import com.bity.icp_kotlin_kit.cryptography.DER
 import com.bity.icp_kotlin_kit.cryptography.secureRandomOfLength
@@ -10,6 +9,7 @@ import com.bity.icp_kotlin_kit.data.datasource.api.model.ContentApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPRequestApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ReadStateApiModel
 import com.bity.icp_kotlin_kit.data.datasource.api.request.ICPRequestEnvelope
+import com.bity.icp_kotlin_kit.data.model.candid.serializer.CandidSerializer
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import java.time.Duration

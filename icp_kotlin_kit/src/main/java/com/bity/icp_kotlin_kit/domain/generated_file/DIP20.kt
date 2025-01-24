@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.generated_file
 
-import com.bity.icp_kotlin_kit.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import java.math.BigInteger
-import com.bity.icp_kotlin_kit.domain.ICPQuery
+import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -42,7 +42,7 @@ object DIP20 {
         val totalSupply: BigInteger,
 
         // token owner
-        val owner: ICPPrincipal,
+        val owner: ICPPrincipalApiModel,
 
         // fee for update calls
         val fee: BigInteger
@@ -144,15 +144,15 @@ object DIP20 {
      * };
      */
     class TxRecord(
-        val caller: ICPPrincipal?,
+        val caller: ICPPrincipalApiModel?,
 
         // operation type
         val op: Operation,
 
         // transaction index
         val index: BigInteger,
-        val from: ICPPrincipal,
-        val to: ICPPrincipal,
+        val from: ICPPrincipalApiModel,
+        val to: ICPPrincipalApiModel,
         val amount: BigInteger,
         val fee: BigInteger,
         val timestamp: TimeStamp,
@@ -182,7 +182,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -204,7 +204,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -226,7 +226,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -248,7 +248,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -270,7 +270,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -278,7 +278,7 @@ object DIP20 {
          */
         // Returns the balance of user who.
         suspend fun balanceOf (
-            who: ICPPrincipal,
+            who: ICPPrincipalApiModel,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -293,7 +293,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -301,8 +301,8 @@ object DIP20 {
          */
         // Returns the amount which spender is still allowed to withdraw from owner.
         suspend fun allowance (
-            owner: ICPPrincipal,
-            spender: ICPPrincipal,
+            owner: ICPPrincipalApiModel,
+            spender: ICPPrincipalApiModel,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -317,7 +317,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -339,7 +339,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -361,7 +361,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -385,7 +385,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -411,7 +411,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -422,7 +422,7 @@ object DIP20 {
         // The range [start, start + limit) here pertains to the transactions of user who.
         // Implementations are allowed to return less TxRecords than requested to fend off DoS attacks.
         suspend fun getUserTransactions (
-            who: ICPPrincipal,
+            who: ICPPrincipalApiModel,
             start: BigInteger,
             limit: BigInteger,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
@@ -439,7 +439,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -447,7 +447,7 @@ object DIP20 {
          */
         // Returns total number of transactions related to the user who.
         suspend fun getUserTransactionAmount (
-            who: ICPPrincipal,
+            who: ICPPrincipalApiModel,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -462,7 +462,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = certification
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -470,7 +470,7 @@ object DIP20 {
          */
         // Transfers value amount of tokens to user to, returns a TxReceipt which contains the transaction index or an error message.
         suspend fun transfer (
-            to: ICPPrincipal,
+            to: ICPPrincipalApiModel,
             value: BigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -485,7 +485,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -495,8 +495,8 @@ object DIP20 {
         // this method allows canister smart contracts to transfer tokens on your behalf,
         // it returns a TxReceipt which contains the transaction index or an error message.
         suspend fun transferFrom (
-            from: ICPPrincipal,
-            to: ICPPrincipal,
+            from: ICPPrincipalApiModel,
+            to: ICPPrincipalApiModel,
             value: BigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -511,7 +511,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
 
         /**
@@ -521,7 +521,7 @@ object DIP20 {
         // If it is called again it overwrites the current allowance with value.
         // There is no upper limit for value.
         suspend fun approve (
-            spender: ICPPrincipal,
+            spender: ICPPrincipalApiModel,
             value: BigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -536,7 +536,7 @@ object DIP20 {
                 pollingValues = pollingValues,
                 certification = ICPRequestCertification.Certified
             ).getOrThrow()
-            return CandidDecoder.decodeNotNull(result)
+            return com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder.decodeNotNull(result)
         }
     }
 }

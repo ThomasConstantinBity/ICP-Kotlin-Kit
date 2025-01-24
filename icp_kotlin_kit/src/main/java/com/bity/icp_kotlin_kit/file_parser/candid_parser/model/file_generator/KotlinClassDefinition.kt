@@ -14,6 +14,7 @@ internal sealed class KotlinClassDefinition(
     var inheritedClass: KotlinClassDefinition? = null
     val innerClasses: MutableList<KotlinClassDefinition> = mutableListOf()
 
+    // TODO, use private to restrict access?
     class TypeAlias(
         val typeAliasId: String,
         val type: IDLType,
