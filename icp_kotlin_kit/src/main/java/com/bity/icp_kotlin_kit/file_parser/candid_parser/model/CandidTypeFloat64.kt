@@ -5,11 +5,11 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeFloat64(
     override val typeId: String,
-    override val typeName: String? = null,
+    override val variableName: String?,
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun getKotlinVariableType(): String = "Float"
+    override val kotlinType: String = "Float"
 
     companion object : ParserNodeDeclaration<CandidTypeFloat64> by reflective()
 }

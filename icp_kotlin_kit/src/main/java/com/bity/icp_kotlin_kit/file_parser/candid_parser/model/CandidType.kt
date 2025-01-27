@@ -5,78 +5,37 @@ import guru.zoroark.tegral.niwen.parser.dsl.subtype
 
 internal sealed class CandidType {
 
-    abstract val typeId: String
-    abstract val typeName: String?
+    abstract val typeId: String?
+    abstract val variableName: String?
     abstract val optionalType: OptionalType
+    abstract val kotlinType: String
 
-    open fun isTypealiasDefinition(): Boolean = true
+    // TODO, make abstract
+    open val isTypeAlias: Boolean = false
 
-    /**
-     * Called from CandidTypeDefinition
-     * type <candidTYpeDefinitionId> = <candidTypeDefinition>
-     */
-    // TODO: make it abstract
-    open fun getKotlinDefinition(candidTypeDefinitionId: String): String =
-        "typealias $candidTypeDefinitionId = ${getKotlinVariableTypeWithOptionalDefinition()}"
+    // TODO, make abstract
+    open fun isKotlinTypealiasDefinition(): Boolean = variableName == null
 
-    // TODO: make it abstract
-    open fun getKotlinDefinitionForSealedClass(className: String): String =
+    // TODO, make abstract
+    open fun getKotlinDefinition(): String =
         TODO("Not implemented for $this")
 
-    // TODO: make it abstract
-    open fun shouldDeclareInnerClass(): Boolean = TODO("Not implemented for $this")
-
-    abstract fun getKotlinVariableType(): String
-
-    fun getVariableName(): String =
-        typeId ?: throw RuntimeException("Unable to get variable name for $this")
-
-    fun getKotlinVariableTypeWithOptionalDefinition(): String {
-        val variableType = getKotlinVariableType()
-        return when(optionalType) {
-            OptionalType.None -> variableType
-            OptionalType.Optional -> "$variableType?"
-            OptionalType.DoubleOptional -> "List<List<${variableType}?>>"
-        }
-    }
-
-    // TODO: throw error if not required for type
-    open fun getKotlinClassName(candidTypeDefinitionId: String? = null): String = TODO("Not implemented for $this")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    open fun getInnerClassesToDeclare(): List<CandidType> = emptyList()
-
-    open fun getTypealiasDefinition(className: String): String {
+    // TODO, make abstract
+    open fun getClassDefinitionForSealedClass(parentClassname: String): String =
         TODO("Not implemented for $this")
+
+    fun getTypealiasDefinition(): String {
+        require(isKotlinTypealiasDefinition())
+        requireNotNull(typeId)
+        return "typealias $typeId = ${getKotlinVariableType()}"
     }
 
-    fun getKotlinValueDefinition(): String {
-        val variableName = typeName ?: getVariableName()
-        val variableType = when(optionalType) {
-            OptionalType.None -> getKotlinVariableType()
-            OptionalType.Optional -> "${getKotlinVariableType()}?"
-            OptionalType.DoubleOptional -> "List<List<${getKotlinVariableType()}?>>"
+    fun getKotlinVariableType(): String =
+        when(optionalType) {
+            OptionalType.None -> kotlinType
+            OptionalType.Optional -> "$kotlinType?"
+            OptionalType.DoubleOptional -> "List<List<$kotlinType?>>"
         }
-        return "${variableName}: $variableType"
-    }
 
     companion object : ParserNodeDeclaration<CandidType> by subtype()
 }

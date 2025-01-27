@@ -26,7 +26,8 @@ internal data class CandidServiceFunction(
             // Define input args
             functionDefinition.appendLine()
             inputArgs.forEach {
-                functionDefinition.appendLine("\t${it.getKotlinValueDefinition()}")
+                TODO()
+                // functionDefinition.appendLine("\t${it.getKotlinValueDefinition()}")
             }
             functionDefinition.append(")")
         }
@@ -85,7 +86,7 @@ internal data class CandidServiceFunction(
 
     private fun getValueToEncodeDefinition(candidType: CandidType): String {
 
-        val argName = candidType.getVariableName()
+        val argName = TODO() // candidType.getVariableName()
         val expectedClass = candidType.getKotlinVariableType()
         val expectedClassNullable = if(candidType.optionalType == OptionalType.None) "false" else "true"
 

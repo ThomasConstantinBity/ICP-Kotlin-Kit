@@ -5,11 +5,11 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal class CandidTypeInt8(
     override val typeId: String,
-    override val typeName: String? = null,
+    override val variableName: String?,
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
-    override fun getKotlinVariableType(): String = "Byte"
+    override val kotlinType: String = "Byte"
 
     companion object : ParserNodeDeclaration<CandidTypeInt8> by reflective()
 }

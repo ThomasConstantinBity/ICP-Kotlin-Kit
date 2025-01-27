@@ -4,32 +4,38 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeCustom(
-    override val typeId: String,
-    override val typeName: String? = null,
+    override val typeId: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
-    val typeDefinition: String
+    override val variableName: String? = null,
+    val customTypeDefinition: String
 ): CandidType() {
 
-    override fun shouldDeclareInnerClass(): Boolean = false
+    override val kotlinType: String = customTypeDefinition
+    override fun getClassDefinitionForSealedClass(parentClassname: String): String {
+        return "object $customTypeDefinition: $parentClassname()"
+    }
 
-    override fun getKotlinClassName(candidTypeDefinitionId: String?): String = typeDefinition
+    // override fun shouldDeclareInnerClass(): Boolean = false
 
-    override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
-        val typealiasDefinition = "typealias $candidTypeDefinitionId = "
+    // override fun getKotlinClassName(candidTypeDefinitionId: String?): String = TODO() // customTypeDefinition
+
+    /*override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
+        TODO()
+        *//*val typealiasDefinition = "typealias $candidTypeDefinitionId = "
         return when(optionalType) {
-            OptionalType.None -> "$typealiasDefinition $typeDefinition"
-            OptionalType.Optional -> "$typealiasDefinition $typeDefinition?"
+            OptionalType.None -> "$typealiasDefinition $customTypeDefinition"
+            OptionalType.Optional -> "$typealiasDefinition $customTypeDefinition?"
             OptionalType.DoubleOptional -> TODO()
-        }
-    }
-    override fun getKotlinVariableType(): String = typeDefinition
+        }*//*
+    }*/
+    /*override fun getKotlinVariableType(): String =
+        when(optionalType) {
+            OptionalType.None -> customTypeDefinition
+            OptionalType.Optional -> "$customTypeDefinition?"
+            OptionalType.DoubleOptional -> "List<List<$customTypeDefinition?>>"
+        }*/
 
-    override fun getKotlinDefinitionForSealedClass(className: String): String {
-        return when {
-            typeId == null -> "object $typeDefinition: $className()"
-            else -> "data class $typeId(val ${typeDefinition.replaceFirstChar { it.lowercase() }}: $typeDefinition): $className()"
-        }
-    }
+    // override fun getKotlinDefinitionForSealedClass(className: String): String = TODO()
 
     companion object : ParserNodeDeclaration<CandidTypeCustom> by reflective()
 }

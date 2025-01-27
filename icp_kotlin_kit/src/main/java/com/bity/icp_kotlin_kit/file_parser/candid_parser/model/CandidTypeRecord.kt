@@ -5,13 +5,31 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeRecord(
-    override val typeId: String,
-    override var typeName: String? = null,
+    override val typeId: String? = null,
+    override val variableName: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
     val candidTypes: List<CandidType>
 ): CandidType() {
 
-    override fun shouldDeclareInnerClass(): Boolean = true
+    override val kotlinType: String
+        get() = TODO("Not yet implemented")
+
+    /*
+    override fun getKotlinVariableType(): String {
+        TODO()
+        /*when {
+            typeName == null -> {
+                val unnamedClassName = UnnamedClassHelper.getUnnamedClassName()
+                typeName = unnamedClassName
+                return unnamedClassName
+            }
+
+            else -> TODO()
+        }*/
+    }
+     */
+
+    /*override fun shouldDeclareInnerClass(): Boolean = true
 
     override fun getKotlinClassName(candidTypeDefinitionId: String?): String =
         if(typeId != null) TODO() else "${candidTypeDefinitionId}Value"
@@ -45,20 +63,7 @@ internal data class CandidTypeRecord(
 
     override fun getInnerClassesToDeclare(): List<CandidType> {
         return listOf(this)
-    }
-
-    override fun getKotlinVariableType(): String {
-
-        when {
-            typeName == null -> {
-                val unnamedClassName = UnnamedClassHelper.getUnnamedClassName()
-                typeName = unnamedClassName
-                return unnamedClassName
-            }
-
-            else -> TODO()
-        }
-    }
+    }*/
 
     companion object : ParserNodeDeclaration<CandidTypeRecord> by reflective()
 }

@@ -132,7 +132,7 @@ internal object CandidServiceParser {
         CandidTypeCustom {
             // TODO, add optional type
             either {
-                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
                     either {
                         expect(Token.Semi)
@@ -143,7 +143,7 @@ internal object CandidServiceParser {
             } or {
                 expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
-                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
             } or {
                 optional {
                     either {
@@ -154,7 +154,7 @@ internal object CandidServiceParser {
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     }
                 }
-                expect(Token.Id) storeIn CandidTypeCustom::typeDefinition
+                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
                     either {
                         expect(Token.RParen)

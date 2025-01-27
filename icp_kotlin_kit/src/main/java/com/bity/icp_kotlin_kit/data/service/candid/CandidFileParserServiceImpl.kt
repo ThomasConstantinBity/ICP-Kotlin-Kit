@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
-import com.bity.icp_kotlin_kit.domain.model.CandidParsedFile
+import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedFile
 import com.bity.icp_kotlin_kit.domain.service.CandidFileParserService
 import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
@@ -9,7 +9,7 @@ internal class CandidFileParserServiceImpl(
     private val candidTypeParserService: CandidTypeParserService
 ) : CandidFileParserService {
 
-    override fun parseCandidFile(candidContent: String): String {
+    override fun parseCandidFile(candidContent: String): CandidParsedFile {
 
         var string = candidContent.trimStart()
         val candidTypes = mutableListOf<CandidType>()
@@ -37,10 +37,10 @@ internal class CandidFileParserServiceImpl(
             string = string.substring(endIndex).trimStart()
         }
 
-        val candidParsedFile = CandidParsedFile(
+        return CandidParsedFile(
             candidTypes = candidTypes
         )
-        TODO()
+
     }
 
     private fun getEndDeclarationIndex(string: String): Int {

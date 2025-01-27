@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.model
+package com.bity.icp_kotlin_kit.domain.model.candid_file
 
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
 

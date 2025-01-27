@@ -4,15 +4,13 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeNat8(
-    override val typeId: String,
-    override val typeName: String? = null,
+    override val typeId: String? = null,
+    override val variableName: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun shouldDeclareInnerClass(): Boolean = false
-
-    override fun getKotlinVariableType(): String = "UByte"
-
+    override fun isKotlinTypealiasDefinition() = false
+    override val kotlinType: String = "UByte"
 
     companion object : ParserNodeDeclaration<CandidTypeNat8> by reflective()
 }
