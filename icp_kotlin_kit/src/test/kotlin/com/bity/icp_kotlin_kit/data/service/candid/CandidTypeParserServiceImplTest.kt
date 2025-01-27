@@ -150,6 +150,40 @@ class CandidTypeParserServiceImplTest {
                         class Principal(val icpPrincipalApiModel: ICPPrincipalApiModel): detail_value()
                     }
                 """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type operation_error = variant {
+                        NotAuthorized;
+                        NonExistentItem;
+                        BadParameters;
+                        Unknown : text;
+                    };
+                """.trimIndent(),
+                """
+                    sealed class operation_error {
+                        object NotAuthorized: operation_error()
+                        object NonExistentItem: operation_error()
+                        object BadParameters: operation_error()
+                        class Unknown(val textValue: String): operation_error()
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type operation_response = variant {
+                        Ok  : opt text;
+                        Err : operation_error;
+                    };
+                """.trimIndent(),
+                """
+                    sealed class operation_response {
+                        class Ok(val textValue: String?): operation_response()
+                        class Err(val operation_error: operation_error): operation_response()
+                    }
+                """.trimIndent()
             )
         )
 

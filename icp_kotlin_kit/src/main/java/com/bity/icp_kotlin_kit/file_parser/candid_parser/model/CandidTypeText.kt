@@ -13,7 +13,7 @@ internal data class CandidTypeText(
     override val kotlinType: String = "String"
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val textValue: $kotlinType"
+        val variableDefinition = "val textValue: ${getKotlinVariableType()}"
         return "class $typeId($variableDefinition): $parentClassname()"
     }
 

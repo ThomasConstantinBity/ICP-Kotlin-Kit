@@ -148,6 +148,10 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
 
             either {
                 optional {
+                    expect(Token.Id) storeIn CandidTypeCustom::typeId
+                    expect(Token.Colon)
+                }
+                optional {
                     either {
                         expect(Token.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType

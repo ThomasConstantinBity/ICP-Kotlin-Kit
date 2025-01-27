@@ -12,7 +12,13 @@ internal data class CandidTypeCustom(
 
     override val kotlinType: String = customTypeDefinition
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        return "object $customTypeDefinition: $parentClassname()"
+        return when {
+            typeId != null -> {
+                val variableDefinition = "val $customTypeDefinition: ${getKotlinVariableType()}"
+                "class $typeId($variableDefinition): $parentClassname()"
+            }
+            else -> "object $customTypeDefinition: $parentClassname()"
+        }
     }
 
     // override fun shouldDeclareInnerClass(): Boolean = false
