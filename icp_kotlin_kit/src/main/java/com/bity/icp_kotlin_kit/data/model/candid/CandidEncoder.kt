@@ -64,7 +64,7 @@ internal object CandidEncoder {
                 } else TODO()
             }
 
-            is v -> CandidValue.Principal(
+            is ICPPrincipalApiModel -> CandidValue.Principal(
                 candidPrincipal = CandidPrincipal(
                     string = arg.string,
                     bytes = arg.bytes
