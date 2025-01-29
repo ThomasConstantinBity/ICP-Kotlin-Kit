@@ -1,12 +1,12 @@
 package com.bity.icp_kotlin_kit.data.model.candid
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrincipal
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import java.math.BigInteger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
@@ -64,7 +64,7 @@ internal object CandidEncoder {
                 } else TODO()
             }
 
-            is ICPPrincipal -> CandidValue.Principal(
+            is ICPPrincipalApiModel -> CandidValue.Principal(
                 candidPrincipal = CandidPrincipal(
                     string = arg.string,
                     bytes = arg.bytes
