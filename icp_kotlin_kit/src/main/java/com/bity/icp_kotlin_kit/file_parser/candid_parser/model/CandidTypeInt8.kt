@@ -9,7 +9,7 @@ internal class CandidTypeInt8(
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
-    override val kotlinType: String = "Byte"
+    override fun getKotlinType(variableName: String?): String = "Byte"
 
     companion object : ParserNodeDeclaration<CandidTypeInt8> by reflective()
 }

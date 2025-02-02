@@ -9,11 +9,10 @@ internal data class CandidTypeNat64(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun isKotlinTypealiasDefinition(): Boolean = false
-    override val kotlinType: String = "ULong"
+    override fun getKotlinType(variableName: String?): String = "ULong"
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val nat64Value: $kotlinType"
+        val variableDefinition = "val nat64Value: ${getKotlinType()}"
         return "class $typeId($variableDefinition): $parentClassname()"
     }
 

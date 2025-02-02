@@ -6,7 +6,7 @@ class CandidParsedFile internal constructor(
     private val candidTypes: List<CandidType>
 ) {
 
-    private val typealiases = candidTypes.filter { it.isKotlinTypealiasDefinition() }
-    private val types = candidTypes.filter { !it.isKotlinTypealiasDefinition() }
+    private val typealiases = candidTypes.filter { it.isTypeAlias }
+    private val types = candidTypes.filter { !it.isTypeAlias }
 
 }

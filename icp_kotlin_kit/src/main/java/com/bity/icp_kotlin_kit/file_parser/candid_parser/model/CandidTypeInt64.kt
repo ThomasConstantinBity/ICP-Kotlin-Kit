@@ -9,11 +9,10 @@ internal data class CandidTypeInt64(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override val kotlinType: String = "Long"
-    override fun isKotlinTypealiasDefinition(): Boolean = false
+    override fun getKotlinType(variableName: String?): String = "Long"
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val int64Value: $kotlinType"
+        val variableDefinition = "val int64Value: ${getKotlinType()}"
         return "class $typeId($variableDefinition): $parentClassname()"
     }
 

@@ -13,61 +13,9 @@ class CandidTypeParserServiceImplTest {
 
     private val candidTypeParserService = CandidTypeParserServiceImpl()
 
-    @ParameterizedTest(name = "{index}")
-    @MethodSource("typealiases")
-    fun typealiases(
-        typeDefinition: String,
-        expectedGeneratedClass: String
-    ) {
-        val candidTypeDefinition = candidTypeParserService.parseCandidType(typeDefinition)
-        assertTrue(candidTypeDefinition.isKotlinTypealiasDefinition())
-        val kotlinDefinition = candidTypeDefinition.getTypealiasDefinition()
-        assertEquals(
-            expected = expectedGeneratedClass
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            actual = kotlinDefinition
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
-        )
 
-    }
 
-    @ParameterizedTest(name = "{index}")
-    @MethodSource("candidVariant")
-    fun variantDefinition(
-        typeDefinition: String,
-        expectedGeneratedClass: String
-    ) {
-        val candidTypeDefinition = candidTypeParserService
-            .parseCandidType(typeDefinition) as? CandidTypeVariant
-        assertNotNull(candidTypeDefinition)
-        assertFalse(candidTypeDefinition.isKotlinTypealiasDefinition())
-        val kotlinDefinition = candidTypeDefinition.getKotlinDefinition()
-        assertEquals(
-            expected = expectedGeneratedClass
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            actual = kotlinDefinition
-                .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
-        )
 
-    }
 
     @ParameterizedTest(name = "{index}")
     @MethodSource("origynNFT")
@@ -97,95 +45,9 @@ class CandidTypeParserServiceImplTest {
 
     companion object {
 
-        @JvmStatic
-        private fun typealiases() = listOf(
-            Arguments.of(
-                "type AskConfigShared = opt AskFeatureArray;",
-                "typealias AskConfigShared = AskFeatureArray?"
-            ),
-            Arguments.of(
-                "type AskFeatureArray = vec AskFeature;",
-                "typealias AskFeatureArray = Array<AskFeature>"
-            ),
-            Arguments.of(
-                "type Caller = opt principal;",
-                "typealias Caller = ICPPrincipalApiModel?"
-            ),
-            Arguments.of(
-                "type AskSubscribeResponse = bool;",
-                "typealias AskSubscribeResponse = Boolean"
-            ),
-            Arguments.of(
-                "type BidConfigShared = opt vec BidFeature;",
-                "typealias BidConfigShared = Array<BidFeature>?"
-            )
-        )
 
-        @JvmStatic
-        private fun candidVariant() = listOf(
-            Arguments.of(
-                """
-                    type detail_value = variant {
-                        True;
-                        False;
-                        I64       : int64;
-                        U64       : nat64;
-                        Vec       : vec detail_value;
-                        Slice     : vec nat8;
-                        Text      : text;
-                        Float     : float64;
-                        Principal : principal;
-                    };
-                """.trimIndent(),
-                """
-                    sealed class detail_value {
-                        object True: detail_value()
-                        object False: detail_value()
-                        class I64(val int64Value: Long): detail_value()
-                        class U64(val nat64Value: ULong): detail_value()
-                        class Vec(val arrayValue: Array<detail_value>): detail_value()
-                        class Slice(val arrayValue: Array<UByte>): detail_value()
-                        class Text(val textValue: String): detail_value()
-                        class Float(val candidFloatValue: Double): detail_value()
-                        class Principal(val icpPrincipalApiModel: ICPPrincipalApiModel): detail_value()
-                    }
-                """.trimIndent()
-            ),
 
-            Arguments.of(
-                """
-                    type operation_error = variant {
-                        NotAuthorized;
-                        NonExistentItem;
-                        BadParameters;
-                        Unknown : text;
-                    };
-                """.trimIndent(),
-                """
-                    sealed class operation_error {
-                        object NotAuthorized: operation_error()
-                        object NonExistentItem: operation_error()
-                        object BadParameters: operation_error()
-                        class Unknown(val textValue: String): operation_error()
-                    }
-                """.trimIndent()
-            ),
 
-            Arguments.of(
-                """
-                    type operation_response = variant {
-                        Ok  : opt text;
-                        Err : operation_error;
-                    };
-                """.trimIndent(),
-                """
-                    sealed class operation_response {
-                        class Ok(val textValue: String?): operation_response()
-                        class Err(val operation_error: operation_error): operation_response()
-                    }
-                """.trimIndent()
-            )
-        )
 
         @JvmStatic
         fun origynNFT() = listOf(

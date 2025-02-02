@@ -10,12 +10,11 @@ internal data class CandidTypeVariant(
     val candidTypes: List<CandidType>,
 ): CandidType() {
 
-    override val kotlinType: String
-        get() = TODO()
+    override fun getKotlinType(variableName: String?): String {
+        TODO("Not yet implemented")
+    }
 
-    override fun isKotlinTypealiasDefinition(): Boolean = false
-
-    override fun getKotlinDefinition(): String {
+    override fun getClassDefinition(): String {
         requireNotNull(typeId)
         val sealedClassDefinition = StringBuilder("sealed class $typeId {")
         val classesDefinition = candidTypes.joinToString(

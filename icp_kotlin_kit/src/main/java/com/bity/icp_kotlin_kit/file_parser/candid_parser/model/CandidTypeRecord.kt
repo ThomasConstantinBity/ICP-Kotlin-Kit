@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser.model
 
-import com.bity.icp_kotlin_kit.file_parser.file_generator.helper.UnnamedClassHelper
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
@@ -11,8 +10,58 @@ internal data class CandidTypeRecord(
     val candidTypes: List<CandidType>
 ): CandidType() {
 
-    override val kotlinType: String
-        get() = TODO("Not yet implemented")
+    override val shouldDeclareInnerClass: Boolean = true
+    override val isTypeAlias: Boolean = false
+
+    override fun getKotlinType(variableName: String?): String =
+        when {
+            typeId != null -> typeId
+            else -> variableName
+                ?.split("_")
+                ?.joinToString { split -> split.replaceFirstChar { it.uppercase() } }
+                ?: TODO()
+        }
+
+    override fun getClassDefinition(): String {
+        val className = typeId ?: name
+        return getClassDefinition(className)
+    }
+
+    override fun getInnerClassDefinition(className: String): String =
+        getClassDefinition(className)
+
+    private fun getClassDefinition(className: String): String {
+        val kotlinClassDefinition = StringBuilder("class $className(")
+        val variables = candidTypes
+            .joinToString(
+                prefix = "\n",
+                separator = ",\n",
+            ) {
+                val variableName = it.variableName
+                val variableType = it.getKotlinVariableType()
+                "val $variableName: $variableType"
+            }
+        kotlinClassDefinition.appendLine(variables)
+
+        // Declare inner classes
+        val innerClassesToDeclare = candidTypes.filter { it.shouldDeclareInnerClass }
+        if (innerClassesToDeclare.isNotEmpty()) {
+            kotlinClassDefinition.appendLine(") {")
+            val kotlinInnerClasses = innerClassesToDeclare.joinToString(
+                separator = "\n\t",
+                prefix = "\t"
+            ) {
+                val innerClassName = it.variableName!!.replaceFirstChar { char -> char.uppercase() }
+                it.getInnerClassDefinition(innerClassName)
+            }
+            kotlinClassDefinition.appendLine(kotlinInnerClasses)
+            kotlinClassDefinition.appendLine("}")
+        } else {
+            kotlinClassDefinition.appendLine(")")
+        }
+
+        return kotlinClassDefinition.toString()
+    }
 
     /*
     override fun getKotlinVariableType(): String {

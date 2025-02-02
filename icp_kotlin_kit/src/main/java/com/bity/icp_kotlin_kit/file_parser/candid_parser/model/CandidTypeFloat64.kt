@@ -9,7 +9,7 @@ internal data class CandidTypeFloat64(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override val kotlinType: String = "Float"
+    override fun getKotlinType(variableName: String?): String = "Float"
 
     companion object : ParserNodeDeclaration<CandidTypeFloat64> by reflective()
 }

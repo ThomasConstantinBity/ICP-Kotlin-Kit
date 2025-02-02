@@ -9,7 +9,7 @@ internal class CandidTypeInt(
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
-    override val kotlinType: String = "BigInteger"
+    override fun getKotlinType(variableName: String?): String = "BigInteger"
 
     companion object : ParserNodeDeclaration<CandidTypeInt> by reflective()
 }

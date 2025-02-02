@@ -9,8 +9,7 @@ internal data class CandidTypeNat8(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun isKotlinTypealiasDefinition() = false
-    override val kotlinType: String = "UByte"
+    override fun getKotlinType(variableName: String?): String = "UByte"
 
     companion object : ParserNodeDeclaration<CandidTypeNat8> by reflective()
 }

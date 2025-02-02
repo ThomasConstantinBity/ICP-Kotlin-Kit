@@ -6,11 +6,13 @@ import guru.zoroark.tegral.niwen.parser.reflective
 internal data class CandidTypeCustom(
     override val typeId: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
-    override val variableName: String? = null,
     val customTypeDefinition: String
 ): CandidType() {
 
-    override val kotlinType: String = customTypeDefinition
+    override val variableName: String = typeId ?: customTypeDefinition
+
+    override fun getKotlinType(variableName: String?): String = customTypeDefinition
+
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
         return when {
             typeId != null -> {

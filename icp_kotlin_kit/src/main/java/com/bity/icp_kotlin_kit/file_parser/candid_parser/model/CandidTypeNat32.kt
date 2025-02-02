@@ -9,7 +9,7 @@ internal class CandidTypeNat32(
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
-    override val kotlinType: String = "UInt"
+    override fun getKotlinType(variableName: String?): String = "UInt"
 
     companion object : ParserNodeDeclaration<CandidTypeNat32> by reflective()
 }

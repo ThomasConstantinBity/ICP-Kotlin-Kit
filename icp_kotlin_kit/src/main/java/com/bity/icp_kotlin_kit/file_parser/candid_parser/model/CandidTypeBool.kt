@@ -9,7 +9,7 @@ internal class CandidTypeBool(
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
-    override val kotlinType: String = "Boolean"
+    override fun getKotlinType(variableName: String?): String = "Boolean"
 
     companion object : ParserNodeDeclaration<CandidTypeBool> by reflective()
 }

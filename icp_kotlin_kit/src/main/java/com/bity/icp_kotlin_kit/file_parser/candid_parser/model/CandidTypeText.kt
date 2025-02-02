@@ -5,15 +5,14 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeText(
     override val typeId: String? = null,
-    override val variableName: String? = null,
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun isKotlinTypealiasDefinition(): Boolean = false
-    override val kotlinType: String = "String"
+    override val variableName: String = typeId ?: "textValue"
+    override fun getKotlinType(variableName: String?): String = "String"
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val textValue: ${getKotlinVariableType()}"
+        val variableDefinition = "val $variableName: ${getKotlinType()}"
         return "class $typeId($variableDefinition): $parentClassname()"
     }
 

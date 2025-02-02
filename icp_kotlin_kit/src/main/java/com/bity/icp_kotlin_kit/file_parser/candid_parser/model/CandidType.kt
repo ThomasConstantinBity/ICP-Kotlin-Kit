@@ -6,35 +6,39 @@ import guru.zoroark.tegral.niwen.parser.dsl.subtype
 internal sealed class CandidType {
 
     abstract val typeId: String?
+
+    // TODO: remove null
     abstract val variableName: String?
     abstract val optionalType: OptionalType
-    abstract val kotlinType: String
+
+    abstract fun  getKotlinType(variableName: String? = null): String
 
     // TODO, make abstract
     open val isTypeAlias: Boolean = false
+    // TODO, make abstract
+    open val shouldDeclareInnerClass: Boolean = false
 
     // TODO, make abstract
-    open fun isKotlinTypealiasDefinition(): Boolean = variableName == null
+    open fun getClassDefinition(): String = TODO("Not implemented for $this")
 
     // TODO, make abstract
-    open fun getKotlinDefinition(): String =
-        TODO("Not implemented for $this")
+    open fun getInnerClassDefinition(className: String): String = TODO("Not implemented for $this")
 
     // TODO, make abstract
     open fun getClassDefinitionForSealedClass(parentClassname: String): String =
         TODO("Not implemented for $this")
 
     fun getTypealiasDefinition(): String {
-        require(isKotlinTypealiasDefinition())
+        require(isTypeAlias)
         requireNotNull(typeId)
         return "typealias $typeId = ${getKotlinVariableType()}"
     }
 
-    fun getKotlinVariableType(): String =
+    fun getKotlinVariableType(variableName: String? = null): String =
         when(optionalType) {
-            OptionalType.None -> kotlinType
-            OptionalType.Optional -> "$kotlinType?"
-            OptionalType.DoubleOptional -> "List<List<$kotlinType?>>"
+            OptionalType.None -> getKotlinType(variableName)
+            OptionalType.Optional -> "${getKotlinType(variableName)}?"
+            OptionalType.DoubleOptional -> "List<List<${getKotlinType(variableName)}?>>"
         }
 
     companion object : ParserNodeDeclaration<CandidType> by subtype()

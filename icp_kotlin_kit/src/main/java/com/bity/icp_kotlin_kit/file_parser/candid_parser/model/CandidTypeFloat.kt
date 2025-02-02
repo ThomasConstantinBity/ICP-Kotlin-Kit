@@ -9,11 +9,10 @@ internal data class CandidTypeFloat(
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override fun isKotlinTypealiasDefinition(): Boolean = false
-    override val kotlinType: String = "Double"
+    override fun getKotlinType(variableName: String?): String = "Double"
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val candidFloatValue: $kotlinType"
+        val variableDefinition = "val candidFloatValue: ${getKotlinVariableType()}"
         return "class $typeId($variableDefinition): $parentClassname()"
     }
 
