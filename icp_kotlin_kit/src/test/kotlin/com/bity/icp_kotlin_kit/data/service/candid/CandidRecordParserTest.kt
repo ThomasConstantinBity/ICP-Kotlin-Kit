@@ -70,6 +70,40 @@ class CandidRecordParserTest {
                         )
                     }
                 """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type token = record {
+                        name        : text;
+                        description : text;
+                        thumbnail   : text;
+                        frontend    : opt text;
+                        principal_id : principal;
+                        submitter: principal;
+                        last_updated_by: principal;
+                        last_updated_at: nat64;
+                        details     : vec record { text; detail_value }
+                    };
+                """.trimIndent(),
+                """
+                    class token(
+                        val name: String,
+                        val description: String,
+                        val thumbnail: String,
+                        val frontend: String?,
+                        val principal_id: ICPPrincipalApiModel,
+                        val submitter: ICPPrincipalApiModel,
+                        val last_updated_by: ICPPrincipalApiModel,
+                        val last_updated_at: ULong,
+                        val details: Array<Details>
+                    ) {
+                        class Details(
+                            val textValue: String,
+                            val detail_value: detail_value
+                        )
+                    }
+                """.trimIndent()
             )
         )
 

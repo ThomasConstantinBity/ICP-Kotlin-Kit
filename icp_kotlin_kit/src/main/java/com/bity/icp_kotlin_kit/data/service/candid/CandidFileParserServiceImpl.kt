@@ -15,25 +15,15 @@ internal class CandidFileParserServiceImpl(
         val candidTypes = mutableListOf<CandidType>()
 
         while(string.isNotEmpty()) {
-
             val endIndex = getEndDeclarationIndex(string)
             val candidDeclaration = string.substring(0, endIndex)
-
-            when {
-
-                candidTypeParserService.isCandidTypeDefinition(candidDeclaration) -> {
-                    try {
-                        val candidTypeDefinition = candidTypeParserService
-                            .parseCandidType(candidDeclaration)
-                        candidTypes.add(candidTypeDefinition)
-                    } catch (t: Throwable) {
-                        println("Error parsing $candidDeclaration")
-                    }
-                }
-
-                else -> throw RuntimeException("Unable to parse $candidDeclaration")
+            try {
+                val candidTypeDefinition = candidTypeParserService
+                    .parseCandidType(candidDeclaration)
+                candidTypes.add(candidTypeDefinition)
+            } catch (t: Throwable) {
+                println("Error parsing $candidDeclaration")
             }
-
             string = string.substring(endIndex).trimStart()
         }
 

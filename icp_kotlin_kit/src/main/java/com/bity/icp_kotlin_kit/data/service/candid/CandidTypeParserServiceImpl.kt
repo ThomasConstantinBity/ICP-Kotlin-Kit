@@ -868,9 +868,6 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
     }
 
-    override fun isCandidTypeDefinition(content: String): Boolean =
-        content.startsWith(prefix = "type", ignoreCase = true)
-
     override fun parseCandidType(candidType: String): CandidType {
         fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
