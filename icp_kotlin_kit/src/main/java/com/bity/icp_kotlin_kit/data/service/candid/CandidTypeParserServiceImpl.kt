@@ -886,6 +886,12 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
                 expect(Token.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
+            } or {
+                expect(Token.Vec)
+                expect(CandidType) storeIn CandidTypeVec::vecType
+                lookahead {
+                    expect(Token.RParen)
+                }
             }
         }
 

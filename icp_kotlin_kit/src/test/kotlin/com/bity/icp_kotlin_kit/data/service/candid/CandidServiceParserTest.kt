@@ -50,9 +50,15 @@ class CandidServiceParserTest {
             Arguments.of(
                 """
                     service : {
+                        // DRS Methods
                         "name"   : () -> (text) query;
                         "get"    : (token_id: principal) -> (opt token) query;
                         "add"    : (trusted_source: opt principal, token: add_token_input) -> (operation_response);
+                        "remove" : (trusted_source: opt principal, token_id: principal) -> (operation_response);
+                    
+                        // Canister methods
+                        "get_all"  : () -> (vec token) query;
+                        "add_admin" : (admin: principal) -> (operation_response);
                     }
                 """.trimIndent(),
                 """
@@ -95,6 +101,52 @@ class CandidServiceParserTest {
                                 )
                                 val result = icpQuery.callAndPoll(
                                     values = listOf(trusted_source, token),
+                                    sender = sender,
+                                    pollingValues = pollingValues
+                                ).getOrThrow()
+                                return CandidDecoder.decodeNotNull(result.first())
+                            }
+                            
+                        suspend fun remove(
+                            trusted_source: ICPPrincipalApiModel?,
+                            token_id: ICPPrincipalApiModel,
+                            sender: ICPSigningPrincipal,
+                            pollingValues: PollingValues = PollingValues()
+                        ): operation_response {
+                            val icpQuery = ICPQuery(
+                                    methodName = "remove",
+                                    canister = canister
+                                )
+                                val result = icpQuery.callAndPoll(
+                                    values = listOf(trusted_source, token_id),
+                                    sender = sender,
+                                    pollingValues = pollingValues
+                                ).getOrThrow()
+                                return CandidDecoder.decodeNotNull(result.first())
+                            }
+                            
+                        suspend fun get_all(): Array<token> {
+                            val icpQuery = ICPQuery(
+                                methodName = "get_all",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decodeNotNull(result.first())
+                        }
+                        
+                        suspend fun add_admin(
+                            admin: ICPPrincipalApiModel,
+                            sender: ICPSigningPrincipal,
+                            pollingValues: PollingValues = PollingValues()
+                        ): operation_response {
+                            val icpQuery = ICPQuery(
+                                    methodName = "add_admin",
+                                    canister = canister
+                                )
+                                val result = icpQuery.callAndPoll(
+                                    values = listOf(admin),
                                     sender = sender,
                                     pollingValues = pollingValues
                                 ).getOrThrow()

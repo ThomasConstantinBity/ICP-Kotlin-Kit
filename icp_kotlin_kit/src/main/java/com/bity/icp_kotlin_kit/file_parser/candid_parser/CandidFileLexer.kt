@@ -7,7 +7,7 @@ internal object CandidFileLexer {
 
     val fileLexer = niwenLexer {
         state {
-            matches("//.*") isToken Token.SingleLineComment
+            matches("//.*").ignore // isToken Token.SingleLineComment
 
             "{" isToken Token.LBrace
             "}" isToken Token.RBrace
