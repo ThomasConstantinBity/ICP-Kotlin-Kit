@@ -1,8 +1,10 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
 import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParserCommon.fileLexer
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileLexer.fileLexer
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.Token
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionDeclaration
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBool
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeCustom
@@ -20,6 +22,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat64
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat8
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypePrincipal
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeRecord
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeService
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeText
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVec
@@ -63,6 +66,8 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 expect(CandidTypeNat64) storeIn self()
             } or {
                 expect(CandidTypeFloat) storeIn self()
+            } or {
+                expect(CandidTypeService) storeIn self()
             }
             /*
                 expect(CandidTypeInt) storeIn self()
@@ -192,6 +197,8 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 lookahead {
                     either {
                         expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
                     } or {
                         expect(Token.Semi)
                     }
@@ -865,6 +872,48 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 expect(Token.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
             }
+        }
+
+        CandidTypeService {
+            either {
+                expect(Token.Service)
+                expect(Token.Colon)
+                expect(Token.LBrace)
+                repeated(min = 0) {
+                    expect(CandidFunctionDeclaration) storeIn item
+                } storeIn CandidTypeService::serviceFunctions
+                expect(Token.RBrace)
+            }
+        }
+
+        CandidFunctionDeclaration {
+            expect(Token.Id) storeIn CandidFunctionDeclaration::functionName
+            expect(Token.Colon)
+
+            expect(Token.LParen)
+            repeated(min = 0) {
+                expect(CandidType) storeIn item
+            } storeIn CandidFunctionDeclaration::inputParameters
+            expect(Token.RParen)
+
+            expect(Token.Arrow)
+
+            expect(Token.LParen)
+            repeated(min = 0) {
+                expect(CandidType) storeIn item
+            } storeIn CandidFunctionDeclaration::outputParameters
+            expect(Token.RParen)
+
+            optional {
+                either {
+                    expect(Token.Query)
+                    emit(CandidFunctionType.Query) storeIn CandidFunctionDeclaration::candidFunctionType
+                } or {
+                    expect(Token.Oneway)
+                    emit(CandidFunctionType.None) storeIn CandidFunctionDeclaration::candidFunctionType
+                }
+            }
+            expect(Token.Semi)
         }
     }
 

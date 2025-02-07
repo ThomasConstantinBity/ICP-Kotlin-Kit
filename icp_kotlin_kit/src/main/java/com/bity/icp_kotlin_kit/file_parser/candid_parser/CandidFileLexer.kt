@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.file_parser.candid_parser
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
 import guru.zoroark.tegral.niwen.lexer.niwenLexer
 
-internal object CandidParserCommon {
+internal object CandidFileLexer {
 
     val fileLexer = niwenLexer {
         state {

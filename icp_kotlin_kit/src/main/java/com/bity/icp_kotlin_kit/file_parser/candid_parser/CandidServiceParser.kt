@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.file_parser.candid_parser
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidParserCommon.fileLexer
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileLexer.fileLexer
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidServiceFunctionType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.OptionalType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.idl_comment.IDLComment

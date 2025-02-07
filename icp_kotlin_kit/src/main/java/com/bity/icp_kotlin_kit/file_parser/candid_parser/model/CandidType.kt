@@ -21,6 +21,8 @@ internal sealed class CandidType {
     // TODO, make abstract
     open fun getClassDefinition(): String = TODO("Not implemented for $this")
 
+    open fun getServiceDefinition(serviceName: String? = null): String = TODO("Not implemented for $this")
+
     // TODO, make abstract
     open fun getInnerClassDefinition(className: String): String = TODO("Not implemented for $this")
 
