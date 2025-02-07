@@ -12,7 +12,7 @@ internal class CandidFunctionDeclaration(
 
     fun getFunctionDefinition(): String {
         val funName = functionName.replace("\"", "")
-        val functionDefinition = StringBuilder("suspend fun $funName(")
+        val functionDefinition = StringBuilder("suspend fun $funName")
         functionDefinition.append(getFunctionInputParamDefinition())
         functionDefinition.appendLine(getFunctionReturnValueDefinition())
         functionDefinition.appendLine(" {")
@@ -23,27 +23,63 @@ internal class CandidFunctionDeclaration(
         return functionDefinition.toString()
     }
 
+    /**
+     * no input params -> ()
+     *
+     * one input param ->
+     *      (
+     *          inputParam1: inputParam1Type
+     *      )
+     *
+     * multiple input params ->
+     *      (
+     *          inputParam1: inputParam1Type,
+     *          inputParam2: inputParam2Type,
+     *          ...
+     *      )
+     */
     private fun getFunctionInputParamDefinition(): String {
-        val inputParametersDefinition = StringBuilder()
+        return when {
+            inputParameters.isEmpty() && candidFunctionType == CandidFunctionType.Query -> "()"
+            inputParameters.isEmpty() && candidFunctionType == CandidFunctionType.None -> {
+                """(
+                        sender: ICPSigningPrincipal,
+                        pollingValues: PollingValues = PollingValues()
+                    )
+                """.trimIndent()
+            }
 
-        val inputVariables = inputParameters.joinToString(
-            prefix = "\n\t",
-            separator = "\n\t",
-            postfix = "\n"
-        ) {
-            // TODO: remove TODO() once variableName is not null
-            val variableName = it.variableName ?: TODO()
-            "$variableName: ${it.getKotlinVariableType()}"
+            inputParameters.isNotEmpty() && candidFunctionType == CandidFunctionType.Query -> {
+                val inputVariablesDefinition = inputParameters
+                    .joinToString(separator = ",\n\t") {
+                        // TODO: remove TODO once variableName is not null
+                        val variableName = it.variableName ?: TODO()
+                        "$variableName: ${it.getKotlinVariableType()}"
+                    }
+                """(
+                        $inputVariablesDefinition
+                    )
+                """.trimIndent()
+            }
+
+            else -> {
+                val inputVariablesDefinition = inputParameters
+                    .joinToString(
+                        separator = ",\n\t",
+                    ) {
+                        // TODO: remove TODO once variableName is not null
+                        val variableName = it.variableName ?: TODO()
+                        "$variableName: ${it.getKotlinVariableType()}"
+                    }
+                """(
+                        $inputVariablesDefinition,
+                        sender: ICPSigningPrincipal,
+                        pollingValues: PollingValues = PollingValues()
+                    )
+                """.trimIndent()
+            }
+
         }
-        inputParametersDefinition.append(inputVariables.trim())
-
-        when (candidFunctionType) {
-            CandidFunctionType.None -> TODO()
-            CandidFunctionType.Query -> { }
-        }
-
-        inputParametersDefinition.append(")")
-        return inputParametersDefinition.toString().trim()
     }
 
     private fun getFunctionReturnValueDefinition(): String {
@@ -55,27 +91,40 @@ internal class CandidFunctionDeclaration(
     }
 
     private fun getQueryDefinition(): String {
-        return when(candidFunctionType) {
-            CandidFunctionType.None -> TODO()
-            CandidFunctionType.Query ->
-                """
-                    val icpQuery = ICPQuery(
-                        methodName = $functionName,
-                        canister = canister
-                    )
+        return """
+            val icpQuery = ICPQuery(
+                methodName = $functionName,
+                canister = canister
+            )
                 """.trimIndent()
-        }
     }
 
     private fun getQueryCallDefinition(): String {
         return when (candidFunctionType) {
-            CandidFunctionType.None -> TODO()
+            CandidFunctionType.None ->
+                """
+                    val result = icpQuery.callAndPoll(
+                        values = ${getListOfValuesForQuery()},
+                        sender = sender,
+                        pollingValues = pollingValues
+                    ).getOrThrow()
+                """.trimIndent()
             CandidFunctionType.Query ->
                 """
                     val result = icpQuery.invoke(
-                        values = listOf()
+                        values = ${getListOfValuesForQuery()}
                     ).getOrThrow()
                 """.trimIndent()
+        }
+    }
+
+    private fun getListOfValuesForQuery(): String {
+        return if(inputParameters.isEmpty()) {
+            "listOf()"
+        } else {
+            // TODO: remove TODO() when variableName is not null
+            val variableNames = inputParameters.joinToString { it.variableName ?: TODO() }
+            "listOf($variableNames)"
         }
     }
 

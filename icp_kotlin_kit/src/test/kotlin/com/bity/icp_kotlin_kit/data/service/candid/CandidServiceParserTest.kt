@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeRecord
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeService
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,9 +26,11 @@ class CandidServiceParserTest {
         assertEquals(
             expected = expectedGeneratedClass
                 .replace("""\s+|\t+""".toRegex(), " ")
+                .replace("""\n""".toRegex(), " ")
                 .trim(),
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
+                .replace("""\n""".toRegex(), " ")
                 .trim(),
             message = """
                 Expected:
@@ -51,6 +52,7 @@ class CandidServiceParserTest {
                     service : {
                         "name"   : () -> (text) query;
                         "get"    : (token_id: principal) -> (opt token) query;
+                        "add"    : (trusted_source: opt principal, token: add_token_input) -> (operation_response);
                     }
                 """.trimIndent(),
                 """
@@ -68,16 +70,37 @@ class CandidServiceParserTest {
                             return CandidDecoder.decodeNotNull(result.first())
                         }
                         
-                        suspend fun get(token_id: ICPPrincipalApiModel): token? {
+                        suspend fun get(
+                            token_id: ICPPrincipalApiModel
+                        ): token? {
                             val icpQuery = ICPQuery(
-                                    methodName = "get",
+                                methodName = "get",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf(token_id)
+                            ).getOrThrow()
+                            return CandidDecoder.decode(result.first())
+                        }
+                            
+                        suspend fun add(
+                            trusted_source: ICPPrincipalApiModel?,
+                            token: add_token_input,
+                            sender: ICPSigningPrincipal,
+                            pollingValues: PollingValues = PollingValues()
+                        ): operation_response {
+                            val icpQuery = ICPQuery(
+                                    methodName = "add",
                                     canister = canister
                                 )
-                                val result = icpQuery.invoke(
-                                    values = listOf()
+                                val result = icpQuery.callAndPoll(
+                                    values = listOf(trusted_source, token),
+                                    sender = sender,
+                                    pollingValues = pollingValues
                                 ).getOrThrow()
-                                return CandidDecoder.decode(result.first())
+                                return CandidDecoder.decodeNotNull(result.first())
                             }
+                            
                     }
                 """.trimIndent()
             )

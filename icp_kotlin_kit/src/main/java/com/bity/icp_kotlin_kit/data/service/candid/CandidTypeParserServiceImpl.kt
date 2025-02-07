@@ -140,7 +140,11 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
                 expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
-                    expect(Token.Semi)
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RParen)
+                    }
                 }
             } or {
                 expect(Token.Type)
@@ -904,6 +908,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
             expect(Token.LParen)
             repeated(min = 0) {
                 expect(CandidType) storeIn item
+                optional {
+                    expect(Token.Comma)
+                }
             } storeIn CandidFunctionDeclaration::inputParameters
             expect(Token.RParen)
 
@@ -912,6 +919,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
             expect(Token.LParen)
             repeated(min = 0) {
                 expect(CandidType) storeIn item
+                optional {
+                    expect(Token.Comma)
+                }
             } storeIn CandidFunctionDeclaration::outputParameters
             expect(Token.RParen)
 
