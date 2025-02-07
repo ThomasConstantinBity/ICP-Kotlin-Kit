@@ -1,12 +1,26 @@
 package com.bity.icp_kotlin_kit.domain.model.candid_file
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
-
-class CandidParsedFile internal constructor(
-    private val candidTypes: List<CandidType>
+internal class CandidParsedFile internal constructor(
+    private val candidParsedTypes: List<CandidParsedType>
 ) {
 
-    private val typealiases = candidTypes.filter { it.isTypeAlias }
-    private val types = candidTypes.filter { !it.isTypeAlias }
+    fun getTypealiasesDefinition() : String {
+        val typealiases = StringBuilder()
+        candidParsedTypes.filter { it.candidTypeDefinition.isTypeAlias }
+            .forEach {
+                val commentedCandidDefinition = it.candidDefinition
+                    .split("\n")
+                    .joinToString("\n *")
+                typealiases.appendLine(
+                    """
+                        /**
+                        $commentedCandidDefinition
+                         */
+                        ${it.candidTypeDefinition.getTypealiasDefinition()}
+                    """.trimIndent()
+                )
+            }
+        return typealiases.toString()
+    }
 
 }

@@ -1,9 +1,9 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
 import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedFile
+import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedType
 import com.bity.icp_kotlin_kit.domain.service.CandidFileParserService
 import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
 
 internal class CandidFileParserServiceImpl(
     private val candidTypeParserService: CandidTypeParserService
@@ -12,7 +12,8 @@ internal class CandidFileParserServiceImpl(
     override fun parseCandidFile(candidContent: String): CandidParsedFile {
 
         var string = candidContent.trimStart()
-        val candidTypes = mutableListOf<CandidType>()
+
+        val candidParsedTypes = mutableListOf<CandidParsedType>()
 
         while(string.isNotEmpty()) {
             val endIndex = getEndDeclarationIndex(string)
@@ -20,7 +21,11 @@ internal class CandidFileParserServiceImpl(
             try {
                 val candidTypeDefinition = candidTypeParserService
                     .parseCandidType(candidDeclaration)
-                candidTypes.add(candidTypeDefinition)
+                val candidParsedType = CandidParsedType(
+                    candidDefinition = candidDeclaration,
+                    candidTypeDefinition = candidTypeDefinition
+                )
+                candidParsedTypes.add(candidParsedType)
             } catch (t: Throwable) {
                 println("Error parsing $candidDeclaration")
             }
@@ -28,7 +33,7 @@ internal class CandidFileParserServiceImpl(
         }
 
         return CandidParsedFile(
-            candidTypes = candidTypes
+            candidParsedTypes = candidParsedTypes
         )
 
     }
