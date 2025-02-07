@@ -50,6 +50,7 @@ class CandidServiceParserTest {
                 """
                     service : {
                         "name"   : () -> (text) query;
+                        "get"    : (token_id: principal) -> (opt token) query;
                     }
                 """.trimIndent(),
                 """
@@ -66,6 +67,17 @@ class CandidServiceParserTest {
                             ).getOrThrow()
                             return CandidDecoder.decodeNotNull(result.first())
                         }
+                        
+                        suspend fun get(token_id: ICPPrincipalApiModel): token? {
+                            val icpQuery = ICPQuery(
+                                    methodName = "get",
+                                    canister = canister
+                                )
+                                val result = icpQuery.invoke(
+                                    values = listOf()
+                                ).getOrThrow()
+                                return CandidDecoder.decode(result.first())
+                            }
                     }
                 """.trimIndent()
             )

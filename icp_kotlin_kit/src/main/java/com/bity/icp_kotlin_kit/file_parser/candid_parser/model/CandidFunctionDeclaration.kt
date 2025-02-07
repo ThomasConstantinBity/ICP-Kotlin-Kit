@@ -25,9 +25,17 @@ internal class CandidFunctionDeclaration(
 
     private fun getFunctionInputParamDefinition(): String {
         val inputParametersDefinition = StringBuilder()
-        if(inputParameters.isNotEmpty()) {
-            TODO()
+
+        val inputVariables = inputParameters.joinToString(
+            prefix = "\n\t",
+            separator = "\n\t",
+            postfix = "\n"
+        ) {
+            // TODO: remove TODO() once variableName is not null
+            val variableName = it.variableName ?: TODO()
+            "$variableName: ${it.getKotlinVariableType()}"
         }
+        inputParametersDefinition.append(inputVariables.trim())
 
         when (candidFunctionType) {
             CandidFunctionType.None -> TODO()
@@ -35,7 +43,7 @@ internal class CandidFunctionDeclaration(
         }
 
         inputParametersDefinition.append(")")
-        return inputParametersDefinition.toString()
+        return inputParametersDefinition.toString().trim()
     }
 
     private fun getFunctionReturnValueDefinition(): String {

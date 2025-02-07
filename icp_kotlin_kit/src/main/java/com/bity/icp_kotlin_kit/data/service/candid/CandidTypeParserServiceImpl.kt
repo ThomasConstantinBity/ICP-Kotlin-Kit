@@ -157,10 +157,21 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
                 expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
             } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
+                    }
+                }
                 expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
                     either {
                         expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
                     } or {
                         expect(Token.Semi)
                     }
