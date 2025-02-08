@@ -4,7 +4,7 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeInt64(
-    override val typeId: String,
+    override val typeId: String? = null,
     override val variableName: String = "int64Value",
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {

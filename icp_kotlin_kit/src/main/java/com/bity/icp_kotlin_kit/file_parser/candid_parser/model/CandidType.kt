@@ -28,8 +28,9 @@ internal sealed class CandidType {
     open fun getInnerClassDefinition(className: String): String = TODO("Not implemented for $this")
 
     open fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val $variableName: ${getKotlinVariableType()}"
-        return "class $typeId($variableDefinition): $parentClassname()"
+        val className = variableName?.replaceFirstChar { it.uppercase() }
+        val variableDefinition = "val ${variableName?.replaceFirstChar { it.lowercase() }}: ${getKotlinVariableType()}"
+        return "class $className($variableDefinition): $parentClassname()"
     }
     fun getTypealiasDefinition(): String {
         require(isTypeAlias)

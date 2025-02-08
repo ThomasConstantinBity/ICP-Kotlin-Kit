@@ -5,7 +5,7 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeVec(
     override val typeId: String? = null,
-    override val variableName: String = "arrayValue",
+    override val variableName: String = "array",
     override val optionalType: OptionalType = OptionalType.None,
     val vecType: CandidType,
 ): CandidType() {
@@ -15,19 +15,20 @@ internal data class CandidTypeVec(
         vecType is CandidTypeRecord
 
     override fun getClassNameForInnerClassDefinition(baseName: String?): String =
-        vecType.getClassNameForInnerClassDefinition(typeId)
+        vecType.getClassNameForInnerClassDefinition(typeId ?: variableName)
 
     override fun getInnerClassDefinition(className: String): String =
         vecType.getInnerClassDefinition(className)
 
     override fun getKotlinType(variableName: String?): String {
-        val arrayDefinition = if(typeId == "Array") "kotlin.Array" else "Array"
+        val arrayDefinition = if(this.variableName.equals("array", true) || typeId == "Array") "kotlin.Array" else "Array"
         return "$arrayDefinition<${vecType.getKotlinVariableType(typeId ?: this.variableName)}>"
     }
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val arrayValue: ${getKotlinType()}"
-        return "class $typeId($variableDefinition): $parentClassname()"
+        val variableDefinition = "val ${variableName.replaceFirstChar { it.lowercase() }}: ${getKotlinType()}"
+        val className = variableName.replaceFirstChar { it.uppercase() }
+        return "class $className($variableDefinition): $parentClassname()"
     }
 
     companion object : ParserNodeDeclaration<CandidTypeVec> by reflective()

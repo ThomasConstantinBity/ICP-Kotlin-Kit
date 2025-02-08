@@ -29,16 +29,8 @@ class CandidVariantParserTest {
                 .trim(),
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
+                .trim()
         )
-
     }
 
     companion object {
@@ -54,9 +46,9 @@ class CandidVariantParserTest {
                         Unauthorized;
                         TooOld;
                         CreatedInFuture : record { ledger_time: nat64 };
-                        // Duplicate : record { duplicate_of : nat };
-                        // GenericError : record { error_code : nat; message : text };
-                        // GenericBatchError : record { error_code : nat; message : text };
+                        Duplicate : record { duplicate_of : nat };
+                        GenericError : record { error_code : nat; message : text };
+                        GenericBatchError : record { error_code : nat; message : text };
                     };
                 """.trimIndent(),
                 """
@@ -67,6 +59,17 @@ class CandidVariantParserTest {
                         object TooOld: TransferError()
                         class CreatedInFuture(
                             val ledger_time: ULong
+                        ): TransferError()
+                        class Duplicate(
+                            val duplicate_of: BigInteger
+                        ): TransferError()
+                        class GenericError(
+                            val error_code: BigInteger,
+                            val message: String
+                        ): TransferError()
+                        class GenericBatchError(
+                            val error_code: BigInteger,
+                            val message: String
                         ): TransferError()
                     }
                 """.trimIndent()
@@ -90,13 +93,13 @@ class CandidVariantParserTest {
                     sealed class detail_value {
                         object True: detail_value()
                         object False: detail_value()
-                        class I64(val int64Value: Long): detail_value()
-                        class U64(val U64: ULong): detail_value()
-                        class Vec(val arrayValue: Array<detail_value>): detail_value()
-                        class Slice(val arrayValue: Array<UByte>): detail_value()
-                        class Text(val textValue: String): detail_value()
-                        class Float(val floatValue: Double): detail_value()
-                        class Principal(val icpPrincipalApiModel: ICPPrincipalApiModel): detail_value()
+                        class I64(val i64: Long): detail_value()
+                        class U64(val u64: ULong): detail_value()
+                        class Vec(val vec: Array<detail_value>): detail_value()
+                        class Slice(val slice: Array<UByte>): detail_value()
+                        class Text(val text: String): detail_value()
+                        class Float(val float: Double): detail_value()
+                        class Principal(val principal: ICPPrincipalApiModel): detail_value()
                     }
                 """.trimIndent()
             ),
@@ -115,7 +118,7 @@ class CandidVariantParserTest {
                         object NotAuthorized: operation_error()
                         object NonExistentItem: operation_error()
                         object BadParameters: operation_error()
-                        class Unknown(val textValue: String): operation_error()
+                        class Unknown(val unknown: String): operation_error()
                     }
                 """.trimIndent()
             ),
@@ -129,8 +132,8 @@ class CandidVariantParserTest {
                 """.trimIndent(),
                 """
                     sealed class operation_response {
-                        class Ok(val textValue: String?): operation_response()
-                        class Err(val operation_error: operation_error): operation_response()
+                        class Ok(val ok: String?): operation_response()
+                        class Err(val err: operation_error): operation_response()
                     }
                 """.trimIndent()
             ),
@@ -149,12 +152,12 @@ class CandidVariantParserTest {
                 """.trimIndent(),
                 """
                     sealed class Value {
-                        class Blob(val blobValue: ByteArray): Value()
-                        class Text(val textValue: String): Value()
-                        class Nat(val natValue: BigInteger): Value()
-                        class Int(val intValue: BigInteger): Value()
-                        class Array(val arrayValue: kotlin.Array<Value>): Value()
-                        class Map(val arrayValue: Array<MapClass>): Value()
+                        class Blob(val blob: ByteArray): Value()
+                        class Text(val text: String): Value()
+                        class Nat(val nat: BigInteger): Value()
+                        class Int(val int: BigInteger): Value()
+                        class Array(val array: kotlin.Array<Value>): Value()
+                        class Map(val map: Array<MapClass>): Value()
                         
                         class MapClass(
                             val textValue: String,

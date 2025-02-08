@@ -94,7 +94,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
 
         CandidTypeCustom {
             either {
-                expect(Token.Id) storeIn CandidTypeCustom::variableName
+                expect(Token.Id) storeIn CandidTypeCustom::typeId
                 expect(Token.Colon)
                 optional {
                     either {
@@ -208,7 +208,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
                 expect(Token.Blob)
             } or {
-                expect(Token.Id) storeIn CandidTypeBlob::typeId
+                expect(Token.Id) storeIn CandidTypeBlob::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -377,7 +377,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeInt {
-            expect(Token.Id) storeIn CandidTypeInt::typeId
+            expect(Token.Id) storeIn CandidTypeInt::variableName
             expect(Token.Colon)
             optional {
                 either {
@@ -497,7 +497,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeInt64 {
-            expect(Token.Id) storeIn CandidTypeInt64::typeId
+            expect(Token.Id) storeIn CandidTypeInt64::variableName
             expect(Token.Colon)
             optional {
                 either {
@@ -683,7 +683,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeFloat {
-            expect(Token.Id) storeIn CandidTypeFloat::typeId
+            expect(Token.Id) storeIn CandidTypeFloat::variableName
             expect(Token.Colon)
             optional {
                 either {

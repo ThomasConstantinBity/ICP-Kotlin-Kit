@@ -28,7 +28,6 @@ internal data class CandidTypeRecord(
                 when(kotlinType) {
                     "Map",
                     "Array" -> "${kotlinType}Class"
-
                     else -> kotlinType
                 }
             }
@@ -80,7 +79,7 @@ internal data class CandidTypeRecord(
         val classDefinition = StringBuilder("class $typeId(")
         val variableDefinition = candidTypes.joinToString(
             prefix = "\n",
-            separator = "\n\t",
+            separator = ",\n\t",
         ) {
             "val ${it.variableName}: ${it.getKotlinVariableType()}"
         }
