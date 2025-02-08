@@ -304,17 +304,10 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeVariant {
-            expect(Token.Type)
-            expect(Token.Id) storeIn CandidTypeVariant::typeId
-            expect(Token.Equals)
-            expect(Token.Variant)
-            expect(Token.LBrace)
-            repeated(min = 1) {
-                expect(CandidType) storeIn item
-                optional { expect(Token.Semi) }
-            } storeIn CandidTypeVariant::candidTypes
-            expect(Token.RBrace)
-            /*either {
+            either {
+                expect(Token.Type)
+                expect(Token.Id) storeIn CandidTypeVariant::typeId
+                expect(Token.Equals)
                 expect(Token.Variant)
                 expect(Token.LBrace)
                 repeated(min = 1) {
@@ -322,7 +315,6 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     optional { expect(Token.Semi) }
                 } storeIn CandidTypeVariant::candidTypes
                 expect(Token.RBrace)
-                expect(Token.Semi)
             } or {
                 expect(Token.Id) storeIn CandidTypeVariant::typeId
                 expect(Token.Colon)
@@ -333,8 +325,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     optional { expect(Token.Semi) }
                 } storeIn CandidTypeVariant::candidTypes
                 expect(Token.RBrace)
-                expect(Token.Semi)
-            }*/
+            }
         }
 
         CandidTypeRecord {

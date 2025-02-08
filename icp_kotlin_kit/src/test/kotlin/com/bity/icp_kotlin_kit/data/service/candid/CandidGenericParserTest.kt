@@ -42,12 +42,32 @@ class CandidGenericParserTest {
         @JvmStatic
         private fun typealiases() = listOf(
             Arguments.of(
+                """
+                    type ApprovalResult = vec record {
+                        token_id : nat;
+                        approval_result : variant { Ok : nat; Err : ApprovalError };
+                    };
+                """.trimIndent(),
+                """
+                    typealias ApprovalResult = kotlin.Array<ApprovalResultClass>
+                    class ApprovalResultClass(
+                        val token_id: BigInteger,
+                        val approval_result: approval_result
+                    )
+                    sealed class approval_result {
+                        class Ok(val ok: BigInteger): approval_result()
+                        class Err(val err: ApprovalError): approval_result()
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
                 "type AskConfigShared = opt AskFeatureArray;",
                 "typealias AskConfigShared = AskFeatureArray?"
             ),
             Arguments.of(
                 "type AskFeatureArray = vec AskFeature;",
-                "typealias AskFeatureArray = Array<AskFeature>"
+                "typealias AskFeatureArray = kotlin.Array<AskFeature>"
             ),
             Arguments.of(
                 "type Caller = opt principal;",
@@ -59,12 +79,12 @@ class CandidGenericParserTest {
             ),
             Arguments.of(
                 "type BidConfigShared = opt vec BidFeature;",
-                "typealias BidConfigShared = Array<BidFeature>?"
+                "typealias BidConfigShared = kotlin.Array<BidFeature>?"
             ),
             Arguments.of(
                 "type Subaccount = blob;",
                 "typealias Subaccount = ByteArray"
-            )
+            ),
         )
 
     }

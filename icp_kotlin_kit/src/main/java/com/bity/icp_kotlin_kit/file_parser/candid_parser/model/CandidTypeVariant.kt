@@ -12,9 +12,7 @@ internal data class CandidTypeVariant(
 
     override val isTypeAlias: Boolean = false
 
-    override fun getKotlinType(variableName: String?): String {
-        TODO("Not yet implemented")
-    }
+    override fun getKotlinType(variableName: String?): String = typeId ?: TODO()
 
     override fun getClassDefinition(): String {
         requireNotNull(typeId)

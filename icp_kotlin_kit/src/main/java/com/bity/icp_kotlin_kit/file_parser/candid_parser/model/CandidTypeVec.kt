@@ -21,8 +21,7 @@ internal data class CandidTypeVec(
         vecType.getInnerClassDefinition(className)
 
     override fun getKotlinType(variableName: String?): String {
-        val arrayDefinition = if(this.variableName.equals("array", true) || typeId == "Array") "kotlin.Array" else "Array"
-        return "$arrayDefinition<${vecType.getKotlinVariableType(typeId ?: this.variableName)}>"
+        return "kotlin.Array<${vecType.getKotlinVariableType(typeId ?: this.variableName)}>"
     }
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {

@@ -35,7 +35,11 @@ internal sealed class CandidType {
     fun getTypealiasDefinition(): String {
         require(isTypeAlias)
         requireNotNull(typeId)
-        return "typealias $typeId = ${getKotlinVariableType()}"
+        val typealiasDefinition = StringBuilder("typealias $typeId = ${getKotlinVariableType()}")
+        if(shouldDeclareInnerClass) {
+            typealiasDefinition.appendLine(getInnerClassDefinition(typeId ?: variableName ?: TODO()))
+        }
+        return typealiasDefinition.toString()
     }
 
     fun getKotlinVariableType(variableName: String? = null): String =
