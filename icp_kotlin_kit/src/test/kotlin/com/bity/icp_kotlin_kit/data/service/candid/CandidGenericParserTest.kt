@@ -60,6 +60,10 @@ class CandidGenericParserTest {
             Arguments.of(
                 "type BidConfigShared = opt vec BidFeature;",
                 "typealias BidConfigShared = Array<BidFeature>?"
+            ),
+            Arguments.of(
+                "type Subaccount = blob;",
+                "typealias Subaccount = ByteArray"
             )
         )
 

@@ -68,7 +68,7 @@ class CandidVariantParserTest {
                         class Vec(val arrayValue: Array<detail_value>): detail_value()
                         class Slice(val arrayValue: Array<UByte>): detail_value()
                         class Text(val textValue: String): detail_value()
-                        class Float(val candidFloatValue: Double): detail_value()
+                        class Float(val floatValue: Double): detail_value()
                         class Principal(val icpPrincipalApiModel: ICPPrincipalApiModel): detail_value()
                     }
                 """.trimIndent()
@@ -104,6 +104,35 @@ class CandidVariantParserTest {
                     sealed class operation_response {
                         class Ok(val textValue: String?): operation_response()
                         class Err(val operation_error: operation_error): operation_response()
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    // Generic value in accordance with ICRC-3
+                    type Value = variant {
+                        Blob : blob;
+                        Text : text;
+                        Nat : nat;
+                        Int : int;
+                        Array : vec Value;
+                        Map : vec record { text; Value };
+                    };
+                """.trimIndent(),
+                """
+                    sealed class Value {
+                        class Blob(val blobValue: ByteArray): Value()
+                        class Text(val textValue: String): Value()
+                        class Nat(val natValue: BigInteger): Value()
+                        class Int(val intValue: BigInteger): Value()
+                        class Array(val arrayValue: kotlin.Array<Value>): Value()
+                        class Map(val arrayValue: Array<MapClass>): Value()
+                        
+                        class MapClass(
+                            val textValue: String,
+                            val value: Value
+                        )
                     }
                 """.trimIndent()
             )

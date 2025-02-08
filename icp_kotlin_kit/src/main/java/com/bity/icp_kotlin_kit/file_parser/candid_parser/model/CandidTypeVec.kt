@@ -5,12 +5,16 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeVec(
     override val typeId: String? = null,
+    override val variableName: String = "arrayValue",
     override val optionalType: OptionalType = OptionalType.None,
     val vecType: CandidType,
 ): CandidType() {
 
-    override val variableName: String = typeId ?: "arrayValue"
+    override val isTypeAlias: Boolean = true
     override val shouldDeclareInnerClass: Boolean = vecType.shouldDeclareInnerClass
+
+    override fun getClassNameForInnerClassDefinition(baseName: String?): String =
+        vecType.getClassNameForInnerClassDefinition(typeId)
 
     override fun getInnerClassDefinition(className: String): String =
         vecType.getInnerClassDefinition(className)

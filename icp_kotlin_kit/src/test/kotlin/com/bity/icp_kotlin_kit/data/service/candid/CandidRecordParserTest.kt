@@ -104,6 +104,16 @@ class CandidRecordParserTest {
                         )
                     }
                 """.trimIndent()
+            ),
+
+            Arguments.of(
+                "type Account = record { owner : principal; subaccount : opt Subaccount };",
+                """
+                    class Account(
+                        val owner: ICPPrincipalApiModel,
+                        val subaccount: Subaccount?
+                    )
+                """.trimIndent()
             )
         )
 

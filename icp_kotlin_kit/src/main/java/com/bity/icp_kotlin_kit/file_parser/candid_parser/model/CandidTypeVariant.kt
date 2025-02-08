@@ -10,6 +10,8 @@ internal data class CandidTypeVariant(
     val candidTypes: List<CandidType>,
 ): CandidType() {
 
+    override val isTypeAlias: Boolean = false
+
     override fun getKotlinType(variableName: String?): String {
         TODO("Not yet implemented")
     }
@@ -24,9 +26,21 @@ internal data class CandidTypeVariant(
         ) {
             it.getClassDefinitionForSealedClass(typeId)
         }
-        sealedClassDefinition.append(classesDefinition)
+        sealedClassDefinition.appendLine(classesDefinition)
+        val innerClasses = getInnerClassDefinition()
+        innerClasses?.let {
+            sealedClassDefinition.appendLine(it)
+        }
         sealedClassDefinition.appendLine("}")
         return sealedClassDefinition.toString()
+    }
+
+    private fun getInnerClassDefinition(): String? {
+        val innerTypesToDeclare = candidTypes.filter { it.shouldDeclareInnerClass }
+        return if(innerTypesToDeclare.isEmpty()) null
+        else innerTypesToDeclare.joinToString {
+            it.getInnerClassDefinition(it.getClassNameForInnerClassDefinition())
+        }
     }
 
     companion object : ParserNodeDeclaration<CandidTypeVariant> by reflective()

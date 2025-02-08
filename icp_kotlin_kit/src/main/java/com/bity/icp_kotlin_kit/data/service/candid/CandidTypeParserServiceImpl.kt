@@ -6,6 +6,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.Token
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionDeclaration
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionType
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
+import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBlob
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBool
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeCustom
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat
@@ -61,20 +62,26 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
             } or {
                 expect(CandidTypeInt64) storeIn self()
             } or {
+                expect(CandidTypeInt) storeIn self()
+            } or {
                 expect(CandidTypeNat8) storeIn self()
             } or {
                 expect(CandidTypeNat64) storeIn self()
             } or {
+                expect(CandidTypeNat) storeIn self()
+            } or {
                 expect(CandidTypeFloat) storeIn self()
             } or {
                 expect(CandidTypeService) storeIn self()
+            } or {
+                expect(CandidTypeBlob) storeIn self()
             }
             /*
                 expect(CandidTypeInt) storeIn self()
                 expect(CandidTypeInt8) storeIn self()
                 expect(CandidTypeInt16) storeIn self()
                 expect(CandidTypeInt32) storeIn self()
-                expect(CandidTypeNat) storeIn self()
+
                 expect(CandidTypeNat16) storeIn self()
                 expect(CandidTypeNat32) storeIn self()
                 expect(CandidTypeFloat64) storeIn self()
@@ -144,6 +151,8 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                         expect(Token.Semi)
                     } or {
                         expect(Token.RParen)
+                    } or {
+                        expect(Token.RBrace)
                     }
                 }
             } or {
@@ -219,31 +228,37 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 }
             }
-            /*either {
-                expect(Token.Id) storeIn CandidTypeText::typeId
+        }
+
+        CandidTypeBlob {
+            either {
+                expect(Token.Type)
+                expect(Token.Id) storeIn CandidTypeBlob::typeId
+                expect(Token.Equals)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
+                    }
+                }
+                expect(Token.Blob)
+            } or {
+                expect(Token.Id) storeIn CandidTypeBlob::typeId
                 expect(Token.Colon)
                 optional {
                     either {
                         expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                        emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     } or {
                         expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                        emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     }
                 }
-                expect(Token.Text)
-            } or {
-                expect(Token.Text)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    } or {
-                        expect(Token.RParen)
-                    }
-                }
-            }*/
+                expect(Token.Blob)
+            }
         }
 
         CandidTypeBool {
@@ -322,6 +337,15 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 }
                 expect(Token.Principal)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.RParen)
+                    }
+                }
             }
         }
 
@@ -434,38 +458,18 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeInt {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeInt::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
-                    }
+            expect(Token.Id) storeIn CandidTypeInt::typeId
+            expect(Token.Colon)
+            optional {
+                either {
+                    expect(Token.Opt)
+                    emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                } or {
+                    expect(Token.DoubleOpt)
+                    emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
                 }
-                expect(Token.Int)
-            } or {
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
-                    }
-                }
-                expect(Token.Int)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
-            }*/
+            }
+            expect(Token.Int)
         }
 
         CandidTypeInt8 {
@@ -586,38 +590,6 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
             }
             expect(Token.Int64)
-            /*either {
-                expect(Token.Id) storeIn CandidTypeInt64::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    }
-                }
-                expect(Token.Int64)
-            } or {
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
-                    }
-                }
-                expect(Token.Int64)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
-            }*/
         }
 
         CandidTypeNat8 {
@@ -772,38 +744,18 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeNat {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeNat::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
-                    }
+            expect(Token.Id) storeIn CandidTypeNat::typeId
+            expect(Token.Colon)
+            optional {
+                either {
+                    expect(Token.Opt)
+                    emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
+                } or {
+                    expect(Token.DoubleOpt)
+                    emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                 }
-                expect(Token.Nat)
-            } or {
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
-                    }
-                }
-                expect(Token.Nat)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
-            }*/
+            }
+            expect(Token.Nat)
         }
 
         CandidTypeFloat {
@@ -945,9 +897,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
     }
 
     override fun parseCandidType(candidType: String): CandidType {
-        /* fileLexer.tokenize(candidType).forEachIndexed { i, t ->
+        fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
-        } */
+        }
         /*typeParser.parseWithDebugger(fileLexer.tokenize(candidType))
             .debuggerResult.apply { println(this) }*/
         return typeParser.parse(fileLexer.tokenize(candidType))

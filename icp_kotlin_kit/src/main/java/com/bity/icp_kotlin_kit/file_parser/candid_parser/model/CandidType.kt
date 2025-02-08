@@ -11,6 +11,7 @@ internal sealed class CandidType {
     abstract val variableName: String?
     abstract val optionalType: OptionalType
 
+    open fun getClassNameForInnerClassDefinition(baseName: String? = null): String = TODO("Not implemented for $this")
     abstract fun  getKotlinType(variableName: String? = null): String
 
     // TODO, make abstract
@@ -26,10 +27,10 @@ internal sealed class CandidType {
     // TODO, make abstract
     open fun getInnerClassDefinition(className: String): String = TODO("Not implemented for $this")
 
-    // TODO, make abstract
-    open fun getClassDefinitionForSealedClass(parentClassname: String): String =
-        TODO("Not implemented for $this")
-
+    open fun getClassDefinitionForSealedClass(parentClassname: String): String {
+        val variableDefinition = "val $variableName: ${getKotlinVariableType()}"
+        return "class $typeId($variableDefinition): $parentClassname()"
+    }
     fun getTypealiasDefinition(): String {
         require(isTypeAlias)
         requireNotNull(typeId)

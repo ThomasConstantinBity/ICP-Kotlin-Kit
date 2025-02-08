@@ -10,16 +10,27 @@ internal data class CandidTypeRecord(
     val candidTypes: List<CandidType>
 ): CandidType() {
 
-    override val shouldDeclareInnerClass: Boolean = true
     override val isTypeAlias: Boolean = false
+    override val shouldDeclareInnerClass: Boolean = true
+
+    override fun getClassNameForInnerClassDefinition(baseName: String?): String =
+        getKotlinType(baseName)
 
     override fun getKotlinType(variableName: String?): String =
         when {
             typeId != null -> typeId
-            else -> variableName
-                ?.split("_")
-                ?.joinToString { split -> split.replaceFirstChar { it.uppercase() } }
-                ?: TODO()
+            variableName == null -> TODO()
+            else -> {
+                val kotlinType = variableName
+                    .split("_")
+                    .joinToString { split -> split.replaceFirstChar { it.uppercase() } }
+                when(kotlinType) {
+                    "Map",
+                    "Array" -> "${kotlinType}Class"
+
+                    else -> kotlinType
+                }
+            }
         }
 
     override fun getClassDefinition(): String {

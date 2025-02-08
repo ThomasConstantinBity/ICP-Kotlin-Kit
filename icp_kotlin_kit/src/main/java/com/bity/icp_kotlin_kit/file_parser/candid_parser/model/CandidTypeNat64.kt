@@ -5,16 +5,11 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal data class CandidTypeNat64(
     override val typeId: String? = null,
+    override val variableName: String = "nat64Value",
     override val optionalType: OptionalType = OptionalType.None,
 ): CandidType() {
 
-    override val variableName: String = typeId ?: "uLongValue"
     override fun getKotlinType(variableName: String?): String = "ULong"
-
-    override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val nat64Value: ${getKotlinType()}"
-        return "class $typeId($variableDefinition): $parentClassname()"
-    }
 
     companion object : ParserNodeDeclaration<CandidTypeNat64> by reflective()
 }

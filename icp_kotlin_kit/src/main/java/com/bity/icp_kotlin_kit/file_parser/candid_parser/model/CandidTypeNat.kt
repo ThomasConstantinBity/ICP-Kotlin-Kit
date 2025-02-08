@@ -5,7 +5,7 @@ import guru.zoroark.tegral.niwen.parser.reflective
 
 internal class CandidTypeNat(
     override val typeId: String,
-    override val variableName: String?,
+    override val variableName: String = "natValue",
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
