@@ -31,14 +31,7 @@ class CandidServiceParserTest {
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
                 .replace("""\n""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
+                .trim()
         )
     }
 
@@ -47,6 +40,109 @@ class CandidServiceParserTest {
 
         @JvmStatic
         private fun candidService() = listOf(
+
+            Arguments.of(
+                """
+                    service : {
+                        icrc7_collection_metadata : () -> (vec record { text; Value } ) query;
+                        icrc7_symbol : () -> (text) query;
+                        icrc7_name : () -> (text) query;
+                        icrc7_description : () -> (opt text) query;
+                        icrc7_logo : () -> (opt text) query;
+                        icrc7_total_supply : () -> (nat) query;
+                        icrc7_supply_cap : () -> (opt nat) query;
+                        icrc7_max_query_batch_size : () -> (opt nat) query;
+                        icrc7_max_update_batch_size : () -> (opt nat) query;
+                        icrc7_default_take_value : () -> (opt nat) query;
+                        icrc7_max_take_value : () -> (opt nat) query;
+                        icrc7_max_memo_size : () -> (opt nat) query;
+                        icrc7_atomic_batch_transfers : () -> (opt bool) query;
+                        icrc7_tx_window : () -> (opt nat) query;
+                        icrc7_permitted_drift : () -> (opt nat) query;
+                        icrc7_token_metadata : (token_ids : vec nat) -> (vec record { nat; opt record { text; Value } }) query;
+                        icrc7_owner_of : (token_ids : vec nat)
+                        -> (vec opt Account) query;
+                        icrc7_balance_of : (vec Account) -> (vec nat) query;
+                        icrc7_tokens : (prev : opt nat, take : opt nat)
+                        -> (vec nat) query;
+                        icrc7_tokens_of : (account : Account, prev : opt nat, take : opt nat)
+                        -> (vec nat) query;
+                        icrc7_transfer : (vec TransferArg) -> (vec opt TransferResult);
+                    }
+                """.trimIndent(),
+                """
+                    class Service(
+                        private val canister: ICPPrincipal
+                    ) {
+                        suspend fun icrc7_symbol(): String {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_symbol",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decodeNotNull(result.first())
+                        }
+                        
+                        suspend fun icrc7_name(): String {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_name",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decodeNotNull(result.first())
+                        }
+                        
+                        suspend fun icrc7_description(): String? {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_description",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decode(result.first())
+                        }
+                        
+                        suspend fun icrc7_logo(): String? {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_logo",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decode(result.first())
+                        }
+                        
+                        suspend fun icrc7_total_supply(): BigInteger {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_total_supply",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decodeNotNull(result.first())
+                        }
+                        
+                        suspend fun icrc7_supply_cap(): BigInteger? {
+                            val icpQuery = ICPQuery(
+                                methodName = "icrc7_supply_cap",
+                                canister = canister
+                            )
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow()
+                            return CandidDecoder.decode(result.first())
+                        }
+                    }
+                """.trimIndent()
+            ),
+
             Arguments.of(
                 """
                     service : {

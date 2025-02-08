@@ -20,7 +20,7 @@ internal data class CandidTypeRecord(
     override fun getKotlinType(variableName: String?): String =
         when {
             typeId != null -> typeId
-            variableName == null -> TODO()
+            variableName == null -> TODO("$this")
             else -> {
                 val kotlinType = variableName
                     .split("_")

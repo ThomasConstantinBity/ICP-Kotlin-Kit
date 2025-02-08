@@ -29,14 +29,7 @@ class CandidRecordParserTest {
                 .trim(),
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
+                .trim()
         )
     }
 
@@ -112,6 +105,29 @@ class CandidRecordParserTest {
                     class Account(
                         val owner: ICPPrincipalApiModel,
                         val subaccount: Subaccount?
+                    )
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type AllocationRecordStable = record {
+                      allocated_space : nat;
+                      token_id : text;
+                      available_space : nat;
+                      canister : principal;
+                      chunks : vec nat;
+                      library_id : text;
+                    };
+                """.trimIndent(),
+                """
+                    class AllocationRecordStable(
+                        val allocated_space: BigInteger,
+                        val token_id: String,
+                        val available_space: BigInteger,
+                        val canister: ICPPrincipalApiModel,
+                        val chunks: Array<BigInteger>,
+                        val library_id: String
                     )
                 """.trimIndent()
             )

@@ -93,7 +93,7 @@ internal class CandidFunctionDeclaration(
     private fun getQueryDefinition(): String {
         return """
             val icpQuery = ICPQuery(
-                methodName = $functionName,
+                methodName = "${functionName.replace("\"", "")}",
                 canister = canister
             )
                 """.trimIndent()
