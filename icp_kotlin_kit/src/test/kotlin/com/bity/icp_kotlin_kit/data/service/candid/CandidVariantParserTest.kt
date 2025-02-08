@@ -45,6 +45,33 @@ class CandidVariantParserTest {
 
         @JvmStatic
         private fun candidVariant() = listOf(
+
+            Arguments.of(
+                """
+                    type TransferError = variant {
+                        NonExistingTokenId;
+                        InvalidRecipient;
+                        Unauthorized;
+                        TooOld;
+                        CreatedInFuture : record { ledger_time: nat64 };
+                        // Duplicate : record { duplicate_of : nat };
+                        // GenericError : record { error_code : nat; message : text };
+                        // GenericBatchError : record { error_code : nat; message : text };
+                    };
+                """.trimIndent(),
+                """
+                    sealed class TransferError {
+                        object NonExistingTokenId: TransferError()
+                        object InvalidRecipient: TransferError()
+                        object Unauthorized: TransferError()
+                        object TooOld: TransferError()
+                        class CreatedInFuture(
+                            val ledger_time: ULong
+                        ): TransferError()
+                    }
+                """.trimIndent()
+            ),
+
             Arguments.of(
                 """
                     type detail_value = variant {
@@ -64,7 +91,7 @@ class CandidVariantParserTest {
                         object True: detail_value()
                         object False: detail_value()
                         class I64(val int64Value: Long): detail_value()
-                        class U64(val nat64Value: ULong): detail_value()
+                        class U64(val U64: ULong): detail_value()
                         class Vec(val arrayValue: Array<detail_value>): detail_value()
                         class Slice(val arrayValue: Array<UByte>): detail_value()
                         class Text(val textValue: String): detail_value()

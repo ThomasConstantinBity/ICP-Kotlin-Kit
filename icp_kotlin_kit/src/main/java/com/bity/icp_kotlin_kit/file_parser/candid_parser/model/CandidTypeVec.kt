@@ -11,7 +11,8 @@ internal data class CandidTypeVec(
 ): CandidType() {
 
     override val isTypeAlias: Boolean = true
-    override val shouldDeclareInnerClass: Boolean = vecType.shouldDeclareInnerClass
+    override val shouldDeclareInnerClass: Boolean =
+        vecType is CandidTypeRecord
 
     override fun getClassNameForInnerClassDefinition(baseName: String?): String =
         vecType.getClassNameForInnerClassDefinition(typeId)

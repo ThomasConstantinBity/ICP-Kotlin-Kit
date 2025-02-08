@@ -11,7 +11,8 @@ internal data class CandidTypeRecord(
 ): CandidType() {
 
     override val isTypeAlias: Boolean = false
-    override val shouldDeclareInnerClass: Boolean = true
+    override val shouldDeclareInnerClass: Boolean =
+        candidTypes.any{ it.shouldDeclareInnerClass }
 
     override fun getClassNameForInnerClassDefinition(baseName: String?): String =
         getKotlinType(baseName)
@@ -59,7 +60,7 @@ internal data class CandidTypeRecord(
         if (innerClassesToDeclare.isNotEmpty()) {
             kotlinClassDefinition.appendLine(") {")
             val kotlinInnerClasses = innerClassesToDeclare.joinToString(
-                separator = "\n\t",
+                separator = ",\n\t",
                 prefix = "\t"
             ) {
                 val innerClassName = it.variableName!!.replaceFirstChar { char -> char.uppercase() }
@@ -74,56 +75,19 @@ internal data class CandidTypeRecord(
         return kotlinClassDefinition.toString()
     }
 
-    /*
-    override fun getKotlinVariableType(): String {
-        TODO()
-        /*when {
-            typeName == null -> {
-                val unnamedClassName = UnnamedClassHelper.getUnnamedClassName()
-                typeName = unnamedClassName
-                return unnamedClassName
-            }
-
-            else -> TODO()
-        }*/
-    }
-     */
-
-    /*override fun shouldDeclareInnerClass(): Boolean = true
-
-    override fun getKotlinClassName(candidTypeDefinitionId: String?): String =
-        if(typeId != null) TODO() else "${candidTypeDefinitionId}Value"
-
-    override fun getKotlinDefinition(candidTypeDefinitionId: String): String {
-        val dataClassDefinition = StringBuilder("data class $candidTypeDefinitionId(")
-        val classVariables = candidTypes.joinToString(
-            separator = ",\n\t",
-            prefix = "\n\t"
+    override fun getClassDefinitionForSealedClass(parentClassname: String): String {
+        requireNotNull(typeId)
+        val classDefinition = StringBuilder("class $typeId(")
+        val variableDefinition = candidTypes.joinToString(
+            prefix = "\n",
+            separator = "\n\t",
         ) {
-            val variableName = it.getVariableName()
-            val variableType = it.getKotlinVariableTypeWithOptionalDefinition()
-            "val $variableName: $variableType"
+            "val ${it.variableName}: ${it.getKotlinVariableType()}"
         }
-        dataClassDefinition.appendLine(classVariables)
-
-        val innerClassesToDeclare = candidTypes.filter { it.shouldDeclareInnerClass() }
-        if(innerClassesToDeclare.isNotEmpty()) {
-            dataClassDefinition.appendLine(") {")
-            val innerClassesDefinition = innerClassesToDeclare.joinToString(
-                prefix = "\n\t\t",
-                separator = "\n\t\t"
-            ) { it.getKotlinDefinition(it.getKotlinClassName()) }
-            dataClassDefinition.appendLine(innerClassesDefinition)
-            dataClassDefinition.appendLine("}")
-        } else {
-            dataClassDefinition.appendLine(")")
-        }
-        return dataClassDefinition.toString()
+        classDefinition.appendLine(variableDefinition)
+        classDefinition.appendLine("): $parentClassname()")
+        return classDefinition.toString()
     }
-
-    override fun getInnerClassesToDeclare(): List<CandidType> {
-        return listOf(this)
-    }*/
 
     companion object : ParserNodeDeclaration<CandidTypeRecord> by reflective()
 }

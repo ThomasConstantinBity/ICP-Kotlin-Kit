@@ -407,41 +407,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 } storeIn CandidTypeRecord::candidTypes
                 expect(Token.RBrace)
-            }
-            /*either {
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
-                    }
-                }
-                expect(Token.Record)
-                expect(Token.LBrace)
-                repeated(min = 1) {
-                    expect(CandidType) storeIn item
-                    optional {
-                        expect(Token.Semi)
-                    }
-                } storeIn CandidTypeRecord::candidTypes
-                expect(Token.RBrace)
-                optional {
-                    expect(Token.Semi)
-                }
             } or {
                 expect(Token.Id) storeIn CandidTypeRecord::typeId
                 expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
-                    }
-                }
                 expect(Token.Record)
                 expect(Token.LBrace)
                 repeated(min = 1) {
@@ -451,10 +419,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 } storeIn CandidTypeRecord::candidTypes
                 expect(Token.RBrace)
-                lookahead {
-                    expect(Token.Semi)
-                }
-            }*/
+            }
         }
 
         CandidTypeInt {
@@ -708,21 +673,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeNat64 {
-            expect(Token.Id) storeIn CandidTypeNat64::typeId
-            expect(Token.Colon)
-            optional {
-                either {
-                    expect(Token.Opt)
-                    emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
-                } or {
-                    expect(Token.DoubleOpt)
-                    emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
-                }
-            }
-            expect(Token.Nat64)
-            /*either {
-
-            } or {
+            either {
+                expect(Token.Id) storeIn CandidTypeNat64::variableName
+                expect(Token.Colon)
                 optional {
                     either {
                         expect(Token.Opt)
@@ -733,14 +686,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 }
                 expect(Token.Nat64)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
-            }*/
+            }
         }
 
         CandidTypeNat {
@@ -897,9 +843,9 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
     }
 
     override fun parseCandidType(candidType: String): CandidType {
-        fileLexer.tokenize(candidType).forEachIndexed { i, t ->
+        /* fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
-        }
+        } */
         /*typeParser.parseWithDebugger(fileLexer.tokenize(candidType))
             .debuggerResult.apply { println(this) }*/
         return typeParser.parse(fileLexer.tokenize(candidType))
