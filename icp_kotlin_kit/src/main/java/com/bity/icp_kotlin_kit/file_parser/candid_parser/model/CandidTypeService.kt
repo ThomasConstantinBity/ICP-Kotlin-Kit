@@ -13,7 +13,9 @@ internal class CandidTypeService(
     override fun getKotlinType(variableName: String?): String = TODO()
 
     override fun getServiceDefinition(serviceName: String?): String {
-        val name = serviceName ?: typeId ?: "Service"
+        val name = typeId?.split("_")?.joinToString("") { it }
+            ?: serviceName
+            ?: "Service"
         val serviceDefinition = StringBuilder(
             """
                 class $name(

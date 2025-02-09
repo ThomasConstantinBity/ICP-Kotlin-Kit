@@ -15,6 +15,7 @@ class KotlinFileGeneratorServiceTest {
         val candidFileText = File(filePath).readText()
         val generatedKotlinFile = kotlinFileGeneratorService.parseAndGetKotlinFile(
             candidFileText = candidFileText,
+            fileName = fileName,
             packageName = "com.example.test"
         )
         println(generatedKotlinFile)
@@ -27,6 +28,7 @@ class KotlinFileGeneratorServiceTest {
             val candidFileText = it.readText()
             val generatedKotlinFile = kotlinFileGeneratorService.parseAndGetKotlinFile(
                 candidFileText = candidFileText,
+                fileName = it.name.split(".").first(),
                 packageName = "com.example.test"
             )
             println(generatedKotlinFile)

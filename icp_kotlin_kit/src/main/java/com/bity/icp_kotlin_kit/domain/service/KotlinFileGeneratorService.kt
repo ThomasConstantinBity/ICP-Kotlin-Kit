@@ -4,6 +4,7 @@ interface KotlinFileGeneratorService {
 
     fun parseAndGetKotlinFile(
         candidFileText: String,
+        fileName: String,
         packageName: String,
     ): String
 

@@ -299,7 +299,19 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 }
                 expect(Token.Principal)
-
+            } or {
+                expect(Token.Principal)
+                lookahead {
+                    either {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.Colon)
+                    }
+                }
             }
         }
 
@@ -766,6 +778,16 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
             either {
                 expect(Token.Service)
                 expect(Token.Colon)
+                expect(Token.LBrace)
+                repeated(min = 0) {
+                    expect(CandidFunctionDeclaration) storeIn item
+                } storeIn CandidTypeService::serviceFunctions
+                expect(Token.RBrace)
+            } or {
+                expect(Token.Type)
+                expect(Token.Id) storeIn CandidTypeService::typeId
+                expect(Token.Equals)
+                expect(Token.Service)
                 expect(Token.LBrace)
                 repeated(min = 0) {
                     expect(CandidFunctionDeclaration) storeIn item
