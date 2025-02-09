@@ -59,7 +59,7 @@ internal data class CandidTypeRecord(
                                 c.uppercase()
                             }
                         }
-                else it.variableName
+                else it.getKotlinVariableType()
                 "val $variableName: $variableType"
             }
         kotlinClassDefinition.appendLine(variables)

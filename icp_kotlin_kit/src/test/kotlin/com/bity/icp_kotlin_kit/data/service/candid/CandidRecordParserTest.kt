@@ -40,6 +40,27 @@ class CandidRecordParserTest {
 
             Arguments.of(
                 """
+                    type EscrowReceipt = record {
+                      token : TokenSpec;
+                      token_id : text;
+                      seller : Account__1;
+                      buyer : Account__1;
+                      amount : nat;
+                    };
+                """.trimIndent(),
+                """
+                    class EscrowReceipt(
+                        val token: TokenSpec,
+                        val token_id: String,
+                        val seller: Account__1,
+                        val buyer: Account__1,
+                        val amount: BigInteger
+                    )
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
                     type DutchParams = record {
                       time_unit : variant { day : nat; hour : nat; minute : nat };
                       decay_type : variant { flat : nat; percent : float64 };

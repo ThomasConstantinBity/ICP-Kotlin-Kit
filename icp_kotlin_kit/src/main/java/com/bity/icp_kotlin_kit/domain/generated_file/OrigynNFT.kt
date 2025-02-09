@@ -1,4 +1,3 @@
-/*
 package com.bity.icp_kotlin_kit.domain.generated_file
 
 import java.math.BigInteger
@@ -11,116 +10,83 @@ import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 import com.bity.icp_kotlin_kit.domain.request.PollingValues
 
-*/
 /**
  * type ApprovalResult = vec record {
  *   token_id : nat;
  *   approval_result : variant { Ok : nat; Err : ApprovalError };
  * };
- *//*
-
-*/
+ */
 /* typealias ApprovalResult = kotlin.Array<ApprovalResult>class ApprovalResult(
     val token_id: BigInteger,
     val null: approval_result
-) *//*
-
-*/
+) */
 /**
  * type AskConfigShared = opt AskFeatureArray;
- *//*
-
+ */
 // typealias AskConfigShared = AskFeatureArray?
 
-*/
 /**
  * type AskFeatureArray = vec AskFeature;
- *//*
-
+ */
 // typealias AskFeatureArray = kotlin.Array<AskFeature>
 
-*/
 /**
  * type AskSubscribeResponse = bool;
- *//*
-
+ */
 typealias AskSubscribeResponse = Boolean
 
-*/
 /**
  * type BidConfigShared = opt vec BidFeature;
- *//*
-
+ */
 // typealias BidConfigShared = kotlin.Array<BidFeature>?
 
-*/
 /**
  * type Caller = opt principal;
- *//*
-
+ */
 typealias Caller = ICPPrincipalApiModel?
 
-*/
 /**
  * type CollectionMetadata = vec record { text; Value };
- *//*
-
-*/
+ */
 /* typealias CollectionMetadata = kotlin.Array<CollectionMetadata>class CollectionMetadata(
     val textValue: String,
     val value: Value
-) *//*
-
-*/
+) */
 /**
  * type DistributeSaleResponse = vec Result;
- *//*
-
+ */
 typealias DistributeSaleResponse = kotlin.Array<Result>
 
-*/
 /**
  * type EXTMemo = vec nat8;
- *//*
-
+ */
 typealias EXTMemo = kotlin.Array<UByte>
 
-*/
 /**
  * type EXTSubAccount = vec nat8;
- *//*
-
+ */
 // typealias EXTSubAccount = kotlin.Array<UByte>
 
-*/
 /**
  * type FeeAccountsParams = vec FeeName;
- *//*
-
+ */
 // typealias FeeAccountsParams = kotlin.Array<FeeName>
 
-*/
 /**
  * type GetArchivesResult = vec GetArchivesResultItem;
- *//*
-
+ */
 // typealias GetArchivesResult = kotlin.Array<GetArchivesResultItem>
 
-*/
 /**
  * type InstantConfigShared = opt vec InstantFeature;
- *//*
-
+ */
 // typealias InstantConfigShared = kotlin.Array<InstantFeature>?
 
-*/
 /**
  * type NFTUpdateResponse = bool;
- *//*
-
+ */
 typealias NFTUpdateResponse = Boolean
 
-*/
 /**
  * type StableEscrowBalances = vec record {
  *   Account;
@@ -128,28 +94,20 @@ typealias NFTUpdateResponse = Boolean
  *   text;
  *   EscrowRecord__1;
  * };
- *//*
-
-*/
+ */
 /* typealias StableEscrowBalances = kotlin.Array<StableEscrowBalances>class StableEscrowBalances(
     val account: Account,
     val account: Account,
     val textValue: String,
     val escrowRecord__1: EscrowRecord__1
-) *//*
-
-*/
+) */
 /**
  * type StableNftLedger = vec record { text; TransactionRecord };
- *//*
-
-*/
+ */
 /*typealias StableNftLedger = kotlin.Array<StableNftLedger>class StableNftLedger(
     val textValue: String,
     val transactionRecord: TransactionRecord
-)*//*
-
-*/
+)*/
 /**
  * type StableSalesBalances = vec record {
  *   Account;
@@ -157,48 +115,37 @@ typealias NFTUpdateResponse = Boolean
  *   text;
  *   EscrowRecord__1;
  * };
- *//*
-
-*/
+ */
 /*typealias StableSalesBalances = kotlin.Array<StableSalesBalances>class StableSalesBalances(
     val account: Account,
     val account: Account,
     val textValue: String,
     val escrowRecord__1: EscrowRecord__1
-)*//*
-
-*/
+)*/
 /**
  * type Subaccount = vec nat8;
- *//*
-
+ */
 // typealias Subaccount = kotlin.Array<UByte>
 
-*/
 /**
  * type TransferResult = vec opt TransferResultItem;
- *//*
-
+ */
 // typealias TransferResult = kotlin.Array<TransferResultItem?>
 
-*/
 /**
  * type canister_id = principal;
- *//*
-
+ */
 typealias canister_id = ICPPrincipalApiModel
 object OrigynNFT {
 
-    */
-/**
+    /**
      * type Account = variant {
      *   account_id : text;
      *   "principal" : principal;
      *   extensible : CandyShared;
      *   account : record { owner : principal; sub_account : opt vec nat8 };
      * };
-     *//*
-
+     */
     sealed class Account {
         class account_id(val account_id: String): Account()
         class principal(val principal: ICPPrincipalApiModel): Account()
@@ -208,16 +155,14 @@ object OrigynNFT {
             val sub_account: kotlin.Array<UByte>?
         ): Account()
     }
-    */
-/**
+    /**
      * type Account__1 = variant {
      *   account_id : text;
      *   "principal" : principal;
      *   extensible : CandyShared;
      *   account : record { owner : principal; sub_account : opt vec nat8 };
      * };
-     *//*
-
+     */
     sealed class Account__1 {
         class account_id(val account_id: String): Account__1()
         class principal(val principal: ICPPrincipalApiModel): Account__1()
@@ -227,16 +172,14 @@ object OrigynNFT {
             val sub_account: kotlin.Array<UByte>?
         ): Account__1()
     }
-    */
-/**
+    /**
      * type Account__2 = variant {
      *   account_id : text;
      *   "principal" : principal;
      *   extensible : CandyShared;
      *   account : record { owner : principal; sub_account : opt vec nat8 };
      * };
-     *//*
-
+     */
     sealed class Account__2 {
         class Account_id(val account_id: String): Account__2()
         class "principal"(val "principal": ICPPrincipalApiModel): Account__2()
@@ -246,17 +189,14 @@ object OrigynNFT {
             val sub_account: kotlin.Array<UByte>?
         ): Account__2()
     }
-    */
-/**
+    /**
      * type Account__3 = record { owner : principal; subaccount : opt Subaccount };
-     *//*
-
+     */
     class Account__3(
         val owner: ICPPrincipalApiModel,
         val subaccount: Subaccount?
     )
-    */
-/**
+    /**
      * type AllocationRecordStable = record {
      *   allocated_space : nat;
      *   token_id : text;
@@ -265,8 +205,7 @@ object OrigynNFT {
      *   chunks : vec nat;
      *   library_id : text;
      * };
-     *//*
-
+     */
     class AllocationRecordStable(
         val allocated_space: BigInteger,
         val token_id: String,
@@ -275,8 +214,7 @@ object OrigynNFT {
         val chunks: kotlin.Array<BigInteger>,
         val library_id: String
     )
-    */
-/**
+    /**
      * type ApprovalArgs = record {
      *   memo : opt vec nat8;
      *   from_subaccount : opt vec nat8;
@@ -284,8 +222,7 @@ object OrigynNFT {
      *   expires_at : opt nat64;
      *   spender : Account__3;
      * };
-     *//*
-
+     */
     class ApprovalArgs(
         val memo: kotlin.Array<UByte>?,
         val from_subaccount: kotlin.Array<UByte>?,
@@ -293,8 +230,7 @@ object OrigynNFT {
         val expires_at: ULong?,
         val account__3: Account__3
     )
-    */
-/**
+    /**
      * type ApprovalError = variant {
      *   GenericError : record { message : text; error_code : nat };
      *   CreatexInFuture : record { ledger_time : nat64 };
@@ -302,8 +238,7 @@ object OrigynNFT {
      *   Unauthorized;
      *   TooOld;
      * };
-     *//*
-
+     */
     sealed class ApprovalError {
         class GenericError(
             val message: String,
@@ -319,20 +254,17 @@ object OrigynNFT {
         object TooOld: ApprovalError()
 
     }
-    */
-/**
+    /**
      * type ArchivedTransactionResponse = record {
      *   args : vec TransactionRange__1;
      *   callback : GetTransactionsFn;
      * };
-     *//*
-
+     */
     class ArchivedTransactionResponse(
         val args: kotlin.Array<TransactionRange__1>,
         val getTransactionsFn: GetTransactionsFn
     )
-    */
-/**
+    /**
      * type AskFeature = variant {
      *   kyc : principal;
      *   start_price : nat;
@@ -351,8 +283,7 @@ object OrigynNFT {
      *   dutch : DutchParams;
      *   ending : EndingType;
      * };
-     *//*
-
+     */
     sealed class AskFeature {
         class Kyc(val kyc: ICPPrincipalApiModel): AskFeature()
         class Start_price(val start_price: BigInteger): AskFeature()
@@ -372,8 +303,7 @@ object OrigynNFT {
         class ending(val ending: EndingType): AskFeature()
 
     }
-    */
-/**
+    /**
      * type AuctionConfig = record {
      *   start_price : nat;
      *   token : TokenSpec;
@@ -392,8 +322,7 @@ object OrigynNFT {
      *     };
      *   };
      * };
-     *//*
-
+     */
     class AuctionConfig(
         val start_price: BigInteger,
         val tokenSpec: TokenSpec,
@@ -404,8 +333,7 @@ object OrigynNFT {
         val buy_now: BigInteger?,
         val null: ending
     )
-    */
-/**
+    /**
      * type BalanceResponse = record {
      *   nfts : vec text;
      *   offers : vec EscrowRecord__1;
@@ -414,8 +342,7 @@ object OrigynNFT {
      *   multi_canister : opt vec principal;
      *   escrow : vec EscrowRecord__1;
      * };
-     *//*
-
+     */
     class BalanceResponse(
         val nfts: kotlin.Array<String>,
         val offers: kotlin.Array<EscrowRecord__1>,
@@ -424,138 +351,115 @@ object OrigynNFT {
         val multi_canister: kotlin.Array<ICPPrincipalApiModel>?,
         val escrow: kotlin.Array<EscrowRecord__1>
     )
-    */
-/**
+    /**
      * type BalanceResult = variant { ok : BalanceResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class BalanceResult {
         class ok(val ok: BalanceResponse): BalanceResult()
         class err(val err: OrigynError): BalanceResult()
 
     }
-    */
-/**
+    /**
      * type BearerResult = variant { ok : Account; err : OrigynError };
-     *//*
-
+     */
     sealed class BearerResult {
         class ok(val ok: Account): BearerResult()
         class err(val err: OrigynError): BearerResult()
 
     }
-    */
-/**
+    /**
      * type BidFeature = variant {
      *   fee_schema : text;
      *   broker : Account__1;
      *   fee_accounts : FeeAccountsParams;
      * };
-     *//*
-
+     */
     sealed class BidFeature {
         class Fee_schema(val fee_schema: String): BidFeature()
         class broker(val broker: Account__1): BidFeature()
         class fee_accounts(val fee_accounts: FeeAccountsParams): BidFeature()
 
     }
-    */
-/**
+    /**
      * type BidRequest = record {
      *   config : BidConfigShared;
      *   escrow_record : EscrowRecord;
      * };
-     *//*
-
+     */
     class BidRequest(
         val bidConfigShared: BidConfigShared,
         val escrowRecord: EscrowRecord
     )
-    */
-/**
+    /**
      * type BlockType = record { url : text; block_type : text };
-     *//*
-
+     */
     class BlockType(
         val url: String,
         val block_type: String
     )
-    */
-/**
+    /**
      * type CanisterLogFeature = variant {
      *   filterMessageByContains;
      *   filterMessageByRegex;
      * };
-     *//*
-
+     */
     sealed class CanisterLogFeature {
         object filterMessageByContains: CanisterLogFeature()
         object filterMessageByRegex: CanisterLogFeature()
 
     }
-    */
-/**
+    /**
      * type CanisterLogMessages = record {
      *   data : vec LogMessagesData;
      *   lastAnalyzedMessageTimeNanos : opt Nanos;
      * };
-     *//*
-
+     */
     class CanisterLogMessages(
         val data: kotlin.Array<LogMessagesData>,
         val lastAnalyzedMessageTimeNanos: Nanos?
     )
-    */
-/**
+    /**
      * type CanisterLogRequest = variant {
      *   getMessagesInfo;
      *   getMessages : GetLogMessagesParameters;
      *   getLatestMessages : GetLatestLogMessagesParameters;
      * };
-     *//*
-
+     */
     sealed class CanisterLogRequest {
         object getMessagesInfo: CanisterLogRequest()
         class getMessages(val getMessages: GetLogMessagesParameters): CanisterLogRequest()
         class getLatestMessages(val getLatestMessages: GetLatestLogMessagesParameters): CanisterLogRequest()
 
     }
-    */
-/**
+    /**
      * type CanisterLogResponse = variant {
      *   messagesInfo : CanisterLogMessagesInfo;
      *   messages : CanisterLogMessages;
      * };
-     *//*
-
+     */
     sealed class CanisterLogResponse {
         class messagesInfo(val messagesInfo: CanisterLogMessagesInfo): CanisterLogResponse()
         class messages(val messages: CanisterLogMessages): CanisterLogResponse()
 
     }
-    */
-/**
+    /**
      * type CanisterMetrics = record { data : CanisterMetricsData };
-     *//*
-
+     */
     class CanisterMetrics(
         val canisterMetricsData: CanisterMetricsData
     )
-    */
-/**
+    /**
      * type CanisterMetricsData = variant {
      *   hourly : vec HourlyMetricsData;
      *   daily : vec DailyMetricsData;
      * };
-     *//*
-
+     */
     sealed class CanisterMetricsData {
         class Hourly(val hourly: kotlin.Array<HourlyMetricsData>): CanisterMetricsData()
         class Daily(val daily: kotlin.Array<DailyMetricsData>): CanisterMetricsData()
 
     }
-    */
-/**
+    /**
      * type ChunkContent = variant {
      *   remote : record { args : ChunkRequest; canister : principal };
      *   chunk : record {
@@ -565,8 +469,7 @@ object OrigynNFT {
      *     current_chunk : opt nat;
      *   };
      * };
-     *//*
-
+     */
     sealed class ChunkContent {
         class remote(
             val chunkRequest: ChunkRequest,
@@ -580,32 +483,27 @@ object OrigynNFT {
             val current_chunk: BigInteger?
         ): ChunkContent()
     }
-    */
-/**
+    /**
      * type ChunkRequest = record {
      *   token_id : text;
      *   chunk : opt nat;
      *   library_id : text;
      * };
-     *//*
-
+     */
     class ChunkRequest(
         val token_id: String,
         val chunk: BigInteger?,
         val library_id: String
     )
-    */
-/**
+    /**
      * type ChunkResult = variant { ok : ChunkContent; err : OrigynError };
-     *//*
-
+     */
     sealed class ChunkResult {
         class ok(val ok: ChunkContent): ChunkResult()
         class err(val err: OrigynError): ChunkResult()
 
     }
-    */
-/**
+    /**
      * type CollectionInfo = record {
      *   multi_canister_count : opt nat;
      *   managers : opt vec principal;
@@ -627,8 +525,7 @@ object OrigynNFT {
      *   symbol : opt text;
      *   allocated_storage : opt nat;
      * };
-     *//*
-
+     */
     class CollectionInfo(
         val multi_canister_count: BigInteger?,
         val managers: kotlin.Array<ICPPrincipalApiModel>?,
@@ -657,18 +554,15 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type CollectionResult = variant { ok : CollectionInfo; err : OrigynError };
-     *//*
-
+     */
     sealed class CollectionResult {
         class ok(val ok: CollectionInfo): CollectionResult()
         class err(val err: OrigynError): CollectionResult()
 
     }
-    */
-/**
+    /**
      * type DIP721Metadata = record {
      *   logo : opt text;
      *   name : opt text;
@@ -677,8 +571,7 @@ object OrigynNFT {
      *   custodians : vec principal;
      *   symbol : opt text;
      * };
-     *//*
-
+     */
     class DIP721Metadata(
         val logo: String?,
         val name: String?,
@@ -687,42 +580,36 @@ object OrigynNFT {
         val custodians: kotlin.Array<ICPPrincipalApiModel>,
         val symbol: String?
     )
-    */
-/**
+    /**
      * type DIP721NatResult = variant { Ok : nat; Err : NftError };
-     *//*
-
+     */
     sealed class DIP721NatResult {
         class Ok(val ok: BigInteger): DIP721NatResult()
         class Err(val err: NftError): DIP721NatResult()
 
     }
-    */
-/**
+    /**
      * type DIP721Stats = record {
      *   cycles : nat;
      *   total_transactions : nat;
      *   total_unique_holders : nat;
      *   total_supply : nat;
      * };
-     *//*
-
+     */
     class DIP721Stats(
         val cycles: BigInteger,
         val total_transactions: BigInteger,
         val total_unique_holders: BigInteger,
         val total_supply: BigInteger
     )
-    */
-/**
+    /**
      * type DIP721SupportedInterface = variant {
      *   Burn;
      *   Mint;
      *   Approval;
      *   TransactionHistory;
      * };
-     *//*
-
+     */
     sealed class DIP721SupportedInterface {
         object Burn: DIP721SupportedInterface()
         object Mint: DIP721SupportedInterface()
@@ -730,38 +617,31 @@ object OrigynNFT {
         object TransactionHistory: DIP721SupportedInterface()
 
     }
-    */
-/**
+    /**
      * type DIP721TokenMetadata = variant { Ok : TokenMetadata; Err : NftError };
-     *//*
-
+     */
     sealed class DIP721TokenMetadata {
         class Ok(val ok: TokenMetadata): DIP721TokenMetadata()
         class Err(val err: NftError): DIP721TokenMetadata()
 
     }
-    */
-/**
+    /**
      * type DIP721TokensListMetadata = variant { Ok : vec nat; Err : NftError };
-     *//*
-
+     */
     sealed class DIP721TokensListMetadata {
         class Ok(val ok: kotlin.Array<BigInteger>): DIP721TokensListMetadata()
         class Err(val err: NftError): DIP721TokensListMetadata()
 
     }
-    */
-/**
+    /**
      * type DIP721TokensMetadata = variant { Ok : vec TokenMetadata; Err : NftError };
-     *//*
-
+     */
     sealed class DIP721TokensMetadata {
         class Ok(val ok: kotlin.Array<TokenMetadata>): DIP721TokensMetadata()
         class Err(val err: NftError): DIP721TokensMetadata()
 
     }
-    */
-/**
+    /**
      * type DailyMetricsData = record {
      *   updateCalls : nat64;
      *   canisterHeapMemorySize : NumericEntity;
@@ -769,8 +649,7 @@ object OrigynNFT {
      *   canisterMemorySize : NumericEntity;
      *   timeMillis : int;
      * };
-     *//*
-
+     */
     class DailyMetricsData(
         val updateCalls: ULong,
         val numericEntity: NumericEntity,
@@ -778,17 +657,14 @@ object OrigynNFT {
         val numericEntity: NumericEntity,
         val timeMillis: BigInteger
     )
-    */
-/**
+    /**
      * type DataCertificate = record { certificate : vec nat8; hash_tree : vec nat8 };
-     *//*
-
+     */
     class DataCertificate(
         val certificate: kotlin.Array<UByte>,
         val hash_tree: kotlin.Array<UByte>
     )
-    */
-/**
+    /**
      * type DepositDetail = record {
      *   token : TokenSpec__1;
      *   trx_id : opt TransactionID__1;
@@ -797,8 +673,7 @@ object OrigynNFT {
      *   amount : nat;
      *   sale_id : opt text;
      * };
-     *//*
-
+     */
     class DepositDetail(
         val tokenSpec__1: TokenSpec__1,
         val transactionID__1: TransactionID__1?,
@@ -807,123 +682,104 @@ object OrigynNFT {
         val amount: BigInteger,
         val sale_id: String?
     )
-    */
-/**
+    /**
      * type DepositWithdrawDescription = record {
      *   token : TokenSpec__1;
      *   withdraw_to : Account;
      *   buyer : Account;
      *   amount : nat;
      * };
-     *//*
-
+     */
     class DepositWithdrawDescription(
         val tokenSpec__1: TokenSpec__1,
         val account: Account,
         val account: Account,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type DistributeSaleRequest = record { seller : opt Account };
-     *//*
-
+     */
     class DistributeSaleRequest(
         val account: Account?
     )
-    */
-/**
+    /**
      * type DutchParams = record {
      *   time_unit : variant { day : nat; hour : nat; minute : nat };
      *   decay_type : variant { flat : nat; percent : float64 };
      * };
-     *//*
-
+     */
     class DutchParams(
         val time_unit: TimeUnit,
         val decay_type: DecayType
     ) {
         sealed class TimeUnit {
-            class day(val day: BigInteger): time_unit()
-            class hour(val hour: BigInteger): time_unit()
-            class minute(val minute: BigInteger): time_unit()
+            class day(val day: BigInteger): TimeUnit()
+            class hour(val hour: BigInteger): TimeUnit()
+            class minute(val minute: BigInteger): TimeUnit()
         }
 
         sealed class DecayType {
-            class flat(val flat: BigInteger): decay_type()
-            class percent(val percent: Double): decay_type()
+            class flat(val flat: BigInteger): DecayType()
+            class percent(val percent: Double): DecayType()
         }
     }
-    */
-/**
+    /**
      * type EXTBalanceRequest = record { token : EXTTokenIdentifier; user : EXTUser };
-     *//*
-
+     */
     class EXTBalanceRequest(
         val eXTTokenIdentifier: EXTTokenIdentifier,
         val eXTUser: EXTUser
     )
-    */
-/**
+    /**
      * type EXTBalanceResult = variant { ok : EXTBalance; err : EXTCommonError };
-     *//*
-
+     */
     sealed class EXTBalanceResult {
         class ok(val ok: EXTBalance): EXTBalanceResult()
         class err(val err: EXTCommonError): EXTBalanceResult()
 
     }
-    */
-/**
+    /**
      * type EXTBearerResult = variant {
      *   ok : EXTAccountIdentifier;
      *   err : EXTCommonError;
      * };
-     *//*
-
+     */
     sealed class EXTBearerResult {
         class ok(val ok: EXTAccountIdentifier): EXTBearerResult()
         class err(val err: EXTCommonError): EXTBearerResult()
 
     }
-    */
-/**
+    /**
      * type EXTCommonError = variant {
      *   InvalidToken : EXTTokenIdentifier;
      *   Other : text;
      * };
-     *//*
-
+     */
     sealed class EXTCommonError {
         class InvalidToken(val invalidToken: EXTTokenIdentifier): EXTCommonError()
         class Other(val other: String): EXTCommonError()
 
     }
-    */
-/**
+    /**
      * type EXTMetadataResult = variant { ok : EXTMetadata; err : EXTCommonError };
-     *//*
-
+     */
     sealed class EXTMetadataResult {
         class ok(val ok: EXTMetadata): EXTMetadataResult()
         class err(val err: EXTCommonError): EXTMetadataResult()
 
     }
-    */
-/**
+    /**
      * type EXTTokensResult = variant {
      *   ok : vec EXTTokensResponse;
      *   err : EXTCommonError;
      * };
-     *//*
-
+     */
     sealed class EXTTokensResult {
         class Ok(val ok: kotlin.Array<EXTTokensResponse>): EXTTokensResult()
         class err(val err: EXTCommonError): EXTTokensResult()
 
     }
-    */
-/**
+    /**
      * type EXTTransferResponse = variant {
      *   ok : EXTBalance;
      *   err : variant {
@@ -935,35 +791,29 @@ object OrigynNFT {
      *     Other : text;
      *   };
      * };
-     *//*
-
+     */
     sealed class EXTTransferResponse {
         class ok(val ok: EXTBalance): EXTTransferResponse()
         class null(val null: err): EXTTransferResponse()
 
     }
-    */
-/**
+    /**
      * type EXTUser = variant { "principal" : principal; address : text };
-     *//*
-
+     */
     sealed class EXTUser {
         class "principal"(val "principal": ICPPrincipalApiModel): EXTUser()
         class Address(val address: String): EXTUser()
 
     }
-    */
-/**
+    /**
      * type EndingType = variant { date : int; timeout : nat };
-     *//*
-
+     */
     sealed class EndingType {
         class Date(val date: BigInteger): EndingType()
         class Timeout(val timeout: BigInteger): EndingType()
 
     }
-    */
-/**
+    /**
      * type Errors = variant {
      *   nyi;
      *   storage_configuration_error;
@@ -1016,8 +866,7 @@ object OrigynNFT {
      *   not_enough_storage;
      *   sales_withdraw_payment_failed;
      * };
-     *//*
-
+     */
     sealed class Errors {
         object nyi: Errors()
         object storage_configuration_error: Errors()
@@ -1071,8 +920,7 @@ object OrigynNFT {
         object sales_withdraw_payment_failed: Errors()
 
     }
-    */
-/**
+    /**
      * type EscrowReceipt = record {
      *   token : TokenSpec;
      *   token_id : text;
@@ -1080,17 +928,15 @@ object OrigynNFT {
      *   buyer : Account__1;
      *   amount : nat;
      * };
-     *//*
-
+     */
     class EscrowReceipt(
-        val tokenSpec: TokenSpec,
+        val token: TokenSpec,
         val token_id: String,
-        val account__1: Account__1,
-        val account__1: Account__1,
+        val seller: Account__1,
+        val buyer: Account__1,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type EscrowReceipt__1 = record {
      *   token : TokenSpec;
      *   token_id : text;
@@ -1098,8 +944,7 @@ object OrigynNFT {
      *   buyer : Account__1;
      *   amount : nat;
      * };
-     *//*
-
+     */
     class EscrowReceipt__1(
         val tokenSpec: TokenSpec,
         val token_id: String,
@@ -1107,8 +952,7 @@ object OrigynNFT {
         val account__1: Account__1,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type EscrowRecord = record {
      *   token : TokenSpec__2;
      *   token_id : text;
@@ -1119,8 +963,7 @@ object OrigynNFT {
      *   sale_id : opt text;
      *   account_hash : opt vec nat8;
      * };
-     *//*
-
+     */
     class EscrowRecord(
         val tokenSpec__2: TokenSpec__2,
         val token_id: String,
@@ -1131,8 +974,7 @@ object OrigynNFT {
         val sale_id: String?,
         val account_hash: kotlin.Array<UByte>?
     )
-    */
-/**
+    /**
      * type EscrowRecord__1 = record {
      *   token : TokenSpec__1;
      *   token_id : text;
@@ -1143,8 +985,7 @@ object OrigynNFT {
      *   sale_id : opt text;
      *   account_hash : opt vec nat8;
      * };
-     *//*
-
+     */
     class EscrowRecord__1(
         val tokenSpec__1: TokenSpec__1,
         val token_id: String,
@@ -1155,57 +996,48 @@ object OrigynNFT {
         val sale_id: String?,
         val account_hash: kotlin.Array<UByte>?
     )
-    */
-/**
+    /**
      * type EscrowRequest = record {
      *   token_id : text;
      *   deposit : DepositDetail;
      *   lock_to_date : opt int;
      * };
-     *//*
-
+     */
     class EscrowRequest(
         val token_id: String,
         val depositDetail: DepositDetail,
         val lock_to_date: BigInteger?
     )
-    */
-/**
+    /**
      * type EscrowResponse = record {
      *   balance : nat;
      *   receipt : EscrowReceipt;
      *   transaction : TransactionRecord;
      * };
-     *//*
-
+     */
     class EscrowResponse(
         val balance: BigInteger,
         val escrowReceipt: EscrowReceipt,
         val transactionRecord: TransactionRecord
     )
-    */
-/**
+    /**
      * type FeeDepositRequest = record { token : TokenSpec__1; account : Account };
-     *//*
-
+     */
     class FeeDepositRequest(
         val tokenSpec__1: TokenSpec__1,
         val account: Account
     )
-    */
-/**
+    /**
      * type FeeDepositResponse = record {
      *   balance : nat;
      *   transaction : TransactionRecord;
      * };
-     *//*
-
+     */
     class FeeDepositResponse(
         val balance: BigInteger,
         val transactionRecord: TransactionRecord
     )
-    */
-/**
+    /**
      * type FeeDepositWithdrawDescription = record {
      *   status : variant { locked : record { sale_id : text }; unlocked };
      *   token : TokenSpec__1;
@@ -1213,8 +1045,7 @@ object OrigynNFT {
      *   account : Account;
      *   amount : nat;
      * };
-     *//*
-
+     */
     class FeeDepositWithdrawDescription(
         val null: status,
         val tokenSpec__1: TokenSpec__1,
@@ -1222,51 +1053,43 @@ object OrigynNFT {
         val account: Account,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type GetArchivesArgs = record { from : opt principal };
-     *//*
-
+     */
     class GetArchivesArgs(
         val from: ICPPrincipalApiModel?
     )
-    */
-/**
+    /**
      * type GetArchivesResultItem = record {
      *   end : nat;
      *   canister_id : principal;
      *   start : nat;
      * };
-     *//*
-
+     */
     class GetArchivesResultItem(
         val end: BigInteger,
         val canister_id: ICPPrincipalApiModel,
         val start: BigInteger
     )
-    */
-/**
+    /**
      * type GetMetricsParameters = record {
      *   dateToMillis : nat;
      *   granularity : MetricsGranularity;
      *   dateFromMillis : nat;
      * };
-     *//*
-
+     */
     class GetMetricsParameters(
         val dateToMillis: BigInteger,
         val metricsGranularity: MetricsGranularity,
         val dateFromMillis: BigInteger
     )
-    */
-/**
+    /**
      * type GetTransactionsResult = record {
      *   log_length : nat;
      *   blocks : vec record { id : nat; block : Value__1 };
      *   archived_blocks : vec ArchivedTransactionResponse;
      * };
-     *//*
-
+     */
     class GetTransactionsResult(
         val log_length: BigInteger,
         val blocks: kotlin.Array<Blocks>,
@@ -1278,15 +1101,13 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type GetTransactionsResult__1 = record {
      *   log_length : nat;
      *   blocks : vec record { id : nat; block : Value__1 };
      *   archived_blocks : vec ArchivedTransactionResponse;
      * };
-     *//*
-
+     */
     class GetTransactionsResult__1(
         val log_length: BigInteger,
         val blocks: kotlin.Array<Blocks>,
@@ -1298,14 +1119,12 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type GovernanceRequest = variant {
      *   update_system_var : record { key : text; val : CandyShared; token_id : text };
      *   clear_shared_wallets : text;
      * };
-     *//*
-
+     */
     sealed class GovernanceRequest {
         class update_system_var(
             val key: String,
@@ -1316,37 +1135,30 @@ object OrigynNFT {
         class Clear_shared_wallets(val clear_shared_wallets: String): GovernanceRequest()
 
     }
-    */
-/**
+    /**
      * type GovernanceResult = variant { ok : GovernanceResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class GovernanceResult {
         class ok(val ok: GovernanceResponse): GovernanceResult()
         class err(val err: OrigynError): GovernanceResult()
 
     }
-    */
-/**
+    /**
      * type HeaderField = record { text; text };
-     *//*
-
+     */
     class HeaderField(
         val textValue: String,
         val textValue: String
     )
-    */
-/**
+    /**
      * type HistoryResult = variant { ok : vec TransactionRecord; err : OrigynError };
-     *//*
-
+     */
     sealed class HistoryResult {
         class Ok(val ok: kotlin.Array<TransactionRecord>): HistoryResult()
         class err(val err: OrigynError): HistoryResult()
 
     }
-    */
-/**
+    /**
      * type HourlyMetricsData = record {
      *   updateCalls : UpdateCallsAggregatedData;
      *   canisterHeapMemorySize : CanisterHeapMemoryAggregatedData;
@@ -1354,8 +1166,7 @@ object OrigynNFT {
      *   canisterMemorySize : CanisterMemoryAggregatedData;
      *   timeMillis : int;
      * };
-     *//*
-
+     */
     class HourlyMetricsData(
         val updateCallsAggregatedData: UpdateCallsAggregatedData,
         val canisterHeapMemoryAggregatedData: CanisterHeapMemoryAggregatedData,
@@ -1363,24 +1174,21 @@ object OrigynNFT {
         val canisterMemoryAggregatedData: CanisterMemoryAggregatedData,
         val timeMillis: BigInteger
     )
-    */
-/**
+    /**
      * type HttpRequest = record {
      *   url : text;
      *   method : text;
      *   body : vec nat8;
      *   headers : vec HeaderField;
      * };
-     *//*
-
+     */
     class HttpRequest(
         val url: String,
         val method: String,
         val body: kotlin.Array<UByte>,
         val headers: kotlin.Array<HeaderField>
     )
-    */
-/**
+    /**
      * type ICTokenSpec = record {
      *   id : opt nat;
      *   fee : opt nat;
@@ -1389,8 +1197,7 @@ object OrigynNFT {
      *   standard : variant { ICRC1; EXTFungible; DIP20; Other : CandyShared; Ledger };
      *   symbol : text;
      * };
-     *//*
-
+     */
     class ICTokenSpec(
         val id: BigInteger?,
         val fee: BigInteger?,
@@ -1399,8 +1206,7 @@ object OrigynNFT {
         val null: standard,
         val symbol: String
     )
-    */
-/**
+    /**
      * type ICTokenSpec__1 = record {
      *   id : opt nat;
      *   fee : opt nat;
@@ -1409,8 +1215,7 @@ object OrigynNFT {
      *   standard : variant { ICRC1; EXTFungible; DIP20; Other : CandyShared; Ledger };
      *   symbol : text;
      * };
-     *//*
-
+     */
     class ICTokenSpec__1(
         val id: BigInteger?,
         val fee: BigInteger?,
@@ -1419,48 +1224,41 @@ object OrigynNFT {
         val null: standard,
         val symbol: String
     )
-    */
-/**
+    /**
      * type IndexType = variant { Stable; StableTyped; Managed };
-     *//*
-
+     */
     sealed class IndexType {
         object Stable: IndexType()
         object StableTyped: IndexType()
         object Managed: IndexType()
 
     }
-    */
-/**
+    /**
      * type InstantFeature = variant {
      *   fee_schema : text;
      *   fee_accounts : FeeAccountsParams;
      * };
-     *//*
-
+     */
     sealed class InstantFeature {
         class Fee_schema(val fee_schema: String): InstantFeature()
         class fee_accounts(val fee_accounts: FeeAccountsParams): InstantFeature()
 
     }
-    */
-/**
+    /**
      * type LogMessagesData = record {
      *   data : Data;
      *   timeNanos : Nanos;
      *   message : text;
      *   caller : Caller;
      * };
-     *//*
-
+     */
     class LogMessagesData(
         val data: Data,
         val nanos: Nanos,
         val message: String,
         val caller: Caller
     )
-    */
-/**
+    /**
      * type ManageSaleRequest = variant {
      *   bid : BidRequest;
      *   escrow_deposit : EscrowRequest;
@@ -1473,8 +1271,7 @@ object OrigynNFT {
      *   distribute_sale : DistributeSaleRequest;
      *   open_sale : text;
      * };
-     *//*
-
+     */
     sealed class ManageSaleRequest {
         class bid(val bid: BidRequest): ManageSaleRequest()
         class escrow_deposit(val escrow_deposit: EscrowRequest): ManageSaleRequest()
@@ -1488,18 +1285,15 @@ object OrigynNFT {
         class Open_sale(val open_sale: String): ManageSaleRequest()
 
     }
-    */
-/**
+    /**
      * type ManageSaleResult = variant { ok : ManageSaleResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class ManageSaleResult {
         class ok(val ok: ManageSaleResponse): ManageSaleResult()
         class err(val err: OrigynError): ManageSaleResult()
 
     }
-    */
-/**
+    /**
      * type ManageStorageRequest = variant {
      *   add_storage_canisters : vec record {
      *     principal;
@@ -1508,8 +1302,7 @@ object OrigynNFT {
      *   };
      *   configure_storage : variant { stableBtree : opt nat; heap : opt nat };
      * };
-     *//*
-
+     */
     sealed class ManageStorageRequest {
         class Add_storage_canisters(val add_storage_canisters: kotlin.Array<Add, Storage, Canisters>): ManageStorageRequest()
         class null(val null: configure_storage): ManageStorageRequest()
@@ -1521,14 +1314,12 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type ManageStorageResponse = variant {
      *   add_storage_canisters : record { nat; nat };
      *   configure_storage : record { nat; nat };
      * };
-     *//*
-
+     */
     sealed class ManageStorageResponse {
         class add_storage_canisters(
             val natValue: BigInteger,
@@ -1540,66 +1331,55 @@ object OrigynNFT {
             val natValue: BigInteger
         ): ManageStorageResponse()
     }
-    */
-/**
+    /**
      * type ManageStorageResult = variant {
      *   ok : ManageStorageResponse;
      *   err : OrigynError;
      * };
-     *//*
-
+     */
     sealed class ManageStorageResult {
         class ok(val ok: ManageStorageResponse): ManageStorageResult()
         class err(val err: OrigynError): ManageStorageResult()
 
     }
-    */
-/**
+    /**
      * type MarketTransferRequest = record {
      *   token_id : text;
      *   sales_config : SalesConfig;
      * };
-     *//*
-
+     */
     class MarketTransferRequest(
         val token_id: String,
         val salesConfig: SalesConfig
     )
-    */
-/**
+    /**
      * type MarketTransferResult = variant {
      *   ok : MarketTransferRequestReponse;
      *   err : OrigynError;
      * };
-     *//*
-
+     */
     sealed class MarketTransferResult {
         class ok(val ok: MarketTransferRequestReponse): MarketTransferResult()
         class err(val err: OrigynError): MarketTransferResult()
 
     }
-    */
-/**
+    /**
      * type MetricsGranularity = variant { hourly; daily };
-     *//*
-
+     */
     sealed class MetricsGranularity {
         object hourly: MetricsGranularity()
         object daily: MetricsGranularity()
 
     }
-    */
-/**
+    /**
      * type MinIncreaseType = variant { amount : nat; percentage : float64 };
-     *//*
-
+     */
     sealed class MinIncreaseType {
         class Amount(val amount: BigInteger): MinIncreaseType()
         class Percentage(val percentage: Double): MinIncreaseType()
 
     }
-    */
-/**
+    /**
      * type NFTBackupChunk = record {
      *   sales_balances : StableSalesBalances;
      *   offers : StableOffers;
@@ -1611,8 +1391,7 @@ object OrigynNFT {
      *   buckets : vec record { principal; StableBucketData };
      *   escrow_balances : StableEscrowBalances;
      * };
-     *//*
-
+     */
     class NFTBackupChunk(
         val stableSalesBalances: StableSalesBalances,
         val stableOffers: StableOffers,
@@ -1640,30 +1419,25 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type NFTInfoResult = variant { ok : NFTInfoStable; err : OrigynError };
-     *//*
-
+     */
     sealed class NFTInfoResult {
         class ok(val ok: NFTInfoStable): NFTInfoResult()
         class err(val err: OrigynError): NFTInfoResult()
 
     }
-    */
-/**
+    /**
      * type NFTInfoStable = record {
      *   metadata : CandyShared;
      *   current_sale : opt SaleStatusShared;
      * };
-     *//*
-
+     */
     class NFTInfoStable(
         val candyShared: CandyShared,
         val saleStatusShared: SaleStatusShared?
     )
-    */
-/**
+    /**
      * type NFTUpdateRequest = variant {
      *   update : record {
      *     token_id : text;
@@ -1672,8 +1446,7 @@ object OrigynNFT {
      *   };
      *   replace : record { token_id : text; data : CandyShared };
      * };
-     *//*
-
+     */
     sealed class NFTUpdateRequest {
         class update(
             val token_id: String,
@@ -1686,18 +1459,15 @@ object OrigynNFT {
             val candyShared: CandyShared
         ): NFTUpdateRequest()
     }
-    */
-/**
+    /**
      * type NFTUpdateResult = variant { ok : NFTUpdateResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class NFTUpdateResult {
         class ok(val ok: NFTUpdateResponse): NFTUpdateResult()
         class err(val err: OrigynError): NFTUpdateResult()
 
     }
-    */
-/**
+    /**
      * type NftError = variant {
      *   UnauthorizedOperator;
      *   SelfTransfer;
@@ -1710,8 +1480,7 @@ object OrigynNFT {
      *   OwnerNotFound;
      *   Other : text;
      * };
-     *//*
-
+     */
     sealed class NftError {
         object UnauthorizedOperator: NftError()
         object SelfTransfer: NftError()
@@ -1725,8 +1494,7 @@ object OrigynNFT {
         class Other(val other: String): NftError()
 
     }
-    */
-/**
+    /**
      * type Nft_Canister = service {
      *                   // __advance_time : (int) -> (int);
      *                   // __set_time_mode : (variant { test; standard }) -> (bool);
@@ -1904,12 +1672,10 @@ object OrigynNFT {
      *                   // wallet_receive : () -> (nat);
      *                   whoami : () -> (principal) query;
      *                 };
-     *//*
-
+     */
     getClassDefinition com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeService@161f6623
 
-    */
-/**
+    /**
      * type NumericEntity = record {
      *   avg : nat64;
      *   max : nat64;
@@ -1917,8 +1683,7 @@ object OrigynNFT {
      *   first : nat64;
      *   last : nat64;
      * };
-     *//*
-
+     */
     class NumericEntity(
         val avg: ULong,
         val max: ULong,
@@ -1926,61 +1691,51 @@ object OrigynNFT {
         val first: ULong,
         val last: ULong
     )
-    */
-/**
+    /**
      * type OrigynTextResult = variant { ok : text; err : OrigynError };
-     *//*
-
+     */
     sealed class OrigynTextResult {
         class Ok(val ok: String): OrigynTextResult()
         class err(val err: OrigynError): OrigynTextResult()
 
     }
-    */
-/**
+    /**
      * type OwnerOfResponse = variant { Ok : opt principal; Err : NftError };
-     *//*
-
+     */
     sealed class OwnerOfResponse {
         class Ok(val ok: ICPPrincipalApiModel?): OwnerOfResponse()
         class Err(val err: NftError): OwnerOfResponse()
 
     }
-    */
-/**
+    /**
      * type OwnerTransferResponse = record {
      *   transaction : TransactionRecord;
      *   assets : vec CandyShared;
      * };
-     *//*
-
+     */
     class OwnerTransferResponse(
         val transactionRecord: TransactionRecord,
         val assets: kotlin.Array<CandyShared>
     )
-    */
-/**
+    /**
      * type OwnerUpdateResult = variant {
      *   ok : OwnerTransferResponse;
      *   err : OrigynError;
      * };
-     *//*
-
+     */
     sealed class OwnerUpdateResult {
         class ok(val ok: OwnerTransferResponse): OwnerUpdateResult()
         class err(val err: OrigynError): OwnerUpdateResult()
 
     }
-    */
-/**
+    /**
      * type PricingConfigShared = variant {
      *   ask : AskConfigShared;
      *   extensible : CandyShared;
      *   instant : InstantConfigShared;
      *   auction : AuctionConfig;
      * };
-     *//*
-
+     */
     sealed class PricingConfigShared {
         class ask(val ask: AskConfigShared): PricingConfigShared()
         class extensible(val extensible: CandyShared): PricingConfigShared()
@@ -1988,16 +1743,14 @@ object OrigynNFT {
         class auction(val auction: AuctionConfig): PricingConfigShared()
 
     }
-    */
-/**
+    /**
      * type PricingConfigShared__1 = variant {
      *   ask : AskConfigShared;
      *   extensible : CandyShared;
      *   instant : InstantConfigShared;
      *   auction : AuctionConfig;
      * };
-     *//*
-
+     */
     sealed class PricingConfigShared__1 {
         class ask(val ask: AskConfigShared): PricingConfigShared__1()
         class extensible(val extensible: CandyShared): PricingConfigShared__1()
@@ -2005,58 +1758,49 @@ object OrigynNFT {
         class auction(val auction: AuctionConfig): PricingConfigShared__1()
 
     }
-    */
-/**
+    /**
      * type RecognizeEscrowResponse = record {
      *   balance : nat;
      *   receipt : EscrowReceipt;
      *   transaction : opt TransactionRecord;
      * };
-     *//*
-
+     */
     class RecognizeEscrowResponse(
         val balance: BigInteger,
         val escrowReceipt: EscrowReceipt,
         val transactionRecord: TransactionRecord?
     )
-    */
-/**
+    /**
      * type RejectDescription = record {
      *   token : TokenSpec__1;
      *   token_id : text;
      *   seller : Account;
      *   buyer : Account;
      * };
-     *//*
-
+     */
     class RejectDescription(
         val tokenSpec__1: TokenSpec__1,
         val token_id: String,
         val account: Account,
         val account: Account
     )
-    */
-/**
+    /**
      * type Result = variant { ok : ManageSaleResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class Result {
         class ok(val ok: ManageSaleResponse): Result()
         class err(val err: OrigynError): Result()
 
     }
-    */
-/**
+    /**
      * type SaleInfoResult = variant { ok : SaleInfoResponse; err : OrigynError };
-     *//*
-
+     */
     sealed class SaleInfoResult {
         class ok(val ok: SaleInfoResponse): SaleInfoResult()
         class err(val err: OrigynError): SaleInfoResult()
 
     }
-    */
-/**
+    /**
      * type SaleStatusShared = record {
      *   token_id : text;
      *   sale_type : variant { auction : AuctionStateShared };
@@ -2064,8 +1808,7 @@ object OrigynNFT {
      *   original_broker_id : opt principal;
      *   sale_id : text;
      * };
-     *//*
-
+     */
     class SaleStatusShared(
         val token_id: String,
         val null: sale_type,
@@ -2073,36 +1816,31 @@ object OrigynNFT {
         val original_broker_id: ICPPrincipalApiModel?,
         val sale_id: String
     )
-    */
-/**
+    /**
      * type SalesConfig = record {
      *   broker_id : opt Account__1;
      *   pricing : PricingConfigShared;
      *   escrow_receipt : opt EscrowReceipt__1;
      * };
-     *//*
-
+     */
     class SalesConfig(
         val account__1: Account__1?,
         val pricingConfigShared: PricingConfigShared,
         val escrowReceipt__1: EscrowReceipt__1?
     )
-    */
-/**
+    /**
      * type ShareWalletRequest = record {
      *   to : Account;
      *   token_id : text;
      *   from : Account;
      * };
-     *//*
-
+     */
     class ShareWalletRequest(
         val account: Account,
         val token_id: String,
         val account: Account
     )
-    */
-/**
+    /**
      * type StableCollectionData = record {
      *   active_bucket : opt principal;
      *   managers : vec principal;
@@ -2115,8 +1853,7 @@ object OrigynNFT {
      *   symbol : opt text;
      *   allocated_storage : nat;
      * };
-     *//*
-
+     */
     class StableCollectionData(
         val active_bucket: ICPPrincipalApiModel?,
         val managers: kotlin.Array<ICPPrincipalApiModel>,
@@ -2129,8 +1866,7 @@ object OrigynNFT {
         val symbol: String?,
         val allocated_storage: BigInteger
     )
-    */
-/**
+    /**
      * type StageChunkArg = record {
      *   content : vec nat8;
      *   token_id : text;
@@ -2138,8 +1874,7 @@ object OrigynNFT {
      *   filedata : CandyShared;
      *   library_id : text;
      * };
-     *//*
-
+     */
     class StageChunkArg(
         val content: kotlin.Array<UByte>,
         val token_id: String,
@@ -2147,39 +1882,32 @@ object OrigynNFT {
         val candyShared: CandyShared,
         val library_id: String
     )
-    */
-/**
+    /**
      * type StageLibraryResponse = record { canister : principal };
-     *//*
-
+     */
     class StageLibraryResponse(
         val canister: ICPPrincipalApiModel
     )
-    */
-/**
+    /**
      * type StageLibraryResult = variant {
      *   ok : StageLibraryResponse;
      *   err : OrigynError;
      * };
-     *//*
-
+     */
     sealed class StageLibraryResult {
         class ok(val ok: StageLibraryResponse): StageLibraryResult()
         class err(val err: OrigynError): StageLibraryResult()
 
     }
-    */
-/**
+    /**
      * type StakeRecord = record { staker : Account; token_id : text; amount : nat };
-     *//*
-
+     */
     class StakeRecord(
         val account: Account,
         val token_id: String,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type StateSize = record {
      *   sales_balances : nat;
      *   offers : nat;
@@ -2189,8 +1917,7 @@ object OrigynNFT {
      *   buckets : nat;
      *   escrow_balances : nat;
      * };
-     *//*
-
+     */
     class StateSize(
         val sales_balances: BigInteger,
         val offers: BigInteger,
@@ -2200,99 +1927,84 @@ object OrigynNFT {
         val buckets: BigInteger,
         val escrow_balances: BigInteger
     )
-    */
-/**
+    /**
      * type StorageMetrics = record {
      *   gateway : principal;
      *   available_space : nat;
      *   allocations : vec AllocationRecordStable;
      *   allocated_storage : nat;
      * };
-     *//*
-
+     */
     class StorageMetrics(
         val gateway: ICPPrincipalApiModel,
         val available_space: BigInteger,
         val allocations: kotlin.Array<AllocationRecordStable>,
         val allocated_storage: BigInteger
     )
-    */
-/**
+    /**
      * type StorageMetricsResult = variant { ok : StorageMetrics; err : OrigynError };
-     *//*
-
+     */
     sealed class StorageMetricsResult {
         class ok(val ok: StorageMetrics): StorageMetricsResult()
         class err(val err: OrigynError): StorageMetricsResult()
 
     }
-    */
-/**
+    /**
      * type StreamingCallbackResponse = record {
      *   token : opt StreamingCallbackToken;
      *   body : vec nat8;
      * };
-     *//*
-
+     */
     class StreamingCallbackResponse(
         val streamingCallbackToken: StreamingCallbackToken?,
         val body: kotlin.Array<UByte>
     )
-    */
-/**
+    /**
      * type StreamingCallbackToken = record {
      *   key : text;
      *   index : nat;
      *   content_encoding : text;
      * };
-     *//*
-
+     */
     class StreamingCallbackToken(
         val key: String,
         val index: BigInteger,
         val content_encoding: String
     )
-    */
-/**
+    /**
      * type SubAccountInfo = record {
      *   account_id : vec nat8;
      *   "principal" : principal;
      *   account_id_text : text;
      *   account : record { "principal" : principal; sub_account : vec nat8 };
      * };
-     *//*
-
+     */
     class SubAccountInfo(
         val account_id: kotlin.Array<UByte>,
         val "principal": ICPPrincipalApiModel,
     val account_id_text: String,
     val null: account
     )
-    */
-/**
+    /**
      * type SupportedStandard = record { url : text; name : text };
-     *//*
-
+     */
     class SupportedStandard(
         val url: String,
         val name: String
     )
-    */
-/**
+    /**
      * type Tip = record {
      *   last_block_index : vec nat8;
      *   hash_tree : vec nat8;
      *   last_block_hash : vec nat8;
      * };
-     *//*
-
+     */
     class Tip(
         val last_block_index: kotlin.Array<UByte>,
         val hash_tree: kotlin.Array<UByte>,
         val last_block_hash: kotlin.Array<UByte>
     )
-    */
-/**
+    /**
      * type TokenIDFilter = record {
      *   filter_type : variant { allow; block };
      *   token_id : text;
@@ -2302,8 +2014,7 @@ object OrigynNFT {
      *     max_amount : opt nat;
      *   };
      * };
-     *//*
-
+     */
     class TokenIDFilter(
         val null: filter_type,
         val token_id: String,
@@ -2316,98 +2027,81 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type TokenSpec = variant { ic : ICTokenSpec; extensible : CandyShared };
-     *//*
-
+     */
     sealed class TokenSpec {
         class ic(val ic: ICTokenSpec): TokenSpec()
         class extensible(val extensible: CandyShared): TokenSpec()
 
     }
-    */
-/**
+    /**
      * type TokenSpecFilter = record {
      *   token : TokenSpec__1;
      *   filter_type : variant { allow; block };
      * };
-     *//*
-
+     */
     class TokenSpecFilter(
         val tokenSpec__1: TokenSpec__1,
         val null: filter_type
     )
-    */
-/**
+    /**
      * type TokenSpec__1 = variant { ic : ICTokenSpec__1; extensible : CandyShared };
-     *//*
-
+     */
     sealed class TokenSpec__1 {
         class ic(val ic: ICTokenSpec__1): TokenSpec__1()
         class extensible(val extensible: CandyShared): TokenSpec__1()
 
     }
-    */
-/**
+    /**
      * type TokenSpec__2 = variant { ic : ICTokenSpec; extensible : CandyShared };
-     *//*
-
+     */
     sealed class TokenSpec__2 {
         class ic(val ic: ICTokenSpec): TokenSpec__2()
         class extensible(val extensible: CandyShared): TokenSpec__2()
 
     }
-    */
-/**
+    /**
      * type TransactionID = variant {
      *   "nat" : nat;
      *   "text" : text;
      *   extensible : CandyShared;
      * };
-     *//*
-
+     */
     sealed class TransactionID {
         class "nat"(val "nat": BigInteger): TransactionID()
         class "text"(val "text": String): TransactionID()
         class extensible(val extensible: CandyShared): TransactionID()
 
     }
-    */
-/**
+    /**
      * type TransactionID__1 = variant {
      *   "nat" : nat;
      *   "text" : text;
      *   extensible : CandyShared;
      * };
-     *//*
-
+     */
     sealed class TransactionID__1 {
         class "nat"(val "nat": BigInteger): TransactionID__1()
         class "text"(val "text": String): TransactionID__1()
         class extensible(val extensible: CandyShared): TransactionID__1()
 
     }
-    */
-/**
+    /**
      * type TransactionRange = record { start : nat; length : nat };
-     *//*
-
+     */
     class TransactionRange(
         val start: BigInteger,
         val length: BigInteger
     )
-    */
-/**
+    /**
      * type TransactionRange__1 = record { start : nat; length : nat };
-     *//*
-
+     */
     class TransactionRange__1(
         val start: BigInteger,
         val length: BigInteger
     )
-    */
-/**
+    /**
      * type TransferArgs = record {
      *   to : Account__3;
      *   token_id : nat;
@@ -2415,8 +2109,7 @@ object OrigynNFT {
      *   from_subaccount : opt vec nat8;
      *   created_at_time : opt nat64;
      * };
-     *//*
-
+     */
     class TransferArgs(
         val account__3: Account__3,
         val token_id: BigInteger,
@@ -2424,8 +2117,7 @@ object OrigynNFT {
         val from_subaccount: kotlin.Array<UByte>?,
         val created_at_time: ULong?
     )
-    */
-/**
+    /**
      * type TransferError = variant {
      *   GenericError : record { message : text; error_code : nat };
      *   Duplicate : record { duplicate_of : nat };
@@ -2434,8 +2126,7 @@ object OrigynNFT {
      *   CreatedInFuture : record { ledger_time : nat64 };
      *   TooOld;
      * };
-     *//*
-
+     */
     sealed class TransferError {
         class GenericError(
             val message: String,
@@ -2455,44 +2146,37 @@ object OrigynNFT {
         object TooOld: TransferError()
 
     }
-    */
-/**
+    /**
      * type TransferResultItem = record {
      *   token_id : nat;
      *   transfer_result : variant { Ok : nat; Err : TransferError };
      * };
-     *//*
-
+     */
     class TransferResultItem(
         val token_id: BigInteger,
         val null: transfer_result
     )
-    */
-/**
+    /**
      * type UpdateModeShared = variant {
      *   Set : CandyShared;
      *   Lock : CandyShared;
      *   Next : vec UpdateShared;
      * };
-     *//*
-
+     */
     sealed class UpdateModeShared {
         class Set(val set: CandyShared): UpdateModeShared()
         class Lock(val lock: CandyShared): UpdateModeShared()
         class Next(val next: kotlin.Array<UpdateShared>): UpdateModeShared()
 
     }
-    */
-/**
+    /**
      * type UpdateRequestShared = record { id : text; update : vec UpdateShared };
-     *//*
-
+     */
     class UpdateRequestShared(
         val id: String,
         val update: kotlin.Array<UpdateShared>
     )
-    */
-/**
+    /**
      * type UpdateSetting = variant {
      *   maxRecordsToArchive : nat;
      *   archiveIndexType : IndexType;
@@ -2503,8 +2187,7 @@ object OrigynNFT {
      *   maxRecordsInArchiveInstance : nat;
      *   archiveControllers : opt opt vec principal;
      * };
-     *//*
-
+     */
     sealed class UpdateSetting {
         class MaxRecordsToArchive(val maxRecordsToArchive: BigInteger): UpdateSetting()
         class archiveIndexType(val archiveIndexType: IndexType): UpdateSetting()
@@ -2516,17 +2199,14 @@ object OrigynNFT {
         class ArchiveControllers(val archiveControllers: kotlin.Array<ICPPrincipalApiModel>): UpdateSetting()
 
     }
-    */
-/**
+    /**
      * type UpdateShared = record { mode : UpdateModeShared; name : text };
-     *//*
-
+     */
     class UpdateShared(
         val updateModeShared: UpdateModeShared,
         val name: String
     )
-    */
-/**
+    /**
      * type Value = variant {
      *   Int : int;
      *   Map : vec record { text; Value };
@@ -2535,8 +2215,7 @@ object OrigynNFT {
      *   Text : text;
      *   Array : vec Value;
      * };
-     *//*
-
+     */
     sealed class Value {
         class Int(val int: BigInteger): Value()
         class Map(val map: kotlin.Array<MapClass>): Value()
@@ -2551,8 +2230,7 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type Value__1 = variant {
      *   Int : int;
      *   Map : vec record { text; Value__1 };
@@ -2561,8 +2239,7 @@ object OrigynNFT {
      *   Text : text;
      *   Array : vec Value__1;
      * };
-     *//*
-
+     */
     sealed class Value__1 {
         class Int(val int: BigInteger): Value__1()
         class Map(val map: kotlin.Array<MapClass>): Value__1()
@@ -2577,18 +2254,15 @@ object OrigynNFT {
         )
 
     }
-    */
-/**
+    /**
      * type WaitForQuietType = record { max : nat; fade : float64; extension : nat64 };
-     *//*
-
+     */
     class WaitForQuietType(
         val max: BigInteger,
         val fade: Double,
         val extension: ULong
     )
-    */
-/**
+    /**
      * type WithdrawDescription = record {
      *   token : TokenSpec__1;
      *   token_id : text;
@@ -2597,8 +2271,7 @@ object OrigynNFT {
      *   buyer : Account;
      *   amount : nat;
      * };
-     *//*
-
+     */
     class WithdrawDescription(
         val tokenSpec__1: TokenSpec__1,
         val token_id: String,
@@ -2607,8 +2280,7 @@ object OrigynNFT {
         val account: Account,
         val amount: BigInteger
     )
-    */
-/**
+    /**
      * type WithdrawRequest = variant {
      *   reject : RejectDescription;
      *   fee_deposit : FeeDepositWithdrawDescription;
@@ -2616,8 +2288,7 @@ object OrigynNFT {
      *   deposit : DepositWithdrawDescription;
      *   escrow : WithdrawDescription;
      * };
-     *//*
-
+     */
     sealed class WithdrawRequest {
         class reject(val reject: RejectDescription): WithdrawRequest()
         class fee_deposit(val fee_deposit: FeeDepositWithdrawDescription): WithdrawRequest()
@@ -2626,8 +2297,7 @@ object OrigynNFT {
         class escrow(val escrow: WithdrawDescription): WithdrawRequest()
 
     }
-    */
-/**
+    /**
      * type canister_status = record {
      *   status : variant { stopped; stopping; running };
      *   memory_size : nat;
@@ -2635,8 +2305,7 @@ object OrigynNFT {
      *   settings : definite_canister_settings;
      *   module_hash : opt vec nat8;
      * };
-     *//*
-
+     */
     class canister_status(
         val null: status,
         val memory_size: BigInteger,
@@ -2644,20 +2313,18 @@ object OrigynNFT {
         val definite_canister_settings: definite_canister_settings,
         val module_hash: kotlin.Array<UByte>?
     )
-    */
-/**
+    /**
      * type definite_canister_settings = record {
      *   freezing_threshold : nat;
      *   controllers : opt vec principal;
      *   memory_allocation : nat;
      *   compute_allocation : nat;
      * };
-     *//*
-
+     */
     class definite_canister_settings(
         val freezing_threshold: BigInteger,
         val controllers: kotlin.Array<ICPPrincipalApiModel>?,
         val memory_allocation: BigInteger,
         val compute_allocation: BigInteger
     )
-}*/
+}
