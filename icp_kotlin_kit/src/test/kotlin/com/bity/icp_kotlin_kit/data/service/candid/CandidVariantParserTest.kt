@@ -40,6 +40,28 @@ class CandidVariantParserTest {
 
             Arguments.of(
                 """
+                    type Account = variant {
+                      account_id : text;
+                      "principal" : principal;
+                      extensible : CandyShared;
+                      account : record { owner : principal; sub_account : opt vec nat8 };
+                    };
+                """.trimIndent(),
+                """
+                    sealed class Account {
+                        class account_id(val account_id: String): Account()
+                        class principal(val principal: ICPPrincipalApiModel): Account()
+                        class extensible(val extensible: CandyShared): Account()
+                        class account(
+                            val owner: ICPPrincipalApiModel,
+                            val sub_account: kotlin.Array<UByte>?
+                        ): Account()
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
                     type TransferError = variant {
                         NonExistingTokenId;
                         InvalidRecipient;

@@ -287,7 +287,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 }
                 expect(Token.Principal)
             } or {
-                expect(Token.Id) storeIn CandidTypePrincipal::variableName
+                expect(Token.Id) transform { it.replace("\"", "") } storeIn CandidTypePrincipal::variableName
                 expect(Token.Colon)
                 optional {
                     either {

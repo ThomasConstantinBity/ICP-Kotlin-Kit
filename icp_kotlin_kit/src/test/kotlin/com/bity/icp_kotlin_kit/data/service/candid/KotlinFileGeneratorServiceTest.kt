@@ -16,7 +16,7 @@ class KotlinFileGeneratorServiceTest {
         val generatedKotlinFile = kotlinFileGeneratorService.parseAndGetKotlinFile(
             candidFileText = candidFileText,
             fileName = fileName,
-            packageName = "com.example.test"
+            packageName = "com.bity.icp_kotlin_kit.domain.generated_file"
         )
         println(generatedKotlinFile)
     }
@@ -29,7 +29,7 @@ class KotlinFileGeneratorServiceTest {
             val generatedKotlinFile = kotlinFileGeneratorService.parseAndGetKotlinFile(
                 candidFileText = candidFileText,
                 fileName = it.name.split(".").first(),
-                packageName = "com.example.test"
+                packageName = "com.bity.icp_kotlin_kit.domain.generated_file"
             )
             println(generatedKotlinFile)
         }
