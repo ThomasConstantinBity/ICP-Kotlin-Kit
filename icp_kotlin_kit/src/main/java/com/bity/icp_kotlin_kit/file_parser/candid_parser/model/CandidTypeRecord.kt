@@ -12,7 +12,10 @@ internal data class CandidTypeRecord(
 
     override val isTypeAlias: Boolean = false
     override val shouldDeclareInnerClass: Boolean =
-        candidTypes.any{ it.shouldDeclareInnerClass }
+        when {
+            candidTypes.any { it is CandidTypeVariant } -> true
+            else -> candidTypes.any{ it.shouldDeclareInnerClass }
+        }
 
     override fun getClassNameForInnerClassDefinition(baseName: String?): String =
         getKotlinType(baseName)
@@ -49,29 +52,52 @@ internal data class CandidTypeRecord(
                 separator = ",\n",
             ) {
                 val variableName = it.variableName
-                val variableType = it.getKotlinVariableType()
+                val variableType = if (it.getKotlinVariableType() == it.variableName)
+                    it.variableName!!.split("_")
+                        .joinToString("") { string ->
+                            string.replaceFirstChar { c ->
+                                c.uppercase()
+                            }
+                        }
+                else it.variableName
                 "val $variableName: $variableType"
             }
         kotlinClassDefinition.appendLine(variables)
-
-        // Declare inner classes
-        val innerClassesToDeclare = candidTypes.filter { it.shouldDeclareInnerClass }
-        if (innerClassesToDeclare.isNotEmpty()) {
+        val innerClassToDeclare = getInnerClassToDeclare()
+        if(innerClassToDeclare != null) {
             kotlinClassDefinition.appendLine(") {")
-            val kotlinInnerClasses = innerClassesToDeclare.joinToString(
-                separator = ",\n\t",
-                prefix = "\t"
-            ) {
-                val innerClassName = it.variableName!!.replaceFirstChar { char -> char.uppercase() }
-                it.getInnerClassDefinition(innerClassName)
-            }
-            kotlinClassDefinition.appendLine(kotlinInnerClasses)
-            kotlinClassDefinition.appendLine("}")
+            kotlinClassDefinition.appendLine(innerClassToDeclare)
         } else {
             kotlinClassDefinition.appendLine(")")
         }
-
         return kotlinClassDefinition.toString()
+    }
+
+    private fun getInnerClassToDeclare(): String? {
+        val innerClassesToDeclare = candidTypes
+            .filter {
+                it.shouldDeclareInnerClass || it is CandidTypeVariant
+            }
+        return if (innerClassesToDeclare.isNotEmpty()) {
+            val innerClassDefinition = StringBuilder()
+            val kotlinInnerClasses = innerClassesToDeclare.joinToString(
+                separator = "\n\t",
+                prefix = "\t"
+            ) {
+                val innerClassName = it.variableName!!.split("_")
+                    .joinToString("") { string ->
+                        string.replaceFirstChar { c ->
+                            c.uppercase()
+                        }
+                    }
+                it.getInnerClassDefinition(innerClassName)
+            }
+            innerClassDefinition.appendLine(kotlinInnerClasses)
+            innerClassDefinition.appendLine("}")
+            innerClassDefinition.toString()
+        } else {
+            null
+        }
     }
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {

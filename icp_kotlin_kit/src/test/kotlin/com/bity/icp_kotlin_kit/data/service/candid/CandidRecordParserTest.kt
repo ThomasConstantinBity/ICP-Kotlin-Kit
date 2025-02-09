@@ -12,7 +12,7 @@ class CandidRecordParserTest {
 
     private val candidTypeParserService = CandidTypeParserServiceImpl()
 
-    @ParameterizedTest(name = "{index}")
+    @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("candidRecord")
     fun variantDefinition(
         typeDefinition: String,
@@ -37,6 +37,48 @@ class CandidRecordParserTest {
 
         @JvmStatic
         private fun candidRecord() = listOf(
+
+            Arguments.of(
+                """
+                    type DutchParams = record {
+                      time_unit : variant { day : nat; hour : nat; minute : nat };
+                      decay_type : variant { flat : nat; percent : float64 };
+                    };
+                """.trimIndent(),
+                """
+                    class DutchParams(
+                        val time_unit: TimeUnit,
+                        val decay_type: DecayType
+                    ) {
+                        sealed class TimeUnit {
+                            class day(val day: BigInteger): TimeUnit()
+                            class hour(val hour: BigInteger): TimeUnit()
+                            class minute(val minute: BigInteger): TimeUnit()
+                        }
+                        
+                        sealed class DecayType {
+                            class flat(val flat: BigInteger): DecayType()
+                            class percent(val percent: Double): DecayType()
+                        }
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type CanisterLogMessages = record {
+                      data : vec LogMessagesData;
+                      lastAnalyzedMessageTimeNanos : opt Nanos;
+                    };
+                """.trimIndent(),
+                """
+                    class CanisterLogMessages(
+                        val data: kotlin.Array<LogMessagesData>,
+                        val lastAnalyzedMessageTimeNanos: Nanos?
+                    )
+                """.trimIndent()
+            ),
+
             Arguments.of(
                 """
                     type add_token_input = record {

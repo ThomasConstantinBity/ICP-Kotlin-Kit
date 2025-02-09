@@ -94,7 +94,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
 
         CandidTypeCustom {
             either {
-                expect(Token.Id) storeIn CandidTypeCustom::typeId
+                expect(Token.Id) storeIn CandidTypeCustom::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -328,7 +328,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 } storeIn CandidTypeVariant::candidTypes
                 expect(Token.RBrace)
             } or {
-                expect(Token.Id) storeIn CandidTypeVariant::typeId
+                expect(Token.Id) storeIn CandidTypeVariant::variableName
                 expect(Token.Colon)
                 expect(Token.Variant)
                 expect(Token.LBrace)

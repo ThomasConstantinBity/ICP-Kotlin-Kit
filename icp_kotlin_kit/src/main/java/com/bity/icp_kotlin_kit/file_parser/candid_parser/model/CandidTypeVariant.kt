@@ -11,18 +11,21 @@ internal data class CandidTypeVariant(
 ): CandidType() {
 
     override val isTypeAlias: Boolean = false
-
-    override fun getKotlinType(variableName: String?): String = typeId ?: TODO()
+    override fun getKotlinType(variableName: String?): String = typeId ?: this.variableName ?: TODO("$this")
 
     override fun getClassDefinition(): String {
         requireNotNull(typeId)
-        val sealedClassDefinition = StringBuilder("sealed class $typeId {")
+        return getSealedClassDefinition(typeId)
+    }
+
+    private fun getSealedClassDefinition(sealedClassName: String): String {
+        val sealedClassDefinition = StringBuilder("sealed class $sealedClassName {")
         val classesDefinition = candidTypes.joinToString(
             prefix = "\n\t",
             separator = "\n\t",
             postfix = "\n"
         ) {
-            it.getClassDefinitionForSealedClass(typeId)
+            it.getClassDefinitionForSealedClass(sealedClassName)
         }
         sealedClassDefinition.appendLine(classesDefinition)
         val innerClasses = getInnerClassDefinition()
@@ -32,6 +35,9 @@ internal data class CandidTypeVariant(
         sealedClassDefinition.appendLine("}")
         return sealedClassDefinition.toString()
     }
+
+    override fun getInnerClassDefinition(className: String): String =
+        getSealedClassDefinition(className)
 
     private fun getInnerClassDefinition(): String? {
         val innerTypesToDeclare = candidTypes.filter { it.shouldDeclareInnerClass }

@@ -12,7 +12,7 @@ class CandidVariantParserTest {
 
     private val candidTypeParserService = CandidTypeParserServiceImpl()
 
-    @ParameterizedTest(name = "{index}")
+    @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("candidVariant")
     fun variantDefinition(
         typeDefinition: String,
@@ -56,6 +56,28 @@ class CandidVariantParserTest {
                             val owner: ICPPrincipalApiModel,
                             val sub_account: kotlin.Array<UByte>?
                         ): Account()
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type Account__1 = variant {
+                      account_id : text;
+                      "principal" : principal;
+                      extensible : CandyShared;
+                      account : record { owner : principal; sub_account : opt vec nat8 };
+                    };
+                """.trimIndent(),
+                """
+                    sealed class Account__1 {
+                        class account_id(val account_id: String): Account__1()
+                        class principal(val principal: ICPPrincipalApiModel): Account__1()
+                        class extensible(val extensible: CandyShared): Account__1()
+                        class account(
+                            val owner: ICPPrincipalApiModel,
+                            val sub_account: kotlin.Array<UByte>?
+                        ): Account__1()
                     }
                 """.trimIndent()
             ),

@@ -12,6 +12,8 @@ internal sealed class CandidType {
     abstract val optionalType: OptionalType
 
     open fun getClassNameForInnerClassDefinition(baseName: String? = null): String = TODO("Not implemented for $this")
+
+    // TODO: can we remove variable name?
     abstract fun  getKotlinType(variableName: String? = null): String
 
     // TODO, make abstract

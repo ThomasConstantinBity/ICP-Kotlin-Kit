@@ -200,8 +200,8 @@ object OrigynNFT {
      *//*
 
     sealed class Account {
-        class Account_id(val account_id: String): Account()
-        class "principal"(val "principal": ICPPrincipalApiModel): Account()
+        class account_id(val account_id: String): Account()
+        class principal(val principal: ICPPrincipalApiModel): Account()
         class extensible(val extensible: CandyShared): Account()
         class account(
             val owner: ICPPrincipalApiModel,
@@ -219,8 +219,8 @@ object OrigynNFT {
      *//*
 
     sealed class Account__1 {
-        class Account_id(val account_id: String): Account__1()
-        class "principal"(val "principal": ICPPrincipalApiModel): Account__1()
+        class account_id(val account_id: String): Account__1()
+        class principal(val principal: ICPPrincipalApiModel): Account__1()
         class extensible(val extensible: CandyShared): Account__1()
         class account(
             val owner: ICPPrincipalApiModel,
@@ -503,7 +503,7 @@ object OrigynNFT {
 
     class CanisterLogMessages(
         val data: kotlin.Array<LogMessagesData>,
-        val nanos: Nanos?
+        val lastAnalyzedMessageTimeNanos: Nanos?
     )
     */
 /**
@@ -840,9 +840,20 @@ object OrigynNFT {
      *//*
 
     class DutchParams(
-        val null: time_unit,
-        val null: decay_type
-    )
+        val time_unit: TimeUnit,
+        val decay_type: DecayType
+    ) {
+        sealed class TimeUnit {
+            class day(val day: BigInteger): time_unit()
+            class hour(val hour: BigInteger): time_unit()
+            class minute(val minute: BigInteger): time_unit()
+        }
+
+        sealed class DecayType {
+            class flat(val flat: BigInteger): decay_type()
+            class percent(val percent: Double): decay_type()
+        }
+    }
     */
 /**
      * type EXTBalanceRequest = record { token : EXTTokenIdentifier; user : EXTUser };
