@@ -178,6 +178,21 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 }
                 expect(Token.Text)
             } or {
+                expect(Token.Type)
+                expect(Token.Id) storeIn CandidTypeText::typeId
+                expect(Token.Equals)
+                emit(true) storeIn CandidTypeText::isTypeAlias
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
+                    }
+                }
+                expect(Token.Text)
+            } or {
                 optional {
                     either {
                         expect(Token.Opt)
@@ -190,6 +205,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 expect(Token.Text)
                 lookahead {
                     either {
+                        expect(Token.Colon)
+                    } or {
                         expect(Token.RBrace)
                     } or {
                         expect(Token.RParen)
@@ -735,6 +752,21 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
             either {
                 expect(Token.Id) storeIn CandidTypeNat::variableName
                 expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
+                    }
+                }
+                expect(Token.Nat)
+            } or {
+                expect(Token.Type)
+                expect(Token.Id) storeIn CandidTypeNat::typeId
+                expect(Token.Equals)
+                emit(true) storeIn CandidTypeNat::isTypeAlias
                 optional {
                     either {
                         expect(Token.Opt)

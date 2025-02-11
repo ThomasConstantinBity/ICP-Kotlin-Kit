@@ -27,13 +27,27 @@ class CandidGenericParserTest {
                 .replace("""\s+|\t+""".toRegex(), " ")
                 .trim()
         )
-
     }
 
     companion object {
 
         @JvmStatic
         private fun typealiases() = listOf(
+
+            Arguments.of(
+                "type EXTTokenIdentifier = text;",
+                "typealias EXTTokenIdentifier = String"
+            ),
+
+            Arguments.of(
+                "type EXTBalance = nat;",
+                "typealias EXTBalance = BigInteger"
+            ),
+
+            Arguments.of(
+                "type EXTAccountIdentifier = text;",
+                "typealias EXTAccountIdentifier = String"
+            ),
 
             Arguments.of(
                 "type UpdateCallsAggregatedData = vec nat64;",
