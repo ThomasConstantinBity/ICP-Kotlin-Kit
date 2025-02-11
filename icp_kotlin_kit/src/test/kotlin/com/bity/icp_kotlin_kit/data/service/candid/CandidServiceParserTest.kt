@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeService
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeService
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

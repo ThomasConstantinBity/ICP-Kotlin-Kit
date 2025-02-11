@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model.candid_file
 
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidType
 
 internal data class CandidParsedType(
     val candidDefinition: String,

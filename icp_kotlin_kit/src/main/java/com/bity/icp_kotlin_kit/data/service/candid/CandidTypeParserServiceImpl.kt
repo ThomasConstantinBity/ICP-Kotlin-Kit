@@ -1,33 +1,33 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
 import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.CandidFileLexer.fileLexer
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.Token
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionDeclaration
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidFunctionType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidType
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBlob
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeBool
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeCustom
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeFloat64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt16
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt32
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeInt8
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat16
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat32
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat64
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeNat8
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypePrincipal
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeRecord
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeService
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeText
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVariant
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVec
-import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.OptionalType
+import com.bity.icp_kotlin_kit.util.CandidFileLexer.fileLexer
+import com.bity.icp_kotlin_kit.domain.model.TokenLexer
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidFunctionDeclaration
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidFunctionType
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidType
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeBlob
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeBool
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeCustom
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeFloat
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeFloat64
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeInt
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeInt16
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeInt32
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeInt64
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeInt8
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat16
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat32
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat64
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat8
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypePrincipal
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeRecord
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeService
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeText
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeVariant
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeVec
+import com.bity.icp_kotlin_kit.domain.model.candid_type.OptionalType
 import guru.zoroark.tegral.niwen.parser.dsl.EitherBranchBuilder
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
@@ -96,67 +96,67 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
             */
 
             optional {
-                expect(Token.Semi)
+                expect(TokenLexer.Semi)
             }
         }
 
         CandidTypeCustom {
             either {
-                expect(Token.Id) storeIn CandidTypeCustom::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeCustom::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     }
                 }
-                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
+                expect(TokenLexer.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
                     either {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     }
                 }
             } or {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeCustom::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeCustom::typeId
+                expect(TokenLexer.Equals)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     }
                 }
-                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
+                expect(TokenLexer.Id) storeIn CandidTypeCustom::customTypeDefinition
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeCustom::optionalType
                     }
                 }
-                expect(Token.Id) storeIn CandidTypeCustom::customTypeDefinition
+                expect(TokenLexer.Id) storeIn CandidTypeCustom::customTypeDefinition
                 lookahead {
                     either {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -165,53 +165,53 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeText {
             either {
-                expect(Token.Id) storeIn CandidTypeText::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeText::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     }
                 }
-                expect(Token.Text)
+                expect(TokenLexer.Text)
             } or {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeText::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeText::typeId
+                expect(TokenLexer.Equals)
                 emit(true) storeIn CandidTypeText::isTypeAlias
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     }
                 }
-                expect(Token.Text)
+                expect(TokenLexer.Text)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeText::optionalType
                     }
                 }
-                expect(Token.Text)
+                expect(TokenLexer.Text)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -219,74 +219,74 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeBlob {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeBlob::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeBlob::typeId
+                expect(TokenLexer.Equals)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     }
                 }
-                expect(Token.Blob)
+                expect(TokenLexer.Blob)
             } or {
-                expect(Token.Id) storeIn CandidTypeBlob::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeBlob::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeBlob::optionalType
                     }
                 }
-                expect(Token.Blob)
+                expect(TokenLexer.Blob)
             }
         }
 
         CandidTypeBool {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeBool::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeBool::typeId
+                expect(TokenLexer.Equals)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
                     }
                 }
-                expect(Token.Boolean)
+                expect(TokenLexer.Boolean)
             } or {
-                expect(Token.Id) storeIn CandidTypeBool::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeBool::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
                     }
                 }
-                expect(Token.Boolean)
+                expect(TokenLexer.Boolean)
             } or {
-                expect(Token.Boolean)
+                expect(TokenLexer.Boolean)
                 lookahead {
                     either {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     } or {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     }
                 }
             }
@@ -295,44 +295,44 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypePrincipal {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypePrincipal::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypePrincipal::typeId
+                expect(TokenLexer.Equals)
                 emit(true) storeIn CandidTypePrincipal::isTypeAlias
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
                     }
                 }
-                expect(Token.Principal)
+                expect(TokenLexer.Principal)
             } or {
-                expect(Token.Id) transform { it.replace("\"", "") } storeIn CandidTypePrincipal::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) transform { it.replace("\"", "") } storeIn CandidTypePrincipal::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypePrincipal::optionalType
                     }
                 }
-                expect(Token.Principal)
+                expect(TokenLexer.Principal)
             } or {
-                expect(Token.Principal)
+                expect(TokenLexer.Principal)
                 lookahead {
                     either {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     } or {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     }
                 }
             }
@@ -340,102 +340,102 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeVariant {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeVariant::typeId
-                expect(Token.Equals)
-                expect(Token.Variant)
-                expect(Token.LBrace)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeVariant::typeId
+                expect(TokenLexer.Equals)
+                expect(TokenLexer.Variant)
+                expect(TokenLexer.LBrace)
                 repeated(min = 1) {
                     expect(CandidType) storeIn item
-                    optional { expect(Token.Semi) }
+                    optional { expect(TokenLexer.Semi) }
                 } storeIn CandidTypeVariant::candidTypes
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             } or {
-                expect(Token.Id) storeIn CandidTypeVariant::variableName
-                expect(Token.Colon)
-                expect(Token.Variant)
-                expect(Token.LBrace)
+                expect(TokenLexer.Id) storeIn CandidTypeVariant::variableName
+                expect(TokenLexer.Colon)
+                expect(TokenLexer.Variant)
+                expect(TokenLexer.LBrace)
                 repeated(min = 1) {
                     expect(CandidType) storeIn item
-                    optional { expect(Token.Semi) }
+                    optional { expect(TokenLexer.Semi) }
                 } storeIn CandidTypeVariant::candidTypes
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             }
         }
 
         CandidTypeRecord {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeRecord::typeId
-                expect(Token.Equals)
-                expect(Token.Record)
-                expect(Token.LBrace)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeRecord::typeId
+                expect(TokenLexer.Equals)
+                expect(TokenLexer.Record)
+                expect(TokenLexer.LBrace)
                 repeated(min = 1) {
                     expect(CandidType) storeIn item
                     optional {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 } storeIn CandidTypeRecord::candidTypes
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             } or {
-                expect(Token.Record)
-                expect(Token.LBrace)
+                expect(TokenLexer.Record)
+                expect(TokenLexer.LBrace)
                 repeated(min = 1) {
                     expect(CandidType) storeIn item
                     optional {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 } storeIn CandidTypeRecord::candidTypes
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             } or {
-                expect(Token.Id) storeIn CandidTypeRecord::typeId
-                expect(Token.Colon)
-                expect(Token.Record)
-                expect(Token.LBrace)
+                expect(TokenLexer.Id) storeIn CandidTypeRecord::typeId
+                expect(TokenLexer.Colon)
+                expect(TokenLexer.Record)
+                expect(TokenLexer.LBrace)
                 repeated(min = 1) {
                     expect(CandidType) storeIn item
                     optional {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 } storeIn CandidTypeRecord::candidTypes
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             }
         }
 
         CandidTypeInt {
             either {
-                expect(Token.Id) storeIn CandidTypeInt::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeInt::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
                     }
                 }
-                expect(Token.Int)
+                expect(TokenLexer.Int)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
                     }
                 }
-                expect(Token.Int)
+                expect(TokenLexer.Int)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -443,18 +443,18 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeInt8 {
             either {
-                expect(Token.Id) storeIn CandidTypeInt8::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeInt8::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt8::optionalType
                     }
                 }
-                expect(Token.Int8)
+                expect(TokenLexer.Int8)
             }
             /* or {
                 optional {
@@ -479,18 +479,18 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeInt16 {
             either {
-                expect(Token.Id) storeIn CandidTypeInt16::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeInt16::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeInt16::optionalType
                     }
                 }
-                expect(Token.Int16)
+                expect(TokenLexer.Int16)
             }
             /* or {
                 optional {
@@ -515,18 +515,18 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeInt32 {
             either {
-                expect(Token.Id) storeIn CandidTypeInt32::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeInt32::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                        expect(TokenLexer.Opt)
+                        emit(com.bity.icp_kotlin_kit.domain.model.candid_type.OptionalType.Optional) storeIn CandidTypeInt32::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeInt32::optionalType
+                        expect(TokenLexer.DoubleOpt)
+                        emit(com.bity.icp_kotlin_kit.domain.model.candid_type.OptionalType.Optional) storeIn CandidTypeInt32::optionalType
                     }
                 }
-                expect(Token.Int32)
+                expect(TokenLexer.Int32)
             }
             /* or {
                 optional {
@@ -550,45 +550,45 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeInt64 {
-            expect(Token.Id) storeIn CandidTypeInt64::variableName
-            expect(Token.Colon)
+            expect(TokenLexer.Id) storeIn CandidTypeInt64::variableName
+            expect(TokenLexer.Colon)
             optional {
                 either {
-                    expect(Token.Opt)
+                    expect(TokenLexer.Opt)
                     emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
                 } or {
-                    expect(Token.DoubleOpt)
+                    expect(TokenLexer.DoubleOpt)
                     emit(OptionalType.Optional) storeIn CandidTypeInt64::optionalType
                 }
             }
-            expect(Token.Int64)
+            expect(TokenLexer.Int64)
         }
 
         CandidTypeNat8 {
             either {
-                expect(Token.Id) storeIn CandidTypeNat8::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeNat8::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
                     }
                 }
-                expect(Token.Nat8)
+                expect(TokenLexer.Nat8)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
                     }
                 }
-                expect(Token.Nat8)
+                expect(TokenLexer.Nat8)
             }
             /*either {
 
@@ -615,38 +615,38 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeNat16 {
             either {
-                expect(Token.Id) storeIn CandidTypeNat16::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeNat16::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
                     }
                 }
-                expect(Token.Nat16)
+                expect(TokenLexer.Nat16)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
                     }
                 }
-                expect(Token.Nat16)
+                expect(TokenLexer.Nat16)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -672,38 +672,38 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeNat32 {
             either {
-                expect(Token.Id) storeIn CandidTypeNat32::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeNat32::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
                     }
                 }
-                expect(Token.Nat32)
+                expect(TokenLexer.Nat32)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat32::optionalType
                     }
                 }
-                expect(Token.Nat32)
+                expect(TokenLexer.Nat32)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -711,38 +711,38 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeNat64 {
             either {
-                expect(Token.Id) storeIn CandidTypeNat64::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeNat64::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
                     }
                 }
-                expect(Token.Nat64)
+                expect(TokenLexer.Nat64)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
                     }
                 }
-                expect(Token.Nat64)
+                expect(TokenLexer.Nat64)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
@@ -750,107 +750,107 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeNat {
             either {
-                expect(Token.Id) storeIn CandidTypeNat::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeNat::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     }
                 }
-                expect(Token.Nat)
+                expect(TokenLexer.Nat)
             } or {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeNat::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeNat::typeId
+                expect(TokenLexer.Equals)
                 emit(true) storeIn CandidTypeNat::isTypeAlias
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     }
                 }
-                expect(Token.Nat)
+                expect(TokenLexer.Nat)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeNat::optionalType
                     }
                 }
-                expect(Token.Nat)
+                expect(TokenLexer.Nat)
                 lookahead {
                     either {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     }
                 }
             }
         }
 
         CandidTypeFloat {
-            expect(Token.Id) storeIn CandidTypeFloat::variableName
-            expect(Token.Colon)
+            expect(TokenLexer.Id) storeIn CandidTypeFloat::variableName
+            expect(TokenLexer.Colon)
             optional {
                 either {
-                    expect(Token.Opt)
+                    expect(TokenLexer.Opt)
                     emit(OptionalType.Optional) storeIn CandidTypeFloat::optionalType
                 } or {
-                    expect(Token.DoubleOpt)
+                    expect(TokenLexer.DoubleOpt)
                     emit(OptionalType.Optional) storeIn CandidTypeFloat::optionalType
                 }
             }
-            expect(Token.Float64)
+            expect(TokenLexer.Float64)
         }
 
         CandidTypeFloat64 {
             either {
-                expect(Token.Id) storeIn CandidTypeFloat64::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeFloat64::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
                     }
                 }
-                expect(Token.Float64)
+                expect(TokenLexer.Float64)
             } or {
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
                     }
                 }
-                expect(Token.Float64)
+                expect(TokenLexer.Float64)
                 lookahead {
                     either {
-                        expect(Token.Semi)
+                        expect(TokenLexer.Semi)
                     } or {
-                        expect(Token.RParen)
+                        expect(TokenLexer.RParen)
                     } or {
-                        expect(Token.RBrace)
+                        expect(TokenLexer.RBrace)
                     } or {
-                        expect(Token.Colon)
+                        expect(TokenLexer.Colon)
                     }
                 }
             }
@@ -877,99 +877,99 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
 
         CandidTypeVec {
             either {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeVec::typeId
-                expect(Token.Equals)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeVec::typeId
+                expect(TokenLexer.Equals)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
                     }
                 }
-                expect(Token.Vec)
+                expect(TokenLexer.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
             } or {
-                expect(Token.Id) storeIn CandidTypeVec::variableName
-                expect(Token.Colon)
+                expect(TokenLexer.Id) storeIn CandidTypeVec::variableName
+                expect(TokenLexer.Colon)
                 optional {
                     either {
-                        expect(Token.Opt)
+                        expect(TokenLexer.Opt)
                         emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
                     } or {
-                        expect(Token.DoubleOpt)
+                        expect(TokenLexer.DoubleOpt)
                         emit(OptionalType.Optional) storeIn CandidTypeVec::optionalType
                     }
                 }
-                expect(Token.Vec)
+                expect(TokenLexer.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
             } or {
-                expect(Token.Vec)
+                expect(TokenLexer.Vec)
                 expect(CandidType) storeIn CandidTypeVec::vecType
                 lookahead {
-                    expect(Token.RParen)
+                    expect(TokenLexer.RParen)
                 }
             }
         }
 
         CandidTypeService {
             either {
-                expect(Token.Service)
-                expect(Token.Colon)
-                expect(Token.LBrace)
+                expect(TokenLexer.Service)
+                expect(TokenLexer.Colon)
+                expect(TokenLexer.LBrace)
                 repeated(min = 0) {
                     expect(CandidFunctionDeclaration) storeIn item
                 } storeIn CandidTypeService::serviceFunctions
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             } or {
-                expect(Token.Type)
-                expect(Token.Id) storeIn CandidTypeService::typeId
-                expect(Token.Equals)
-                expect(Token.Service)
-                expect(Token.LBrace)
+                expect(TokenLexer.Type)
+                expect(TokenLexer.Id) storeIn CandidTypeService::typeId
+                expect(TokenLexer.Equals)
+                expect(TokenLexer.Service)
+                expect(TokenLexer.LBrace)
                 repeated(min = 0) {
                     expect(CandidFunctionDeclaration) storeIn item
                 } storeIn CandidTypeService::serviceFunctions
-                expect(Token.RBrace)
+                expect(TokenLexer.RBrace)
             }
         }
 
         CandidFunctionDeclaration {
-            expect(Token.Id) storeIn CandidFunctionDeclaration::functionName
-            expect(Token.Colon)
+            expect(TokenLexer.Id) storeIn CandidFunctionDeclaration::functionName
+            expect(TokenLexer.Colon)
 
-            expect(Token.LParen)
+            expect(TokenLexer.LParen)
             repeated(min = 0) {
                 expect(CandidType) storeIn item
                 optional {
-                    expect(Token.Comma)
+                    expect(TokenLexer.Comma)
                 }
             } storeIn CandidFunctionDeclaration::inputParameters
-            expect(Token.RParen)
+            expect(TokenLexer.RParen)
 
-            expect(Token.Arrow)
+            expect(TokenLexer.Arrow)
 
-            expect(Token.LParen)
+            expect(TokenLexer.LParen)
             repeated(min = 0) {
                 expect(CandidType) storeIn item
                 optional {
-                    expect(Token.Comma)
+                    expect(TokenLexer.Comma)
                 }
             } storeIn CandidFunctionDeclaration::outputParameters
-            expect(Token.RParen)
+            expect(TokenLexer.RParen)
 
             optional {
                 either {
-                    expect(Token.Query)
+                    expect(TokenLexer.Query)
                     emit(CandidFunctionType.Query) storeIn CandidFunctionDeclaration::candidFunctionType
                 } or {
-                    expect(Token.Oneway)
+                    expect(TokenLexer.Oneway)
                     emit(CandidFunctionType.None) storeIn CandidFunctionDeclaration::candidFunctionType
                 }
             }
-            expect(Token.Semi)
+            expect(TokenLexer.Semi)
         }
     }
 
