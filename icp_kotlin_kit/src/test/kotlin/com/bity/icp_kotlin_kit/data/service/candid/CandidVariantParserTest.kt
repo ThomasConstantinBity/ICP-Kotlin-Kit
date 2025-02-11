@@ -40,6 +40,70 @@ class CandidVariantParserTest {
 
             Arguments.of(
                 """
+                    type CandyShared = variant {
+                      Int : int;
+                      Map : vec record { CandyShared; CandyShared };
+                      Nat : nat;
+                      Set : vec CandyShared;
+                      Nat16 : nat16;
+                      Nat32 : nat32;
+                      Nat64 : nat64;
+                      Blob : vec nat8;
+                      Bool : bool;
+                      Int8 : int8;
+                      Ints : vec int;
+                      Nat8 : nat8;
+                      Nats : vec nat;
+                      Text : text;
+                      Bytes : vec nat8;
+                      Int16 : int16;
+                      Int32 : int32;
+                      Int64 : int64;
+                      Option : opt CandyShared;
+                      Floats : vec float64;
+                      Float : float64;
+                      Principal : principal;
+                      Array : vec CandyShared;
+                      Class : vec PropertyShared;
+                    };
+                """.trimIndent(),
+                """
+                    sealed class CandyShared {
+                        class Int(val Int: BigInteger): CandyShared()
+                        class Map(val Map: kotlin.Array<MapClass>): CandyShared()
+                        class Nat(val Nat: BigInteger): CandyShared()
+                        class Set(val Set: kotlin.Array<CandyShared>): CandyShared()
+                        class Nat16(val Nat16: UShort): CandyShared()
+                        class Nat32(val Nat32: UInt): CandyShared()
+                        class Nat64(val Nat64: ULong): CandyShared()
+                        class Blob(val Blob: kotlin.Array<UByte>): CandyShared()
+                        class Bool(val Bool: Boolean): CandyShared()
+                        class Int8(val Int8: Byte): CandyShared()
+                        class Ints(val Ints: kotlin.Array<BigInteger>): CandyShared()
+                        class Nat8(val Nat8: UByte): CandyShared()
+                        class Nats(val Nats: kotlin.Array<BigInteger>): CandyShared()
+                        class Text(val Text: String): CandyShared()
+                        class Bytes(val Bytes: kotlin.Array<UByte>): CandyShared()
+                        class Int16(val Int16: Short): CandyShared()
+                        class Int32(val Int32: Int): CandyShared()
+                        class Int64(val Int64: Long): CandyShared()
+                        class Option(val Option: CandyShared?): CandyShared()
+                        class Floats(val Floats: kotlin.Array<Float>): CandyShared()
+                        class Float(val Float: Double): CandyShared()
+                        class Principal(val Principal: ICPPrincipalApiModel): CandyShared()
+                        class Array(val Array: kotlin.Array<CandyShared>): CandyShared()
+                        class Class(val Class: kotlin.Array<PropertyShared>): CandyShared()
+                        
+                        class MapClass(
+                            val candyShared: CandyShared, 
+                            val candyShared: CandyShared 
+                        )
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
                     type Account = variant {
                       account_id : text;
                       "principal" : principal;

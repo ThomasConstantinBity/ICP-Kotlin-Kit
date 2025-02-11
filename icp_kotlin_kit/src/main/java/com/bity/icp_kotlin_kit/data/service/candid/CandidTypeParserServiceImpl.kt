@@ -61,11 +61,21 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
             } or {
                 expect(CandidTypeVariant) storeIn self()
             } or {
+                expect(CandidTypeInt8) storeIn self()
+            } or {
+                expect(CandidTypeInt16) storeIn self()
+            } or {
+                expect(CandidTypeInt32) storeIn self()
+            } or {
                 expect(CandidTypeInt64) storeIn self()
             } or {
                 expect(CandidTypeInt) storeIn self()
             } or {
                 expect(CandidTypeNat8) storeIn self()
+            } or {
+                expect(CandidTypeNat16) storeIn self()
+            } or{
+                expect(CandidTypeNat32) storeIn self()
             } or {
                 expect(CandidTypeNat64) storeIn self()
             } or {
@@ -73,19 +83,16 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
             } or {
                 expect(CandidTypeFloat) storeIn self()
             } or {
+                expect(CandidTypeFloat64) storeIn self()
+            } or {
                 expect(CandidTypeService) storeIn self()
             } or {
                 expect(CandidTypeBlob) storeIn self()
             }
             /*
-
-                expect(CandidTypeInt8) storeIn self()
-                expect(CandidTypeInt16) storeIn self()
-                expect(CandidTypeInt32) storeIn self()
-
                 expect(CandidTypeNat16) storeIn self()
                 expect(CandidTypeNat32) storeIn self()
-                expect(CandidTypeFloat64) storeIn self()
+
             */
 
             optional {
@@ -229,6 +236,19 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 expect(Token.Type)
                 expect(Token.Id) storeIn CandidTypeBool::typeId
                 expect(Token.Equals)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+                    }
+                }
+                expect(Token.Boolean)
+            } or {
+                expect(Token.Id) storeIn CandidTypeBool::variableName
+                expect(Token.Colon)
                 optional {
                     either {
                         expect(Token.Opt)
@@ -405,8 +425,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeInt8 {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeInt8::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeInt8::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -418,7 +438,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                     }
                 }
                 expect(Token.Int8)
-            } or {
+            }
+            /* or {
                 optional {
                     either {
                         expect(Token.Opt)
@@ -440,8 +461,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeInt16 {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeInt16::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeInt16::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -453,7 +474,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                     }
                 }
                 expect(Token.Int16)
-            } or {
+            }
+            /* or {
                 optional {
                     either {
                         expect(Token.Opt)
@@ -475,8 +497,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeInt32 {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeInt32::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeInt32::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -488,7 +510,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                     }
                 }
                 expect(Token.Int32)
-            } or {
+            }
+            /* or {
                 optional {
                     either {
                         expect(Token.Opt)
@@ -525,18 +548,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeNat8 {
-            optional {
-                either {
-                    expect(Token.Opt)
-                    emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
-                } or {
-                    expect(Token.DoubleOpt)
-                    emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
-                }
-            }
-            expect(Token.Nat8)
-            /*either {
-                expect(Token.Id) storeIn CandidTypeNat8::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeNat8::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -548,6 +561,20 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                     }
                 }
                 expect(Token.Nat8)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat8::optionalType
+                    }
+                }
+                expect(Token.Nat8)
+            }
+            /*either {
+
             } or {
                 optional {
                     either {
@@ -570,6 +597,43 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeNat16 {
+            either {
+                expect(Token.Id) storeIn CandidTypeNat16::variableName
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    }
+                }
+                expect(Token.Nat16)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
+                    }
+                }
+                expect(Token.Nat16)
+                lookahead {
+                    either {
+                        expect(Token.Colon)
+                    } or {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    }
+                }
+            }
+
             /* either {
                 expect(Token.Id) storeIn CandidTypeNat16::typeId
                 expect(Token.Colon)
@@ -585,28 +649,13 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 expect(Token.Nat16)
             } or {
                 optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
-                    }
-                }
-                expect(Token.Nat16)
-                lookahead {
-                    either {
-                        expect(Token.Semi)
-                    } or {
-                        expect(Token.RBrace)
-                    }
-                }
+
             }*/
         }
 
         CandidTypeNat32 {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeNat32::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeNat32::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -631,12 +680,16 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 expect(Token.Nat32)
                 lookahead {
                     either {
-                        expect(Token.Semi)
+                        expect(Token.Colon)
                     } or {
                         expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
                     }
                 }
-            }*/
+            }
         }
 
         CandidTypeNat64 {
@@ -654,6 +707,17 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 }
                 expect(Token.Nat64)
             }
+            /*lookahead {
+                either {
+                    expect(Token.Colon)
+                } or {
+                    expect(Token.RBrace)
+                } or {
+                    expect(Token.RParen)
+                } or {
+                    expect(Token.Semi)
+                }
+            }*/
         }
 
         CandidTypeNat {
@@ -711,8 +775,8 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
 
         CandidTypeFloat64 {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeFloat64::typeId
+            either {
+                expect(Token.Id) storeIn CandidTypeFloat64::variableName
                 expect(Token.Colon)
                 optional {
                     either {
@@ -725,6 +789,29 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                 }
                 expect(Token.Float64)
             } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeFloat64::optionalType
+                    }
+                }
+                expect(Token.Float64)
+                lookahead {
+                    either {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.Colon)
+                    }
+                }
+            }
+            /* or {
                 optional {
                     either {
                         expect(Token.Opt)
@@ -844,9 +931,9 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
     }
 
     override fun parseCandidType(candidType: String): CandidType {
-        /* fileLexer.tokenize(candidType).forEachIndexed { i, t ->
+         /*fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
-        } */
+        }*/
         /*typeParser.parseWithDebugger(fileLexer.tokenize(candidType))
             .debuggerResult.apply { println(this) }*/
         return typeParser.parse(fileLexer.tokenize(candidType))

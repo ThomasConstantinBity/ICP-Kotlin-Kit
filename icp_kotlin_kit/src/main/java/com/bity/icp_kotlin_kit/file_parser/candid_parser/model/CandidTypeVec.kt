@@ -25,7 +25,7 @@ internal data class CandidTypeVec(
     }
 
     override fun getClassDefinitionForSealedClass(parentClassname: String): String {
-        val variableDefinition = "val ${variableName.replaceFirstChar { it.lowercase() }}: ${getKotlinType()}"
+        val variableDefinition = "val ${variableName}: ${getKotlinType()}"
         val className = variableName.replaceFirstChar { it.uppercase() }
         return "class $className($variableDefinition): $parentClassname()"
     }

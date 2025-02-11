@@ -4,8 +4,8 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.reflective
 
 internal class CandidTypeInt32(
-    override val typeId: String,
-    override val variableName: String?,
+    override val typeId: String? = null,
+    override val variableName: String = "int32Value",
     override val optionalType: OptionalType = OptionalType.None,
 ) : CandidType() {
 
