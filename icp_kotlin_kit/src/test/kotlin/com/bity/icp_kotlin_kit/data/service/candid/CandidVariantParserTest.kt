@@ -10,7 +10,7 @@ import kotlin.test.assertNotNull
 
 class CandidVariantParserTest {
 
-    private val candidTypeParserService = CandidTypeParserServiceImpl()
+    private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("candidVariant")

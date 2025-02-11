@@ -10,7 +10,7 @@ import kotlin.test.assertNotNull
 
 class CandidRecordParserTest {
 
-    private val candidTypeParserService = CandidTypeParserServiceImpl()
+    private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("candidRecord")
@@ -37,6 +37,86 @@ class CandidRecordParserTest {
 
         @JvmStatic
         private fun candidRecord() = listOf(
+
+            Arguments.of(
+                """
+                    type AuctionStateShared = record {
+                      status : variant { closed; open; not_started };
+                      participants : vec record { principal; int };
+                      token : TokenSpec__1;
+                      current_bid_amount : nat;
+                      winner : opt Account;
+                      end_date : int;
+                      current_config : BidConfigShared;
+                      start_date : int;
+                      wait_for_quiet_count : opt nat;
+                      current_escrow : opt EscrowReceipt;
+                      allow_list : opt vec record { principal; bool };
+                      min_next_bid : nat;
+                      config : PricingConfigShared__1;
+                    };
+                """.trimIndent(),
+                """
+                    class AuctionStateShared(
+                        val status: Status,
+                        val participants: kotlin.Array<Participants>,
+                        val token: TokenSpec__1,
+                        val current_bid_amount: BigInteger,
+                        val winner: Account?,
+                        val end_date: BigInteger,
+                        val current_config: BidConfigShared,
+                        val start_date: BigInteger,
+                        val wait_for_quiet_count: BigInteger?,
+                        val current_escrow: EscrowReceipt?,
+                        val allow_list: kotlin.Array<AllowList>?,
+                        val min_next_bid: BigInteger,
+                        val config: PricingConfigShared__1
+                    ) {
+                        sealed class Status {
+                            object closed: Status()
+                            object open: Status()
+                            object not_started: Status()
+                        }
+                        
+                        class Participants(
+                            val icpPrincipalApiModel: ICPPrincipalApiModel,
+                            val intValue: BigInteger
+                        )
+                        
+                        class AllowList(
+                            val icpPrincipalApiModel: ICPPrincipalApiModel,
+                            val boolValue: Boolean
+                        )
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    type canister_status = record {
+                      status : variant { stopped; stopping; running };
+                      memory_size : nat;
+                      cycles : nat;
+                      settings : definite_canister_settings;
+                      module_hash : opt vec nat8;
+                    };
+                """.trimIndent(),
+                """
+                    class canister_status(
+                        val status: Status,
+                        val memory_size: BigInteger,
+                        val cycles: BigInteger,
+                        val settings: definite_canister_settings,
+                        val module_hash: kotlin.Array<UByte>?
+                    ) {
+                        sealed class Status {
+                            object stopped: Status()
+                            object stopping: Status()
+                            object running: Status()
+                        }
+                    }
+                """.trimIndent()
+            ),
 
             Arguments.of(
                 """

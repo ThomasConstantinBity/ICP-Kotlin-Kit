@@ -27,7 +27,7 @@ internal data class CandidTypeRecord(
             else -> {
                 val kotlinType = variableName
                     .split("_")
-                    .joinToString { split -> split.replaceFirstChar { it.uppercase() } }
+                    .joinToString(separator = "") { split -> split.replaceFirstChar { it.uppercase() } }
                 when(kotlinType) {
                     "Map",
                     "Array" -> "${kotlinType}Class"

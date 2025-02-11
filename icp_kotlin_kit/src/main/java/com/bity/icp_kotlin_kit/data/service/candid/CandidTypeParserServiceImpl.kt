@@ -28,6 +28,7 @@ import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeText
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVariant
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.CandidTypeVec
 import com.bity.icp_kotlin_kit.file_parser.candid_parser.model.OptionalType
+import guru.zoroark.tegral.niwen.parser.dsl.EitherBranchBuilder
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
 import guru.zoroark.tegral.niwen.parser.dsl.expect
@@ -39,7 +40,7 @@ import guru.zoroark.tegral.niwen.parser.dsl.or
 import guru.zoroark.tegral.niwen.parser.dsl.repeated
 import guru.zoroark.tegral.niwen.parser.dsl.self
 
-internal class CandidTypeParserServiceImpl : CandidTypeParserService {
+internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuilder<CandidTypeBool>.() -> Unit) : CandidTypeParserService {
 
     private val typeParser = niwenParser {
 
@@ -77,7 +78,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                 expect(CandidTypeBlob) storeIn self()
             }
             /*
-                expect(CandidTypeInt) storeIn self()
+
                 expect(CandidTypeInt8) storeIn self()
                 expect(CandidTypeInt16) storeIn self()
                 expect(CandidTypeInt32) storeIn self()
@@ -224,20 +225,7 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeBool {
-            /*either {
-                expect(Token.Id) storeIn CandidTypeBool::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
-                    }
-                }
-                expect(Token.Boolean)
-            } or {
+            either {
                 expect(Token.Type)
                 expect(Token.Id) storeIn CandidTypeBool::typeId
                 expect(Token.Equals)
@@ -251,22 +239,20 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
                     }
                 }
                 expect(Token.Boolean)
-
-            }*/
-
-            expect(Token.Type)
-            expect(Token.Id) storeIn CandidTypeBool::typeId
-            expect(Token.Equals)
-            optional {
-                either {
-                    expect(Token.Opt)
-                    emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
-                } or {
-                    expect(Token.DoubleOpt)
-                    emit(OptionalType.Optional) storeIn CandidTypeBool::optionalType
+            } or {
+                expect(Token.Boolean)
+                lookahead {
+                    either {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    } or {
+                        expect(Token.Colon)
+                    }
                 }
             }
-            expect(Token.Boolean)
 
         }
 
@@ -380,18 +366,42 @@ internal class CandidTypeParserServiceImpl : CandidTypeParserService {
         }
 
         CandidTypeInt {
-            expect(Token.Id) storeIn CandidTypeInt::variableName
-            expect(Token.Colon)
-            optional {
-                either {
-                    expect(Token.Opt)
-                    emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
-                } or {
-                    expect(Token.DoubleOpt)
-                    emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+            either {
+                expect(Token.Id) storeIn CandidTypeInt::variableName
+                expect(Token.Colon)
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    }
+                }
+                expect(Token.Int)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeInt::optionalType
+                    }
+                }
+                expect(Token.Int)
+                lookahead {
+                    either {
+                        expect(Token.Colon)
+                    } or {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    }
                 }
             }
-            expect(Token.Int)
         }
 
         CandidTypeInt8 {

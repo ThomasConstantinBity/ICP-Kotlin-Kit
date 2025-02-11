@@ -24,6 +24,6 @@ object CandidFileParserServiceFactory {
     }
 
     private fun provideCandidTypeParserService(): CandidTypeParserService =
-        CandidTypeParserServiceImpl()
+        CandidTypeParserServiceImpl { {} }
 
 }

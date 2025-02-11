@@ -11,7 +11,7 @@ import kotlin.test.assertNotNull
 
 class CandidServiceParserTest {
 
-    private val candidTypeParserService = CandidTypeParserServiceImpl()
+    private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
 
     @Test
     fun origynNFTService() {

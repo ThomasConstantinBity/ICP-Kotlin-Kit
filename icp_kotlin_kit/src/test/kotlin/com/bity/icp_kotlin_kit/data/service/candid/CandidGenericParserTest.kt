@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 
 class CandidGenericParserTest {
 
-    private val candidTypeParserService = CandidTypeParserServiceImpl()
+    private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
 
     @ParameterizedTest(name = "{index}")
     @MethodSource("typealiases")
