@@ -10,7 +10,7 @@ class CandidGenericParserTest {
 
     private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
 
-    @ParameterizedTest(name = "{index}")
+    @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("typealiases")
     fun typealiases(
         typeDefinition: String,
@@ -25,14 +25,7 @@ class CandidGenericParserTest {
                 .trim(),
             actual = kotlinDefinition
                 .replace("""\s+|\t+""".toRegex(), " ")
-                .trim(),
-            message = """
-                Expected:
-                $expectedGeneratedClass
-                
-                Actual:
-                $kotlinDefinition
-            """.trimIndent()
+                .trim()
         )
 
     }
@@ -41,6 +34,12 @@ class CandidGenericParserTest {
 
         @JvmStatic
         private fun typealiases() = listOf(
+
+            Arguments.of(
+                "type UpdateCallsAggregatedData = vec nat64;",
+                "typealias UpdateCallsAggregatedData = kotlin.Array<ULong>"
+            ),
+
             Arguments.of(
                 """
                     type ApprovalResult = vec record {

@@ -706,18 +706,29 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
                     }
                 }
                 expect(Token.Nat64)
-            }
-            /*lookahead {
-                either {
-                    expect(Token.Colon)
-                } or {
-                    expect(Token.RBrace)
-                } or {
-                    expect(Token.RParen)
-                } or {
-                    expect(Token.Semi)
+            } or {
+                optional {
+                    either {
+                        expect(Token.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    } or {
+                        expect(Token.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeNat64::optionalType
+                    }
                 }
-            }*/
+                expect(Token.Nat64)
+                lookahead {
+                    either {
+                        expect(Token.Colon)
+                    } or {
+                        expect(Token.RBrace)
+                    } or {
+                        expect(Token.RParen)
+                    } or {
+                        expect(Token.Semi)
+                    }
+                }
+            }
         }
 
         CandidTypeNat {
