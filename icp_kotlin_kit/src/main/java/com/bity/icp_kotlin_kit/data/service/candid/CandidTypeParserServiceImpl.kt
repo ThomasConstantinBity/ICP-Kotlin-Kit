@@ -390,6 +390,15 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
             } or {
                 expect(TokenLexer.Id) storeIn CandidTypeRecord::typeId
                 expect(TokenLexer.Colon)
+                optional {
+                    either {
+                        expect(TokenLexer.Opt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    } or {
+                        expect(TokenLexer.DoubleOpt)
+                        emit(OptionalType.Optional) storeIn CandidTypeRecord::optionalType
+                    }
+                }
                 expect(TokenLexer.Record)
                 expect(TokenLexer.LBrace)
                 repeated(min = 1) {

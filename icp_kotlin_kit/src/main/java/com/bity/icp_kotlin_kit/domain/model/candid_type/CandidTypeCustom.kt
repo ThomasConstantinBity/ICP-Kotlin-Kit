@@ -7,7 +7,7 @@ internal data class CandidTypeCustom(
     override val typeId: String? = null,
     val customTypeDefinition: String,
     override val optionalType: OptionalType = OptionalType.None,
-    override val variableName: String = customTypeDefinition.replaceFirstChar { it.lowercase() }
+    override val variableName: String? = null
 ): CandidType() {
 
     override val isTypeAlias: Boolean = true
@@ -21,7 +21,7 @@ internal data class CandidTypeCustom(
              *     Option : opt CandyShared;
              * }
              */
-            parentClassname == customTypeDefinition -> {
+            variableName != null -> {
                 val variableDefinition = "val $variableName: ${getKotlinVariableType()}"
                 val className = variableName
                 "class $className($variableDefinition): $parentClassname()"
