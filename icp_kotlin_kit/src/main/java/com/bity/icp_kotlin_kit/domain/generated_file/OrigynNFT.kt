@@ -5,6 +5,8 @@ import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
+import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.GetBlocksArgs
+import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.Result_4
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT.ApprovalResultClass
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
@@ -174,7 +176,7 @@ typealias OrigynSubaccount = kotlin.Array<UByte>
 /**
  * type TransferResult = vec opt TransferResultItem;
  */
-typealias TransferResult = kotlin.Array<OrigynNFT.TransferResultItem?>
+typealias OrigynTransferResult = kotlin.Array<OrigynNFT.TransferResultItem?>
 
 /**
  * type UpdateCallsAggregatedData = vec nat64;
@@ -331,6 +333,30 @@ object OrigynNFT {
         val args: kotlin.Array<TransactionRange__1>,
         val callback: GetTransactionsFn
     )
+
+    class GetTransactionsFn(
+        methodName: String,
+        canister: ICPPrincipal
+    ) : ICPQuery(
+        methodName = methodName,
+        canister = canister
+    ) {
+        suspend operator fun invoke(
+            array: kotlin.Array<TransactionRange>,
+        ): GetTransactionsResult__1 {
+            val result = this.query(
+                values = listOf(
+                    ValueToEncode(
+                        arg = array,
+                        expectedClass = Array::class,
+                        expectedClassNullable = false,
+                        arrayType = TransactionRange::class
+                    )
+                ),
+            ).getOrThrow()
+            return CandidDecoder.decodeNotNull(result.first())
+        }
+    }
     /**
      * type AskFeature = variant {
      *   kyc : principal;
@@ -383,16 +409,29 @@ object OrigynNFT {
      * };
      */
     sealed class AskSubscribeRequest {
+
         class subscribe(
-            val null: stake,
-            val null: filter?
-        ): AskSubscribeRequest()
+            val stake: Stake,
+            val filter: Filter?
+        ): AskSubscribeRequest() {
+
+            class Stake(
+                val principal: ICPPrincipalApiModel,
+                val natValue: BigInteger
+            )
+            class Filter(
+                val tokens: kotlin.Array<TokenSpecFilter>?,
+                val token_ids: kotlin.Array<TokenIDFilter>?
+            )
+
+        }
 
         class unsubscribe(
             val icpPrincipalApiModel: ICPPrincipalApiModel,
             val natValue: BigInteger
         ): AskSubscribeRequest()
     }
+
     /**
      * type AuctionConfig = record {
      *   start_price : nat;
@@ -1956,6 +1995,37 @@ object OrigynNFT {
         }
 
     }
+
+    /**
+     * type Vec = vec record {
+     *   text;
+     *   variant {
+     *     Nat64Content : nat64;
+     *     Nat32Content : nat32;
+     *     BoolContent : bool;
+     *     Nat8Content : nat8;
+     *     Int64Content : int64;
+     *     IntContent : int;
+     *     NatContent : nat;
+     *     Nat16Content : nat16;
+     *     Int32Content : int32;
+     *     Int8Content : int8;
+     *     FloatContent : float64;
+     *     Int16Content : int16;
+     *     BlobContent : vec nat8;
+     *     NestedContent : Vec;
+     *     Principal : principal;
+     *     TextContent : text;
+     *   };
+     * };
+     */
+    class Vec(
+        val textValue: String,
+        val variant: VecVariant
+    ) {
+        sealed class VecVariant
+    }
+
     /**
      * type GenericValue = variant {
      *   Nat64Content : nat64;
@@ -2382,14 +2452,23 @@ object OrigynNFT {
      * };
      */
     sealed class ManageStorageRequest {
-        class Add_storage_canisters(val add_storage_canisters: kotlin.Array<AddStorageCanisters>): ManageStorageRequest()
-        class configure_storage(val configure_storage: configure_storage): ManageStorageRequest()
 
-        class AddStorageCanisters(
-            val icpPrincipalApiModel: ICPPrincipalApiModel,
+        class add_storage_canisters(
+            val principal: ICPPrincipalApiModel,
             val natValue: BigInteger,
-            val null: TODO("CandidTypeRecord(typeId=null, variableName=null, optionalType=None, candidTypes=[com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat@5412bfea, com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat@44a6a68e, com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeNat@4743a322])")
-        )
+            val record: RecordClass
+        ) : ManageStorageRequest() {
+            class RecordClass(
+                val natValue_1 : BigInteger,
+                val natValue_2 : BigInteger,
+                val natValue_3 : BigInteger
+            )
+        }
+
+        sealed class configure_storage: ManageStorageRequest() {
+            class stableBtree(val stableBtree: BigInteger?)
+            class heap(val heap: BigInteger?)
+        }
 
     }
     /**
@@ -2749,18 +2828,23 @@ object OrigynNFT {
         val escrow_balances: StableEscrowBalances
     ) {
         class Allocations(
-            val null: TODO("CandidTypeRecord(typeId=null, variableName=null, optionalType=None, candidTypes=[CandidTypeText(typeId=null, variableName=textValue, isTypeAlias=false, optionalType=None), CandidTypeText(typeId=null, variableName=textValue, isTypeAlias=false, optionalType=None)])"),
-        val null: AllocationRecordStable
-        )
+            val allocationsValue: AllocationsValue,
+            val allocationRecordStable: AllocationRecordStable
+        ) {
+            class AllocationsValue(
+                val textValue_1: String,
+                val textValue_2: String
+            )
+        }
 
         class NftSales(
             val textValue: String,
-            val null: SaleStatusShared
+            val saleStatusShared: SaleStatusShared
         )
 
         class Buckets(
             val icpPrincipalApiModel: ICPPrincipalApiModel,
-            val null: StableBucketData
+            val stableBucketData: StableBucketData
         )
 
     }
@@ -3238,14 +3322,19 @@ object OrigynNFT {
      */
     sealed class SaleInfoResponse {
         class status(val status: SaleStatusShared?): SaleInfoResponse()
-        class fee_deposit_info(val fee_deposit_info: SubAccountInfo): SaleInfoResponse()
-        class active(
+        class fee_deposit_info(val subAccountInfo: SubAccountInfo): SaleInfoResponse()
+        class Active(
             val eof: Boolean,
             val records: kotlin.Array<Records>,
             val count: BigInteger
-        ): SaleInfoResponse()
+        ): SaleInfoResponse() {
+            class Records(
+                val textValue: String,
+                val saleStatusShared: SaleStatusShared
+            )
+        }
 
-        class deposit_info(val deposit_info: SubAccountInfo): SaleInfoResponse()
+        class deposit_info(val subAccountInfo: SubAccountInfo): SaleInfoResponse()
         class history(
             val eof: Boolean,
             val records: kotlin.Array<SaleStatusShared?>,
@@ -3253,18 +3342,6 @@ object OrigynNFT {
         ): SaleInfoResponse()
 
         class escrow_info(val escrow_info: SubAccountInfo): SaleInfoResponse()
-
-        class active(
-            val eof: Boolean,
-            val records: kotlin.Array<Records>,
-            val count: BigInteger
-        ) {
-            class Records(
-                val textValue: String,
-                val null: SaleStatusShared?
-            )
-
-        }
     }
     /**
      * type SaleInfoResult = variant { ok : SaleInfoResponse; err : OrigynError };
@@ -3342,15 +3419,20 @@ object OrigynNFT {
     ) {
 
         class Version(
-            val natVAlue_1: BigInteger,
-            val natVAlue_2: BigInteger,
-            val natVAlue_3: BigInteger,
+            val natValue_1: BigInteger,
+            val natValue_2: BigInteger,
+            val natValue_3: BigInteger,
         )
 
         class Allocations(
-            val null: TODO("CandidTypeRecord(typeId=null, variableName=null, optionalType=None, candidTypes=[CandidTypeText(typeId=null, variableName=textValue, isTypeAlias=false, optionalType=None), CandidTypeText(typeId=null, variableName=textValue, isTypeAlias=false, optionalType=None)])"),
-        val intValue: BigInteger
-        )
+            val allocationValue: AllocationValue,
+            val intValue: BigInteger
+        ) {
+            class AllocationValue(
+                val textValue_1: String,
+                val textValue_2: String
+            )
+        }
 
     }
     /**
