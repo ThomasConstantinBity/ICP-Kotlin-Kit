@@ -8,7 +8,6 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import java.math.BigInteger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
@@ -16,6 +15,10 @@ import kotlin.reflect.jvm.isAccessible
 import kotlin.reflect.jvm.jvmErasure
 
 internal object CandidEncoder {
+
+    private fun encodeSealedClass(valueToEncode: ValueToEncode): CandidValue {
+        TODO()
+    }
 
     operator fun invoke(valueToEncode: ValueToEncode): CandidValue {
 
@@ -26,6 +29,9 @@ internal object CandidEncoder {
                 )
             )
         }
+
+        if(valueToEncode.expectedClass.isSealed)
+            return encodeSealedClass(valueToEncode)
 
         val candidValue = when(val arg = valueToEncode.arg) {
 
@@ -56,12 +62,11 @@ internal object CandidEncoder {
                     CandidValue.Vector(
                         CandidVector(
                             values = arg.map { CandidEncoder(
-                                TODO()
-                                /* ValueToEncode(
-                                    arg = it,
-                                    expectedClass = ,
-                                    expectedClassNullable = false
-                                ) */
+                                 ValueToEncode(
+                                    arg = it!!,
+                                    arrayType = valueToEncode.arrayType,
+                                     arrayTypeNullable = valueToEncode.arrayTypeNullable
+                                )
                             ) },
                             containedType = candidPrimitiveTypeForClass(firstArg::class)
                         )
@@ -84,7 +89,6 @@ internal object CandidEncoder {
                     bytes = arg.bytes
                 )
             )
-            is ICPPrincipal -> throw Exception("ICP Principal no longer supported")
 
             else -> {
                 val dictionary = arg::class.memberProperties.associate {
@@ -117,6 +121,7 @@ internal object CandidEncoder {
             UByte::class -> CandidType.Natural8
             ULong::class -> CandidType.Natural64
 
+            String::class -> CandidType.Text
             ByteArray::class -> CandidType.Vector(CandidType.Integer8)
 
             /**
@@ -136,7 +141,7 @@ internal object CandidEncoder {
             Double::class.java -> CandidType.Primitive(CandidPrimitiveType.FLOAT64)
 
             Boolean::class.java -> CandidType.Primitive(CandidPrimitiveType.BOOL)
-            String::class.java -> CandidType.Primitive(CandidPrimitiveType.TEXT)
+
             **/
 
             else -> TODO("not implemented for $clazz")

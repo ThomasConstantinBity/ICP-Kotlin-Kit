@@ -4,14 +4,15 @@ import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.GetBlocksArgs
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.Result_4
+import com.bity.icp_kotlin_kit.di.icpCanisterRepository
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT.ApprovalResultClass
+import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
-import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
-import com.bity.icp_kotlin_kit.domain.request.PollingValues
+import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 
 /**
  * type Nanos = nat64;
@@ -533,13 +534,13 @@ object OrigynNFT {
      *   escrow : vec EscrowRecord__1;
      * };
      */
-    class BalanceResponse(
+    data class BalanceResponse(
         val nfts: kotlin.Array<String>,
-        val offers: kotlin.Array<EscrowRecord__1>,
-        val sales: kotlin.Array<EscrowRecord__1>,
-        val stake: kotlin.Array<StakeRecord>,
+        val offers: kotlin.Array<EscrowRecord__1>?,
+        val sales: kotlin.Array<EscrowRecord__1>?,
+        val stake: kotlin.Array<StakeRecord>?,
         val multi_canister: kotlin.Array<ICPPrincipalApiModel>?,
-        val escrow: kotlin.Array<EscrowRecord__1>
+        val escrow: kotlin.Array<EscrowRecord__1>?
     )
     /**
      * type BalanceResult = variant { ok : BalanceResponse; err : OrigynError };
@@ -2935,7 +2936,7 @@ object OrigynNFT {
      *                   // balance : (EXTBalanceRequest) -> (EXTBalanceResult) query;
      *                   // balanceEXT : (EXTBalanceRequest) -> (EXTBalanceResult) query;
      *                   // balance_of_batch_nft_origyn : (vec Account) -> (vec BalanceResult) query;
-     *                   // balance_of_nft_origyn : (Account) -> (BalanceResult) query;
+     *                   balance_of_nft_origyn : (Account) -> (BalanceResult) query;
      *                   // balance_of_secure_batch_nft_origyn : (vec Account) -> (vec BalanceResult);
      *                   // balance_of_secure_nft_origyn : (Account) -> (BalanceResult);
      *                   // bearer : (EXTTokenIdentifier) -> (EXTBearerResult) query;
@@ -3059,7 +3060,7 @@ object OrigynNFT {
      *                   // nftStreamingCallback : (StreamingCallbackToken) -> (
      *                   //     StreamingCallbackResponse,
      *                   //   ) query;
-     *                   // nft_batch_origyn : (vec text) -> (vec NFTInfoResult) query;
+     *                   nft_batch_origyn : (vec text) -> (vec NFTInfoResult) query;
      *                   // nft_batch_secure_origyn : (vec text) -> (vec NFTInfoResult);
      *                   // nft_origyn : (text) -> (NFTInfoResult) query;
      *                   // nft_secure_origyn : (text) -> (NFTInfoResult);
@@ -3103,8 +3104,71 @@ object OrigynNFT {
      *                 };
      */
     class Nft_Canister(
-        private val canisterId: ICPPrincipal
+        private val canister: ICPPrincipal
     ) {
+
+        /**
+         * balance_of_nft_origyn : (Account) -> (BalanceResult) query;
+         */
+        suspend fun balance_of_nft_origyn(
+            account: Account
+        ): BalanceResult {
+
+            /*val query = ICPQuery(
+                methodName = "balance_of_nft_origyn",
+                canister = canister
+            )
+            val result = query.query(
+                values = listOf(
+                    ValueToEncode(
+                        arg = account,
+                        expectedClass = Account::class,
+                        expectedClassNullable = false
+                    )
+                )
+            ).getOrThrow()
+            return CandidDecoder.decodeNotNull(result.first())*/
+
+            val canisterRepository: ICPCanisterRepository = icpCanisterRepository
+            val args = listOf(
+                CandidValue.Variant(
+                    CandidVariant(
+                        candidTypes = mapOf("principal" to CandidType.Principal),
+                        value = Pair("principal", CandidValue.Principal((account as Account.principal).principal.string))
+                    )
+                )
+            )
+            val icpMethod = ICPMethod(
+                canister = canister,
+                methodName = "balance_of_nft_origyn",
+                args = args
+            )
+            val result = canisterRepository.query(icpMethod)
+            val ok = CandidDecoder.decodeNotNull<BalanceResult>(result.getOrThrow().first())
+            return ok
+        }
+
+        /**
+         * nft_batch_origyn : (vec text) -> (vec NFTInfoResult) query;
+         */
+        suspend fun nft_batch_origyn(
+            textValues: Array<String>
+        ): Array<NFTInfoResult> {
+            val query = ICPQuery(
+                methodName = "nft_batch_origyn",
+                canister = canister
+            )
+            val result = query.query(
+                values = listOf(
+                    ValueToEncode(
+                        arg = textValues,
+                        arrayType = String::class,
+                        arrayTypeNullable = false
+                    )
+                )
+            ).getOrThrow()
+            return CandidDecoder.decodeNotNull(result.first())
+        }
 
     }
 

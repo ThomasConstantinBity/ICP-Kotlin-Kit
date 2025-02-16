@@ -5,6 +5,7 @@ import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import kotlinx.coroutines.async
@@ -28,7 +29,8 @@ internal class NFTRepositoryImpl(
                             icpPrincipal = icpPrincipal,
                             collection = it
                         )
-                    } catch (_: RemoteClientError) {
+                    } catch (err: RemoteClientError) {
+                        println(err)
                         emptyList<ICPNFTDetails>()
                     }
                 }
@@ -41,7 +43,7 @@ internal class NFTRepositoryImpl(
         icpPrincipal: ICPPrincipal,
         collection: ICPNftCollection
     ): List<ICPNFTDetails> {
-        val actor = nftActorFactory.createActor(collection)
+        val actor = nftActorFactory.createNFTService(collection)
             ?: return emptyList()
         return actor.getUserHoldings(icpPrincipal)
     }

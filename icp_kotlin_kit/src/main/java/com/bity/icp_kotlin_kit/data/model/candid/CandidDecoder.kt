@@ -2,6 +2,7 @@ package com.bity.icp_kotlin_kit.data.model.candid
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidKey
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
@@ -408,11 +409,15 @@ object CandidDecoder {
             val key = it.name
             requireNotNull(key)
             val candidValue = candidRecord[key]
-            requireNotNull(candidValue)
-            decode(
-                candidValue = candidValue,
-                type = it.type
-            )
+            /*requireNotNull(candidValue) {
+                "Missing value for parameter: ${it.name}"
+            }*/
+            candidValue?.let { cv ->
+                decode(
+                    candidValue = cv,
+                    type = it.type
+                )
+            }
         }
         return constructor.callBy(params)
     }
@@ -447,7 +452,12 @@ object CandidDecoder {
                     is CandidValue.Natural64 -> value.uInt64
                     is CandidValue.Natural8 -> value
                     CandidValue.Null -> null
-                    is CandidValue.Option -> TODO()
+                    is CandidValue.Option -> {
+                        when(value.option) {
+                            is CandidOption.None -> null
+                            is CandidOption.Some -> TODO()
+                        }
+                    }
                     is CandidValue.Record -> {
                         buildObject(
                             candidRecord = value.record,

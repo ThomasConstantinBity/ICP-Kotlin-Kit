@@ -12,16 +12,4 @@ sealed class CandidOption(
         value = wrapped,
         containedType = wrapped.candidType
     )
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is CandidOption) return false
-        return value == other.value && containedType == other.containedType
-    }
-
-    override fun hashCode(): Int {
-        var result = value?.hashCode() ?: 0
-        result = 31 * result + containedType.hashCode()
-        return result
-    }
 }
