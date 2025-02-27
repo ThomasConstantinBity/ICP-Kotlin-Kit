@@ -42,6 +42,9 @@ fun AppFeatures(
         MainButton(text = "Account Balance") {
             navController.navigate(Screen.AccountBalance.route)
         }
+        MainButton(text = "8 Years Gang Demo") {
+            navController.navigate(Screen.NFTDetails("tskpj-aiaaa-aaaag-qaxsq-cai"))
+        }
     }
 }
 

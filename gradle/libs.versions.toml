@@ -17,6 +17,7 @@ jackson-module-kotlin = "2.14.2"
 
 junit-jupiter-version = "5.10.1"
 kotlinx-coroutines-version = "1.7.3"
+serialization = "1.6.3"
 
 agp = "8.3.2"
 kotlin = "1.9.0"
@@ -71,6 +72,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigationRuntime" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]
@@ -81,4 +83,4 @@ kotlinx-test = ["kotlin-test", "kotlinx-coroutines-test"]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

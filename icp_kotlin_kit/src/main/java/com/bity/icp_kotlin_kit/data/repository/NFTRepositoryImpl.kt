@@ -18,6 +18,10 @@ internal class NFTRepositoryImpl(
     private val nftCachedService: NFTCachedService
 ): NFTRepository {
 
+    override suspend fun getNFTCollection(canisterPrincipal: ICPPrincipal): ICPNftCollection? =
+        nftCachedService.getAllNFTsCollections()
+            .firstOrNull { it.canister == canisterPrincipal }
+
     override suspend fun getAllNFTsCollections(): List<ICPNftCollection> =
         nftCachedService.getAllNFTsCollections()
 
