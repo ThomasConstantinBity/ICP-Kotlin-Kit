@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit
 
+import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
@@ -18,10 +19,15 @@ import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogHandler
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 
 /**
@@ -71,6 +77,7 @@ class TmpTest {
         GetAllNFTCollectionsUseCase()
             .invoke()
             .sortedBy { it.name }
+            .filter { it.standard == ICPNftStandard.ICRC7 }
             .forEach {
                 logger.logInfo(
                     """
@@ -82,31 +89,32 @@ class TmpTest {
                 )
             }
     }
-
-    @Test
-    fun `check ICRC7 NFTs balance`() = runTest {
-        GetAllNFTCollectionsUseCase()
-            .invoke()
-            .filter { it.standard == ICPNftStandard.ICRC7 }
-            .forEach {
-                logger.logInfo("Calling icrc7_tokens for ${it.name}")
-
-                val service = DBANFTService(it.canister)
-                try {
-                    val nfts = service.icrc7_tokens(null, null)
-                    logger.logInfo("Tokens for ${it.name}: ${nfts.size}")
-                    nfts.forEach {
-                        val realNFTHolder = service.icrc7_owner_of(arrayOf(it))
-                        logger.logInfo("Holder of ${it}: ${realNFTHolder.firstOrNull()?.owner?.string}")
-                        // val nftHolder = GetNFTHoldings().invoke()
-                    }
-                } catch (t: Throwable) {
-                    if(t !is RemoteClientError) {
-                        logger.logError(throwable = t)
-                        fail(t)
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("icrc7Canisters")
+    fun `ICRC7 NFTs balance`(
+        collectionName: String,
+        canister: String
+    ) = runTest {
+        val service = DBANFTService(ICPPrincipal(canister))
+        try {
+            val nfts = service.icrc7_tokens(null, null)
+            logger.logInfo("Tokens for ${collectionName}: ${nfts.size}")
+            nfts.map {
+                async {
+                    val realNFTHolder = service.icrc7_owner_of(arrayOf(it))
+                    logger.logInfo("Holder of ${it}: ${realNFTHolder.firstOrNull()?.owner?.string}")
+                    realNFTHolder.firstOrNull()?.owner?.toDomainModel()?.let {
+                        val nftHoldings = GetNFTHoldings().invoke(it)
+                        logger.logInfo("NFT holding for ${it.string}: ${nftHoldings.size}")
                     }
                 }
+            }.awaitAll()
+        } catch (t: Throwable) {
+            if(t !is RemoteClientError) {
+                logger.logError(throwable = t)
+                fail(t)
             }
+        }
     }
 
     @Test
@@ -157,6 +165,54 @@ class TmpTest {
         val result = canisterRepository.query(icpMethod)
         val ok = CandidDecoder.decodeNotNull<OrigynNFT.BalanceResult>(result.getOrThrow().first())
         println((ok as OrigynNFT.BalanceResult.ok).ok)
+    }
+
+    companion object {
+
+        /**
+         * --------- BAD 3D Avatars ---------
+         * standard: ICRC7
+         * canister: lzhom-nqaaa-aaaap-ahmpq-cai
+         * ---------------------------
+
+         * --------- Chain Fusion Toonis ---------
+         * standard: ICRC7
+         * canister: nsbts-5iaaa-aaaah-aeblq-cai
+         * ---------------------------
+         * --------- Cosmicrafts Game NFTs ---------
+         * standard: ICRC7
+         * canister: phgme-naaaa-aaaap-abwda-cai
+         * ---------------------------
+         * --------- Cosmicrafts Lootboxes ---------
+         * standard: ICRC7
+         * canister: w4fdk-fiaaa-aaaap-qccgq-cai
+         * ---------------------------
+         * --------- DAS - Scott Bateman ---------
+         * standard: ICRC7
+         * canister: cokeu-yaaaa-aaaag-qjvea-cai
+         * ---------------------------
+         * --------- Front Row  ---------
+         * standard: ICRC7
+         * canister: frbof-fqaaa-aaaal-qshca-cai
+         * ---------------------------
+
+         */
+
+        @JvmStatic
+        private fun icrc7Canisters() = listOf(
+            Arguments.of(
+                "Cashier Collection",
+                "hfevg-caaaa-aaaai-actwa-cai"
+            ),
+            Arguments.of(
+                "Crypto Cat",
+                "pjuco-6iaaa-aaaam-adu7q-cai"
+            ),
+            Arguments.of(
+                "Front Row Test 23062024",
+                "auw3m-7yaaa-aaaal-qjf6q-cai"
+            )
+        )
     }
 
 }

@@ -48,7 +48,7 @@ object CandidDecoder {
             CandidValue.Null -> return null
             is CandidValue.Option -> getOptionValue(
                 candidValue = candidValue.option.value,
-                constructor = T::class.constructors.firstOrNull()
+                componentType = T::class
             )
             is CandidValue.Record -> {
                 val kClass: KClass<T> = T::class
@@ -84,7 +84,7 @@ object CandidDecoder {
 
     fun getOptionValue(
         candidValue: CandidValue?,
-        constructor: KFunction<*>?
+        componentType: KClass<*>?
     ): Any? {
         candidValue ?: return null
         return when(candidValue) {
@@ -105,9 +105,12 @@ object CandidDecoder {
             is CandidValue.Natural64 -> candidValue.uInt64
             is CandidValue.Natural8 -> candidValue.uInt8
             CandidValue.Null -> null
-            is CandidValue.Option -> candidValue.option.value?.let { value -> getOptionValue(value, constructor) }
+            is CandidValue.Option ->
+                candidValue.option.value?.let { value -> getOptionValue(value, componentType) }
             is CandidValue.Principal -> TODO()
             is CandidValue.Record -> {
+                requireNotNull(componentType)
+                val constructor = componentType.primaryConstructor
                 requireNotNull(constructor)
                 buildObject(
                     candidRecord = candidValue.record,
@@ -118,7 +121,13 @@ object CandidDecoder {
             is CandidValue.Service -> TODO()
             is CandidValue.Text -> candidValue.string
             is CandidValue.Variant -> TODO()
-            is CandidValue.Vector -> TODO()
+            is CandidValue.Vector -> {
+                requireNotNull(componentType)
+                buildArray(
+                    candidVector = candidValue.vector,
+                    componentType = componentType
+                )
+            }
         }
     }
 
@@ -462,7 +471,11 @@ object CandidDecoder {
                     is CandidValue.Option -> {
                         when(value.option) {
                             is CandidOption.None -> null
-                            is CandidOption.Some -> getOptionValue(value, componentType.constructors.firstOrNull())
+                            is CandidOption.Some ->
+                                getOptionValue(
+                                    candidValue = value,
+                                    componentType = componentType
+                                )
                         }
                     }
                     is CandidValue.Record -> {

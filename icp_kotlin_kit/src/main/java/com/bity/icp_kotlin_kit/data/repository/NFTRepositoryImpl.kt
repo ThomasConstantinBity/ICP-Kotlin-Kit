@@ -8,6 +8,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
+import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -22,6 +23,7 @@ internal class NFTRepositoryImpl(
 
     override suspend fun getNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails> = coroutineScope {
         return@coroutineScope nftCachedService.getAllNFTsCollections()
+            .filter { it.standard == ICPNftStandard.ICRC7 }
             .map {
                 async {
                     try {
@@ -30,7 +32,7 @@ internal class NFTRepositoryImpl(
                             collection = it
                         )
                     } catch (err: RemoteClientError) {
-                        println(err)
+                        ICPKitLogger.logError(throwable = err)
                         emptyList<ICPNFTDetails>()
                     }
                 }
