@@ -12,6 +12,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
+import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -42,6 +43,16 @@ import org.junit.jupiter.api.Test
  * ]
  */
 class TmpTest {
+
+    @Test
+    fun test() = runTest {
+        GetAllNFTCollectionsUseCase()
+            .invoke()
+            .sortedBy { it.name }
+            .forEach {
+                println("${it.name} - ${it.standard.name} - ${it.canister.string}")
+            }
+    }
 
     @Test
     fun tmpTest() = runTest {
