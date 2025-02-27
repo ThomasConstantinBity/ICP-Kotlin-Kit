@@ -8,6 +8,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
+import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import java.lang.RuntimeException
 import java.math.BigInteger
 import kotlin.reflect.KClass
@@ -44,7 +45,7 @@ object CandidDecoder {
             is CandidValue.Natural32 -> candidValue.uInt32
             is CandidValue.Natural64 -> candidValue.uInt64
             is CandidValue.Natural8 -> candidValue.uInt8
-            CandidValue.Null -> TODO()
+            CandidValue.Null -> return null
             is CandidValue.Option -> getOptionValue(
                 candidValue = candidValue.option.value,
                 constructor = T::class.constructors.firstOrNull()
@@ -106,7 +107,13 @@ object CandidDecoder {
             CandidValue.Null -> null
             is CandidValue.Option -> candidValue.option.value?.let { value -> getOptionValue(value, constructor) }
             is CandidValue.Principal -> TODO()
-            is CandidValue.Record -> TODO()
+            is CandidValue.Record -> {
+                requireNotNull(constructor)
+                buildObject(
+                    candidRecord = candidValue.record,
+                    constructor = constructor
+                )
+            }
             CandidValue.Reserved -> TODO()
             is CandidValue.Service -> TODO()
             is CandidValue.Text -> candidValue.string
@@ -455,7 +462,7 @@ object CandidDecoder {
                     is CandidValue.Option -> {
                         when(value.option) {
                             is CandidOption.None -> null
-                            is CandidOption.Some -> TODO()
+                            is CandidOption.Some -> getOptionValue(value, componentType.constructors.firstOrNull())
                         }
                     }
                     is CandidValue.Record -> {

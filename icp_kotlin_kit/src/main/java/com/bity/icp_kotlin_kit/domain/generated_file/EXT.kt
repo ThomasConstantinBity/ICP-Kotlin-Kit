@@ -641,6 +641,7 @@ class EXTService(
             pollingValues = pollingValues,
         ).getOrThrow()
 
+        TODO()
     }
 
     suspend fun add_admin                    (
@@ -659,7 +660,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun add_template                    (
@@ -699,7 +700,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     class UnnamedClass0(
@@ -808,7 +809,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun create_accessory                    (
@@ -847,7 +848,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun cron_disbursements         (
@@ -865,7 +866,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun cron_events         (
@@ -883,7 +884,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun cron_settlements         (
@@ -901,7 +902,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun cron_verification         (
@@ -919,7 +920,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun details                    (
@@ -1372,7 +1373,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun record_nft                    (
@@ -1398,7 +1399,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun record_token                    (
@@ -1421,7 +1422,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun remove_accessory                    (
@@ -1461,7 +1462,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun remove_record_nft                    (
@@ -1481,7 +1482,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun setMaxMessagesCount                    (
@@ -1500,7 +1501,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun settle                    (
@@ -1695,7 +1696,7 @@ class EXTService(
             sender = sender,
             pollingValues = pollingValues,
         ).getOrThrow()
-
+        TODO()
     }
 
     suspend fun wear_accessory                    (

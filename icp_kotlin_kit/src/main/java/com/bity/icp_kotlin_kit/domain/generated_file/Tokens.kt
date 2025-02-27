@@ -247,7 +247,7 @@ class TokensService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): Array<token> {
+    ): Array<com.bity.icp_kotlin_kit.domain.generated_file.token> {
         val icpQuery = ICPQuery(
             methodName = "get_all",
             canister = canister

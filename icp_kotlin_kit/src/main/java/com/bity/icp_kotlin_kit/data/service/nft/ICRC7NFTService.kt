@@ -4,10 +4,12 @@ import com.bity.icp_kotlin_kit.domain.generated_file.Account
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.service.NFTService
 
 internal class ICRC7NFTService(
+    private val canister: ICPPrincipal,
     private val service: DBANFTService,
 ): NFTService {
 
@@ -25,7 +27,9 @@ internal class ICRC7NFTService(
         val tokenMetadata = service.icrc7_token_metadata(tokenHoldings)
         return tokenHoldings.zip(tokenMetadata) { tokenId, tokenMetadata ->
             ICPNFTDetails(
-                name = "#${tokenId}"
+                name = "#${tokenId}",
+                standard = ICPNftStandard.ICRC7,
+                canister = canister
             )
         }
     }

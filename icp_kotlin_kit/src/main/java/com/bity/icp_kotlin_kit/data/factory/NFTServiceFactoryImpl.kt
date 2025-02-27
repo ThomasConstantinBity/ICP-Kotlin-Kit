@@ -18,6 +18,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
 
             ICPNftStandard.EXT ->
                 EXTNFTService(
+                    canister = collection.canister,
                     service = EXTService(
                         canister = collection.canister
                     )
@@ -25,6 +26,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
 
             ICPNftStandard.ICRC7 ->
                 ICRC7NFTService(
+                    canister = collection.canister,
                     service = DBANFTService(
                         canister = collection.canister,
                     ),

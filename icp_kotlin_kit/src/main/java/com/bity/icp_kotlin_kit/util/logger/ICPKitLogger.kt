@@ -8,7 +8,7 @@ object ICPKitLogger {
         this.logger = logger
     }
 
-    fun logError(message: String, throwable: Throwable? = null) {
+    fun logError(message: String? = null, throwable: Throwable) {
         logger?.logError(message, throwable)
     }
 
@@ -16,16 +16,16 @@ object ICPKitLogger {
         logger?.logInfo(message)
     }
 
-    fun logWarning(message: String, throwable: Throwable? = null) {
-        logger?.logWarning(message, throwable)
+    fun logWarning(message: String) {
+        logger?.logWarning(message)
     }
 
-    fun logDebug(message: String, throwable: Throwable? = null) {
-        logger?.logDebug(message, throwable)
+    fun logDebug(message: String) {
+        logger?.logDebug(message)
     }
 
-    fun logVerbose(message: String, throwable: Throwable? = null) {
-        logger?.logVerbose(message, throwable)
+    fun logVerbose(message: String) {
+        logger?.logVerbose(message)
     }
 
 }
