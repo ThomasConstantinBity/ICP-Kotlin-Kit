@@ -7,7 +7,7 @@ import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.NTuple7
-import com.bity.icp_kotlin_kit.domain.request.PollingValues
+import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 

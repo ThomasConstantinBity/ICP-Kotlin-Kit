@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.domain.repository
 
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlock
-import com.bity.icp_kotlin_kit.domain.request.TransferICPRequest
+import com.bity.icp_kotlin_kit.domain.model.request.TransferICPRequest
 import java.math.BigInteger
 
 internal interface LedgerCanisterRepository {

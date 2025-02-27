@@ -8,7 +8,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
-import com.bity.icp_kotlin_kit.domain.request.PollingValues
+import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
 
 open class ICPQuery(
     private val methodName: String,

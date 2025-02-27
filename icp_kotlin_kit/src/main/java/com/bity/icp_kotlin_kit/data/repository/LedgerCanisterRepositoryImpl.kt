@@ -9,8 +9,7 @@ import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlock
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransaction
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransactionOperation
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
-import com.bity.icp_kotlin_kit.domain.request.TransferICPRequest
-import com.bity.icp_kotlin_kit.util.ext_function.timestampNanosToDate
+import com.bity.icp_kotlin_kit.domain.model.request.TransferICPRequest
 import com.bity.icp_kotlin_kit.util.icpTimestampNow
 import java.math.BigInteger
 

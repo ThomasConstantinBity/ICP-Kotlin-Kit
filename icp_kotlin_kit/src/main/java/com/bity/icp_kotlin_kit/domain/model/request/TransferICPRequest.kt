@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.request
+package com.bity.icp_kotlin_kit.domain.model.request
 
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal

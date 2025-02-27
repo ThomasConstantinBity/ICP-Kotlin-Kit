@@ -7,7 +7,7 @@ import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
-import com.bity.icp_kotlin_kit.domain.request.PollingValues
+import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
 import java.math.BigInteger
 
 /**

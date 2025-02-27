@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.domain.usecase.ledger
 import com.bity.icp_kotlin_kit.di.ledgerCanisterRepository
 import com.bity.icp_kotlin_kit.domain.model.error.ICPLedgerCanisterError
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
-import com.bity.icp_kotlin_kit.domain.request.TransferICPRequest
+import com.bity.icp_kotlin_kit.domain.model.request.TransferICPRequest
 import com.bity.icp_kotlin_kit.util.cryptography.ICPAccountCryptography
 import java.math.BigInteger
 
