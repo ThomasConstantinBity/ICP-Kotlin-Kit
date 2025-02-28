@@ -3,6 +3,7 @@ package com.bity.icp_kotlin_kit.data.repository
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
+import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 
@@ -20,6 +21,11 @@ internal class NFTCachedServiceImpl(
         }
         return cachedCollections
     }
+
+    override suspend fun getNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
+        getAllNFTsCollections()
+            .firstOrNull { it.canister == collectionPrincipal }
+
 }
 
 private fun DABNFT.nft_canister.toDomainModel(): ICPNftCollection? {

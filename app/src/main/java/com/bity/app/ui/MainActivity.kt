@@ -15,6 +15,7 @@ import com.bity.app.ui.screen.nft_details.NFTDetails
 import com.bity.app.ui.screen.nft_details.NFTDetailsViewModel
 import com.bity.app.ui.theme.ICPKotlinKitTheme
 import com.bity.app.ui.util.Screen
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import okhttp3.Route
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         val sendRoute: Screen.NFTDetails = it.toRoute()
                         val viewModel = NFTDetailsViewModel(
                             nftCanisterString = sendRoute.canisterString,
-                            getNFTCollection = get()
+                            nftRepository = get()
                         )
                         NFTDetails(
                             viewModel = viewModel

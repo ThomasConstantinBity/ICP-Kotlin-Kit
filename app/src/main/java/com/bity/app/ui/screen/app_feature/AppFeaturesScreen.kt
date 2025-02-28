@@ -45,6 +45,12 @@ fun AppFeatures(
         MainButton(text = "8 Years Gang Demo") {
             navController.navigate(Screen.NFTDetails("tskpj-aiaaa-aaaag-qaxsq-cai"))
         }
+        MainButton(text = "Crypto Cat") {
+            navController.navigate(Screen.NFTDetails("pjuco-6iaaa-aaaam-adu7q-cai"))
+        }
+        MainButton(text = "Mutant Space Apes") {
+            navController.navigate(Screen.NFTDetails("gikg4-eaaaa-aaaam-qaieq-cai"))
+        }
     }
 }
 

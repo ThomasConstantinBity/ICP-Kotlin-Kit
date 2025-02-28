@@ -3,30 +3,57 @@ package com.bity.app.ui.screen.nft_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTCollection
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NFTDetailsViewModel(
     nftCanisterString: String,
-    private val getNFTCollection: GetNFTCollection
+    private val nftRepository: NFTRepository
 ) : ViewModel() {
 
-    private val canisterPrincipal = ICPPrincipal(nftCanisterString)
+    private val collectionPrincipal = ICPPrincipal(nftCanisterString)
 
     private val _state = MutableStateFlow(NFTDetailsState())
     val state: StateFlow<NFTDetailsState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            val nftDetails = getNFTCollection(canisterPrincipal)
-            _state.value = _state.value.copy(
-                nftCollection = nftDetails
-            )
+            withContext(Dispatchers.IO) {
+                getNFTDetails()
+            }
         }
     }
 
+    private suspend fun getNFTDetails() = coroutineScope {
+        listOf(
+            async { updateNFTCollection() },
+            async { updateNFTsList() }
+        ).awaitAll()
+        _state.value = _state.value.copy(
+            isLoading = false
+        )
+    }
+
+    private suspend fun updateNFTCollection() {
+        val nftDetails = nftRepository.getNFTCollection(collectionPrincipal)
+        _state.value = _state.value.copy(
+            nftCollection = nftDetails
+        )
+    }
+
+    private suspend fun updateNFTsList() {
+        val collectionDetails = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        _state.value = _state.value.copy(
+            collectionNFTs = collectionDetails
+        )
+    }
 
 }

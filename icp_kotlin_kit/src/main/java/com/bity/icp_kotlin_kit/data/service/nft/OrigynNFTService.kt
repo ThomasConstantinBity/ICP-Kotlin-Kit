@@ -1,10 +1,12 @@
 package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
-import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
+import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.service.NFTService
+import java.math.BigInteger
 
 class OrigynNFTService(
     private val canister: OrigynNFT.Nft_Canister
@@ -23,6 +25,17 @@ class OrigynNFTService(
         if(errors.isNotEmpty()) TODO()
 
         return nftIds.zip(results).map(::getNFTDetails)
+    }
+
+    override suspend fun getNFTCollectionIds(
+        prev: BigInteger?,
+        take: BigInteger?
+    ): List<BigInteger> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+        TODO("Not yet implemented")
     }
 
     private fun getNFTDetails(pair: Pair<String, OrigynNFT.NFTInfoResult.ok>): ICPNFTDetails {

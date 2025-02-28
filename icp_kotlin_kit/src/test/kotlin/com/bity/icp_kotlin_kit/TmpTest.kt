@@ -8,6 +8,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
+import com.bity.icp_kotlin_kit.di.nftRepository
 import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
@@ -28,6 +29,8 @@ import org.junit.jupiter.api.fail
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 
 /**
@@ -77,7 +80,6 @@ class TmpTest {
         GetAllNFTCollectionsUseCase()
             .invoke()
             .sortedBy { it.name }
-            .filter { it.standard == ICPNftStandard.ICRC7 }
             .forEach {
                 logger.logInfo(
                     """
@@ -89,6 +91,25 @@ class TmpTest {
                 )
             }
     }
+
+    @Test
+    fun `Mutant Space Apes`() = runTest {
+        val collectionPrincipal = ICPPrincipal("gikg4-eaaaa-aaaam-qaieq-cai")
+        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        nfts.forEach { nft ->
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.nftImageUrl}")
+        }
+    }
+
+    @Test
+    fun `Cosmic Birth`() = runTest {
+        val collectionPrincipal = ICPPrincipal("vqtoo-uqaaa-aaaap-aajla-cai")
+        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        nfts.forEach { nft ->
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+        }
+    }
+
     @ParameterizedTest(name = "{0}")
     @MethodSource("icrc7Canisters")
     fun `ICRC7 NFTs balance`(

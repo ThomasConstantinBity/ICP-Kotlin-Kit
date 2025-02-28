@@ -2,11 +2,13 @@ package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.domain.generated_file.Account
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
-import com.bity.icp_kotlin_kit.domain.model.ICPNFTDetails
+import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
+import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.service.NFTService
+import java.math.BigInteger
 
 internal class ICRC7NFTService(
     private val canister: ICPPrincipal,
@@ -32,5 +34,19 @@ internal class ICRC7NFTService(
                 canister = canister
             )
         }
+    }
+
+    override suspend fun getNFTCollectionIds(
+        prev: BigInteger?,
+        take: BigInteger?
+    ): List<BigInteger> {
+        return service.icrc7_tokens(
+            prev = prev,
+            take = take
+        ).toList()
+    }
+
+    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+        TODO("Not yet implemented")
     }
 }

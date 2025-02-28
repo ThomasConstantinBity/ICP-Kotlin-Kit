@@ -87,7 +87,7 @@ fun NFTCard(
             )
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                text = nft.name,
+                text = "[${nft.standard.name}] - ${nft.name}",
                 style = MaterialTheme.typography.titleMedium
             )
         }

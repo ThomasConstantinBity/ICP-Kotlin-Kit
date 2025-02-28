@@ -64,9 +64,9 @@ internal val ledgerCanisterRepository: LedgerCanisterRepository by lazy {
     )
 }
 
-internal val nftRepository: NFTRepository by lazy {
+val nftRepository: NFTRepository by lazy {
     NFTRepositoryImpl(
-        nftActorFactory = nftActorFactory,
+        nftServiceFactory = nftActorFactory,
         nftCachedService = nftCachedService
     )
 }
