@@ -8,6 +8,10 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
 internal class ICRC7NFTService(
@@ -46,7 +50,28 @@ internal class ICRC7NFTService(
         ).toList()
     }
 
-    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
-        TODO("Not yet implemented")
+    override suspend fun fetchCollectionNFTs(
+        collectionPrincipal: ICPPrincipal,
+    ): List<ICPNFTCollectionItem> = coroutineScope {
+        val collectionIds = getNFTCollectionIds().toTypedArray()
+        return@coroutineScope collectionIds.map {
+            async {
+                val nftMetadata = fetchNFTMetadata(it)
+                ICPKitLogger.logInfo("$nftMetadata")
+                return@async ICPNFTCollectionItem(
+                    id = it,
+                    nftId = it.toString(),
+                    nftImageUrl = "",
+                    thumbnail = ""
+                )
+            }
+        }.awaitAll()
     }
+
+    // TODO: icrc7_token_metadata accepts an array of ids, but there is a max value (ex. 100), is this value the same for all canisters?
+    private suspend fun fetchNFTMetadata(nftId: BigInteger) {
+        val metadata = service.icrc7_token_metadata(arrayOf(nftId))
+        TODO("$metadata")
+    }
+
 }

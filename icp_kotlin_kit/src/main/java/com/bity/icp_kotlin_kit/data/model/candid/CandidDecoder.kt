@@ -473,7 +473,7 @@ object CandidDecoder {
                             is CandidOption.None -> null
                             is CandidOption.Some ->
                                 getOptionValue(
-                                    candidValue = value,
+                                    candidValue = value.option.value,
                                     componentType = componentType
                                 )
                         }

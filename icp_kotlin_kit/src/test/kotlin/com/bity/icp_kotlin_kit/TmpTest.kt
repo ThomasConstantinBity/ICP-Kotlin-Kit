@@ -79,6 +79,7 @@ class TmpTest {
     fun `get all NFTs`() = runTest {
         GetAllNFTCollectionsUseCase()
             .invoke()
+            .filter { it.standard == ICPNftStandard.ICRC7 }
             .sortedBy { it.name }
             .forEach {
                 logger.logInfo(
@@ -104,6 +105,33 @@ class TmpTest {
     @Test
     fun `Cosmic Birth`() = runTest {
         val collectionPrincipal = ICPPrincipal("vqtoo-uqaaa-aaaap-aajla-cai")
+        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        nfts.forEach { nft ->
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+        }
+    }
+
+    @Test
+    fun `Crypto Cat`() = runTest {
+        val collectionPrincipal = ICPPrincipal("pjuco-6iaaa-aaaam-adu7q-cai")
+        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        nfts.forEach { nft ->
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+        }
+    }
+
+    @Test
+    fun `Chain Fusion Toonis`() = runTest {
+        val collectionPrincipal = ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai")
+        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        nfts.forEach { nft ->
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+        }
+    }
+
+    @Test
+    fun `Cashier Collection`() = runTest {
+        val collectionPrincipal = ICPPrincipal("hfevg-caaaa-aaaai-actwa-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")

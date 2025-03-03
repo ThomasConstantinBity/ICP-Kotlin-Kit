@@ -56,6 +56,7 @@ internal object CandidEncoder {
             is ByteArray -> CandidValue.Blob(arg)
 
             is Array<*> -> {
+                // TODO: could join if/else
                 if(arg.isNotEmpty()) {
                     val firstArg = arg.first()
                     requireNotNull(firstArg)

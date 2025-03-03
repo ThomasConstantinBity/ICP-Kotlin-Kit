@@ -390,12 +390,17 @@ class DBANFTService(
         return CandidDecoder.decode(result.first())
     }
 
+    /**
+     * vec opt vec record { text; Value; }
+     * vec opt vec record { text; Value; }
+     * vec record { nat; opt record { text; Value } }
+     */
     suspend fun icrc7_token_metadata(
         token_ids: Array<BigInteger>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): Array<UnnamedClass1> {
+    ): Array<Array<UnnamedClass1>?> {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_token_metadata",
@@ -420,16 +425,9 @@ class DBANFTService(
     }
 
     class UnnamedClass1(
-        val bigInteger: BigInteger,
-        val unnamedClass2: UnnamedClass2?
-    ) {
-
-        class UnnamedClass2(
-            val string: String,
-            val value: Value
-        )
-
-    }
+        val text: String,
+        val value: Value
+    )
 
     suspend fun icrc7_owner_of(
         token_ids: Array<BigInteger>,
