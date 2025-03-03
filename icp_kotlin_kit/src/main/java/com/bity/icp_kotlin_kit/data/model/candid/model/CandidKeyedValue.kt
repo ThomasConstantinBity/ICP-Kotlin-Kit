@@ -8,4 +8,6 @@ data class CandidKeyedValue(
         key = CandidKey(key),
         value = value
     )
+
+    override fun toString(): String = value.toString()
 }

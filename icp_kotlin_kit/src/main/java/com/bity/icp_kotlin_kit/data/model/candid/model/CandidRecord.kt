@@ -19,6 +19,8 @@ data class CandidRecord(
             .sortedBy { it.key }
     )
 
+    override fun toString(): String = "record { ${candidSortedItems.joinToString("; ")} }"
+
     operator fun get(hashedKey: ULong): CandidValue? =
         candidSortedItems.firstOrNull { it.key.longValue.toULong() == hashedKey }?.value
 

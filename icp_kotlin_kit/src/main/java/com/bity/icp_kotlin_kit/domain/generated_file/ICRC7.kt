@@ -394,6 +394,7 @@ class DBANFTService(
      * vec opt vec record { text; Value; }
      * vec opt vec record { text; Value; }
      * vec record { nat; opt record { text; Value } }
+     * vec { opt vec { record { "icrc7:metadata:uri:image"; variant { Text = "https://i.ibb.co/McNjC7M/8-no-backround.png" } } }; },
      */
     suspend fun icrc7_token_metadata(
         token_ids: Array<BigInteger>,

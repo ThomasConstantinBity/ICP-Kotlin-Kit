@@ -8,11 +8,10 @@ import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
+import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.service.NFTService
-import com.bity.icp_kotlin_kit.util.ext_function.bytes
 import com.bity.icp_kotlin_kit.util.ext_function.to32Bits
 import java.math.BigInteger
-import java.nio.ByteBuffer
 
 internal class EXTNFTService(
     private val canister: ICPPrincipal,
@@ -41,11 +40,16 @@ internal class EXTNFTService(
             ICPNFTCollectionItem(
                 id = it,
                 nftId = nftId,
-                nftImageUrl = getNFTCollectionItemImageURL(nftId),
-                thumbnail = getNFTCollectionItemThumbnailURL(nftId),
+                metadata = getNFTMetadata(nftId)
             )
         }
     }
+
+    private fun getNFTMetadata(nftId: String): ICPNFTEXTMetadata =
+        ICPNFTEXTMetadata(
+            nftImageUrl = getNFTCollectionItemImageURL(nftId),
+            thumbnailUrl = getNFTCollectionItemThumbnailURL(nftId)
+        )
 
     private fun getNFTCollectionItemId(tokenIndex: BigInteger): String {
         val prefix = byteArrayOf(0x0A, 0x74, 0x69, 0x64)

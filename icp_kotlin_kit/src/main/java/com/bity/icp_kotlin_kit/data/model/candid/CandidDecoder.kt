@@ -8,7 +8,6 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import java.lang.RuntimeException
 import java.math.BigInteger
 import kotlin.reflect.KClass
@@ -471,17 +470,27 @@ object CandidDecoder {
                     is CandidValue.Option -> {
                         when(value.option) {
                             is CandidOption.None -> null
-                            is CandidOption.Some ->
-                                getOptionValue(
-                                    candidValue = value.option.value,
-                                    componentType = componentType
-                                )
+                            is CandidOption.Some -> {
+                                if(componentType.java.isArray) {
+                                    getOptionValue(
+                                        candidValue = value.option.value,
+                                        componentType = componentType.java.componentType.kotlin
+                                    )
+                                } else {
+                                    getOptionValue(
+                                        candidValue = value.option.value,
+                                        componentType = componentType
+                                    )
+                                }
+                            }
+
                         }
                     }
                     is CandidValue.Record -> {
+                        val constructor = componentType.constructors.first()
                         buildObject(
                             candidRecord = value.record,
-                            constructor = componentType.constructors.first()
+                            constructor = constructor
                         )
                     }
                     CandidValue.Reserved -> TODO()

@@ -9,7 +9,6 @@ import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
 import com.bity.icp_kotlin_kit.di.nftRepository
-import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
@@ -29,8 +28,6 @@ import org.junit.jupiter.api.fail
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 
 /**
@@ -98,7 +95,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("gikg4-eaaaa-aaaam-qaieq-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.nftImageUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
         }
     }
 
@@ -107,7 +104,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("vqtoo-uqaaa-aaaap-aajla-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
         }
     }
 
@@ -116,7 +113,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("pjuco-6iaaa-aaaam-adu7q-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
         }
     }
 
@@ -125,7 +122,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
         }
     }
 
@@ -134,7 +131,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("hfevg-caaaa-aaaai-actwa-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.thumbnail}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
         }
     }
 

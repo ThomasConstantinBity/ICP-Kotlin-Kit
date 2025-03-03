@@ -36,4 +36,5 @@ class CandidVariant {
         this.value = value.second
     }
 
+    override fun toString(): String = "variant { $value }"
 }
