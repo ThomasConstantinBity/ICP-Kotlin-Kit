@@ -6,5 +6,5 @@ import java.math.BigInteger
 data class ICPNFTCollectionItem(
     val id: BigInteger,
     val nftId: String,
-    val metadata: ICPNFTMetadata
+    val metadata: ICPNFTMetadata?
 )

@@ -55,15 +55,15 @@ class EXTNFTServiceTest {
 
         assertEquals(BigInteger.ZERO, nftCollection.first().id)
         assertEquals("jkgnc-hakor-uwiaa-aaaaa-deacb-eaqca-aaaaa-a", nftCollection.first().nftId)
-        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=jkgnc-hakor-uwiaa-aaaaa-deacb-eaqca-aaaaa-a", nftCollection.first().metadata.thumbnailUrl)
+        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=jkgnc-hakor-uwiaa-aaaaa-deacb-eaqca-aaaaa-a", nftCollection.first().metadata?.thumbnailUrl)
 
         assertEquals(BigInteger.ONE, nftCollection[1].id)
         assertEquals("hwf6d-cqkor-uwiaa-aaaaa-deacb-eaqca-aaaaa-q", nftCollection[1].nftId)
-        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=hwf6d-cqkor-uwiaa-aaaaa-deacb-eaqca-aaaaa-q", nftCollection[1].metadata.thumbnailUrl)
+        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=hwf6d-cqkor-uwiaa-aaaaa-deacb-eaqca-aaaaa-q", nftCollection[1].metadata?.thumbnailUrl)
 
         assertEquals(BigInteger("373"), nftCollection.last().id)
         assertEquals("op4gl-3qkor-uwiaa-aaaaa-deacb-eaqca-aaaf2-q", nftCollection.last().nftId)
-        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=op4gl-3qkor-uwiaa-aaaaa-deacb-eaqca-aaaf2-q", nftCollection.last().metadata.thumbnailUrl)
+        assertEquals("https://gikg4-eaaaa-aaaam-qaieq-cai.raw.icp0.io/?tokenid=op4gl-3qkor-uwiaa-aaaaa-deacb-eaqca-aaaf2-q", nftCollection.last().metadata?.thumbnailUrl)
     }
 
 }

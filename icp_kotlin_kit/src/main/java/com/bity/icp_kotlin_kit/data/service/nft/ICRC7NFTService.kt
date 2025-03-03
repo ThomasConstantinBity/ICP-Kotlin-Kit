@@ -5,7 +5,6 @@ import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.Value
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTICRC7Metadata
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
@@ -70,16 +69,33 @@ internal class ICRC7NFTService(
     }
 
     // TODO: icrc7_token_metadata accepts an array of ids, but there is a max value (ex. 100), is this value the same for all canisters?
-    // icrc7:metadata:uri:image
-    private suspend fun fetchNFTMetadata(nftId: BigInteger) : ICPNFTICRC7Metadata {
-        val metadata = service.icrc7_token_metadata(arrayOf(nftId))
-        val item = metadata.firstOrNull { innerArray ->
-            innerArray?.find { it.text == "icrc7:metadata:uri:image" } != null
-        }?.find { it.text == "icrc7:metadata:uri:image" }
+    private suspend fun fetchNFTMetadata(nftId: BigInteger) : ICPNFTICRC7Metadata? {
+        val metadata = try {
+            service.icrc7_token_metadata(arrayOf(nftId))
+        } catch (t: Throwable) {
+            ICPKitLogger.logError("Error while getting metadata for NFT id $nftId from ${canister.string}", t)
+            return null
+        }
+        val uriMetadata = metadata.firstOrNull { innerArray ->
+            innerArray?.find { it.text == URL_METADATA_KEY } != null
+        }?.find { it.text == URL_METADATA_KEY }
+        if(uriMetadata == null) {
+            ICPKitLogger.logDebug("No metadata found for NFT id $nftId from ${canister.string}")
+            return null
+        }
+        val textValue = (uriMetadata.value as? Value.Text)
+        if(textValue == null) {
+            ICPKitLogger.logDebug("Wrong NFT metadata found for NFT id $nftId from ${canister.string}")
+            return null
+        }
         return ICPNFTICRC7Metadata(
-            thumbnailUrl = (item?.value as Value.Text).string
+            thumbnailUrl = textValue.string
         )
 
+    }
+
+    companion object {
+        private const val URL_METADATA_KEY = "icrc7:metadata:uri:image"
     }
 
 }

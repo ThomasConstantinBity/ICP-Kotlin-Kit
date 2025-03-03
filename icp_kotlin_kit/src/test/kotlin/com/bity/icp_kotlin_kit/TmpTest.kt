@@ -95,7 +95,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("gikg4-eaaaa-aaaam-qaieq-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
     }
 
@@ -104,7 +104,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("vqtoo-uqaaa-aaaap-aajla-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
     }
 
@@ -113,7 +113,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("pjuco-6iaaa-aaaam-adu7q-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
     }
 
@@ -122,7 +122,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
     }
 
@@ -131,7 +131,7 @@ class TmpTest {
         val collectionPrincipal = ICPPrincipal("hfevg-caaaa-aaaai-actwa-cai")
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
-            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata.thumbnailUrl}")
+            logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
     }
 
