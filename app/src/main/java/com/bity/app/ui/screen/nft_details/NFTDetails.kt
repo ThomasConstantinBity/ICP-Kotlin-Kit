@@ -113,7 +113,7 @@ fun NFTCard(
     ) {
         Column {
             SubcomposeAsyncImage(
-                model = nftItem.thumbnail,
+                model = nftItem.metadata?.thumbnailUrl,
                 contentDescription = null,
                 loading = { CircularProgressIndicator() }
             )
