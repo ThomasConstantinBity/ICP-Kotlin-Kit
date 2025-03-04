@@ -232,6 +232,71 @@ class CandidServiceParserTest {
             Arguments.of(
                 """
                     service : {
+                      // acceptCycles: () -> ();
+                      // addMetadataStorageType: (text) -> () oneway;
+                      // addMetadataUrlMany: (vec record { MetadataStorageType__1; TokenIndex__1; MetadataStorageInfo__1; }) -> () oneway;
+                      // allowance: (AllowanceRequest__1) -> (Result__2_2) query;
+                      // approve: (ApproveRequest__1) -> (bool);
+                      // approveAll: (vec ApproveRequest__1) -> (vec TokenIndex__1);
+                      // availableCycles: () -> (nat) query;
+                      // balance: (BalanceRequest__1) -> (BalanceResponse__1) query;
+                      // batchMintNFT: (vec MintRequest__1) -> (vec TokenIndex__1);
+                      // batchTransfer: (vec TransferRequest__1) -> (vec TransferResponse__1);
+                      // bearer: (TokenIdentifier__7) -> (Result__2_1) query;
+                      // clearProperties: () -> () oneway;
+                      // deleteMetadataStorageType: (text) -> () oneway;
+                      // extensions: () -> (vec Extension__1) query;
+                      // getAllowances: () -> (vec record { TokenIndex__1; principal; }) query;
+                      // getMedataStorageType: () -> (vec text);
+                      // getMinter: () -> (principal) query;
+                      // getProperties: () -> (vec record { text; vec record { text; nat; }; }) query;
+                      // getRegistry: () -> (vec record { TokenIndex__1; AccountIdentifier__4; }) query;
+                      // getRootBucketId: () -> (opt text);
+                      // getScore: () -> (vec record { TokenIndex__1; float64; }) query;
+                      // getStorageMetadataUrl: (MetadataStorageType__1, TokenIndex__1) -> (record { text; text; text; });
+                      getTokens: () -> (vec record { TokenIndex__1; Metadata__1; }) query;
+                      // getTokensByIds: (vec TokenIndex__1) -> (vec record { TokenIndex__1; Metadata__1; }) query;
+                      // getTokensByProperties: (vec record { text; vec text; }) -> (vec record { TokenIndex__1; Metadata__1; }) query;
+                      // http_request: (HttpRequest__1) -> (HttpResponse__1) query;
+                      // initCap: () -> (opt text);
+                      // initLastMetadata: (TokenIndex__1, TokenIndex__1) -> ();
+                      // initproperties: (TokenIndex__1, TokenIndex__1) -> ();
+                      // lookProperties: () -> (vec record { Property__2; vec TokenIndex__1; }) query;
+                      // lookPropertyScoreByTokenId: () -> (vec record { TokenIndex__1; vec record { Property__2; int64; }; }) query;
+                      // metadata: (TokenIdentifier__7) -> (Result__2) query;
+                      // mintNFT: (MintRequest__1) -> (TokenIndex__1);
+                      // replaceMetadata: (MetadataStorageType__1, TokenIndex__1, TokenIndex__1) -> ();
+                      // setMinter: (principal) -> ();
+                      // setScoreOfTokenId: (int64) -> ();
+                      // supply: (TokenIdentifier__7) -> (Result_14) query;
+                      // tokens: (AccountIdentifier__4) -> (Result_13) query;
+                      // tokens_ext: (AccountIdentifier__4) -> (Result_12) query;
+                      // transfer: (TransferRequest__1) -> (TransferResponse__1);
+                      // updateMetadata: (vec record { TokenIndex__1; opt blob; }) -> ();
+                      // updateNFTName: (text, text, TokenIndex__1, TokenIndex__1) -> ();
+                    }
+                """.trimIndent(),
+                """
+                    class Service(
+                        private val canister: ICPPrincipal
+                    ) {
+                        suspend fun getTokens(): kotlin.Array<ArrayClass> { 
+                            val icpQuery = ICPQuery( 
+                                methodName = "getTokens", 
+                                canister = canister 
+                            ) 
+                            val result = icpQuery.invoke( 
+                                values = listOf() 
+                            ).getOrThrow() 
+                            return CandidDecoder.decodeNotNull(result.first()) 
+                        }
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
+                    service : {
                         icrc7_collection_metadata : () -> (vec record { text; Value } ) query;
                         icrc7_symbol : () -> (text) query;
                         icrc7_name : () -> (text) query;

@@ -51,6 +51,9 @@ fun AppFeatures(
         MainButton(text = "Mutant Space Apes") {
             navController.navigate(Screen.NFTDetails("gikg4-eaaaa-aaaam-qaieq-cai"))
         }
+        MainButton(text = "Chain Fusion Toonis") {
+            navController.navigate(Screen.NFTDetails("nsbts-5iaaa-aaaah-aeblq-cai"))
+        }
     }
 }
 

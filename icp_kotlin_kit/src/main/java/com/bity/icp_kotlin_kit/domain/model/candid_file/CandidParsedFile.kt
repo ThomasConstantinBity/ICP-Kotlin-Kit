@@ -1,5 +1,8 @@
 package com.bity.icp_kotlin_kit.domain.model.candid_file
 
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidService
+import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeService
+
 internal class CandidParsedFile internal constructor(
     private val candidParsedTypes: List<CandidParsedType>
 ) {
@@ -19,6 +22,7 @@ internal class CandidParsedFile internal constructor(
     fun getClassesDefinition() : String {
         val classes = StringBuilder()
         candidParsedTypes.filter { !it.candidTypeDefinition.isTypeAlias }
+            .filter { it.candidTypeDefinition !is CandidTypeService }
             .forEach {
                 val commentedCandidDefinition = getCommentedCandidDefinition(it.candidDefinition)
                 classes.appendLine(commentedCandidDefinition)
@@ -26,6 +30,12 @@ internal class CandidParsedFile internal constructor(
                 classes.appendLine()
             }
         return classes.toString()
+    }
+
+    fun getServiceDefinition() : String {
+        return candidParsedTypes
+            .filter { it.candidTypeDefinition is CandidTypeService }
+            .joinToString("\n") { it.candidTypeDefinition.getServiceDefinition() }
     }
 
     private fun getCommentedCandidDefinition(candidDefinition: String): String {

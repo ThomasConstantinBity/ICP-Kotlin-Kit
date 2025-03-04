@@ -22,7 +22,7 @@ internal class EXTNFTService(
         service.tokens_ext(principal.string)
             .toDataModel(canister)
 
-    override suspend fun getNFTCollectionIds(
+    override suspend fun fetchNFTCollectionIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
@@ -33,7 +33,7 @@ internal class EXTNFTService(
     override suspend fun fetchCollectionNFTs(
         collectionPrincipal: ICPPrincipal
     ): List<ICPNFTCollectionItem> {
-        val collectionIds = getNFTCollectionIds()
+        val collectionIds = fetchNFTCollectionIds()
         return collectionIds
             .map {
             val nftId = getNFTCollectionItemId(it)

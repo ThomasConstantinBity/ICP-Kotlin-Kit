@@ -3,8 +3,12 @@ package com.bity.app.ui
 import android.app.Application
 import android.util.Log
 import com.bity.app.di.appModule
+import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTService
+import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
+import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogHandler
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
+import com.bity.icp_kotlin_kit.util.nft_service.NFTServiceUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 
@@ -13,6 +17,7 @@ class MainApplication: Application() {
         super.onCreate()
         initKoin()
         initLogger()
+        initCustoICPNFTServices()
     }
 
     private fun initKoin() {
@@ -20,6 +25,10 @@ class MainApplication: Application() {
             androidContext(this@MainApplication)
             modules(appModule)
         }
+    }
+
+    private fun initCustoICPNFTServices() {
+
     }
 
     private fun initLogger() {

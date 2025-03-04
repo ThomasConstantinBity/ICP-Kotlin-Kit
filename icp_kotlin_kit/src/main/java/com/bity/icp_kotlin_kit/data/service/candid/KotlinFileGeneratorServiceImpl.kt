@@ -52,6 +52,7 @@ internal class KotlinFileGeneratorServiceImpl(
         stringBuilder.appendLine()
 
         stringBuilder.appendLine(candidParsedFile.getClassesDefinition())
+        stringBuilder.appendLine(candidParsedFile.getServiceDefinition())
 
         stringBuilder.appendLine()
         stringBuilder.appendLine("}")

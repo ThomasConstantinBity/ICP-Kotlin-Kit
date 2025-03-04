@@ -7,16 +7,16 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
-import com.bity.icp_kotlin_kit.data.service.nft.custom.ChainFusionToonisNFTService
+import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTService
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
 import com.bity.icp_kotlin_kit.di.nftRepository
+import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
-import com.bity.icp_kotlin_kit.domain.service.NFTService
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogHandler
@@ -124,11 +124,6 @@ class TmpTest {
     // Standard is ICRC7 but doesn't support icrc7_tokens
     fun `Chain Fusion Toonis`() = runTest {
         val collectionPrincipal = ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai")
-        val nftService = ChainFusionToonisNFTService(
-            canister = collectionPrincipal,
-            service = TODO()
-        )
-        NFTServiceUtil.setNFTService(collectionPrincipal, nftService)
         val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")

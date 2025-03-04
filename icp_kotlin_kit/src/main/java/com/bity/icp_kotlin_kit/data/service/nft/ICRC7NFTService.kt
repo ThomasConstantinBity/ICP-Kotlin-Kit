@@ -43,7 +43,7 @@ internal class ICRC7NFTService(
         }*/
     }
 
-    override suspend fun getNFTCollectionIds(
+    override suspend fun fetchNFTCollectionIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
@@ -56,7 +56,7 @@ internal class ICRC7NFTService(
     override suspend fun fetchCollectionNFTs(
         collectionPrincipal: ICPPrincipal,
     ): List<ICPNFTCollectionItem> = coroutineScope {
-        val collectionIds = getNFTCollectionIds().toTypedArray()
+        val collectionIds = fetchNFTCollectionIds().toTypedArray()
         return@coroutineScope collectionIds.map {
             async {
                 return@async ICPNFTCollectionItem(

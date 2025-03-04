@@ -27,7 +27,7 @@ class OrigynNFTService(
         return nftIds.zip(results).map(::getNFTDetails)
     }
 
-    override suspend fun getNFTCollectionIds(
+    override suspend fun fetchNFTCollectionIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
