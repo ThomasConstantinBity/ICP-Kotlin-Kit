@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
-import com.bity.icp_kotlin_kit.domain.generated_file.CFTTokenIndex__1
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
@@ -20,14 +19,14 @@ class ChainFusionToonisNFTService(
 
     private val objectMapper  = ObjectMapper().registerKotlinModule()
 
-    override suspend fun fetchNFTCollectionIds(
+    override suspend fun fetchIds(
         prev: BigInteger?,
         take: BigInteger?,
     ): List<BigInteger> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+    override suspend fun fetchNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
         val collectionTokens = service.getTokens()
         return collectionTokens.map { it.toICPNFTCollectionItem() }
     }
@@ -36,7 +35,7 @@ class ChainFusionToonisNFTService(
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCollectionNFT(
+    override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
         nftId: BigInteger,
     ) : ICPNFTCollectionItem {
@@ -48,6 +47,11 @@ class ChainFusionToonisNFTService(
             metadata = token.firstOrNull()?.toICPNFTCollectionItem()?.metadata,
         )
     }
+
+    override suspend fun fetchOwner(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ): ICPPrincipal? = null
 
     private fun ChainFusionToonis.CFTService.ArrayClass.toICPNFTCollectionItem() : ICPNFTCollectionItem {
         val id = BigInteger("$tokenIndex__1")

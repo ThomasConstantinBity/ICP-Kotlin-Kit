@@ -7,21 +7,17 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
-import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTService
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
 import com.bity.icp_kotlin_kit.di.nftRepository
-import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogHandler
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import com.bity.icp_kotlin_kit.util.nft_service.NFTServiceUtil
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
@@ -95,7 +91,7 @@ class TmpTest {
     @Test
     fun `Mutant Space Apes`() = runTest {
         val collectionPrincipal = ICPPrincipal("gikg4-eaaaa-aaaam-qaieq-cai")
-        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        val nfts = nftRepository.fetchNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
@@ -104,7 +100,7 @@ class TmpTest {
     @Test
     fun `Cosmic Birth`() = runTest {
         val collectionPrincipal = ICPPrincipal("vqtoo-uqaaa-aaaap-aajla-cai")
-        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        val nfts = nftRepository.fetchNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
@@ -113,7 +109,7 @@ class TmpTest {
     @Test
     fun `Crypto Cat`() = runTest {
         val collectionPrincipal = ICPPrincipal("pjuco-6iaaa-aaaam-adu7q-cai")
-        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        val nfts = nftRepository.fetchNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
@@ -123,7 +119,7 @@ class TmpTest {
     // Standard is ICRC7 but doesn't support icrc7_tokens
     fun `Chain Fusion Toonis`() = runTest {
         val collectionPrincipal = ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai")
-        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        val nfts = nftRepository.fetchNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }
@@ -132,7 +128,7 @@ class TmpTest {
     @Test
     fun `Cashier Collection`() = runTest {
         val collectionPrincipal = ICPPrincipal("hfevg-caaaa-aaaai-actwa-cai")
-        val nfts = nftRepository.fetchCollectionNFTs(collectionPrincipal)
+        val nfts = nftRepository.fetchNFTs(collectionPrincipal)
         nfts.forEach { nft ->
             logger.logInfo("[${nft.id}] - ${nft.nftId}: ${nft.metadata?.thumbnailUrl}")
         }

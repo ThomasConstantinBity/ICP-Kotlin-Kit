@@ -5,6 +5,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.data.service.nft.ICRC7NFTService
 import com.bity.icp_kotlin_kit.data.service.nft.OrigynNFTService
 import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTService
+import com.bity.icp_kotlin_kit.di.nftCollectionIdService
 import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
@@ -25,7 +26,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
         ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai").let { collectionPrincipal ->
             val nftService = ChainFusionToonisNFTService(
                 canister = collectionPrincipal,
-                service = ChainFusionToonis.CFTService(collectionPrincipal)
+                service = ChainFusionToonis.CFTService(collectionPrincipal),
             )
             setNFTService(collectionPrincipal, nftService)
         }
@@ -51,7 +52,8 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
                     canister = collection.canister,
                     service = EXTService(
                         canister = collection.canister
-                    )
+                    ),
+                    idService = nftCollectionIdService
                 )
 
             ICPNftStandard.ICRC7 ->

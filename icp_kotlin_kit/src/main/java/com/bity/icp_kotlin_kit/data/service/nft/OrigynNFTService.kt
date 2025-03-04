@@ -27,18 +27,25 @@ open class OrigynNFTService(
         return nftIds.zip(results).map(::getNFTDetails)
     }
 
-    override suspend fun fetchNFTCollectionIds(
+    override suspend fun fetchIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+    override suspend fun fetchNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCollectionNFT(
+    override suspend fun fetchOwner(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ): ICPPrincipal? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
         nftId: BigInteger,
     ) : ICPNFTCollectionItem {

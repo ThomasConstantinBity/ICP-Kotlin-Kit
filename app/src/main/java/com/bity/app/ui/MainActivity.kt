@@ -1,9 +1,9 @@
 package com.bity.app.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,16 +16,11 @@ import com.bity.app.ui.screen.nft_collection_details.NFTCollectionDetails
 import com.bity.app.ui.screen.nft_collection_details.NFTDetailsViewModel
 import com.bity.app.ui.theme.ICPKotlinKitTheme
 import com.bity.app.ui.util.Screen
-import com.bity.app.ui.util.Screen.NFTDetails
 import org.koin.core.component.KoinComponent
-import org.koin
-    .core.component.get
-import com.bity.app.ui.screen.nft_details.NFTDetailsPage
-import com.bity.app.ui.screen.nft_details.NFTDetailsPageViewModel
-import com.bity.icp_kotlin_kit.di.nftRepository
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.get
 
 class MainActivity : ComponentActivity(), KoinComponent {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -44,19 +39,9 @@ class MainActivity : ComponentActivity(), KoinComponent {
                     composable(route = Screen.ICPNFTs.route) {
                         ICPNFTsScreen(
                             onNFTClick = {
+                                Log.d(TAG, "collection $it")
                                 navController.navigate(Screen.NFTCollectionDetails(it))
                             }
-                        )
-                    }
-                    composable<NFTDetails> {
-                        val route: NFTDetails = it.toRoute()
-                        val viewModel = NFTDetailsPageViewModel(
-                            collectionCanister = route.collectionPrincipal,
-                            nftId = route.nftId,
-                            nftRepository = get()
-                        )
-                        NFTDetailsPage(
-                            viewModel = viewModel
                         )
                     }
                     composable(route = Screen.AccountBalance.route) {
@@ -69,18 +54,16 @@ class MainActivity : ComponentActivity(), KoinComponent {
                             nftRepository = get()
                         )
                         NFTCollectionDetails(
-                            viewModel = viewModel,
-                            onNftClick = {
-                                val route = Screen.NFTDetails(
-                                    collectionPrincipal = sendRoute.canisterString,
-                                    nftId = it.toString()
-                                )
-                                navController.navigate(route)
-                            }
+                            viewModel = viewModel
                         )
                     }
                 }
             }
         }
     }
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
 }

@@ -7,22 +7,24 @@ import com.bity.icp_kotlin_kit.domain.generated_file.Result_1
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
+import com.bity.icp_kotlin_kit.domain.model.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
+import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
 import com.bity.icp_kotlin_kit.domain.service.NFTService
-import com.bity.icp_kotlin_kit.util.ext_function.to32Bits
 import java.math.BigInteger
 
 open class EXTNFTService(
     private val canister: ICPPrincipal,
-    private val service: EXTService
+    private val service: EXTService,
+    private val idService: NFTCollectionIdService
 ): NFTService {
 
     override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> =
         service.tokens_ext(principal.string)
             .toDataModel(canister)
 
-    override suspend fun fetchNFTCollectionIds(
+    override suspend fun fetchIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
@@ -30,40 +32,46 @@ open class EXTNFTService(
         return tokens.map { BigInteger("${it.tokenIndex}") }
     }
 
-    override suspend fun fetchCollectionNFTs(
-        collectionPrincipal: ICPPrincipal
+    override suspend fun fetchNFTs(
+        collectionPrincipal: ICPPrincipal,
     ): List<ICPNFTCollectionItem> {
-        val collectionIds = fetchNFTCollectionIds()
+        val collectionIds = fetchIds()
         return collectionIds
             .map {
-            val nftId = getNFTCollectionItemId(it)
-            ICPNFTCollectionItem(
-                id = it,
-                nftId = nftId,
-                metadata = getNFTMetadata(nftId)
-            )
-        }
+                val nftId = idService.getNFTCollectionItemId(
+                    canisterBytes = canister.bytes,
+                    tokenIndex = it
+                )
+                ICPNFTCollectionItem(
+                    id = it,
+                    nftId = nftId,
+                    metadata = getNFTMetadata(nftId)
+                )
+            }
     }
 
-    override suspend fun fetchCollectionNFT(
+    override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
         nftId: BigInteger,
     ) : ICPNFTCollectionItem {
-        TODO("Not yet implemented")
+        val nfts = fetchNFTs(collectionPrincipal)
+        return nfts.find { it.id == nftId }
+            ?: throw NFTServiceException.NFTNotFound(
+                collectionPrincipal = collectionPrincipal,
+                nftId = nftId
+            )
     }
+
+    override suspend fun fetchOwner(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ): ICPPrincipal? = null
 
     private fun getNFTMetadata(nftId: String): ICPNFTEXTMetadata =
         ICPNFTEXTMetadata(
             nftImageUrl = getNFTCollectionItemImageURL(nftId),
             thumbnailUrl = getNFTCollectionItemThumbnailURL(nftId)
         )
-
-    private fun getNFTCollectionItemId(tokenIndex: BigInteger): String {
-        val prefix = byteArrayOf(0x0A, 0x74, 0x69, 0x64)
-        val bytes = prefix + canister.bytes + tokenIndex.to32Bits()
-        val principal = ICPPrincipal(bytes)
-        return principal.string
-    }
 
     /**
      * [NFT_CANISTERS.WRAPPED_PUNKS]: `https://${NFT_CANISTERS.IC_PUNKS}.raw.icp0.io/Token/${index}`,

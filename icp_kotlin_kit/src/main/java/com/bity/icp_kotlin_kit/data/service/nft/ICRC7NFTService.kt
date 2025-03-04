@@ -43,14 +43,21 @@ open class ICRC7NFTService(
         }*/
     }
 
-    override suspend fun fetchCollectionNFT(
+    override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
         nftId: BigInteger,
     ) : ICPNFTCollectionItem {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchNFTCollectionIds(
+    override suspend fun fetchOwner(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ): ICPPrincipal? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchIds(
         prev: BigInteger?,
         take: BigInteger?
     ): List<BigInteger> {
@@ -60,10 +67,10 @@ open class ICRC7NFTService(
         ).toList()
     }
 
-    override suspend fun fetchCollectionNFTs(
+    override suspend fun fetchNFTs(
         collectionPrincipal: ICPPrincipal,
     ): List<ICPNFTCollectionItem> = coroutineScope {
-        val collectionIds = fetchNFTCollectionIds().toTypedArray()
+        val collectionIds = fetchIds().toTypedArray()
         return@coroutineScope collectionIds.map {
             async {
                 return@async ICPNFTCollectionItem(

@@ -28,14 +28,12 @@ import java.math.BigInteger
 fun NFTCollectionDetails(
     modifier: Modifier = Modifier,
     viewModel: NFTDetailsViewModel,
-    onNftClick: (BigInteger) -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     NFTCollectionDetailsPage(
         modifier = modifier,
         state = state,
-        onNftClick = onNftClick
     )
 }
 
@@ -43,7 +41,6 @@ fun NFTCollectionDetails(
 private fun NFTCollectionDetailsPage(
     modifier: Modifier = Modifier,
     state: NFTDetailsState,
-    onNftClick: (BigInteger) -> Unit
 ) {
     if(state.isLoading) LoadingDialog()
     LazyVerticalGrid(
@@ -58,7 +55,6 @@ private fun NFTCollectionDetailsPage(
         items(state.collectionNFTs) {
             NFTCard(
                 nftItem = it,
-                onClick = onNftClick
             )
         }
     }
@@ -103,12 +99,10 @@ private fun Header(
 fun NFTCard(
     modifier: Modifier = Modifier,
     nftItem: ICPNFTCollectionItem,
-    onClick: (BigInteger) -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(horizontal = 4.dp, vertical = 8.dp),
-        onClick = { onClick(nftItem.id) }
     ) {
         Column {
             SubcomposeAsyncImage(

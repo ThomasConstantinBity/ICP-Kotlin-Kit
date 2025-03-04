@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.data.service
 
 import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTService
+import com.bity.icp_kotlin_kit.di.nftCollectionIdService
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService.UnnamedClass2
 import com.bity.icp_kotlin_kit.domain.generated_file.Metadata
@@ -24,7 +25,8 @@ class EXTNFTServiceTest {
     fun setUp() {
         service = EXTNFTService(
             canister = canister,
-            service = extService
+            service = extService,
+            idService = nftCollectionIdService
         )
     }
 
@@ -49,7 +51,7 @@ class EXTNFTServiceTest {
             )
         )
 
-        val nftCollection = service.fetchCollectionNFTs(collectionPrincipal)
+        val nftCollection = service.fetchNFTs(collectionPrincipal)
 
         assertEquals(3, nftCollection.size)
 

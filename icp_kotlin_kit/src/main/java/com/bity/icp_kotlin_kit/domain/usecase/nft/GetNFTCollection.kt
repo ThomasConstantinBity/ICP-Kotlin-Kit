@@ -12,6 +12,6 @@ class GetNFTCollection internal constructor(
     constructor(): this(nftRepository)
 
     suspend operator fun invoke(canister: ICPPrincipal): ICPNftCollection? =
-        repository.fetchNFTCollection(canister)
+        repository.fetchCollection(canister)
 
 }

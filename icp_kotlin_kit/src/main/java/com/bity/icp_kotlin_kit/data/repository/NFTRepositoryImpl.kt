@@ -23,23 +23,23 @@ internal class NFTRepositoryImpl(
     private val nftCachedService: NFTCachedService
 ): NFTRepository {
 
-    override suspend fun fetchAllNFTsCollections(): List<ICPNftCollection> =
+    override suspend fun fetchAllCollections(): List<ICPNftCollection> =
         nftCachedService.getAllNFTsCollections()
 
-    override suspend fun fetchNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
+    override suspend fun fetchCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
         nftCachedService.getNFTCollection(collectionPrincipal)
 
-    override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+    override suspend fun fetchNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
         val nftService = getNFTServiceForCollection(collectionPrincipal)
-        return nftService.fetchCollectionNFTs(collectionPrincipal)
+        return nftService.fetchNFTs(collectionPrincipal)
     }
 
-    override suspend fun fetchCollectionNFT(
+    override suspend fun fetchNFTOwner(
         collectionPrincipal: ICPPrincipal,
         nftId: BigInteger,
-    ): ICPNFTCollectionItem {
+    ): ICPPrincipal? {
         val nftService = getNFTServiceForCollection(collectionPrincipal)
-        return nftService.fetchCollectionNFT(
+        return nftService.fetchOwner(
             collectionPrincipal = collectionPrincipal,
             nftId = nftId
         )

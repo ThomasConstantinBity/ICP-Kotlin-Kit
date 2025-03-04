@@ -11,6 +11,7 @@ import com.bity.icp_kotlin_kit.data.repository.NFTRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.SNSCachedServiceImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.TokensCachedServiceImpl
+import com.bity.icp_kotlin_kit.data.service.nft.NFTCollectionIdServiceImpl
 import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
 import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
@@ -26,6 +27,7 @@ import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.domain.service.SNSCachedService
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
+import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
 import com.bity.icp_kotlin_kit.domain.service.TokensCachedService
 import com.bity.icp_kotlin_kit.util.jackson.CborConverterFactory
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -123,6 +125,10 @@ private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by l
     NNSICPIndexCanister.NNSICPIndexCanisterService(
         canister = ICPSystemCanisters.Index.icpPrincipal
     )
+}
+
+val nftCollectionIdService: NFTCollectionIdService by lazy {
+    NFTCollectionIdServiceImpl()
 }
 
 /**
