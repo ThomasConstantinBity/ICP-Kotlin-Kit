@@ -7,6 +7,7 @@ internal class CandidTypeInt(
     override val typeId: String? = null,
     override val variableName: String = "intValue",
     override val optionalType: OptionalType = OptionalType.None,
+    override val isTypeAlias: Boolean = false
 ) : CandidType() {
 
     override fun getKotlinType(variableName: String?): String = "BigInteger"

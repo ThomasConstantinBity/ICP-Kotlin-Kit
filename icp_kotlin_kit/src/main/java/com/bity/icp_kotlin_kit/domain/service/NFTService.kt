@@ -5,8 +5,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import java.math.BigInteger
 
-internal interface NFTService {
-
+interface NFTService {
     suspend fun getNFTCollectionIds(
         prev: BigInteger? = null,
         take: BigInteger? = null

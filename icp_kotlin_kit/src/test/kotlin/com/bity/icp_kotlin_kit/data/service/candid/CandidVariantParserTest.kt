@@ -40,6 +40,31 @@ class CandidVariantParserTest {
 
             Arguments.of(
                 """
+                    type Result_12 = variant {
+                        err: CommonError__2;
+                        ok: vec record {
+                            TokenIndex__1;
+                            opt Listing__2;
+                            opt blob;
+                        };
+                    };
+                """.trimIndent(),
+                """
+                    sealed class Result_12 {
+                        class err(val err: CommonError__2): Result_12()
+                        class ok(val ok: kotlin.Array<okClass>): Result_12()
+                        
+                        class okClass(
+                            val tokenIndex__1: TokenIndex__1,
+                            val listing__2: Listing__2?
+                            val blobValue: ByteArray?
+                        )
+                    }
+                """.trimIndent()
+            ),
+
+            Arguments.of(
+                """
                     type CandyShared = variant {
                       Int : int;
                       Map : vec record { CandyShared; CandyShared };

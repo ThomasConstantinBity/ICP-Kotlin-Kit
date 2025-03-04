@@ -10,7 +10,7 @@ class KotlinFileGeneratorServiceTest {
 
     @Test
     fun `parse file`() {
-        val fileName = "OrigynNFT"
+        val fileName = "ChainFusionToonis"
         val filePath = "src/test/resources/candid_file/$fileName.did"
         val candidFileText = File(filePath).readText()
         val generatedKotlinFile = kotlinFileGeneratorService.parseAndGetKotlinFile(

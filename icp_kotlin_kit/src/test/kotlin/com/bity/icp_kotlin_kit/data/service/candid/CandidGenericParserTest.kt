@@ -35,6 +35,16 @@ class CandidGenericParserTest {
         private fun typealiases() = listOf(
 
             Arguments.of(
+                "type Time__2 = int;",
+                "typealias Time__2 = BigInteger"
+            ),
+
+            Arguments.of(
+                "type TokenIndex__1 = nat32;",
+                "typealias TokenIndex__1 = UInt"
+            ),
+
+            Arguments.of(
                 "type EXTTokenIdentifier = text;",
                 "typealias EXTTokenIdentifier = String"
             ),

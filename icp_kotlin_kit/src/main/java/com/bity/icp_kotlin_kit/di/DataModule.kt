@@ -132,7 +132,7 @@ private val tokenServiceFactory: TokenServiceFactory by lazy {
     TokenServiceFactoryImpl()
 }
 
-private val nftActorFactory: NFTServiceFactory by lazy {
+internal val nftActorFactory: NFTServiceFactory by lazy {
     NFTServiceFactoryImpl()
 }
 
