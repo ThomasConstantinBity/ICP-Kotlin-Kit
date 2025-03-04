@@ -13,12 +13,12 @@ import com.bity.icp_kotlin_kit.domain.service.NFTService
 import com.bity.icp_kotlin_kit.util.ext_function.to32Bits
 import java.math.BigInteger
 
-internal class EXTNFTService(
+open class EXTNFTService(
     private val canister: ICPPrincipal,
     private val service: EXTService
 ): NFTService {
 
-    override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> =
+    override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> =
         service.tokens_ext(principal.string)
             .toDataModel(canister)
 
@@ -43,6 +43,13 @@ internal class EXTNFTService(
                 metadata = getNFTMetadata(nftId)
             )
         }
+    }
+
+    override suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ) : ICPNFTCollectionItem {
+        TODO("Not yet implemented")
     }
 
     private fun getNFTMetadata(nftId: String): ICPNFTEXTMetadata =

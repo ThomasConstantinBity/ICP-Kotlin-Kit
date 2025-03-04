@@ -11,5 +11,5 @@ class GetNFTHoldings internal constructor(
     constructor(): this(nftRepository)
 
     suspend operator fun invoke(icpPrincipal: ICPPrincipal): List<*> =
-        repository.getNFTHoldings(icpPrincipal)
+        repository.fetchNFTHoldings(icpPrincipal)
 }

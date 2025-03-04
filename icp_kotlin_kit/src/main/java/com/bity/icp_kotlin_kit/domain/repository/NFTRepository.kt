@@ -7,8 +7,12 @@ import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import java.math.BigInteger
 
 interface NFTRepository {
-    suspend fun getAllNFTsCollections(): List<ICPNftCollection>
-    suspend fun getNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection?
+    suspend fun fetchAllNFTsCollections(): List<ICPNftCollection>
+    suspend fun fetchNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection?
     suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem>
-    suspend fun getNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails>
+    suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger
+    ): ICPNFTCollectionItem
+    suspend fun fetchNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails>
 }

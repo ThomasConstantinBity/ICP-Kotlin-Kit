@@ -15,12 +15,12 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
-internal class ICRC7NFTService(
+open class ICRC7NFTService(
     private val canister: ICPPrincipal,
     private val service: DBANFTService,
 ): NFTService {
 
-    override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
+    override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
 
         val tokenHoldings = service.icrc7_tokens_of(
             account = Account(
@@ -41,6 +41,13 @@ internal class ICRC7NFTService(
                 canister = canister
             )
         }*/
+    }
+
+    override suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ) : ICPNFTCollectionItem {
+        TODO("Not yet implemented")
     }
 
     override suspend fun fetchNFTCollectionIds(

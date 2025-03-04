@@ -116,34 +116,23 @@ internal object CandidEncoder {
     private fun candidPrimitiveTypeForClass(clazz: KClass<*>): CandidType {
         return when(clazz) {
 
-            Byte::class -> CandidType.Integer8
             BigInteger::class -> CandidType.Natural
+            Float::class -> CandidType.Float32
+            Double::class -> CandidType.Float64
+
+            Byte::class-> CandidType.Integer8
+            Short::class -> CandidType.Integer16
+            Int::class -> CandidType.Integer32
+            Long::class -> CandidType.Integer64
 
             UByte::class -> CandidType.Natural8
+            UShort::class -> CandidType.Natural16
+            UInt::class -> CandidType.Natural32
             ULong::class -> CandidType.Natural64
 
             String::class -> CandidType.Text
+            Boolean::class -> CandidType.Bool
             ByteArray::class -> CandidType.Vector(CandidType.Integer8)
-
-            /**
-            // Unsigned Value
-            UByte::class.java-> CandidType.Primitive(CandidPrimitiveType.NATURAL8)
-            UShort::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL16)
-            UInt::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL32)
-            ULong::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL64)
-
-            // Signed Value
-            Byte::class.java-> CandidType.Primitive(CandidPrimitiveType.INTEGER8)
-            Short::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER16)
-            Int::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER32)
-            Long::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER64)
-
-            Float::class.java -> CandidType.Primitive(CandidPrimitiveType.FLOAT32)
-            Double::class.java -> CandidType.Primitive(CandidPrimitiveType.FLOAT64)
-
-            Boolean::class.java -> CandidType.Primitive(CandidPrimitiveType.BOOL)
-
-            **/
 
             else -> TODO("not implemented for $clazz")
         }

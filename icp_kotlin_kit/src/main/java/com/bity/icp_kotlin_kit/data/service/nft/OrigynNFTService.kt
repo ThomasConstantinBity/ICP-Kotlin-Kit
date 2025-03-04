@@ -8,11 +8,11 @@ import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.service.NFTService
 import java.math.BigInteger
 
-class OrigynNFTService(
+open class OrigynNFTService(
     private val canister: OrigynNFT.Nft_Canister
 ): NFTService {
 
-    override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
+    override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
         val account = OrigynNFT.Account.principal(principal.toDataModel())
         val nftIds = when (val nftBalanceResult = canister.balance_of_nft_origyn(account)) {
             is OrigynNFT.BalanceResult.ok -> nftBalanceResult.ok.nfts
@@ -35,6 +35,13 @@ class OrigynNFTService(
     }
 
     override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ) : ICPNFTCollectionItem {
         TODO("Not yet implemented")
     }
 

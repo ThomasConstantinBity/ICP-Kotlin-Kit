@@ -23,10 +23,10 @@ internal class NFTRepositoryImpl(
     private val nftCachedService: NFTCachedService
 ): NFTRepository {
 
-    override suspend fun getAllNFTsCollections(): List<ICPNftCollection> =
+    override suspend fun fetchAllNFTsCollections(): List<ICPNftCollection> =
         nftCachedService.getAllNFTsCollections()
 
-    override suspend fun getNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
+    override suspend fun fetchNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
         nftCachedService.getNFTCollection(collectionPrincipal)
 
     override suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
@@ -34,7 +34,18 @@ internal class NFTRepositoryImpl(
         return nftService.fetchCollectionNFTs(collectionPrincipal)
     }
 
-    override suspend fun getNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails> = coroutineScope {
+    override suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ): ICPNFTCollectionItem {
+        val nftService = getNFTServiceForCollection(collectionPrincipal)
+        return nftService.fetchCollectionNFT(
+            collectionPrincipal = collectionPrincipal,
+            nftId = nftId
+        )
+    }
+
+    override suspend fun fetchNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails> = coroutineScope {
         return@coroutineScope nftCachedService.getAllNFTsCollections()
             .filter { it.standard == ICPNftStandard.ICRC7 }
             .map {
@@ -60,7 +71,7 @@ internal class NFTRepositoryImpl(
     ): List<ICPNFTDetails> {
         val nftService = nftServiceFactory.createNFTService(collection)
             ?: return emptyList()
-        return nftService.getUserHoldings(icpPrincipal)
+        return nftService.fetchUserHoldings(icpPrincipal)
     }
 
     private suspend fun getNFTServiceForCollection(collectionPrincipal: ICPPrincipal) : NFTService {

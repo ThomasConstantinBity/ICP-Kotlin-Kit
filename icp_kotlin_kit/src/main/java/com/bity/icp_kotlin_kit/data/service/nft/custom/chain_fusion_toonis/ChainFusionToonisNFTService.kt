@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
+import com.bity.icp_kotlin_kit.domain.generated_file.CFTTokenIndex__1
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
@@ -31,8 +32,21 @@ class ChainFusionToonisNFTService(
         return collectionTokens.map { it.toICPNFTCollectionItem() }
     }
 
-    override suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
+    override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger,
+    ) : ICPNFTCollectionItem {
+        val args = arrayOf("$nftId".toUInt())
+        val token = service.getTokensByIds(args)
+        return ICPNFTCollectionItem(
+            id = nftId,
+            nftId = nftId.toString(),
+            metadata = token.firstOrNull()?.toICPNFTCollectionItem()?.metadata,
+        )
     }
 
     private fun ChainFusionToonis.CFTService.ArrayClass.toICPNFTCollectionItem() : ICPNFTCollectionItem {

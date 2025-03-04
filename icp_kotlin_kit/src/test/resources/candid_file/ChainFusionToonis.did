@@ -186,7 +186,7 @@ service : {
     // getScore: () -> (vec record { TokenIndex__1; float64; }) query;
     // getStorageMetadataUrl: (MetadataStorageType__1, TokenIndex__1) -> (record { text; text; text; });
     getTokens: () -> (vec record { TokenIndex__1; Metadata__1; }) query;
-    // getTokensByIds: (vec TokenIndex__1) -> (vec record { TokenIndex__1; Metadata__1; }) query;
+    getTokensByIds: (vec TokenIndex__1) -> (vec record { TokenIndex__1; Metadata__1; }) query;
     // getTokensByProperties: (vec record { text; vec text; }) -> (vec record { TokenIndex__1; Metadata__1; }) query;
     // http_request: (HttpRequest__1) -> (HttpResponse__1) query;
     // initCap: () -> (opt text);

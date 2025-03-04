@@ -11,5 +11,5 @@ class GetAllNFTCollectionsUseCase internal constructor(
     constructor(): this(nftRepository)
 
     suspend operator fun invoke(): List<ICPNftCollection> =
-        repository.getAllNFTsCollections()
+        repository.fetchAllNFTsCollections()
 }

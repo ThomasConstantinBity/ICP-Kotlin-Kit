@@ -439,5 +439,26 @@ object ChainFusionToonis {
             val metadata__1: Metadata__1
         )
 
+        // getTokensByIds: (vec TokenIndex__1) -> (vec record { TokenIndex__1; Metadata__1; }) query;
+        suspend fun getTokensByIds(
+            array: kotlin.Array<CFTTokenIndex__1>
+        ): kotlin.Array<ArrayClass>
+        {
+            val icpQuery = ICPQuery(
+                methodName = "getTokensByIds",
+                canister = canister
+            )
+            val result = icpQuery.query(
+                values = listOf(
+                    ValueToEncode(
+                        arg = array,
+                        arrayType = ArrayClass::class,
+                        arrayTypeNullable = false
+                    )
+                )
+            ).getOrThrow()
+            return CandidDecoder.decodeNotNull(result.first())
+        }
+
     }
 }

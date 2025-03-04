@@ -18,8 +18,12 @@ import com.bity.app.ui.theme.ICPKotlinKitTheme
 import com.bity.app.ui.util.Screen
 import com.bity.app.ui.util.Screen.NFTDetails
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
+import org.koin
+    .core.component.get
 import com.bity.app.ui.screen.nft_details.NFTDetailsPage
+import com.bity.app.ui.screen.nft_details.NFTDetailsPageViewModel
+import com.bity.icp_kotlin_kit.di.nftRepository
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +49,15 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         )
                     }
                     composable<NFTDetails> {
-                        val route: Screen.NFTDetails = it.toRoute()
-                        NFTDetailsPage()
+                        val route: NFTDetails = it.toRoute()
+                        val viewModel = NFTDetailsPageViewModel(
+                            collectionCanister = route.collectionPrincipal,
+                            nftId = route.nftId,
+                            nftRepository = get()
+                        )
+                        NFTDetailsPage(
+                            viewModel = viewModel
+                        )
                     }
                     composable(route = Screen.AccountBalance.route) {
                         AccountBalance()

@@ -49,7 +49,7 @@ class NFTDetailsViewModel(
     }
 
     private suspend fun updateNFTCollection() {
-        val nftDetails = nftRepository.getNFTCollection(collectionPrincipal)
+        val nftDetails = nftRepository.fetchNFTCollection(collectionPrincipal)
         _state.value = _state.value.copy(
             nftCollection = nftDetails
         )

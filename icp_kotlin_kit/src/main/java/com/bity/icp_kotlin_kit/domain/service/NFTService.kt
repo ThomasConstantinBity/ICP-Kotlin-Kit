@@ -11,5 +11,9 @@ interface NFTService {
         take: BigInteger? = null
     ): List<BigInteger>
     suspend fun fetchCollectionNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem>
-    suspend fun getUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails>
+    suspend fun fetchCollectionNFT(
+        collectionPrincipal: ICPPrincipal,
+        nftId: BigInteger
+    ) : ICPNFTCollectionItem
+    suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails>
 }
