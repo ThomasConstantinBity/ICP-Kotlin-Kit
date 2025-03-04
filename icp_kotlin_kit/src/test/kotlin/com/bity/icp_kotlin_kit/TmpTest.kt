@@ -79,7 +79,6 @@ class TmpTest {
     fun `get all NFTs`() = runTest {
         GetAllNFTCollectionsUseCase()
             .invoke()
-            .filter { it.standard == ICPNftStandard.ICRC7 }
             .sortedBy { it.name }
             .forEach {
                 logger.logInfo(

@@ -17,7 +17,6 @@ class MainApplication: Application() {
         super.onCreate()
         initKoin()
         initLogger()
-        initCustoICPNFTServices()
     }
 
     private fun initKoin() {
@@ -27,14 +26,15 @@ class MainApplication: Application() {
         }
     }
 
-    private fun initCustoICPNFTServices() {
-
-    }
-
     private fun initLogger() {
         ICPKitLogger.setLogger(object : ICPKitLogHandler {
+
             override fun logError(message: String?, throwable: Throwable) {
-                Log.d("ICPKotlinKit", message, throwable)
+                Log.e("ICPKotlinKit", message, throwable)
+            }
+
+            override fun logInfo(message: String) {
+                Log.i("ICPKotlinKit", message)
             }
         })
     }

@@ -1,15 +1,12 @@
-package com.bity.app.ui.screen.nft_details
+package com.bity.app.ui.screen.nft_collection_details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -18,36 +15,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
 import com.bity.app.ui.widget.LoadingDialog
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import java.math.BigInteger
 
 @Composable
-fun NFTDetails(
+fun NFTCollectionDetails(
     modifier: Modifier = Modifier,
     viewModel: NFTDetailsViewModel,
+    onNftClick: (BigInteger) -> Unit
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-    NFTDetailsPage(
+    NFTCollectionDetailsPage(
         modifier = modifier,
-        state = state
+        state = state,
+        onNftClick = onNftClick
     )
 }
 
 @Composable
-private fun NFTDetailsPage(
+private fun NFTCollectionDetailsPage(
     modifier: Modifier = Modifier,
     state: NFTDetailsState,
+    onNftClick: (BigInteger) -> Unit
 ) {
     if(state.isLoading) LoadingDialog()
     LazyVerticalGrid(
@@ -61,7 +57,8 @@ private fun NFTDetailsPage(
         }
         items(state.collectionNFTs) {
             NFTCard(
-                nftItem = it
+                nftItem = it,
+                onClick = onNftClick
             )
         }
     }
@@ -105,11 +102,13 @@ private fun Header(
 @Composable
 fun NFTCard(
     modifier: Modifier = Modifier,
-    nftItem: ICPNFTCollectionItem
+    nftItem: ICPNFTCollectionItem,
+    onClick: (BigInteger) -> Unit
 ) {
     Card(
         modifier = modifier
-            .padding(horizontal = 4.dp, vertical = 8.dp)
+            .padding(horizontal = 4.dp, vertical = 8.dp),
+        onClick = { onClick(nftItem.id) }
     ) {
         Column {
             SubcomposeAsyncImage(

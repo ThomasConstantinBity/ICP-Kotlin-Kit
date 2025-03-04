@@ -43,16 +43,16 @@ fun AppFeatures(
             navController.navigate(Screen.AccountBalance.route)
         }
         MainButton(text = "8 Years Gang Demo") {
-            navController.navigate(Screen.NFTDetails("tskpj-aiaaa-aaaag-qaxsq-cai"))
+            navController.navigate(Screen.NFTCollectionDetails("tskpj-aiaaa-aaaag-qaxsq-cai"))
         }
         MainButton(text = "Crypto Cat") {
-            navController.navigate(Screen.NFTDetails("pjuco-6iaaa-aaaam-adu7q-cai"))
+            navController.navigate(Screen.NFTCollectionDetails("pjuco-6iaaa-aaaam-adu7q-cai"))
         }
         MainButton(text = "Mutant Space Apes") {
-            navController.navigate(Screen.NFTDetails("gikg4-eaaaa-aaaam-qaieq-cai"))
+            navController.navigate(Screen.NFTCollectionDetails("gikg4-eaaaa-aaaam-qaieq-cai"))
         }
         MainButton(text = "Chain Fusion Toonis") {
-            navController.navigate(Screen.NFTDetails("nsbts-5iaaa-aaaah-aeblq-cai"))
+            navController.navigate(Screen.NFTCollectionDetails("nsbts-5iaaa-aaaah-aeblq-cai"))
         }
     }
 }

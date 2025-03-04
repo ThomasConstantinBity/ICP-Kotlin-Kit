@@ -1,5 +1,6 @@
-package com.bity.app.ui.screen.nft_details
+package com.bity.app.ui.screen.nft_collection_details
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -27,7 +28,12 @@ class NFTDetailsViewModel(
     init {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                getNFTDetails()
+                try {
+                    getNFTDetails()
+                } catch (t: Throwable) {
+                    t.printStackTrace()
+                    Log.e(TAG, "Error", t)
+                }
             }
         }
     }
@@ -54,6 +60,10 @@ class NFTDetailsViewModel(
         _state.value = _state.value.copy(
             collectionNFTs = collectionDetails
         )
+    }
+
+    companion object {
+        private val TAG = "NFTDetailsViewModel"
     }
 
 }

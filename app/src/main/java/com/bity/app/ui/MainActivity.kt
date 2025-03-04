@@ -3,6 +3,7 @@ package com.bity.app.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,14 +12,14 @@ import com.bity.app.ui.screen.account_information.AccountBalance
 import com.bity.app.ui.screen.app_feature.AppFeatures
 import com.bity.app.ui.screen.icp_nfts.ICPNFTsScreen
 import com.bity.app.ui.screen.icp_tokens.ICPTokensScreen
-import com.bity.app.ui.screen.nft_details.NFTDetails
-import com.bity.app.ui.screen.nft_details.NFTDetailsViewModel
+import com.bity.app.ui.screen.nft_collection_details.NFTCollectionDetails
+import com.bity.app.ui.screen.nft_collection_details.NFTDetailsViewModel
 import com.bity.app.ui.theme.ICPKotlinKitTheme
 import com.bity.app.ui.util.Screen
-import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
-import okhttp3.Route
+import com.bity.app.ui.util.Screen.NFTDetails
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import com.bity.app.ui.screen.nft_details.NFTDetailsPage
 
 class MainActivity : ComponentActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,21 +40,32 @@ class MainActivity : ComponentActivity(), KoinComponent {
                     composable(route = Screen.ICPNFTs.route) {
                         ICPNFTsScreen(
                             onNFTClick = {
-                                navController.navigate(Screen.NFTDetails(it))
+                                navController.navigate(Screen.NFTCollectionDetails(it))
                             }
                         )
+                    }
+                    composable<NFTDetails> {
+                        val route: Screen.NFTDetails = it.toRoute()
+                        NFTDetailsPage()
                     }
                     composable(route = Screen.AccountBalance.route) {
                         AccountBalance()
                     }
-                    composable<Screen.NFTDetails> {
-                        val sendRoute: Screen.NFTDetails = it.toRoute()
+                    composable<Screen.NFTCollectionDetails> {
+                        val sendRoute: Screen.NFTCollectionDetails = it.toRoute()
                         val viewModel = NFTDetailsViewModel(
                             nftCanisterString = sendRoute.canisterString,
                             nftRepository = get()
                         )
-                        NFTDetails(
-                            viewModel = viewModel
+                        NFTCollectionDetails(
+                            viewModel = viewModel,
+                            onNftClick = {
+                                val route = Screen.NFTDetails(
+                                    collectionPrincipal = sendRoute.canisterString,
+                                    nftId = it.toString()
+                                )
+                                navController.navigate(route)
+                            }
                         )
                     }
                 }

@@ -35,6 +35,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
         collectionPrincipal: ICPPrincipal,
         nftService: NFTService,
     ) {
+        ICPKitLogger.logInfo("setting custom nft service for ${collectionPrincipal.string}")
         customNFTService[collectionPrincipal.string] = nftService
     }
 
