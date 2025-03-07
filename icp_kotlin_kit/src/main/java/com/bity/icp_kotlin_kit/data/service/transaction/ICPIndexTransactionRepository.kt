@@ -8,15 +8,15 @@ import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
-import com.bity.icp_kotlin_kit.domain.service.ICPTransactionService
+import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import java.math.BigInteger
 
-internal class ICPIndexTransactionService(
+internal class ICPIndexTransactionRepository(
     private val icpToken: ICPToken,
-    private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
-): ICPTransactionService {
+    private val indexCanister: NNSICPIndexCanister.NNSICPIndexCanisterService
+): ICPTransactionRepository {
 
-    override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
+    override suspend fun fetchAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = NNSICPIndexCanister.GetAccountTransactionsArgs(
             account = NNSICPIndexCanister.Account(
                 owner = account.principal.toDataModel(),
@@ -25,7 +25,7 @@ internal class ICPIndexTransactionService(
             start = null,
             max_results = BigInteger("1000000")
         )
-        val transactions = indexService.get_account_transactions(getAccountTransactionsArgs)
+        val transactions = indexCanister.get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
             is NNSICPIndexCanister.GetAccountIdentifierTransactionsResult.Err ->
                 throw transactions.getAccountIdentifierTransactionsError.toDataModel()

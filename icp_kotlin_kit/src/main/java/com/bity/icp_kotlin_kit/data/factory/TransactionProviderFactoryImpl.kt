@@ -1,13 +1,13 @@
 package com.bity.icp_kotlin_kit.data.factory
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
-import com.bity.icp_kotlin_kit.data.service.transaction.ICPICRC1IndexTransactionService
-import com.bity.icp_kotlin_kit.data.service.transaction.ICPIndexTransactionService
+import com.bity.icp_kotlin_kit.data.service.transaction.ICPICRC1IndexTransactionRepository
+import com.bity.icp_kotlin_kit.data.service.transaction.ICPIndexTransactionRepository
 import com.bity.icp_kotlin_kit.data.repository.url.ICPExplorerURLRepository
 import com.bity.icp_kotlin_kit.data.repository.url.ICPTokenExplorerURLRepository
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
-import com.bity.icp_kotlin_kit.domain.service.ICPTransactionService
+import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
@@ -20,17 +20,17 @@ internal class TransactionProviderFactoryImpl(
     private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
 ): TransactionProviderFactory {
 
-    override suspend fun getTransactionProvider(token: ICPToken): ICPTransactionService? {
+    override suspend fun getTransactionProvider(token: ICPToken): ICPTransactionRepository? {
         // TODO: Support DIP20 tokens
         if(token.canister == ICPSystemCanisters.Ledger.icpPrincipal)
-            return ICPIndexTransactionService(
+            return ICPIndexTransactionRepository(
                 icpToken = token,
-                indexService = indexService
+                indexCanister = indexService
             )
         val index = findSNS(token.canister)?.index_canister_id
             ?.toDomainModel()
             ?: return null
-        return ICPICRC1IndexTransactionService(
+        return ICPICRC1IndexTransactionRepository(
             icpToken = token,
             indexCanister = index
         )

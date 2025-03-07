@@ -31,7 +31,7 @@ class TransactionServiceImpl internal constructor(
             ?: throw TransactionServiceException.TokenNotFound(tokenCanister)
         val transactionProvider = transactionRepositoryFactory.getTransactionProvider(token)
             ?: return emptyList()
-        return transactionProvider.getAllTransactions(account)
+        return transactionProvider.fetchAllTransactions(account)
     }
 
     override suspend fun explorerUrl(

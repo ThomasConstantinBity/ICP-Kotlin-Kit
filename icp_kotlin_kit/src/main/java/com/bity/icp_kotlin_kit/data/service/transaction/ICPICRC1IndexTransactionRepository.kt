@@ -11,16 +11,16 @@ import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransaction
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
-import com.bity.icp_kotlin_kit.domain.service.ICPTransactionService
+import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import java.math.BigInteger
 
-class ICPICRC1IndexTransactionService(
+class ICPICRC1IndexTransactionRepository(
     private val icpToken: ICPToken,
     private val indexCanister: ICPPrincipal
-): ICPTransactionService {
+): ICPTransactionRepository {
 
     // TODO, need to update
-    override suspend fun getAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
+    override suspend fun fetchAllTransactions(account: ICPAccount): List<ICPTokenTransaction> {
         val getAccountTransactionsArgs = GetAccountTransactionsArgs(
             account = ICRC1IndexCanister.Account(
                 owner = account.principal.toDataModel(),
