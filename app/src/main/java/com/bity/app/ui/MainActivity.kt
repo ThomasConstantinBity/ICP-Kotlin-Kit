@@ -39,10 +39,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
                     composable(route = Screen.ICPNFTs.route) {
                         ICPNFTsScreen(
-                            onNFTClick = {
-                                Log.d(TAG, "collection $it")
-                                navController.navigate(Screen.NFTCollectionDetails(it))
-                            }
+                            onNFTClick = { }
                         )
                     }
 
