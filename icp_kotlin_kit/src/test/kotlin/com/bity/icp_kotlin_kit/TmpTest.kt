@@ -13,6 +13,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
 import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
@@ -75,7 +76,10 @@ class TmpTest {
     fun `get all NFTs`() = runTest {
         GetAllNFTCollectionsUseCase()
             .invoke()
-            .sortedBy { it.name }
+            .filter { it.standard == ICPNftStandard.ICRC7 }
+            // .find { it.canister.string == "hfevg-caaaa-aaaai-actwa-cai" }
+            //?.let {
+            //.sortedBy { it.name }
             .forEach {
                 logger.logInfo(
                     """

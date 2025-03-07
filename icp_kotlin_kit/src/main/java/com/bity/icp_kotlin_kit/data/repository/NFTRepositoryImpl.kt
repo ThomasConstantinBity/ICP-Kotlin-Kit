@@ -56,7 +56,10 @@ internal class NFTRepositoryImpl(
                             collection = it
                         )
                     } catch (err: RemoteClientError) {
-                        ICPKitLogger.logError(throwable = err)
+                        ICPKitLogger.logError(
+                            "Error getting NFT holdings for collection ${it.name} - ${it.canister.string}",
+                            err
+                        )
                         emptyList<ICPNFTDetails>()
                     }
                 }

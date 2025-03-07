@@ -6,6 +6,10 @@ import java.math.BigInteger
 
 sealed class NFTServiceException(message: String? = null) : ICPKitException(message) {
 
+    class InvalidToken(
+        token: String
+    ) : NFTServiceException("Invalid token: $token")
+
     class StandardNotSupported(
         standard: ICPNftStandard
     ) : NFTServiceException("Standard not supported: $standard")

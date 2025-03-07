@@ -201,7 +201,7 @@ service : {
     // setScoreOfTokenId: (int64) -> ();
     // supply: (TokenIdentifier__7) -> (Result_14) query;
     // tokens: (AccountIdentifier__4) -> (Result_13) query;
-    // tokens_ext: (AccountIdentifier__4) -> (Result_12) query;
+    tokens_ext: (AccountIdentifier__4) -> (Result_12) query;
     // transfer: (TransferRequest__1) -> (TransferResponse__1);
     // updateMetadata: (vec record { TokenIndex__1; opt blob; }) -> ();
     // updateNFTName: (text, text, TokenIndex__1, TokenIndex__1) -> ();

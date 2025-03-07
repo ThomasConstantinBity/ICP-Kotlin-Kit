@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidEncoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
@@ -18,7 +19,7 @@ open class ICPQuery(
 
     // TODO, this will be removed
     suspend operator fun invoke(
-        values: List<com.bity.icp_kotlin_kit.data.model.ValueToEncode>?,
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues,
         certification: ICPRequestCertification
@@ -34,7 +35,7 @@ open class ICPQuery(
 
     // TODO, values could be not null
     suspend fun query(
-        values: List<com.bity.icp_kotlin_kit.data.model.ValueToEncode>?,
+        values: List<ValueToEncode>?,
     ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(
             canister = canister,
@@ -45,7 +46,7 @@ open class ICPQuery(
     }
 
     suspend fun callAndPoll(
-        values: List<com.bity.icp_kotlin_kit.data.model.ValueToEncode>?,
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal?,
         pollingValues: PollingValues
     ): Result<List<CandidValue>> {

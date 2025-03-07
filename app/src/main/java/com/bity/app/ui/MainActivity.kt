@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Text
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.bity.app.ui.screen.account_information.AccountBalance
+import com.bity.app.ui.screen.account_nft_holding.AccountNFTHolding
 import com.bity.app.ui.screen.app_feature.AppFeatures
 import com.bity.app.ui.screen.icp_nfts.ICPNFTsScreen
 import com.bity.app.ui.screen.icp_tokens.ICPTokensScreen
@@ -30,12 +32,11 @@ class MainActivity : ComponentActivity(), KoinComponent {
                     navController = navController,
                     startDestination = Screen.FeatureList.route
                 ) {
+
                     composable(route = Screen.FeatureList.route) {
                         AppFeatures(navController = navController)
                     }
-                    composable(route = Screen.ICPTokens.route) {
-                        ICPTokensScreen()
-                    }
+
                     composable(route = Screen.ICPNFTs.route) {
                         ICPNFTsScreen(
                             onNFTClick = {
@@ -44,19 +45,11 @@ class MainActivity : ComponentActivity(), KoinComponent {
                             }
                         )
                     }
-                    composable(route = Screen.AccountBalance.route) {
-                        AccountBalance()
+
+                    composable(route = Screen.NFTHoldings.route) {
+                        AccountNFTHolding()
                     }
-                    composable<Screen.NFTCollectionDetails> {
-                        val sendRoute: Screen.NFTCollectionDetails = it.toRoute()
-                        val viewModel = NFTDetailsViewModel(
-                            nftCanisterString = sendRoute.canisterString,
-                            nftRepository = get()
-                        )
-                        NFTCollectionDetails(
-                            viewModel = viewModel
-                        )
-                    }
+
                 }
             }
         }

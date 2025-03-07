@@ -92,23 +92,29 @@ open class EXTNFTService(
             else -> "https://${canister.string}.raw.icp0.io/?type=thumbnail&tokenid=${nftId}"
         }
 
+    private fun Result_1.ok._ArrayClass.toDataModel(canister: ICPPrincipal): ICPNFTDetails {
+        val nftId = idService.getNFTCollectionItemId(
+            canisterBytes = canister.bytes,
+            tokenIndex = BigInteger(tokenIndex.toString())
+        )
+        return ICPNFTDetails(
+            name = "#$tokenIndex",
+            standard = ICPNftStandard.EXT,
+            canister = canister,
+            metadata = getNFTMetadata(nftId)
+        )
+    }
+
+    private fun Result_1.toDataModel(canister: ICPPrincipal): List<ICPNFTDetails> =
+        when(this) {
+            is Result_1.err -> throw commonError.toDataModel()
+            is Result_1.ok -> values.map { it.toDataModel(canister) }
+        }
+
+    private fun CommonError.toDataModel(): RemoteClientError =
+        when(this) {
+            is CommonError.InvalidToken -> RemoteClientError.InvalidToken(tokenIdentifier__1)
+            is CommonError.Other -> RemoteClientError.GetUserNFTHoldingsGenericError(string)
+        }
+
 }
-
-private fun Result_1.toDataModel(canister: ICPPrincipal): List<ICPNFTDetails> =
-    when(this) {
-        is Result_1.err -> throw commonError.toDataModel()
-        is Result_1.ok -> values.map { it.toDataModel(canister) }
-    }
-
-private fun Result_1.ok._ArrayClass.toDataModel(canister: ICPPrincipal): ICPNFTDetails =
-    ICPNFTDetails(
-        name = "#$tokenIndex",
-        standard = ICPNftStandard.EXT,
-        canister = canister
-    )
-
-private fun CommonError.toDataModel(): RemoteClientError =
-    when(this) {
-        is CommonError.InvalidToken -> RemoteClientError.InvalidToken(tokenIdentifier__1)
-        is CommonError.Other -> RemoteClientError.GetUserNFTHoldingsGenericError(string)
-    }

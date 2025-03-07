@@ -1,7 +1,9 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
+import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
@@ -32,7 +34,25 @@ class ChainFusionToonisNFTService(
     }
 
     override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
-        TODO("Not yet implemented")
+        val accountIdentifier = ICPAccount.mainAccount(principal).address
+        val result = service.tokens_ext(accountIdentifier)
+        return when(result) {
+            is ChainFusionToonis.Result_12.err -> {
+                onUserHoldingError(result.err)
+                emptyList()
+            }
+            is ChainFusionToonis.Result_12.ok -> TODO()
+        }
+    }
+
+    private fun onUserHoldingError(err: ChainFusionToonis.CommonError__2) {
+        when(err) {
+            is ChainFusionToonis.CommonError__2.InvalidToken -> {
+                val exception = NFTServiceException.InvalidToken(err.InvalidToken)
+                ICPKitLogger.logError("Received InvalidToken response from ChainFusionToonis canister", exception)
+            }
+            is ChainFusionToonis.CommonError__2.Other -> { }
+        }
     }
 
     override suspend fun fetchNFT(

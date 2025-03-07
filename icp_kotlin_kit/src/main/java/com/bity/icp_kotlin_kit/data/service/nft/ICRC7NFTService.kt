@@ -5,6 +5,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.Value
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
+import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTICRC7Metadata
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
@@ -20,7 +21,11 @@ open class ICRC7NFTService(
     private val service: DBANFTService,
 ): NFTService {
 
-    override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
+    open val urlMetadataKeys = listOf("icrc7:metadata:uri:image", "image")
+
+    override suspend fun fetchUserHoldings(
+        principal: ICPPrincipal
+    ): List<ICPNFTDetails> = coroutineScope {
 
         val tokenHoldings = service.icrc7_tokens_of(
             account = Account(
@@ -31,16 +36,18 @@ open class ICRC7NFTService(
             take = null
         )
 
-        TODO()
+        return@coroutineScope tokenHoldings.map { tokenId ->
+            async {
+                val metadata = fetchNFTMetadata(tokenId)
+                ICPNFTDetails(
+                    name = "#${tokenId}",
+                    standard = ICPNftStandard.ICRC7,
+                    canister = canister,
+                    metadata = metadata
+                )
+            }
+        }.awaitAll()
 
-        /*val tokenMetadata = service.icrc7_token_metadata(tokenHoldings)
-        return tokenHoldings.zip(tokenMetadata) { tokenId, tokenMetadata ->
-            ICPNFTDetails(
-                name = "#${tokenId}",
-                standard = ICPNftStandard.ICRC7,
-                canister = canister
-            )
-        }*/
     }
 
     override suspend fun fetchNFT(
@@ -83,7 +90,7 @@ open class ICRC7NFTService(
     }
 
     // TODO: icrc7_token_metadata accepts an array of ids, but there is a max value (ex. 100), is this value the same for all canisters?
-    private suspend fun fetchNFTMetadata(nftId: BigInteger) : ICPNFTICRC7Metadata? {
+    open suspend fun fetchNFTMetadata(nftId: BigInteger) : ICPNFTICRC7Metadata? {
         val metadata = try {
             service.icrc7_token_metadata(arrayOf(nftId))
         } catch (t: Throwable) {
@@ -91,8 +98,8 @@ open class ICRC7NFTService(
             return null
         }
         val uriMetadata = metadata.firstOrNull { innerArray ->
-            innerArray?.find { it.text == URL_METADATA_KEY } != null
-        }?.find { it.text == URL_METADATA_KEY }
+            innerArray?.find { urlMetadataKeys.contains(it.text) } != null
+        }?.find { urlMetadataKeys.contains(it.text) }
         if(uriMetadata == null) {
             ICPKitLogger.logDebug("No metadata found for NFT id $nftId from ${canister.string}")
             return null
@@ -106,10 +113,6 @@ open class ICRC7NFTService(
             thumbnailUrl = textValue.string
         )
 
-    }
-
-    companion object {
-        private const val URL_METADATA_KEY = "icrc7:metadata:uri:image"
     }
 
 }

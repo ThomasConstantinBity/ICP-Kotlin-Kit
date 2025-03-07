@@ -460,5 +460,23 @@ object ChainFusionToonis {
             return CandidDecoder.decodeNotNull(result.first())
         }
 
+        // tokens_ext: (AccountIdentifier) -> (Result) query;
+        suspend fun tokens_ext(
+            accountIdentifier: CFTAccountIdentifier__4,
+        ): Result_12 {
+            val icpQuery = ICPQuery(
+                methodName = "tokens_ext",
+                canister = canister
+            )
+            val result = icpQuery.query(
+                values = listOf(
+                    ValueToEncode(
+                        arg = accountIdentifier
+                    )
+                )
+            ).getOrThrow()
+            return CandidDecoder.decodeNotNull(result.first())
+        }
+
     }
 }
