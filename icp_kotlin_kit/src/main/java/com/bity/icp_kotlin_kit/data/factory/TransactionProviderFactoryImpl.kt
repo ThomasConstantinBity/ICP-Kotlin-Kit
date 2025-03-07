@@ -13,10 +13,10 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ExplorerURLRepository
-import com.bity.icp_kotlin_kit.domain.service.SNSCachedService
+import com.bity.icp_kotlin_kit.domain.repository.SNSCachedRepository
 
 internal class TransactionProviderFactoryImpl(
-    private val snsService: SNSCachedService,
+    private val snsService: SNSCachedRepository,
     private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
 ): TransactionProviderFactory {
 

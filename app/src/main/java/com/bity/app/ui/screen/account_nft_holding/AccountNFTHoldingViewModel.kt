@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
+import com.bity.icp_kotlin_kit.domain.service.NFTService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AccountNFTHoldingViewModel(
-    private val nftRepository: NFTRepository
+    private val nftService: NFTService
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AccountNFTHoldingState>(AccountNFTHoldingState.Result())
@@ -25,7 +25,7 @@ class AccountNFTHoldingViewModel(
                 val principal = ICPPrincipal(principalString)
                 _state.value = AccountNFTHoldingState.Loading
                 val holdings = withContext(Dispatchers.IO) {
-                    nftRepository.fetchNFTHoldings(principal)
+                    nftService.fetchNFTHoldings(principal)
                 }
                 _state.value = AccountNFTHoldingState.Result(holdings)
                 Log.d(TAG, "holdings: ${holdings.size}")

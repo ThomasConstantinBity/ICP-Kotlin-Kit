@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.service
 
-import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTService
+import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTRepository
 import com.bity.icp_kotlin_kit.di.nftCollectionIdService
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService.UnnamedClass2
@@ -19,11 +19,11 @@ class EXTNFTServiceTest {
 
     private val canister = mockk<ICPPrincipal>()
     private val extService = mockk<EXTService>()
-    private lateinit var service: EXTNFTService
+    private lateinit var service: EXTNFTRepository
 
     @BeforeEach
     fun setUp() {
-        service = EXTNFTService(
+        service = EXTNFTRepository(
             canister = canister,
             service = extService,
             idService = nftCollectionIdService

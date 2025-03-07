@@ -1,53 +1,53 @@
 package com.bity.icp_kotlin_kit.data.factory
 
-import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTService
+import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTRepository
 import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
-import com.bity.icp_kotlin_kit.data.service.nft.ICRC7NFTService
-import com.bity.icp_kotlin_kit.data.service.nft.OrigynNFTService
-import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTService
+import com.bity.icp_kotlin_kit.data.service.nft.ICRC7NFTRepository
+import com.bity.icp_kotlin_kit.data.service.nft.OrigynNFTRepository
+import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTRepository
 import com.bity.icp_kotlin_kit.di.nftCollectionIdService
-import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
+import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 
-internal class NFTServiceFactoryImpl: NFTServiceFactory {
+internal class NFTRepositoryFactoryImpl: NFTRepositoryFactory {
 
-    private val customNFTService = hashMapOf<String, NFTService>()
+    private val customNFTServiceToBeRepo = hashMapOf<String, NFTRepository>()
 
     init {
         // ChainFusionToonis
         ICPPrincipal("nsbts-5iaaa-aaaah-aeblq-cai").let { collectionPrincipal ->
-            val nftService = ChainFusionToonisNFTService(
+            val nftService = ChainFusionToonisNFTRepository(
                 canister = collectionPrincipal,
                 service = ChainFusionToonis.CFTService(collectionPrincipal),
             )
-            setNFTService(collectionPrincipal, nftService)
+            setNFTRepository(collectionPrincipal, nftService)
         }
     }
 
-    override fun setNFTService(
+    override fun setNFTRepository(
         collectionPrincipal: ICPPrincipal,
-        nftService: NFTService,
+        nftServiceToBeRepo: NFTRepository,
     ) {
         ICPKitLogger.logInfo("setting custom nft service for ${collectionPrincipal.string}")
-        customNFTService[collectionPrincipal.string] = nftService
+        customNFTServiceToBeRepo[collectionPrincipal.string] = nftServiceToBeRepo
     }
 
-    override fun createNFTService(collection: ICPNftCollection): NFTService? {
-        if(customNFTService.containsKey(collection.canister.string)) {
+    override fun createNFTService(collection: ICPNftCollection): NFTRepository? {
+        if(customNFTServiceToBeRepo.containsKey(collection.canister.string)) {
             ICPKitLogger.logInfo("Found custom NFT service for ${collection.canister.string}")
-            return customNFTService[collection.canister.string]
+            return customNFTServiceToBeRepo[collection.canister.string]
         }
         return when(collection.standard) {
 
             ICPNftStandard.EXT ->
-                EXTNFTService(
+                EXTNFTRepository(
                     canister = collection.canister,
                     service = EXTService(
                         canister = collection.canister
@@ -56,7 +56,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
                 )
 
             ICPNftStandard.ICRC7 ->
-                ICRC7NFTService(
+                ICRC7NFTRepository(
                     canister = collection.canister,
                     service = DBANFTService(
                         canister = collection.canister,
@@ -64,7 +64,7 @@ internal class NFTServiceFactoryImpl: NFTServiceFactory {
                 )
 
             ICPNftStandard.ORIGYN_NFT ->
-                OrigynNFTService(
+                OrigynNFTRepository(
                     canister = OrigynNFT.Nft_Canister(
                         canister = collection.canister
                     )

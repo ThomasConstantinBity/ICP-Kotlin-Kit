@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
+import com.bity.icp_kotlin_kit.domain.service.NFTService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class NFTDetailsViewModel(
     nftCanisterString: String,
-    private val nftRepository: NFTRepository
+    private val nftService: NFTService
 ) : ViewModel() {
 
     private val collectionPrincipal = ICPPrincipal(nftCanisterString)
@@ -49,14 +49,14 @@ class NFTDetailsViewModel(
     }
 
     private suspend fun updateNFTCollection() {
-        val nftDetails = nftRepository.fetchCollection(collectionPrincipal)
+        val nftDetails = nftService.fetchCollection(collectionPrincipal)
         _state.value = _state.value.copy(
             nftCollection = nftDetails
         )
     }
 
     private suspend fun updateNFTsList() {
-        val collectionDetails = nftRepository.fetchNFTs(collectionPrincipal)
+        val collectionDetails = nftService.fetchNFTs(collectionPrincipal)
         _state.value = _state.value.copy(
             collectionNFTs = collectionDetails
         )

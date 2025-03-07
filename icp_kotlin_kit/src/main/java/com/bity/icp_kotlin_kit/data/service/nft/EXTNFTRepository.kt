@@ -11,14 +11,14 @@ import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import java.math.BigInteger
 
-open class EXTNFTService(
+open class EXTNFTRepository(
     private val canister: ICPPrincipal,
     private val service: EXTService,
     private val idService: NFTCollectionIdService
-): NFTService {
+): NFTRepository {
 
     override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> =
         service.tokens_ext(principal.string)

@@ -5,25 +5,25 @@ import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
-import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
+import com.bity.icp_kotlin_kit.domain.repository.NFTCachedRepository
 
-internal class NFTCachedServiceImpl(
-    private val nftService: DABNFT.DABNFTService
-): NFTCachedService {
+internal class NFTCachedRepositoryImpl(
+    private val canister: DABNFT.DABNFTService
+): NFTCachedRepository {
 
     private var cachedCollections: List<ICPNftCollection> = emptyList()
 
-    override suspend fun getAllNFTsCollections(): List<ICPNftCollection> {
+    override suspend fun fetchAllNFTsCollections(): List<ICPNftCollection> {
         if(cachedCollections.isEmpty()) {
-            val collections = nftService.get_all()
+            val collections = this@NFTCachedRepositoryImpl.canister.get_all()
                 .mapNotNull { it.toDomainModel() }
             cachedCollections = collections
         }
         return cachedCollections
     }
 
-    override suspend fun getNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
-        getAllNFTsCollections()
+    override suspend fun fetchNFTCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
+        fetchAllNFTsCollections()
             .firstOrNull { it.canister == collectionPrincipal }
 
 }

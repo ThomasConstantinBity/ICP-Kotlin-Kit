@@ -8,16 +8,16 @@ import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTMetadata
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.math.BigInteger
 
-class ChainFusionToonisNFTService(
+class ChainFusionToonisNFTRepository(
     private val canister: ICPPrincipal,
     private val service: ChainFusionToonis.CFTService,
-) : NFTService {
+) : NFTRepository {
 
     private val objectMapper  = ObjectMapper().registerKotlinModule()
 

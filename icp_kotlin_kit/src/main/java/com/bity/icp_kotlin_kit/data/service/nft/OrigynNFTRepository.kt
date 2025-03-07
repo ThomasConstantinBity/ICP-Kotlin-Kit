@@ -5,12 +5,12 @@ import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import java.math.BigInteger
 
-open class OrigynNFTService(
+open class OrigynNFTRepository(
     private val canister: OrigynNFT.Nft_Canister
-): NFTService {
+): NFTRepository {
 
     override suspend fun fetchUserHoldings(principal: ICPPrincipal): List<ICPNFTDetails> {
         val account = OrigynNFT.Account.principal(principal.toDataModel())

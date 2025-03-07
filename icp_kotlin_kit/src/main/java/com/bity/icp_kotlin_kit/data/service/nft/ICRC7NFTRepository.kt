@@ -9,17 +9,17 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTICRC7Metadata
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
-open class ICRC7NFTService(
+open class ICRC7NFTRepository(
     private val canister: ICPPrincipal,
     private val service: DBANFTService,
-): NFTService {
+): NFTRepository {
 
     open val urlMetadataKeys = listOf("icrc7:metadata:uri:image", "image")
 

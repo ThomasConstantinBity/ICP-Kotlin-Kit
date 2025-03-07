@@ -2,7 +2,7 @@ package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.exception.TokenRepositoryException
-import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
+import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenBalance
@@ -10,19 +10,19 @@ import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer
 import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
-import com.bity.icp_kotlin_kit.domain.service.TokensCachedService
+import com.bity.icp_kotlin_kit.domain.repository.TokensCachedRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
 internal class TokenRepositoryImpl (
-    private val tokensCachedService: TokensCachedService,
-    private val tokenServiceFactory: TokenServiceFactory
+    private val tokensCachedRepository: TokensCachedRepository,
+    private val tokenRepositoryFactory: TokenRepositoryFactory
 ): TokenRepository {
 
     override suspend fun fetchAllTokens(): List<ICPToken> =
-        tokensCachedService.fetchAllTokens()
+        tokensCachedRepository.fetchAllTokens()
 
     override suspend fun fetchTokensBalance(
         principal: ICPPrincipal
@@ -55,7 +55,7 @@ internal class TokenRepositoryImpl (
         principal: ICPPrincipal
     ): BigInteger? {
         val actor = try {
-            tokenServiceFactory.createService(standard, canister)
+            tokenRepositoryFactory.createRepository(standard, canister)
         } catch (ex: TokenRepositoryException.NoTokenServiceFound) {
             ICPKitLogger.logError(throwable = ex)
             return null
@@ -69,7 +69,7 @@ internal class TokenRepositoryImpl (
     }
 
     override suspend fun fee(token: ICPToken): BigInteger {
-        val actor = tokenServiceFactory.createService(
+        val actor = tokenRepositoryFactory.createRepository(
             standard = token.standard,
             canister = token.canister
         )
@@ -77,7 +77,7 @@ internal class TokenRepositoryImpl (
     }
 
     override suspend fun send(transferArgs: ICPTokenTransferArgs): ICPTokenTransfer {
-        val actor = tokenServiceFactory.createService(
+        val actor = tokenRepositoryFactory.createRepository(
             standard = transferArgs.token.standard,
             canister = transferArgs.token.canister
         )

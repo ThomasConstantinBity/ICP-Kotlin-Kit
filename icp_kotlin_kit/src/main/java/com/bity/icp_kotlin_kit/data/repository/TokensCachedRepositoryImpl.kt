@@ -2,27 +2,27 @@ package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
-import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
+import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.*
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
-import com.bity.icp_kotlin_kit.domain.service.TokensCachedService
+import com.bity.icp_kotlin_kit.domain.repository.TokensCachedRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
-internal class TokensCachedServiceImpl(
-    private val tokensService: TokensService,
-    private val actorFactory: TokenServiceFactory
-): TokensCachedService {
+internal class TokensCachedRepositoryImpl(
+    private val canister: TokensService,
+    private val actorFactory: TokenRepositoryFactory
+): TokensCachedRepository {
 
     private var cachedTokens: List<ICPToken>? = null
 
     override suspend fun fetchAllTokens(): List<ICPToken> = coroutineScope {
         cachedTokens?.let { return@coroutineScope it }
         val tokensDeferred = async {
-            tokensService.get_all()
+            this@TokensCachedRepositoryImpl.canister.get_all()
                 .map { it.toICPToken() }
         }
         val icpTokenDeferred = async {
@@ -36,7 +36,7 @@ internal class TokensCachedServiceImpl(
     private suspend fun getICPToken(): ICPToken {
         val standard = ICPTokenStandard.ICP
         val canister = ICPSystemCanisters.Ledger.icpPrincipal
-        val actor = actorFactory.createService(
+        val actor = actorFactory.createRepository(
             standard = standard,
             canister = canister
         )

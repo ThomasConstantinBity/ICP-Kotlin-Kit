@@ -1,7 +1,7 @@
-package com.bity.icp_kotlin_kit.domain.service
+package com.bity.icp_kotlin_kit.domain.repository
 
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 
-internal interface TokensCachedService {
+internal interface TokensCachedRepository {
     suspend fun fetchAllTokens(): List<ICPToken>
 }

@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
-import com.bity.icp_kotlin_kit.domain.factory.NFTServiceFactory
+import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -9,25 +9,25 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.exception.NFTRepositoryException
 import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
-import com.bity.icp_kotlin_kit.domain.service.NFTCachedService
-import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
+import com.bity.icp_kotlin_kit.domain.repository.NFTCachedRepository
 import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
-internal class NFTRepositoryImpl(
-    private val nftServiceFactory: NFTServiceFactory,
-    private val nftCachedService: NFTCachedService
-): NFTRepository {
+internal class NFTServiceImpl(
+    private val nftRepositoryFactory: NFTRepositoryFactory,
+    private val nftCachedRepository: NFTCachedRepository
+): NFTService {
 
     override suspend fun fetchAllCollections(): List<ICPNftCollection> =
-        nftCachedService.getAllNFTsCollections()
+        nftCachedRepository.fetchAllNFTsCollections()
 
     override suspend fun fetchCollection(collectionPrincipal: ICPPrincipal): ICPNftCollection? =
-        nftCachedService.getNFTCollection(collectionPrincipal)
+        nftCachedRepository.fetchNFTCollection(collectionPrincipal)
 
     override suspend fun fetchNFTs(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem> {
         val nftService = getNFTServiceForCollection(collectionPrincipal)
@@ -46,7 +46,7 @@ internal class NFTRepositoryImpl(
     }
 
     override suspend fun fetchNFTHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails> = coroutineScope {
-        return@coroutineScope nftCachedService.getAllNFTsCollections()
+        return@coroutineScope nftCachedRepository.fetchAllNFTsCollections()
             .filter { it.standard == ICPNftStandard.ICRC7 }
             .map {
                 async {
@@ -72,15 +72,15 @@ internal class NFTRepositoryImpl(
         icpPrincipal: ICPPrincipal,
         collection: ICPNftCollection
     ): List<ICPNFTDetails> {
-        val nftService = nftServiceFactory.createNFTService(collection)
+        val nftService = nftRepositoryFactory.createNFTService(collection)
             ?: return emptyList()
         return nftService.fetchUserHoldings(icpPrincipal)
     }
 
-    private suspend fun getNFTServiceForCollection(collectionPrincipal: ICPPrincipal) : NFTService {
-        val collection = nftCachedService.getNFTCollection(collectionPrincipal)
+    private suspend fun getNFTServiceForCollection(collectionPrincipal: ICPPrincipal) : NFTRepository {
+        val collection = nftCachedRepository.fetchNFTCollection(collectionPrincipal)
             ?: throw NFTRepositoryException.CollectionNotFound(collectionPrincipal)
-        return nftServiceFactory.createNFTService(collection)
+        return nftRepositoryFactory.createNFTService(collection)
             ?: throw NFTServiceException.StandardNotSupported(collection.standard)
     }
 }
