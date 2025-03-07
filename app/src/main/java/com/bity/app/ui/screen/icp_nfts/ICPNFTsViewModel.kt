@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
+import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ICPNFTsViewModel(
-    private val getAllNFTCollections: GetAllNFTCollectionsUseCase
+    private val nftRepository: NFTRepository
 ): ViewModel() {
 
     var state: ICPNFTsState by mutableStateOf(ICPNFTsState())
@@ -20,7 +20,7 @@ class ICPNFTsViewModel(
     init {
         viewModelScope.launch {
             val nftCollections = withContext(Dispatchers.IO) {
-                getAllNFTCollections()
+                nftRepository.fetchAllCollections()
             }
             state = ICPNFTsState(
                 isLoading = false,

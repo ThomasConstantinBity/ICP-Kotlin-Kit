@@ -17,10 +17,10 @@ internal class TokenRepositoryImpl (
     private val actorFactory: TokenServiceFactory
 ): TokenRepository {
 
-    override suspend fun getAllTokens(): List<ICPToken> =
+    override suspend fun fetchAllTokens(): List<ICPToken> =
         tokensCachedService.getAllTokens()
 
-    override suspend fun getTokenBalance(
+    override suspend fun fetchTokenBalance(
         standard: ICPTokenStandard,
         canister: ICPPrincipal,
         principal: ICPPrincipal

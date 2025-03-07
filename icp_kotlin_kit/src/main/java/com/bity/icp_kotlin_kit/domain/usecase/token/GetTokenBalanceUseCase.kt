@@ -15,10 +15,10 @@ class GetTokenBalanceUseCase internal constructor(
     constructor(): this(tokenRepository)
 
     suspend operator fun invoke(principal: ICPPrincipal): List<ICPTokenBalance> = coroutineScope {
-        val tokens = repository.getAllTokens()
+        val tokens = repository.fetchAllTokens()
         tokens.map { token ->
             token to async {
-                repository.getTokenBalance(
+                repository.fetchTokenBalance(
                     standard = token.standard,
                     canister = token.canister,
                     principal = principal

@@ -1,8 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.usecase
 
-import com.bity.icp_kotlin_kit.data.factory.TransactionProviderFactoryImpl
 import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
-import com.bity.icp_kotlin_kit.di.nnsSNSWService
 import com.bity.icp_kotlin_kit.di.tokenRepository
 import com.bity.icp_kotlin_kit.di.transactionProviderFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
@@ -23,7 +21,7 @@ class GetExplorerUrlUseCase internal constructor(
         tokenCanister: ICPPrincipal,
         transactionIndex: String
     ): String? {
-        val token = repository.getAllTokens()
+        val token = repository.fetchAllTokens()
             .firstOrNull { it.canister.string == tokenCanister.string }
             ?: throw DABTokenException.TokenNotFound(tokenCanister)
         val explorerUrlProvider = transactionFactory.getExplorerURLProvider(token)

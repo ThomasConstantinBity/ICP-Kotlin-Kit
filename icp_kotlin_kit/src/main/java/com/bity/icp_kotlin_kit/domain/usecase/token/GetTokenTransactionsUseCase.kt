@@ -32,7 +32,7 @@ class GetTokenTransactionsUseCase internal constructor(
         account: ICPAccount,
         tokenCanister: ICPPrincipal
     ): List<ICPTokenTransaction> {
-        val token = repository.getAllTokens()
+        val token = repository.fetchAllTokens()
             .firstOrNull { it.canister.string == tokenCanister.string }
             ?: throw DABTokenException.TokenNotFound(tokenCanister)
         val transactionProvider = transactionFactory.getTransactionProvider(token)

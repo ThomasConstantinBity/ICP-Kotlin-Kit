@@ -7,9 +7,9 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import java.math.BigInteger
 
-internal interface TokenRepository {
-    suspend fun getAllTokens(): List<ICPToken>
-    suspend fun getTokenBalance(
+interface TokenRepository {
+    suspend fun fetchAllTokens(): List<ICPToken>
+    suspend fun fetchTokenBalance(
         standard: ICPTokenStandard,
         canister: ICPPrincipal,
         principal: ICPPrincipal
