@@ -3,17 +3,14 @@ package com.bity.icp_kotlin_kit.data.repository
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
 import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
-import com.bity.icp_kotlin_kit.domain.generated_file.detail_value
+import com.bity.icp_kotlin_kit.domain.generated_file.*
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
-import com.bity.icp_kotlin_kit.domain.model.error.TokenActorException
 import com.bity.icp_kotlin_kit.domain.service.TokensCachedService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
-import com.bity.icp_kotlin_kit.domain.generated_file.token
 
 internal class TokensCachedServiceImpl(
     private val tokensService: TokensService,
@@ -39,10 +36,7 @@ internal class TokensCachedServiceImpl(
     private suspend fun getICPToken(): ICPToken {
         val standard = ICPTokenStandard.ICP
         val canister = ICPSystemCanisters.Ledger.icpPrincipal
-        val actor = actorFactory.createActor(
-            standard = standard,
-            canister = canister
-        ) ?: throw TokenActorException.NullActorException(
+        val actor = actorFactory.createService(
             standard = standard,
             canister = canister
         )

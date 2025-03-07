@@ -3,6 +3,7 @@ package com.bity.icp_kotlin_kit.data.factory
 import com.bity.icp_kotlin_kit.data.service.token.DIP20TokenService
 import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
 import com.bity.icp_kotlin_kit.data.service.token.ICRC1TokenService
+import com.bity.icp_kotlin_kit.domain.exception.TokenRepositoryException
 import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1
@@ -11,10 +12,10 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 
 internal class TokenServiceFactoryImpl: TokenServiceFactory {
 
-    override fun createActor(
+    override fun createService(
         standard: ICPTokenStandard,
         canister: ICPPrincipal
-    ): ICPTokenService? =
+    ): ICPTokenService =
         when(standard) {
             ICPTokenStandard.DIP20 -> DIP20TokenService(
                 service = DIP20.DIP20Service(
@@ -32,6 +33,10 @@ internal class TokenServiceFactoryImpl: TokenServiceFactory {
             ICPTokenStandard.WICP,
             ICPTokenStandard.EXT,
             ICPTokenStandard.ROSETTA,
-            ICPTokenStandard.DRC20 -> null
+            ICPTokenStandard.DRC20 ->
+                throw TokenRepositoryException.NoTokenServiceFound(
+                    standard = standard,
+                    canister = canister
+                )
         }
 }

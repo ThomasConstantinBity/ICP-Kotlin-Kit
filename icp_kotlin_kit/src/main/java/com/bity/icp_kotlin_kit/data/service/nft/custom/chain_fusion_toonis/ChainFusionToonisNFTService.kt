@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.model.exception.NFTServiceException
+import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata

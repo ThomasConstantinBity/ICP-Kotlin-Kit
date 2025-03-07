@@ -46,7 +46,7 @@ class GetTokenLexerBalanceUseCaseTest {
         val balance2 = BigInteger("200")
 
         coEvery { tokenRepository.fetchAllTokens() } returns listOf(token, token)
-        coEvery { tokenRepository.fetchTokenBalance(any(), any(), any()) } returnsMany listOf(balance1, balance2)
+        coEvery { tokenRepository.fetchTokensBalance(any(), any(), any()) } returnsMany listOf(balance1, balance2)
 
         val result = getTokenBalancesUseCase(mockPrincipal)
 

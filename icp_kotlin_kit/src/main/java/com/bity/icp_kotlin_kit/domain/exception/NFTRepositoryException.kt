@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.model.exception
+package com.bity.icp_kotlin_kit.domain.exception
 
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 

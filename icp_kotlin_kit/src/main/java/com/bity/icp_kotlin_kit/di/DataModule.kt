@@ -76,7 +76,7 @@ val nftRepository: NFTRepository by lazy {
 internal val tokenRepository: TokenRepository by lazy {
     TokenRepositoryImpl(
         tokensCachedService = tokensCachedService,
-        actorFactory = tokenServiceFactory
+        tokenServiceFactory = tokenServiceFactory
     )
 }
 

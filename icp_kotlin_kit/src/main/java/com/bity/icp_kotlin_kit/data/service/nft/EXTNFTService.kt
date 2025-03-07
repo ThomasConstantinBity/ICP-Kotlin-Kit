@@ -7,7 +7,7 @@ import com.bity.icp_kotlin_kit.domain.generated_file.Result_1
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
-import com.bity.icp_kotlin_kit.domain.model.exception.NFTServiceException
+import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
