@@ -8,23 +8,23 @@ object ICPKitLogger {
         this.logger = logger
     }
 
-    fun logError(message: String? = null, throwable: Throwable) {
+    internal fun logError(message: String? = null, throwable: Throwable) {
         logger?.logError(message, throwable)
     }
 
-    fun logInfo(message: String) {
+    internal fun logInfo(message: String) {
         logger?.logInfo(message)
     }
 
-    fun logWarning(message: String) {
+    internal fun logWarning(message: String) {
         logger?.logWarning(message)
     }
 
-    fun logDebug(message: String) {
+    internal fun logDebug(message: String) {
         logger?.logDebug(message)
     }
 
-    fun logVerbose(message: String) {
+    internal fun logVerbose(message: String) {
         logger?.logVerbose(message)
     }
 

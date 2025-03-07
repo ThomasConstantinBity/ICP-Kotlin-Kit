@@ -178,3 +178,10 @@ tasks.register("parseCandidFiles") {
     }
 }
 ```
+
+### NFT Support
+The library, in the `DataModule` file, provides an `nftRepository` object that implements the `NFTRepository` interface. The interface implementation can be used to fetch all the required NFT information. If you want to handle a collection with a custom implementation, you can call `NFTServiceUtil.setNFTService`. You can check `ChainFusionToonisNFTService` for an example.
+
+### Logger
+
+To enhance tracking and debugging, you can set a custom logger by calling `ICPKitLogger.setLogger`. Simply provide an implementation of `ICPKitLogHandler` and override only the necessary functions. All methods with custom behavior have an empty body by default, allowing for flexible customization.  

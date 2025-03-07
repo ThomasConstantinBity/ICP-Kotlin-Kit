@@ -15,7 +15,6 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.service.NFTService
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import com.bity.icp_kotlin_kit.util.nft_service.NFTServiceUtil
 
 internal class NFTServiceFactoryImpl: NFTServiceFactory {
 
