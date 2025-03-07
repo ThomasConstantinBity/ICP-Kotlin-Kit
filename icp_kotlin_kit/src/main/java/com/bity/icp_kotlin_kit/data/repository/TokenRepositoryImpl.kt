@@ -22,7 +22,7 @@ internal class TokenRepositoryImpl (
 ): TokenRepository {
 
     override suspend fun fetchAllTokens(): List<ICPToken> =
-        tokensCachedService.getAllTokens()
+        tokensCachedService.fetchAllTokens()
 
     override suspend fun fetchTokensBalance(
         principal: ICPPrincipal
@@ -61,7 +61,7 @@ internal class TokenRepositoryImpl (
             return null
         }
         return try {
-            actor.getBalance(principal)
+            actor.fetchBalance(principal)
         } catch (ex: RemoteClientError) {
             ICPKitLogger.logError(throwable = ex)
             null

@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.service.token
+package com.bity.icp_kotlin_kit.data.repository.token
 
 import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -8,30 +8,30 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.ICRC1TokenException
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
-import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
+import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
 import com.bity.icp_kotlin_kit.util.ext_function.toICPTimestamp
 import java.math.BigInteger
 
-internal class ICRC1TokenService(
-    private val service: ICRC1.ICRC1Service
-): ICPTokenService {
+internal class ICRC1TokenRepository(
+    private val canister: ICRC1.ICRC1Service
+): ICPTokenRepository {
 
-    override suspend fun getBalance(principal: ICPPrincipal): BigInteger {
+    override suspend fun fetchBalance(principal: ICPPrincipal): BigInteger {
         val account = ICRC1.Account(
             owner = principal.toDataModel(),
             subaccount = null
         )
-        return service.icrc1_balance_of(account)
+        return this@ICRC1TokenRepository.canister.icrc1_balance_of(account)
     }
 
-    override suspend fun metadata(): ICPTokenMetadata {
-        val metadata = service.icrc1_metadata()
-        val totalSupply = service.icrc1_total_supply()
+    override suspend fun fetchMetadata(): ICPTokenMetadata {
+        val metadata = this@ICRC1TokenRepository.canister.icrc1_metadata()
+        val totalSupply = this@ICRC1TokenRepository.canister.icrc1_total_supply()
         return buildICPTokenMetadata(metadata, totalSupply)
     }
 
     override suspend fun fee(): BigInteger =
-        service.icrc1_fee()
+        this@ICRC1TokenRepository.canister.icrc1_fee()
 
     override suspend fun transfer(args: ICPTokenTransferArgs): ICPTokenTransfer {
         val transferArgs = ICRC1.TransferArgs(
@@ -45,7 +45,7 @@ internal class ICRC1TokenService(
             memo = args.icrc1Memo,
             created_at_time = args.createdAtMillis?.toICPTimestamp()
         )
-        val transferResult = service.icrc1_transfer(
+        val transferResult = this@ICRC1TokenRepository.canister.icrc1_transfer(
             transferArgs = transferArgs,
             sender = args.sender
         )

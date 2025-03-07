@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.data.service.token
+package com.bity.icp_kotlin_kit.data.repository.token
 
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20.TxError
@@ -9,26 +9,26 @@ import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
 import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.toDomainModel
-import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
+import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
 import java.math.BigInteger
 
-internal class DIP20TokenService(
-    private val service: DIP20.DIP20Service
-): ICPTokenService {
+internal class DIP20TokenRepository(
+    private val canister: DIP20.DIP20Service
+): ICPTokenRepository {
 
-    override suspend fun getBalance(principal: ICPPrincipal): BigInteger =
-        service.balanceOf(principal.toDataModel())
+    override suspend fun fetchBalance(principal: ICPPrincipal): BigInteger =
+        this@DIP20TokenRepository.canister.balanceOf(principal.toDataModel())
 
     override suspend fun fee(): BigInteger =
-        metadata().fee
+        fetchMetadata().fee
 
-    override suspend fun metadata(): ICPTokenMetadata {
-        val metadata = service.getMetadata()
+    override suspend fun fetchMetadata(): ICPTokenMetadata {
+        val metadata = this@DIP20TokenRepository.canister.getMetadata()
         return metadata.toDomainModel()
     }
 
     override suspend fun transfer(args: ICPTokenTransferArgs): ICPTokenTransfer {
-        val txReceipt = service.transfer(
+        val txReceipt = this@DIP20TokenRepository.canister.transfer(
             to = args.to.principal.toDataModel(),
             value = args.amount,
             sender = args.sender

@@ -19,7 +19,7 @@ internal class TokensCachedServiceImpl(
 
     private var cachedTokens: List<ICPToken>? = null
 
-    override suspend fun getAllTokens(): List<ICPToken> = coroutineScope {
+    override suspend fun fetchAllTokens(): List<ICPToken> = coroutineScope {
         cachedTokens?.let { return@coroutineScope it }
         val tokensDeferred = async {
             tokensService.get_all()
@@ -40,7 +40,7 @@ internal class TokensCachedServiceImpl(
             standard = standard,
             canister = canister
         )
-        val metadata = actor.metadata()
+        val metadata = actor.fetchMetadata()
         return ICPToken(
             standard = standard,
             canister = canister,

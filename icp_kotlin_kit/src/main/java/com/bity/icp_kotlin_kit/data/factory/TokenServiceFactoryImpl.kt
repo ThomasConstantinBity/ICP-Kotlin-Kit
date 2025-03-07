@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.data.factory
 
-import com.bity.icp_kotlin_kit.data.service.token.DIP20TokenService
-import com.bity.icp_kotlin_kit.domain.service.ICPTokenService
-import com.bity.icp_kotlin_kit.data.service.token.ICRC1TokenService
+import com.bity.icp_kotlin_kit.data.repository.token.DIP20TokenRepository
+import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
+import com.bity.icp_kotlin_kit.data.repository.token.ICRC1TokenRepository
 import com.bity.icp_kotlin_kit.domain.exception.TokenRepositoryException
 import com.bity.icp_kotlin_kit.domain.factory.TokenServiceFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
@@ -15,17 +15,17 @@ internal class TokenServiceFactoryImpl: TokenServiceFactory {
     override fun createService(
         standard: ICPTokenStandard,
         canister: ICPPrincipal
-    ): ICPTokenService =
+    ): ICPTokenRepository =
         when(standard) {
-            ICPTokenStandard.DIP20 -> DIP20TokenService(
-                service = DIP20.DIP20Service(
+            ICPTokenStandard.DIP20 -> DIP20TokenRepository(
+                canister = DIP20.DIP20Service(
                     canister = canister
                 )
             )
             ICPTokenStandard.ICP,
             ICPTokenStandard.ICRC1,
-            ICPTokenStandard.ICRC2 -> ICRC1TokenService(
-                service = ICRC1.ICRC1Service(
+            ICPTokenStandard.ICRC2 -> ICRC1TokenRepository(
+                canister = ICRC1.ICRC1Service(
                     canister = canister
                 )
             )
