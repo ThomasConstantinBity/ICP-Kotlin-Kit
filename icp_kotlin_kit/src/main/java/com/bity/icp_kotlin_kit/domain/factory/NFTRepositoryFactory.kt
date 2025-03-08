@@ -9,5 +9,5 @@ internal interface NFTRepositoryFactory {
         collectionPrincipal: ICPPrincipal,
         nftServiceToBeRepo: NFTRepository
     )
-    fun createNFTService(collection: ICPNftCollection): NFTRepository?
+    fun createNFTRepository(collection: ICPNftCollection): NFTRepository?
 }

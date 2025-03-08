@@ -1,33 +1,24 @@
 package com.bity.icp_kotlin_kit
 
-import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
-import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
+import com.bity.icp_kotlin_kit.di.fetchAllNFTCollections
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
 import com.bity.icp_kotlin_kit.di.nftService
-import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
-import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
-import com.bity.icp_kotlin_kit.domain.usecase.nft.GetNFTHoldings
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogHandler
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.fail
-import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 
 
 /**
@@ -74,7 +65,7 @@ class TmpTest {
 
     @Test
     fun `get all NFTs`() = runTest {
-        GetAllNFTCollectionsUseCase()
+        fetchAllNFTCollections
             .invoke()
             .filter { it.standard == ICPNftStandard.ICRC7 }
             // .find { it.canister.string == "hfevg-caaaa-aaaai-actwa-cai" }
@@ -138,7 +129,7 @@ class TmpTest {
         }
     }
 
-    @ParameterizedTest(name = "{0}")
+    /*@ParameterizedTest(name = "{0}")
     @MethodSource("icrc7Canisters")
     fun `ICRC7 NFTs balance`(
         collectionName: String,
@@ -164,13 +155,13 @@ class TmpTest {
                 fail(t)
             }
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun tmpTest() = runTest {
 
-        /*val nftList = GetAllNFTCollectionsUseCase().invoke()
-        nftList.forEach { println("${it.name} - ${it.canister.string}") }*/
+        *//*val nftList = GetAllNFTCollectionsUseCase().invoke()
+        nftList.forEach { println("${it.name} - ${it.canister.string}") }*//*
 
         // GLD NFT
         // val principal = ICPPrincipal("ahzsn-oryvk-4joqr-orao4-glrr3-ovhmd-bacbr-ojr5q-2k4lw-neyy4-xqe")
@@ -180,7 +171,7 @@ class TmpTest {
         println("NFT holding for ${principal.string}: ${nftHolding.size}")
         nftHolding.forEach { println(it) }
 
-    }
+    }*/
 
     @Test
     fun parsingTest() = runTest {

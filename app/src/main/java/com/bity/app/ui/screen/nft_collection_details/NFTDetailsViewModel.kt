@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.service.NFTService
+import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchNFTCollection
+import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchNFTCollectionTokens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -17,7 +18,8 @@ import kotlinx.coroutines.withContext
 
 class NFTDetailsViewModel(
     nftCanisterString: String,
-    private val nftService: NFTService
+    private val fetchNFTCollection: FetchNFTCollection,
+    private val fetchNFTCollectionTokens: FetchNFTCollectionTokens
 ) : ViewModel() {
 
     private val collectionPrincipal = ICPPrincipal(nftCanisterString)
@@ -49,21 +51,21 @@ class NFTDetailsViewModel(
     }
 
     private suspend fun updateNFTCollection() {
-        val nftDetails = nftService.fetchCollection(collectionPrincipal)
+        val nftDetails = fetchNFTCollection(collectionPrincipal)
         _state.value = _state.value.copy(
             nftCollection = nftDetails
         )
     }
 
     private suspend fun updateNFTsList() {
-        val collectionDetails = nftService.fetchNFTs(collectionPrincipal)
+        val collectionDetails = fetchNFTCollectionTokens(collectionPrincipal)
         _state.value = _state.value.copy(
             collectionNFTs = collectionDetails
         )
     }
 
     companion object {
-        private val TAG = "NFTDetailsViewModel"
+        private const val TAG = "NFTDetailsViewModel"
     }
 
 }

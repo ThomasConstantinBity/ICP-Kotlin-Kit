@@ -18,7 +18,7 @@ import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 
 internal class NFTRepositoryFactoryImpl: NFTRepositoryFactory {
 
-    private val customNFTServiceToBeRepo = hashMapOf<String, NFTRepository>()
+    private val customNFTRepository = hashMapOf<String, NFTRepository>()
 
     init {
         // ChainFusionToonis
@@ -36,13 +36,13 @@ internal class NFTRepositoryFactoryImpl: NFTRepositoryFactory {
         nftServiceToBeRepo: NFTRepository,
     ) {
         ICPKitLogger.logInfo("setting custom nft service for ${collectionPrincipal.string}")
-        customNFTServiceToBeRepo[collectionPrincipal.string] = nftServiceToBeRepo
+        customNFTRepository[collectionPrincipal.string] = nftServiceToBeRepo
     }
 
-    override fun createNFTService(collection: ICPNftCollection): NFTRepository? {
-        if(customNFTServiceToBeRepo.containsKey(collection.canister.string)) {
+    override fun createNFTRepository(collection: ICPNftCollection): NFTRepository? {
+        if(customNFTRepository.containsKey(collection.canister.string)) {
             ICPKitLogger.logInfo("Found custom NFT service for ${collection.canister.string}")
-            return customNFTServiceToBeRepo[collection.canister.string]
+            return customNFTRepository[collection.canister.string]
         }
         return when(collection.standard) {
 
