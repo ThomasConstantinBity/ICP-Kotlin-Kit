@@ -1,13 +1,13 @@
 package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
+import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.generated_file.CommonError
 import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
 import com.bity.icp_kotlin_kit.domain.generated_file.Result_1
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
-import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
@@ -56,7 +56,7 @@ open class EXTNFTRepository(
     ) : ICPNFTCollectionItem {
         val nfts = fetchNFTs(collectionPrincipal)
         return nfts.find { it.id == nftId }
-            ?: throw NFTServiceException.NFTNotFound(
+            ?: throw ICPKitException.NFTNotFound(
                 collectionPrincipal = collectionPrincipal,
                 nftId = nftId
             )

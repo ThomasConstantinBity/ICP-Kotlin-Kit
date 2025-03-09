@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.repository
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
 import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
-import com.bity.icp_kotlin_kit.domain.exception.TokenRepositoryException
+import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.*
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -72,7 +72,7 @@ internal class TokenCachedRepositoryImpl(
     ): BigInteger? {
         val repository = try {
             tokenRepositoryFactory.createRepository(standard, canister)
-        } catch (ex: TokenRepositoryException.NoTokenServiceFound) {
+        } catch (ex: ICPKitException) {
             ICPKitLogger.logError(throwable = ex)
             return null
         }

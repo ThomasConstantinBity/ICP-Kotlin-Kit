@@ -1,9 +1,10 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
+import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
+import com.bity.icp_kotlin_kit.domain.generated_file.token
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.exception.NFTServiceException
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
@@ -48,7 +49,10 @@ class ChainFusionToonisNFTRepository(
     private fun onUserHoldingError(err: ChainFusionToonis.CommonError__2) {
         when(err) {
             is ChainFusionToonis.CommonError__2.InvalidToken -> {
-                val exception = NFTServiceException.InvalidToken(err.InvalidToken)
+                val exception = ICPKitException.InvalidNFTToken(
+                    canister = canister,
+                    token = err.InvalidToken
+                )
                 ICPKitLogger.logError("Received InvalidToken response from ChainFusionToonis canister", exception)
             }
             is ChainFusionToonis.CommonError__2.Other -> { }

@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.use_case.transaction
 
-import com.bity.icp_kotlin_kit.domain.exception.TransactionServiceException
+import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
@@ -27,7 +27,7 @@ class FetchTokenTransactions internal constructor(
     ): List<ICPTokenTransaction> {
         val token = tokenRepository.fetchAllTokens()
             .firstOrNull { it.canister.string == tokenCanister.string }
-            ?: throw TransactionServiceException.TokenNotFound(tokenCanister)
+            ?: throw ICPKitException.TokenNotFound(tokenCanister)
         return transactionRepository.fetchTokenTransactions(account, token)
     }
 
