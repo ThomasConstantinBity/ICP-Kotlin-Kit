@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.error.ICPCryptographyError
-import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
+import com.bity.icp_kotlin_kit.domain.use_case.token.FetchTokensBalance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AccountBalanceViewModel(
-    private val tokenRepository: TokenRepository
+    private val fetchTokensBalance: FetchTokensBalance
 ): ViewModel() {
 
     var accountInformationState by mutableStateOf(AccountBalanceState())
@@ -33,7 +33,7 @@ class AccountBalanceViewModel(
                 isLoading = true
             )
             val tokensBalance = withContext(Dispatchers.IO) {
-                tokenRepository.fetchTokensBalance(principalId)
+                fetchTokensBalance(principalId)
             }
 
             accountInformationState = accountInformationState.copy(

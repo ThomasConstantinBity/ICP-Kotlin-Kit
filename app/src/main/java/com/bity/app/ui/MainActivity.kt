@@ -37,6 +37,14 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         AppFeatures(navController = navController)
                     }
 
+                    composable(route = Screen.ICPTokens.route) {
+                        ICPTokensScreen()
+                    }
+
+                    composable(route = Screen.AccountBalance.route) {
+                        AccountBalance()
+                    }
+
                     composable(route = Screen.ICPNFTs.route) {
                         ICPNFTsScreen(
                             onNFTClick = { }

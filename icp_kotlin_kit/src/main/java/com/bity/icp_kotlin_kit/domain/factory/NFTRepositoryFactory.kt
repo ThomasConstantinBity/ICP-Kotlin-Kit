@@ -7,7 +7,7 @@ import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 internal interface NFTRepositoryFactory {
     fun setNFTRepository(
         collectionPrincipal: ICPPrincipal,
-        nftServiceToBeRepo: NFTRepository
+        nftRepository: NFTRepository
     )
     fun createNFTRepository(collection: ICPNftCollection): NFTRepository?
 }

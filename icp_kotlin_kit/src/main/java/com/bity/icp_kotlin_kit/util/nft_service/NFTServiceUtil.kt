@@ -8,11 +8,11 @@ object NFTServiceUtil {
 
     fun setNFTService(
         collectionPrincipal: ICPPrincipal,
-        nftServiceToBeRepo: NFTRepository
+        nftRepository: NFTRepository
     ) {
         nftRepositoryFactory.setNFTRepository(
             collectionPrincipal = collectionPrincipal,
-            nftServiceToBeRepo = nftServiceToBeRepo
+            nftRepository = nftRepository
         )
     }
 

@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
-import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
+import com.bity.icp_kotlin_kit.domain.use_case.token.FetchTokensBalance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TokensBalanceViewModel(
-    private val tokenRepository: TokenRepository
+    private val fetchTokensBalance: FetchTokensBalance
 ): ViewModel() {
 
     var state: TokensBalanceState by mutableStateOf(TokensBalanceState.TokenWithBalance())
@@ -25,9 +25,7 @@ class TokensBalanceViewModel(
         viewModelScope.launch {
             try {
                 val tokens = withContext(Dispatchers.IO) {
-                    tokenRepository.fetchTokensBalance(
-                        ICPPrincipal(principal)
-                    )
+                    fetchTokensBalance(ICPPrincipal(principal))
                 }
                 state = TokensBalanceState.TokenWithBalance(
                     tokens.filter { it.token.standard != ICPTokenStandard.ICP }

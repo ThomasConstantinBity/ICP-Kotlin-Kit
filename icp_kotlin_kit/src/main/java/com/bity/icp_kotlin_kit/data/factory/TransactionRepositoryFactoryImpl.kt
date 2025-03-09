@@ -1,11 +1,11 @@
 package com.bity.icp_kotlin_kit.data.factory
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
-import com.bity.icp_kotlin_kit.data.service.transaction.ICPICRC1IndexTransactionRepository
-import com.bity.icp_kotlin_kit.data.service.transaction.ICPIndexTransactionRepository
+import com.bity.icp_kotlin_kit.data.repository.transaction.ICRC1TransactionRepository
+import com.bity.icp_kotlin_kit.data.repository.transaction.IndexTransactionRepository
 import com.bity.icp_kotlin_kit.data.repository.url.ICPExplorerURLRepository
 import com.bity.icp_kotlin_kit.data.repository.url.ICPTokenExplorerURLRepository
-import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
+import com.bity.icp_kotlin_kit.domain.factory.TransactionRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
@@ -14,29 +14,30 @@ import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ExplorerURLRepository
 import com.bity.icp_kotlin_kit.domain.repository.SNSCachedRepository
+import com.bity.icp_kotlin_kit.domain.repository.TransactionRepository
 
-internal class TransactionProviderFactoryImpl(
+internal class TransactionRepositoryFactoryImpl(
     private val snsService: SNSCachedRepository,
     private val indexService: NNSICPIndexCanister.NNSICPIndexCanisterService
-): TransactionProviderFactory {
+): TransactionRepositoryFactory {
 
-    override suspend fun getTransactionProvider(token: ICPToken): ICPTransactionRepository? {
+    override suspend fun getTransactionRepository(token: ICPToken): TransactionRepository? {
         // TODO: Support DIP20 tokens
         if(token.canister == ICPSystemCanisters.Ledger.icpPrincipal)
-            return ICPIndexTransactionRepository(
+            return IndexTransactionRepository(
                 icpToken = token,
                 indexCanister = indexService
             )
         val index = findSNS(token.canister)?.index_canister_id
             ?.toDomainModel()
             ?: return null
-        return ICPICRC1IndexTransactionRepository(
+        return ICRC1TransactionRepository(
             icpToken = token,
             indexCanister = index
         )
     }
 
-    override suspend fun getExplorerURLProvider(token: ICPToken): ExplorerURLRepository? {
+    override suspend fun getExplorerURLRepository(token: ICPToken): ExplorerURLRepository? {
         if(token.canister == ICPSystemCanisters.Ledger.icpPrincipal)
             return ICPExplorerURLRepository()
         val rootCanisterId = findSNS(token.canister)?.root_canister_id

@@ -33,10 +33,10 @@ internal class NFTRepositoryFactoryImpl: NFTRepositoryFactory {
 
     override fun setNFTRepository(
         collectionPrincipal: ICPPrincipal,
-        nftServiceToBeRepo: NFTRepository,
+        nftRepository: NFTRepository,
     ) {
         ICPKitLogger.logInfo("setting custom nft service for ${collectionPrincipal.string}")
-        customNFTRepository[collectionPrincipal.string] = nftServiceToBeRepo
+        customNFTRepository[collectionPrincipal.string] = nftRepository
     }
 
     override fun createNFTRepository(collection: ICPNftCollection): NFTRepository? {

@@ -33,30 +33,18 @@ fun AppFeatures(
             text = "App features",
             style = MaterialTheme.typography.titleLarge
         )
-        /*MainButton(text = "ICP Tokens") {
+        MainButton(text = "ICP Tokens") {
             navController.navigate(Screen.ICPTokens.route)
-        }*/
+        }
+        MainButton(text = "Account ICP Tokens Balance") {
+            navController.navigate(Screen.AccountBalance.route)
+        }
         MainButton(text = "ICP NFTs") {
             navController.navigate(Screen.ICPNFTs.route)
         }
         MainButton(text = "Account NFT holdings") {
             navController.navigate(Screen.NFTHoldings.route)
         }
-        /*MainButton(text = "Account Balance") {
-            navController.navigate(Screen.AccountBalance.route)
-        }*/
-        /*MainButton(text = "8 Years Gang Demo") {
-            navController.navigate(Screen.NFTCollectionDetails("tskpj-aiaaa-aaaag-qaxsq-cai"))
-        }
-        MainButton(text = "Crypto Cat") {
-            navController.navigate(Screen.NFTCollectionDetails("pjuco-6iaaa-aaaam-adu7q-cai"))
-        }
-        MainButton(text = "Mutant Space Apes") {
-            navController.navigate(Screen.NFTCollectionDetails("gikg4-eaaaa-aaaam-qaieq-cai"))
-        }
-        MainButton(text = "Chain Fusion Toonis") {
-            navController.navigate(Screen.NFTCollectionDetails("nsbts-5iaaa-aaaah-aeblq-cai"))
-        }*/
     }
 }
 
