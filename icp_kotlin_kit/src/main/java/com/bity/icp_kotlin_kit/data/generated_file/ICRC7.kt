@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder

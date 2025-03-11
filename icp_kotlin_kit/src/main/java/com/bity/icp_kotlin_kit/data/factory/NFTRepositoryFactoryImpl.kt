@@ -1,15 +1,15 @@
 package com.bity.icp_kotlin_kit.data.factory
 
 import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTRepository
-import com.bity.icp_kotlin_kit.domain.generated_file.DBANFTService
+import com.bity.icp_kotlin_kit.data.generated_file.DBANFTService
 import com.bity.icp_kotlin_kit.data.service.nft.ICRC7NFTRepository
 import com.bity.icp_kotlin_kit.data.service.nft.OrigynNFTRepository
 import com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis.ChainFusionToonisNFTRepository
 import com.bity.icp_kotlin_kit.di.nftCollectionIdService
 import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
-import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
-import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
+import com.bity.icp_kotlin_kit.data.generated_file.ChainFusionToonis
+import com.bity.icp_kotlin_kit.data.generated_file.EXTService
+import com.bity.icp_kotlin_kit.data.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard

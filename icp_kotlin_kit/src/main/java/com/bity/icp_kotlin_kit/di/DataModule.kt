@@ -15,11 +15,11 @@ import com.bity.icp_kotlin_kit.di.icpTransactionRepository
 import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionRepositoryFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
-import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
+import com.bity.icp_kotlin_kit.data.generated_file.DABNFT
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
+import com.bity.icp_kotlin_kit.data.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
@@ -68,37 +68,16 @@ internal val ledgerCanisterRepository: LedgerCanisterRepository by lazy {
 /**
  * Service
  */
-private val ledgerCanisterService: LedgerCanister.LedgerCanisterService by lazy {
-    LedgerCanister.LedgerCanisterService(
-        canister = ICPSystemCanisters.Ledger.icpPrincipal
-    )
-}
-private val dabNFTService: DABNFT.DABNFTService by lazy {
-    DABNFT.DABNFTService(
-        canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
-    )
-}
-private val tokensService: TokensService by lazy {
-    TokensService(
-        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
-    )
-}
-internal val tokenCachedRepository: TokenCachedRepository by lazy {
-    TokenCachedRepositoryImpl(
-        canister = tokensService,
-        tokenRepositoryFactory = tokenRepositoryFactory
-    )
+val nftCollectionIdService: NFTCollectionIdService by lazy {
+    NFTCollectionIdServiceImpl()
 }
 
-internal val icpTransactionRepository: ICPTransactionRepository by lazy {
-    ICPTransactionRepositoryImpl(
-        transactionRepositoryFactory = transactionRepositoryFactory
-    )
-}
-
-private val snsCachedRepository: SNSCachedRepository by lazy {
-    SNSCachedRepositoryImpl(
-        canister = nnsSNSWService
+/**
+* Canister from generated file
+ */
+private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by lazy {
+    NNSICPIndexCanister.NNSICPIndexCanisterService(
+        canister = ICPSystemCanisters.Index.icpPrincipal
     )
 }
 
@@ -108,14 +87,28 @@ internal val nnsSNSWService: NNS_SNS_W.nns_sns_wService by lazy {
     )
 }
 
-private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by lazy {
-    NNSICPIndexCanister.NNSICPIndexCanisterService(
-        canister = ICPSystemCanisters.Index.icpPrincipal
+private val snsCachedRepository: SNSCachedRepository by lazy {
+    SNSCachedRepositoryImpl(
+        canister = nnsSNSWService
     )
 }
 
-val nftCollectionIdService: NFTCollectionIdService by lazy {
-    NFTCollectionIdServiceImpl()
+private val tokensService: TokensService by lazy {
+    TokensService(
+        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
+    )
+}
+
+private val dabNFTService: DABNFT.DABNFTService by lazy {
+    DABNFT.DABNFTService(
+        canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
+    )
+}
+
+private val ledgerCanisterService: LedgerCanister.LedgerCanisterService by lazy {
+    LedgerCanister.LedgerCanisterService(
+        canister = ICPSystemCanisters.Ledger.icpPrincipal
+    )
 }
 
 /**
@@ -132,32 +125,14 @@ internal val transactionRepositoryFactory: TransactionRepositoryFactory by lazy 
     )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Factory
- */
 internal val nftRepositoryFactory: NFTRepositoryFactory by lazy {
     NFTRepositoryFactoryImpl()
+}
+
+internal val icpTransactionRepository: ICPTransactionRepository by lazy {
+    ICPTransactionRepositoryImpl(
+        transactionRepositoryFactory = transactionRepositoryFactory
+    )
 }
 
 /**
@@ -167,5 +142,12 @@ internal val nftCachedRepository: NFTCachedRepository by lazy {
     NFTCachedRepositoryImpl(
         dabCanister = dabNFTService,
         nftRepositoryFactory = nftRepositoryFactory
+    )
+}
+
+internal val tokenCachedRepository: TokenCachedRepository by lazy {
+    TokenCachedRepositoryImpl(
+        canister = tokensService,
+        tokenRepositoryFactory = tokenRepositoryFactory
     )
 }

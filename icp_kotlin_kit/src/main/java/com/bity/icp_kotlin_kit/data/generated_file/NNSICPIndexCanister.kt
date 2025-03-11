@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -52,15 +52,15 @@ object NNSICPIndexCanister {
     )
 
     class GetBlocksResponse(
-        val blocks: kotlin.Array<Array<UByte>>,
+        val blocks: Array<Array<UByte>>,
         val chain_length: ULong
     )
 
     class HttpRequest(
         val url: String,
         val method: String,
-        val body: kotlin.Array<UByte>,
-        val headers: kotlin.Array<HttpRequestHeaders>
+        val body: Array<UByte>,
+        val headers: Array<HttpRequestHeaders>
     ) {
         class HttpRequestHeaders(
             val string_1: String,
@@ -69,8 +69,8 @@ object NNSICPIndexCanister {
     }
 
     class HttpResponse(
-        val body: kotlin.Array<UByte>,
-        val headers: kotlin.Array<HttpResponseHeaders>,
+        val body: Array<UByte>,
+        val headers: Array<HttpResponseHeaders>,
         val status_code: UShort
     ) {
         class HttpResponseHeaders(

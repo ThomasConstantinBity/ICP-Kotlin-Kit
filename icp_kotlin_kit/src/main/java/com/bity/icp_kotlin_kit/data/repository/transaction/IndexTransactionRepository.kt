@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository.transaction
 
-import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.error.GetAllTransactionsException

@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.service.nft
 
-import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT
+import com.bity.icp_kotlin_kit.data.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem

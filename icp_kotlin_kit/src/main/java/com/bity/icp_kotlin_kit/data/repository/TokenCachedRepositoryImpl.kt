@@ -1,11 +1,13 @@
 package com.bity.icp_kotlin_kit.data.repository
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
+import com.bity.icp_kotlin_kit.data.generated_file.TokensService
+import com.bity.icp_kotlin_kit.data.generated_file.detail_value
+import com.bity.icp_kotlin_kit.data.generated_file.token
 import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.*
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenBalance

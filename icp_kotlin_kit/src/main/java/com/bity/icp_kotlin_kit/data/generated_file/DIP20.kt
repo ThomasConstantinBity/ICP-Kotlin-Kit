@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -409,7 +409,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<TxRecord> {
+        ): Array<TxRecord> {
             val icpQuery = ICPQuery(
                 methodName = "getTransactions",
                 canister = canister
@@ -440,7 +440,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<TxRecord> {
+        ): Array<TxRecord> {
             val icpQuery = ICPQuery(
                 methodName = "getUserTransactions",
                 canister = canister

@@ -1,12 +1,8 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
 import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedFile
-import com.bity.icp_kotlin_kit.domain.service.CandidFileParserService
-import com.bity.icp_kotlin_kit.domain.service.KotlinFileGeneratorService
 
-internal class KotlinFileGeneratorServiceImpl(
-    private val candidFileParserService: CandidFileParserService
-) : KotlinFileGeneratorService {
+object KotlinFileGeneratorService {
 
     private val imports = """
         import java.math.BigInteger
@@ -21,7 +17,7 @@ internal class KotlinFileGeneratorServiceImpl(
     """.trimIndent()
     private val importSize = imports.split("\n").size
 
-    override fun parseAndGetKotlinFile(
+    fun parseAndGetKotlinFile(
         candidFileText: String,
         fileName: String,
         packageName: String
@@ -32,7 +28,7 @@ internal class KotlinFileGeneratorServiceImpl(
         kotlinFile.appendLine(imports)
         kotlinFile.appendLine()
 
-        val candidParsedFile = candidFileParserService.parseCandidFile(candidFileText)
+        val candidParsedFile = CandidFileParserService.parseCandidFile(candidFileText)
         kotlinFile.appendLine(candidParsedFile.getTypealiasesDefinition())
         kotlinFile.appendLine()
         writeKotlinObject(

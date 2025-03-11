@@ -2,9 +2,9 @@ package com.bity.icp_kotlin_kit.data.service.nft
 
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
-import com.bity.icp_kotlin_kit.domain.generated_file.CommonError
-import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
-import com.bity.icp_kotlin_kit.domain.generated_file.Result_1
+import com.bity.icp_kotlin_kit.data.generated_file.CommonError
+import com.bity.icp_kotlin_kit.data.generated_file.EXTService
+import com.bity.icp_kotlin_kit.data.generated_file.Result_1
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard

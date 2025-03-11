@@ -2,14 +2,11 @@ package com.bity.icp_kotlin_kit.data.service.candid
 
 import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedFile
 import com.bity.icp_kotlin_kit.domain.model.candid_file.CandidParsedType
-import com.bity.icp_kotlin_kit.domain.service.CandidFileParserService
-import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
+import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 
-internal class CandidFileParserServiceImpl(
-    private val candidTypeParserService: CandidTypeParserService
-) : CandidFileParserService {
+internal object CandidFileParserService {
 
-    override fun parseCandidFile(candidContent: String): CandidParsedFile {
+    fun parseCandidFile(candidContent: String): CandidParsedFile {
 
         var string = candidContent.trimStart()
 
@@ -19,7 +16,7 @@ internal class CandidFileParserServiceImpl(
             val endIndex = getEndDeclarationIndex(string)
             val candidDeclaration = string.substring(0, endIndex)
             try {
-                val candidTypeDefinition = candidTypeParserService
+                val candidTypeDefinition = CandidTypeParserService
                     .parseCandidType(candidDeclaration)
                 val candidParsedType = CandidParsedType(
                     candidDefinition = candidDeclaration,
@@ -27,7 +24,7 @@ internal class CandidFileParserServiceImpl(
                 )
                 candidParsedTypes.add(candidParsedType)
             } catch (t: Throwable) {
-                println("Error parsing $candidDeclaration")
+                ICPKitLogger.logError("Error parsing $candidDeclaration", t)
             }
             string = string.substring(endIndex).trimStart()
         }

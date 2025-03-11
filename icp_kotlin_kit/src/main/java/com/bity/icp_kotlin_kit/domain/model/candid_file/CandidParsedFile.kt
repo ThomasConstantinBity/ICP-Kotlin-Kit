@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.domain.model.candid_file
 
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidService
 import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeService
 
 internal class CandidParsedFile internal constructor(

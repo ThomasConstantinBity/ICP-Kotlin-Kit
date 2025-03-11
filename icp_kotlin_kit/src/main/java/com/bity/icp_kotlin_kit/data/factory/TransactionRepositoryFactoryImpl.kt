@@ -6,9 +6,8 @@ import com.bity.icp_kotlin_kit.data.repository.transaction.IndexTransactionRepos
 import com.bity.icp_kotlin_kit.data.repository.url.ICPExplorerURLRepository
 import com.bity.icp_kotlin_kit.data.repository.url.ICPTokenExplorerURLRepository
 import com.bity.icp_kotlin_kit.domain.factory.TransactionRepositoryFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
-import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
-import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
+import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters

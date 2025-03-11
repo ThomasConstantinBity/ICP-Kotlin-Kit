@@ -1,8 +1,7 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
 import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
-import com.bity.icp_kotlin_kit.domain.generated_file.ChainFusionToonis
-import com.bity.icp_kotlin_kit.domain.generated_file.token
+import com.bity.icp_kotlin_kit.data.generated_file.ChainFusionToonis
 import com.bity.icp_kotlin_kit.domain.model.ICPAccount
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem

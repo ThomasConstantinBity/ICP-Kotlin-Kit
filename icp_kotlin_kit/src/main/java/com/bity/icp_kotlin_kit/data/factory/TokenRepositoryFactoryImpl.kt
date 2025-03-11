@@ -5,8 +5,8 @@ import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
 import com.bity.icp_kotlin_kit.data.repository.token.ICRC1TokenRepository
 import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
-import com.bity.icp_kotlin_kit.domain.generated_file.ICRC1
+import com.bity.icp_kotlin_kit.data.generated_file.DIP20
+import com.bity.icp_kotlin_kit.data.generated_file.ICRC1
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 

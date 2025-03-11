@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -85,7 +85,7 @@ object ICRC1IndexCanister {
 
     class GetBlocksResponse(
         val chain_length: ULong,
-        val blocks: kotlin.Array<Block>
+        val blocks: Array<Block>
     )
 
     class Account(
@@ -105,7 +105,7 @@ object ICRC1IndexCanister {
     class Approve(
         val fee: BigInteger?,
         val from: Account,
-        val memo: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
         val created_at_time: ULong?,
         val amount: BigInteger,
         val expected_allowance: BigInteger?,
@@ -115,7 +115,7 @@ object ICRC1IndexCanister {
 
     class Burn(
         val from: Account,
-        val memo: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
         val created_at_time: ULong?,
         val amount: BigInteger,
         val spender: Account?
@@ -123,7 +123,7 @@ object ICRC1IndexCanister {
 
     class Mint(
         val to: Account,
-        val memo: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
         val created_at_time: ULong?,
         val amount: BigInteger
     )
@@ -132,7 +132,7 @@ object ICRC1IndexCanister {
         val to: Account,
         val fee: BigInteger?,
         val from: Account,
-        val memo: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
         val created_at_time: ULong?,
         val amount: BigInteger,
         val spender: Account?
@@ -155,7 +155,7 @@ object ICRC1IndexCanister {
 
     class GetTransactions(
         val balance: ICRC1IndexCanisterTokens,
-        val transactions: kotlin.Array<TransactionWithId>,
+        val transactions: Array<TransactionWithId>,
         // The txid of the oldest transaction the account has
         val oldest_tx_id: BlockIndex?
     )
@@ -188,11 +188,11 @@ object ICRC1IndexCanister {
      * }
      */
     class FeeCollectorRanges(
-        val ranges: kotlin.Array<FeeCollectorRangesRanges>
+        val ranges: Array<FeeCollectorRangesRanges>
     ) {
         class FeeCollectorRangesRanges(
             val account: Account,
-            val unnamedClass0: kotlin.Array<UnnamedClass0>
+            val unnamedClass0: Array<UnnamedClass0>
         ) {
             class UnnamedClass0(
                 val blockIndex_1: BlockIndex,
@@ -308,7 +308,7 @@ object ICRC1IndexCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<SubAccount> {
+        ): Array<SubAccount> {
             val icpQuery = ICPQuery(
                 methodName = "list_subaccounts",
                 canister = canister

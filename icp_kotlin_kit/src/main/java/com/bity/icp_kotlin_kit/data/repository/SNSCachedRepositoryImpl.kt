@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
+import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
 import com.bity.icp_kotlin_kit.domain.repository.SNSCachedRepository
 
 internal class SNSCachedRepositoryImpl (

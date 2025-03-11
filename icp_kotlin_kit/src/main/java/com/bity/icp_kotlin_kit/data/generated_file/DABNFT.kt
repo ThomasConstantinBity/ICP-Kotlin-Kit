@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -25,11 +25,11 @@ object DABNFT {
         ): detail_value()
 
         class Vec(
-            val values: kotlin.Array<detail_value>
+            val values: Array<detail_value>
         ): detail_value()
 
         class Slice(
-            val values: kotlin.Array<UByte>
+            val values: Array<UByte>
         ): detail_value()
 
         class Text(
@@ -52,7 +52,7 @@ object DABNFT {
         val thumbnail: String,
         val frontend: String?,
         val principal_id: ICPPrincipalApiModel,
-        val details: kotlin.Array<add_nft_inputDetails>
+        val details: Array<add_nft_inputDetails>
     ) {
 
         class add_nft_inputDetails(
@@ -71,7 +71,7 @@ object DABNFT {
         val submitter: ICPPrincipalApiModel,
         val last_updated_by: ICPPrincipalApiModel,
         val last_updated_at: ULong,
-        val details: kotlin.Array<nft_canisterDetails>
+        val details: Array<nft_canisterDetails>
     ) {
 
         class nft_canisterDetails(

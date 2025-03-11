@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -120,7 +120,7 @@ object LedgerCanister {
         val num_blocks_to_archive: ULong,
         val max_transactions_per_response: ULong?,
         val trigger_threshold: ULong,
-        val more_controller_ids: kotlin.Array<ICPPrincipalApiModel>?,
+        val more_controller_ids: Array<ICPPrincipalApiModel>?,
         val max_message_size_bytes: ULong?,
         val cycles_for_archive_creation: ULong?,
         val node_max_memory_size_bytes: ULong?,
@@ -215,7 +215,7 @@ object LedgerCanister {
      * type Archives = record { archives : vec ArchiveInfo };
      */
     class Archives(
-        val archives: kotlin.Array<ArchiveInfo>
+        val archives: Array<ArchiveInfo>
     )
 
     /**
@@ -229,7 +229,7 @@ object LedgerCanister {
      * type BlockRange = record { blocks : vec CandidBlock };
      */
     class BlockRange(
-        val blocks: kotlin.Array<CandidBlock>
+        val blocks: Array<CandidBlock>
     )
 
     /**
@@ -474,7 +474,7 @@ object LedgerCanister {
      * };
      */
     class InitArgs(
-        val send_whitelist: kotlin.Array<ICPPrincipalApiModel>,
+        val send_whitelist: Array<ICPPrincipalApiModel>,
         val token_symbol: String?,
         val transfer_fee: Tokens?,
         val minting_account: String,
@@ -943,7 +943,7 @@ object LedgerCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<StandardRecord> {
+        ): Array<StandardRecord> {
             val icpQuery = ICPQuery(
                 methodName = "icrc10_supported_standards",
                 canister = canister
@@ -1098,7 +1098,7 @@ object LedgerCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): kotlin.Array<StandardRecord> {
+        ): Array<StandardRecord> {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_supported_standards",
                 canister = canister

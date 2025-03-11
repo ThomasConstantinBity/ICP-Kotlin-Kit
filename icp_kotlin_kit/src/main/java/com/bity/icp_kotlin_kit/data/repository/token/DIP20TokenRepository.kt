@@ -1,7 +1,7 @@
 package com.bity.icp_kotlin_kit.data.repository.token
 
-import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
-import com.bity.icp_kotlin_kit.domain.generated_file.DIP20.TxError
+import com.bity.icp_kotlin_kit.data.generated_file.DIP20
+import com.bity.icp_kotlin_kit.data.generated_file.DIP20.TxError
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenMetadata
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer

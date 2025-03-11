@@ -1,6 +1,5 @@
 package com.bity.icp_kotlin_kit.data.service.candid
 
-import com.bity.icp_kotlin_kit.domain.service.CandidTypeParserService
 import com.bity.icp_kotlin_kit.util.CandidFileLexer.fileLexer
 import com.bity.icp_kotlin_kit.domain.model.TokenLexer
 import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidFunctionDeclaration
@@ -28,7 +27,6 @@ import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeText
 import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeVariant
 import com.bity.icp_kotlin_kit.domain.model.candid_type.CandidTypeVec
 import com.bity.icp_kotlin_kit.domain.model.candid_type.OptionalType
-import guru.zoroark.tegral.niwen.parser.dsl.EitherBranchBuilder
 import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.emit
 import guru.zoroark.tegral.niwen.parser.dsl.expect
@@ -40,7 +38,7 @@ import guru.zoroark.tegral.niwen.parser.dsl.or
 import guru.zoroark.tegral.niwen.parser.dsl.repeated
 import guru.zoroark.tegral.niwen.parser.dsl.self
 
-internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuilder<CandidTypeBool>.() -> Unit) : CandidTypeParserService {
+internal object CandidTypeParserService {
 
     private val typeParser = niwenParser {
 
@@ -920,7 +918,7 @@ internal class CandidTypeParserServiceImpl(val function: () -> EitherBranchBuild
         }
     }
 
-    override fun parseCandidType(candidType: String): CandidType {
+    fun parseCandidType(candidType: String): CandidType {
          /*fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
         }*/

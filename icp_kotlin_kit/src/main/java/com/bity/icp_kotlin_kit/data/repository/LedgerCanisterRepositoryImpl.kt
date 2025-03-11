@@ -1,8 +1,8 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.ArchivedBlocksRange
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.GetBlocksArgs
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister.ArchivedBlocksRange
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister.GetBlocksArgs
 import com.bity.icp_kotlin_kit.domain.model.error.QueryBlockError
 import com.bity.icp_kotlin_kit.domain.model.error.TransferError
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlock

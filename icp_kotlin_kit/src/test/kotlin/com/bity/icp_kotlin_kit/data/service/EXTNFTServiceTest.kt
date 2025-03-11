@@ -2,9 +2,9 @@ package com.bity.icp_kotlin_kit.data.service
 
 import com.bity.icp_kotlin_kit.data.service.nft.EXTNFTRepository
 import com.bity.icp_kotlin_kit.di.nftCollectionIdService
-import com.bity.icp_kotlin_kit.domain.generated_file.EXTService
-import com.bity.icp_kotlin_kit.domain.generated_file.EXTService.UnnamedClass2
-import com.bity.icp_kotlin_kit.domain.generated_file.Metadata
+import com.bity.icp_kotlin_kit.data.generated_file.EXTService
+import com.bity.icp_kotlin_kit.data.generated_file.EXTService.UnnamedClass2
+import com.bity.icp_kotlin_kit.data.generated_file.Metadata
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.util.MutantSpaceApesPrincipal
 import io.mockk.coEvery

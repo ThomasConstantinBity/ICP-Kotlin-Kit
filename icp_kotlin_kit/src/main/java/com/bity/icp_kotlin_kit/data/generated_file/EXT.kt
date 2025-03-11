@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
@@ -106,7 +106,7 @@ class TransferRequest(
 )
 
 class Transaction(
-    val bytes: kotlin.Array<UByte>,
+    val bytes: Array<UByte>,
     val closed: Time?,
     val from: AccountIdentifier__1,
     val id: BigInteger,
@@ -281,7 +281,7 @@ sealed class Result_2 {
     ): Result_2()
 
     class ok(
-        val values: kotlin.Array<TokenIndex>
+        val values: Array<TokenIndex>
     ): Result_2()
 
 }
@@ -315,14 +315,14 @@ sealed class Result {
 
 class Response(
     val body: ByteArray,
-    val headers: kotlin.Array<HeaderField>,
+    val headers: Array<HeaderField>,
     val status_code: UShort,
     val streaming_strategy: StreamingStrategy?
 )
 
 class Request(
     val body: ByteArray,
-    val headers: kotlin.Array<HeaderField>,
+    val headers: Array<HeaderField>,
     val method: String,
     val url: String
 )
@@ -546,11 +546,11 @@ sealed class CommonError {
 
 sealed class CanisterMetricsData {
     class daily(
-        val values: kotlin.Array<DailyMetricsData>
+        val values: Array<DailyMetricsData>
     ): CanisterMetricsData()
 
     class hourly(
-        val values: kotlin.Array<HourlyMetricsData>
+        val values: Array<HourlyMetricsData>
     ): CanisterMetricsData()
 
 }
@@ -584,13 +584,13 @@ sealed class CanisterLogRequest {
 
 class CanisterLogMessagesInfo(
     val count: UInt,
-    val features: kotlin.Array<CanisterLogFeature>,
+    val features: Array<CanisterLogFeature>,
     val firstTimeNanos: Nanos?,
     val lastTimeNanos: Nanos?
 )
 
 class CanisterLogMessages(
-    val data: kotlin.Array<LogMessagesData>,
+    val data: Array<LogMessagesData>,
     val lastAnalyzedMessageTimeNanos: Nanos?
 )
 
@@ -685,7 +685,7 @@ class EXTService(
     }
 
     suspend fun airdrop_rewards                    (
-        unnamedClass0: kotlin.Array<UnnamedClass0>,
+        unnamedClass0: Array<UnnamedClass0>,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
     ) {
@@ -949,7 +949,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<Extension> {
+    ): Array<Extension> {
 
         val icpQuery = ICPQuery(
             methodName = "extensions",
@@ -1040,7 +1040,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<UnnamedClass1> {
+    ): Array<UnnamedClass1> {
 
         val icpQuery = ICPQuery(
             methodName = "getRegistry",
@@ -1066,7 +1066,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<UnnamedClass2> {
+    ): Array<UnnamedClass2> {
 
         val icpQuery = ICPQuery(
             methodName = "getTokens",
@@ -1092,7 +1092,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<ICPPrincipalApiModel> {
+    ): Array<ICPPrincipalApiModel> {
 
         val icpQuery = ICPQuery(
             methodName = "get_admins",
@@ -1113,7 +1113,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<UnnamedClass3> {
+    ): Array<UnnamedClass3> {
 
         val icpQuery = ICPQuery(
             methodName = "get_pending_transactions",
@@ -1140,7 +1140,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<Reward>? {
+    ): Array<Reward>? {
 
         val icpQuery = ICPQuery(
             methodName = "get_recorded_rewards",
@@ -1161,7 +1161,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<UnnamedClass4> {
+    ): Array<UnnamedClass4> {
 
         val icpQuery = ICPQuery(
             methodName = "get_stats_items",
@@ -1273,7 +1273,7 @@ class EXTService(
         tokenIdentifier: TokenIdentifier,
         uLong: ULong,
         accountIdentifier__2: AccountIdentifier__2,
-        uByte: kotlin.Array<UByte>,
+        uByte: Array<UByte>,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
     ): LockResponse {
@@ -1318,7 +1318,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<SubAccount__2>? {
+    ): Array<SubAccount__2>? {
 
         val icpQuery = ICPQuery(
             methodName = "payments",
@@ -1339,7 +1339,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<Disbursement> {
+    ): Array<Disbursement> {
 
         val icpQuery = ICPQuery(
             methodName = "read_disbursements",
@@ -1644,7 +1644,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): kotlin.Array<EntrepotTransaction> {
+    ): Array<EntrepotTransaction> {
 
         val icpQuery = ICPQuery(
             methodName = "transactions",

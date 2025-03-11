@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
@@ -9,7 +9,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
-import com.bity.icp_kotlin_kit.domain.generated_file.OrigynNFT.ApprovalResultClass
+import com.bity.icp_kotlin_kit.data.generated_file.OrigynNFT.ApprovalResultClass
 import com.bity.icp_kotlin_kit.domain.model.ICPMethod
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
@@ -222,7 +222,7 @@ object OrigynNFT {
         class extensible(val extensible: CandyShared): Account()
         class account(
             val owner: ICPPrincipalApiModel,
-            val sub_account: kotlin.Array<UByte>?
+            val sub_account: Array<UByte>?
         ): Account()
     }
     /**
@@ -239,7 +239,7 @@ object OrigynNFT {
         class extensible(val extensible: CandyShared): Account__1()
         class account(
             val owner: ICPPrincipalApiModel,
-            val sub_account: kotlin.Array<UByte>?
+            val sub_account: Array<UByte>?
         ): Account__1()
     }
     /**
@@ -256,7 +256,7 @@ object OrigynNFT {
         class extensible(val extensible: CandyShared): Account__2()
         class account(
             val owner: ICPPrincipalApiModel,
-            val sub_account: kotlin.Array<UByte>?
+            val sub_account: Array<UByte>?
         ): Account__2()
     }
     /**
@@ -281,7 +281,7 @@ object OrigynNFT {
         val token_id: String,
         val available_space: BigInteger,
         val canister: ICPPrincipalApiModel,
-        val chunks: kotlin.Array<BigInteger>,
+        val chunks: Array<BigInteger>,
         val library_id: String
     )
     /**
@@ -294,8 +294,8 @@ object OrigynNFT {
      * };
      */
     class ApprovalArgs(
-        val memo: kotlin.Array<UByte>?,
-        val from_subaccount: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
+        val from_subaccount: Array<UByte>?,
         val created_at_time: ULong?,
         val expires_at: ULong?,
         val spender: Account__3
@@ -331,7 +331,7 @@ object OrigynNFT {
      * };
      */
     class ArchivedTransactionResponse(
-        val args: kotlin.Array<TransactionRange__1>,
+        val args: Array<TransactionRange__1>,
         val callback: GetTransactionsFn
     )
 
@@ -343,7 +343,7 @@ object OrigynNFT {
         canister = canister
     ) {
         suspend operator fun invoke(
-            array: kotlin.Array<TransactionRange>,
+            array: Array<TransactionRange>,
         ): GetTransactionsResult__1 {
             val result = this.query(
                 values = listOf(
@@ -383,12 +383,12 @@ object OrigynNFT {
         class start_price(val start_price: BigInteger): OrigynAskFeature()
         class token(val token: TokenSpec): OrigynAskFeature()
         class fee_schema(val fee_schema: String): OrigynAskFeature()
-        class Notify(val notify: kotlin.Array<ICPPrincipalApiModel>): OrigynAskFeature()
+        class Notify(val notify: Array<ICPPrincipalApiModel>): OrigynAskFeature()
         class wait_for_quiet(val wait_for_quiet: WaitForQuietType): OrigynAskFeature()
         class reserve(val reserve: BigInteger): OrigynAskFeature()
         class start_date(val start_date: BigInteger): OrigynAskFeature()
         class min_increase(val min_increase: MinIncreaseType): OrigynAskFeature()
-        class Allow_list(val allow_list: kotlin.Array<ICPPrincipalApiModel>): OrigynAskFeature()
+        class Allow_list(val allow_list: Array<ICPPrincipalApiModel>): OrigynAskFeature()
         class buy_now(val buy_now: BigInteger): OrigynAskFeature()
         class fee_accounts(val fee_accounts: FeeAccountsParams): OrigynAskFeature()
         class nifty_settlement(val nifty_settlement: NiftySettlementType): OrigynAskFeature()
@@ -421,8 +421,8 @@ object OrigynNFT {
                 val natValue: BigInteger
             )
             class Filter(
-                val tokens: kotlin.Array<TokenSpecFilter>?,
-                val token_ids: kotlin.Array<TokenIDFilter>?
+                val tokens: Array<TokenSpecFilter>?,
+                val token_ids: Array<TokenIDFilter>?
             )
 
         }
@@ -459,7 +459,7 @@ object OrigynNFT {
         val reserve: BigInteger?,
         val start_date: BigInteger,
         val min_increase: MinIncreaseType,
-        val allow_list: kotlin.Array<ICPPrincipalApiModel>?,
+        val allow_list: Array<ICPPrincipalApiModel>?,
         val buy_now: BigInteger?,
         val ending: Ending
     ) {
@@ -493,7 +493,7 @@ object OrigynNFT {
      */
     class AuctionStateShared(
         val status: Status,
-        val participants: kotlin.Array<Participants>,
+        val participants: Array<Participants>,
         val token: TokenSpec__1,
         val current_bid_amount: BigInteger,
         val winner: Account?,
@@ -502,7 +502,7 @@ object OrigynNFT {
         val start_date: BigInteger,
         val wait_for_quiet_count: BigInteger?,
         val current_escrow: EscrowReceipt?,
-        val allow_list: kotlin.Array<AllowList>?,
+        val allow_list: Array<AllowList>?,
         val min_next_bid: BigInteger,
         val config: PricingConfigShared__1
     ) {
@@ -535,12 +535,12 @@ object OrigynNFT {
      * };
      */
     data class BalanceResponse(
-        val nfts: kotlin.Array<String>,
-        val offers: kotlin.Array<EscrowRecord__1>?,
-        val sales: kotlin.Array<EscrowRecord__1>?,
-        val stake: kotlin.Array<StakeRecord>?,
-        val multi_canister: kotlin.Array<ICPPrincipalApiModel>?,
-        val escrow: kotlin.Array<EscrowRecord__1>?
+        val nfts: Array<String>,
+        val offers: Array<EscrowRecord__1>?,
+        val sales: Array<EscrowRecord__1>?,
+        val stake: Array<StakeRecord>?,
+        val multi_canister: Array<ICPPrincipalApiModel>?,
+        val escrow: Array<EscrowRecord__1>?
     )
     /**
      * type BalanceResult = variant { ok : BalanceResponse; err : OrigynError };
@@ -743,7 +743,7 @@ object OrigynNFT {
             ): TxnType()
 
             class canister_managers_updated(
-                val managers: kotlin.Array<ICPPrincipalApiModel>,
+                val managers: Array<ICPPrincipalApiModel>,
                 val extensible: CandyShared
             ): TxnType()
 
@@ -761,7 +761,7 @@ object OrigynNFT {
             ): TxnType()
 
             class data(
-                val hash: kotlin.Array<UByte>?,
+                val hash: Array<UByte>?,
                 val extensible: CandyShared,
                 val data_dapp: String?,
                 val data_path: String?
@@ -779,7 +779,7 @@ object OrigynNFT {
             class mint(
                 val to: Account__1,
                 val from: Account__1,
-                val sale: kotlin.Array<Sale>?,
+                val sale: Array<Sale>?,
                 val extensible: CandyShared
             ): TxnType() {
                 class Sale(
@@ -933,7 +933,7 @@ object OrigynNFT {
      * };
      */
     class CanisterLogMessages(
-        val data: kotlin.Array<LogMessagesData>,
+        val data: Array<LogMessagesData>,
         val lastAnalyzedMessageTimeNanos: OrigynNanos?
     )
     /**
@@ -945,7 +945,7 @@ object OrigynNFT {
      * };
      */
     class CanisterLogMessagesInfo(
-        val features: kotlin.Array<CanisterLogFeature?>,
+        val features: Array<CanisterLogFeature?>,
         val lastTimeNanos: OrigynNanos?,
         val count: UInt,
         val firstTimeNanos: OrigynNanos?
@@ -987,8 +987,8 @@ object OrigynNFT {
      * };
      */
     sealed class CanisterMetricsData {
-        class Hourly(val hourly: kotlin.Array<HourlyMetricsData>): CanisterMetricsData()
-        class Daily(val daily: kotlin.Array<DailyMetricsData>): CanisterMetricsData()
+        class Hourly(val hourly: Array<HourlyMetricsData>): CanisterMetricsData()
+        class Daily(val daily: Array<DailyMetricsData>): CanisterMetricsData()
 
     }
     /**
@@ -1010,7 +1010,7 @@ object OrigynNFT {
 
         class chunk(
             val total_chunks: BigInteger,
-            val content: kotlin.Array<UByte>,
+            val content: Array<UByte>,
             val storage_allocation: AllocationRecordStable,
             val current_chunk: BigInteger?
         ): ChunkContent()
@@ -1060,19 +1060,19 @@ object OrigynNFT {
      */
     class CollectionInfo(
         val multi_canister_count: BigInteger?,
-        val managers: kotlin.Array<ICPPrincipalApiModel>?,
+        val managers: Array<ICPPrincipalApiModel>?,
         val owner: ICPPrincipalApiModel?,
         val metadata: CandyShared?,
         val logo: String?,
         val name: String?,
         val network: ICPPrincipalApiModel?,
         val created_at: ULong?,
-        val fields: kotlin.Array<Fields>?,
+        val fields: Array<Fields>?,
         val upgraded_at: ULong?,
         val token_ids_count: BigInteger?,
         val available_space: BigInteger?,
-        val multi_canister: kotlin.Array<ICPPrincipalApiModel>?,
-        val token_ids: kotlin.Array<String>?,
+        val multi_canister: Array<ICPPrincipalApiModel>?,
+        val token_ids: Array<String>?,
         val transaction_count: BigInteger?,
         val unique_holders: BigInteger?,
         val total_supply: BigInteger?,
@@ -1117,7 +1117,7 @@ object OrigynNFT {
         val name: String?,
         val created_at: ULong,
         val upgraded_at: ULong,
-        val custodians: kotlin.Array<ICPPrincipalApiModel>,
+        val custodians: Array<ICPPrincipalApiModel>,
         val symbol: String?
     )
     /**
@@ -1169,7 +1169,7 @@ object OrigynNFT {
      * type DIP721TokensListMetadata = variant { Ok : vec nat; Err : NftError };
      */
     sealed class DIP721TokensListMetadata {
-        class Ok(val Ok: kotlin.Array<BigInteger>): DIP721TokensListMetadata()
+        class Ok(val Ok: Array<BigInteger>): DIP721TokensListMetadata()
         class Err(val Err: NftError): DIP721TokensListMetadata()
 
     }
@@ -1177,7 +1177,7 @@ object OrigynNFT {
      * type DIP721TokensMetadata = variant { Ok : vec TokenMetadata; Err : NftError };
      */
     sealed class DIP721TokensMetadata {
-        class Ok(val Ok: kotlin.Array<TokenMetadata>): DIP721TokensMetadata()
+        class Ok(val Ok: Array<TokenMetadata>): DIP721TokensMetadata()
         class Err(val Err: NftError): DIP721TokensMetadata()
 
     }
@@ -1261,8 +1261,8 @@ object OrigynNFT {
      * type DataCertificate = record { certificate : vec nat8; hash_tree : vec nat8 };
      */
     class DataCertificate(
-        val certificate: kotlin.Array<UByte>,
-        val hash_tree: kotlin.Array<UByte>
+        val certificate: Array<UByte>,
+        val hash_tree: Array<UByte>
     )
     /**
      * type DepositDetail = record {
@@ -1377,13 +1377,13 @@ object OrigynNFT {
     sealed class EXTMetadata {
         class fungible(
             val decimals: UByte,
-            val metadata: kotlin.Array<UByte>?,
+            val metadata: Array<UByte>?,
             val name: String,
             val symbol: String
         ): EXTMetadata()
 
         class nonfungible(
-            val metadata: kotlin.Array<UByte>?
+            val metadata: Array<UByte>?
         ): EXTMetadata()
     }
     /**
@@ -1405,7 +1405,7 @@ object OrigynNFT {
     class EXTTokensResponse(
         val nat32Value: UInt,
         val record: Record?,
-        val vecValue: kotlin.Array<UByte>?
+        val vecValue: Array<UByte>?
     ) {
         class Record(
             val locked: BigInteger?,
@@ -1421,7 +1421,7 @@ object OrigynNFT {
      * };
      */
     sealed class EXTTokensResult {
-        class Ok(val ok: kotlin.Array<EXTTokensResponse>): EXTTokensResult()
+        class Ok(val ok: Array<EXTTokensResponse>): EXTTokensResult()
         class err(val err: EXTCommonError): EXTTokensResult()
 
     }
@@ -1633,7 +1633,7 @@ object OrigynNFT {
             ): TxnType()
 
             class canister_managers_updated(
-                val managers: kotlin.Array<ICPPrincipalApiModel>,
+                val managers: Array<ICPPrincipalApiModel>,
                 val extensible: CandyShared
             ): TxnType()
 
@@ -1651,7 +1651,7 @@ object OrigynNFT {
             ): TxnType()
 
             class data(
-                val hash: kotlin.Array<UByte>?,
+                val hash: Array<UByte>?,
                 val extensible: CandyShared,
                 val data_dapp: String?,
                 val data_path: String?
@@ -1905,7 +1905,7 @@ object OrigynNFT {
         val buyer: Account__2,
         val amount: BigInteger,
         val sale_id: String?,
-        val account_hash: kotlin.Array<UByte>?
+        val account_hash: Array<UByte>?
     )
     /**
      * type EscrowRecord__1 = record {
@@ -1927,7 +1927,7 @@ object OrigynNFT {
         val buyer: Account,
         val amount: BigInteger,
         val sale_id: String?,
-        val account_hash: kotlin.Array<UByte>?
+        val account_hash: Array<UByte>?
     )
     /**
      * type EscrowRequest = record {
@@ -2060,7 +2060,7 @@ object OrigynNFT {
         class Int8Content(val Int8Content: Byte): GenericValue()
         class FloatContent(val FloatContent: Double): GenericValue()
         class Int16Content(val Int16Content: Short): GenericValue()
-        class BlobContent(val BlobContent: kotlin.Array<UByte>): GenericValue()
+        class BlobContent(val BlobContent: Array<UByte>): GenericValue()
         class NestedContent(val NestedContent: Vec): GenericValue()
         class Principal(val Principal: ICPPrincipalApiModel): GenericValue()
         class TextContent(val TextContent: String): GenericValue()
@@ -2141,8 +2141,8 @@ object OrigynNFT {
      */
     class GetTransactionsResult(
         val log_length: BigInteger,
-        val blocks: kotlin.Array<Blocks>,
-        val archived_blocks: kotlin.Array<ArchivedTransactionResponse>
+        val blocks: Array<Blocks>,
+        val archived_blocks: Array<ArchivedTransactionResponse>
     ) {
         class Blocks(
             val id: BigInteger,
@@ -2159,8 +2159,8 @@ object OrigynNFT {
      */
     class GetTransactionsResult__1(
         val log_length: BigInteger,
-        val blocks: kotlin.Array<Blocks>,
-        val archived_blocks: kotlin.Array<ArchivedTransactionResponse>
+        val blocks: Array<Blocks>,
+        val archived_blocks: Array<ArchivedTransactionResponse>
     ) {
         class Blocks(
             val id: BigInteger,
@@ -2212,8 +2212,8 @@ object OrigynNFT {
      * };
      */
     class HTTPResponse(
-        val body: kotlin.Array<UByte>,
-        val headers: kotlin.Array<HeaderField>,
+        val body: Array<UByte>,
+        val headers: Array<HeaderField>,
         val streaming_strategy: StreamingStrategy?,
         val status_code: UShort
     )
@@ -2228,7 +2228,7 @@ object OrigynNFT {
      * type HistoryResult = variant { ok : vec TransactionRecord; err : OrigynError };
      */
     sealed class HistoryResult {
-        class Ok(val ok: kotlin.Array<TransactionRecord>): HistoryResult()
+        class Ok(val ok: Array<TransactionRecord>): HistoryResult()
         class err(val err: OrigynError): HistoryResult()
 
     }
@@ -2259,8 +2259,8 @@ object OrigynNFT {
     class HttpRequest(
         val url: String,
         val method: String,
-        val body: kotlin.Array<UByte>,
-        val headers: kotlin.Array<HeaderField>
+        val body: Array<UByte>,
+        val headers: Array<HeaderField>
     )
     /**
      * type ICTokenSpec = record {
@@ -2366,7 +2366,7 @@ object OrigynNFT {
      */
     sealed class ManageCollectionCommand {
         class UpdateOwner(val UpdateOwner: ICPPrincipalApiModel): ManageCollectionCommand()
-        class UpdateManagers(val UpdateManagers: kotlin.Array<ICPPrincipalApiModel>): ManageCollectionCommand()
+        class UpdateManagers(val UpdateManagers: Array<ICPPrincipalApiModel>): ManageCollectionCommand()
         class UpdateMetadata(
             val textValue: String,
             val candyShared: CandyShared?,
@@ -2429,7 +2429,7 @@ object OrigynNFT {
         class withdraw(val withdraw: WithdrawResponse): ManageSaleResponse()
         class ask_subscribe(val ask_subscribe: AskSubscribeResponse): ManageSaleResponse()
         class end_sale(val end_sale: EndSaleResponse): ManageSaleResponse()
-        class Refresh_offers(val refresh_offers: kotlin.Array<EscrowRecord__1>): ManageSaleResponse()
+        class Refresh_offers(val refresh_offers: Array<EscrowRecord__1>): ManageSaleResponse()
         class distribute_sale(val distribute_sale: DistributeSaleResponse): ManageSaleResponse()
         class open_sale(val open_sale: Boolean): ManageSaleResponse()
 
@@ -2672,7 +2672,7 @@ object OrigynNFT {
             ): TxnType()
 
             class canister_managers_updated(
-                val managers: kotlin.Array<ICPPrincipalApiModel>,
+                val managers: Array<ICPPrincipalApiModel>,
                 val extensible: CandyShared
             ): TxnType()
 
@@ -2690,7 +2690,7 @@ object OrigynNFT {
             ): TxnType()
 
             class data(
-                val hash: kotlin.Array<UByte>?,
+                val hash: Array<UByte>?,
                 val extensible: CandyShared,
                 val data_dapp: String?,
                 val data_path: String?
@@ -2823,9 +2823,9 @@ object OrigynNFT {
         val collection_data: StableCollectionData,
         val nft_ledgers: StableNftLedger,
         val canister: ICPPrincipalApiModel,
-        val allocations: kotlin.Array<Allocations>,
-        val nft_sales: kotlin.Array<NftSales>,
-        val buckets: kotlin.Array<Buckets>,
+        val allocations: Array<Allocations>,
+        val nft_sales: Array<NftSales>,
+        val buckets: Array<Buckets>,
         val escrow_balances: StableEscrowBalances
     ) {
         class Allocations(
@@ -3250,7 +3250,7 @@ object OrigynNFT {
      */
     class OwnerTransferResponse(
         val transaction: TransactionRecord,
-        val assets: kotlin.Array<CandyShared>
+        val assets: Array<CandyShared>
     )
     /**
      * type OwnerUpdateResult = variant {
@@ -3389,7 +3389,7 @@ object OrigynNFT {
         class fee_deposit_info(val subAccountInfo: SubAccountInfo): SaleInfoResponse()
         class Active(
             val eof: Boolean,
-            val records: kotlin.Array<Records>,
+            val records: Array<Records>,
             val count: BigInteger
         ): SaleInfoResponse() {
             class Records(
@@ -3401,7 +3401,7 @@ object OrigynNFT {
         class deposit_info(val subAccountInfo: SubAccountInfo): SaleInfoResponse()
         class history(
             val eof: Boolean,
-            val records: kotlin.Array<SaleStatusShared?>,
+            val records: Array<SaleStatusShared?>,
             val count: BigInteger
         ): SaleInfoResponse()
 
@@ -3479,7 +3479,7 @@ object OrigynNFT {
         val version: Version,
         val b_gateway: Boolean,
         val available_space: BigInteger,
-        val allocations: kotlin.Array<Allocations>
+        val allocations: Array<Allocations>
     ) {
 
         class Version(
@@ -3515,7 +3515,7 @@ object OrigynNFT {
      */
     class StableCollectionData(
         val active_bucket: ICPPrincipalApiModel?,
-        val managers: kotlin.Array<ICPPrincipalApiModel>,
+        val managers: Array<ICPPrincipalApiModel>,
         val owner: ICPPrincipalApiModel,
         val metadata: CandyShared?,
         val logo: String?,
@@ -3535,7 +3535,7 @@ object OrigynNFT {
      * };
      */
     class StageChunkArg(
-        val content: kotlin.Array<UByte>,
+        val content: Array<UByte>,
         val token_id: String,
         val chunk: BigInteger,
         val filedata: CandyShared,
@@ -3597,7 +3597,7 @@ object OrigynNFT {
     class StorageMetrics(
         val gateway: ICPPrincipalApiModel,
         val available_space: BigInteger,
-        val allocations: kotlin.Array<AllocationRecordStable>,
+        val allocations: Array<AllocationRecordStable>,
         val allocated_storage: BigInteger
     )
     /**
@@ -3616,7 +3616,7 @@ object OrigynNFT {
      */
     class StreamingCallbackResponse(
         val token: StreamingCallbackToken?,
-        val body: kotlin.Array<UByte>
+        val body: Array<UByte>
     )
     /**
      * type StreamingCallbackToken = record {
@@ -3639,14 +3639,14 @@ object OrigynNFT {
      * };
      */
     class SubAccountInfo(
-        val account_id: kotlin.Array<UByte>,
+        val account_id: Array<UByte>,
         val principal: ICPPrincipalApiModel,
         val account_id_text: String,
         val account: Account
     ) {
         class Account(
             val principal: ICPPrincipalApiModel,
-            val sub_account: kotlin.Array<UByte>
+            val sub_account: Array<UByte>
         )
     }
     /**
@@ -3664,9 +3664,9 @@ object OrigynNFT {
      * };
      */
     class Tip(
-        val last_block_index: kotlin.Array<UByte>,
-        val hash_tree: kotlin.Array<UByte>,
-        val last_block_hash: kotlin.Array<UByte>
+        val last_block_index: Array<UByte>,
+        val hash_tree: Array<UByte>,
+        val last_block_hash: Array<UByte>
     )
     /**
      * type TokenIDFilter = record {
@@ -3682,7 +3682,7 @@ object OrigynNFT {
     class TokenIDFilter(
         val filter_type: FilterType,
         val token_id: String,
-        val tokens: kotlin.Array<Tokens>
+        val tokens: Array<Tokens>
     ) {
         sealed class FilterType {
             object allow: FilterType()
@@ -3721,7 +3721,7 @@ object OrigynNFT {
         val operator: ICPPrincipalApiModel?,
         val approved_at: ULong?,
         val approved_by: ICPPrincipalApiModel?,
-        val properties: kotlin.Array<Properties>,
+        val properties: Array<Properties>,
         val is_burned: Boolean,
         val token_identifier: BigInteger,
         val burned_at: ULong?,
@@ -3978,7 +3978,7 @@ object OrigynNFT {
             ): TxnType()
 
             class canister_managers_updated(
-                val managers: kotlin.Array<ICPPrincipalApiModel>,
+                val managers: Array<ICPPrincipalApiModel>,
                 val extensible: CandyShared
             ): TxnType()
 
@@ -3996,7 +3996,7 @@ object OrigynNFT {
             ): TxnType()
 
             class data(
-                val hash: kotlin.Array<UByte>?,
+                val hash: Array<UByte>?,
                 val extensible: CandyShared,
                 val data_dapp: String?,
                 val data_path: String?
@@ -4095,8 +4095,8 @@ object OrigynNFT {
     class TransferArgs(
         val to: Account__3,
         val token_id: BigInteger,
-        val memo: kotlin.Array<UByte>?,
-        val from_subaccount: kotlin.Array<UByte>?,
+        val memo: Array<UByte>?,
+        val from_subaccount: Array<UByte>?,
         val created_at_time: ULong?
     )
     /**
@@ -4155,7 +4155,7 @@ object OrigynNFT {
     sealed class UpdateModeShared {
         class Set(val Set: CandyShared): UpdateModeShared()
         class Lock(val Lock: CandyShared): UpdateModeShared()
-        class Next(val Next: kotlin.Array<UpdateShared>): UpdateModeShared()
+        class Next(val Next: Array<UpdateShared>): UpdateModeShared()
 
     }
     /**
@@ -4163,7 +4163,7 @@ object OrigynNFT {
      */
     class UpdateRequestShared(
         val id: String,
-        val update: kotlin.Array<UpdateShared>
+        val update: Array<UpdateShared>
     )
     /**
      * type UpdateSetting = variant {
@@ -4185,7 +4185,7 @@ object OrigynNFT {
         class archiveCycles(val archiveCycles: BigInteger): UpdateSetting()
         class maxActiveRecords(val maxActiveRecords: BigInteger): UpdateSetting()
         class maxRecordsInArchiveInstance(val maxRecordsInArchiveInstance: BigInteger): UpdateSetting()
-        class ArchiveControllers(val archiveControllers: kotlin.Array<ICPPrincipalApiModel>): UpdateSetting()
+        class ArchiveControllers(val archiveControllers: Array<ICPPrincipalApiModel>): UpdateSetting()
 
     }
     /**
@@ -4448,7 +4448,7 @@ object OrigynNFT {
             ): TxnType()
 
             class canister_managers_updated(
-                val managers: kotlin.Array<ICPPrincipalApiModel>,
+                val managers: Array<ICPPrincipalApiModel>,
                 val extensible: CandyShared
             ): TxnType()
 
@@ -4466,7 +4466,7 @@ object OrigynNFT {
             ): TxnType()
 
             class data(
-                val hash: kotlin.Array<UByte>?,
+                val hash: Array<UByte>?,
                 val extensible: CandyShared,
                 val data_dapp: String?,
                 val data_path: String?
@@ -4567,7 +4567,7 @@ object OrigynNFT {
         val memory_size: BigInteger,
         val cycles: BigInteger,
         val settings: definite_canister_settings,
-        val module_hash: kotlin.Array<UByte>?
+        val module_hash: Array<UByte>?
     ) {
         sealed class Status {
             object stopped: Status()
@@ -4587,7 +4587,7 @@ object OrigynNFT {
      */
     class definite_canister_settings(
         val freezing_threshold: BigInteger,
-        val controllers: kotlin.Array<ICPPrincipalApiModel>?,
+        val controllers: Array<ICPPrincipalApiModel>?,
         val memory_allocation: BigInteger,
         val compute_allocation: BigInteger
     )

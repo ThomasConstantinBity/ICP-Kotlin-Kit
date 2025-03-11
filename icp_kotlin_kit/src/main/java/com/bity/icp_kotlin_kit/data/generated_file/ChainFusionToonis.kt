@@ -1,4 +1,4 @@
-package com.bity.icp_kotlin_kit.domain.generated_file
+package com.bity.icp_kotlin_kit.data.generated_file
 
 import java.math.BigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
@@ -6,8 +6,6 @@ import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
-import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
-import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 
 /**
  * type TokenIndex__1 = nat32;
@@ -179,7 +177,7 @@ object ChainFusionToonis {
      */
     sealed class Result_13 {
         class err(val err: CommonError__2): Result_13()
-        class ok(val ok: kotlin.Array<CFTTokenIndex__1>): Result_13()
+        class ok(val ok: Array<CFTTokenIndex__1>): Result_13()
     }
 
     /**
@@ -195,7 +193,7 @@ object ChainFusionToonis {
      */
     sealed class Result_12 {
         class err(val err: CommonError__2): Result_12()
-        class ok(val ok: kotlin.Array<okClass>): Result_12()
+        class ok(val ok: Array<okClass>): Result_12()
 
         class okClass(
             val tokenIndex__1: CFTTokenIndex__1,
@@ -308,7 +306,7 @@ object ChainFusionToonis {
      */
     class HttpResponse__1(
         val body: ByteArray,
-        val headers: kotlin.Array<HeaderField>,
+        val headers: Array<HeaderField>,
         val status_code: UShort
     )
 
@@ -323,7 +321,7 @@ object ChainFusionToonis {
      */
     class HttpRequest__1(
         val body: ByteArray,
-        val headers: kotlin.Array<HeaderField>,
+        val headers: Array<HeaderField>,
         val method: String,
         val url: String
     )
@@ -441,8 +439,8 @@ object ChainFusionToonis {
 
         // getTokensByIds: (vec TokenIndex__1) -> (vec record { TokenIndex__1; Metadata__1; }) query;
         suspend fun getTokensByIds(
-            array: kotlin.Array<CFTTokenIndex__1>
-        ): kotlin.Array<ArrayClass>
+            array: Array<CFTTokenIndex__1>
+        ): Array<ArrayClass>
         {
             val icpQuery = ICPQuery(
                 methodName = "getTokensByIds",
