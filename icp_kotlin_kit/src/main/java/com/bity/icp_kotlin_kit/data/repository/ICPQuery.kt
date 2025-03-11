@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidEncoder
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.di.icpCanisterRepository
@@ -8,7 +9,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
-import com.bity.icp_kotlin_kit.domain.request.PollingValues
+import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
 
 open class ICPQuery(
     private val methodName: String,
@@ -16,41 +17,43 @@ open class ICPQuery(
 ) {
     private val canisterRepository: ICPCanisterRepository = icpCanisterRepository
 
+    // TODO, this will be removed
     suspend operator fun invoke(
-        args: List<Any?>?,
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues,
         certification: ICPRequestCertification
-    ): Result<CandidValue> =
+    ): Result<List<CandidValue>> =
         when(certification) {
-            ICPRequestCertification.Uncertified -> query(args)
+            ICPRequestCertification.Uncertified -> query(values)
             ICPRequestCertification.Certified -> callAndPoll(
-                args = args,
+                values = values,
                 sender = sender,
                 pollingValues = pollingValues
             )
         }
 
-    private suspend fun query(
-        args: List<Any?>?,
-    ): Result<CandidValue> {
+    // TODO, values could be not null
+    suspend fun query(
+        values: List<ValueToEncode>?,
+    ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,
-            args = args?.map { CandidEncoder(it) }
+            args = values?.map { CandidEncoder(it) }
         )
         return canisterRepository.query(icpMethod)
     }
 
     suspend fun callAndPoll(
-        args: List<Any?>?,
+        values: List<ValueToEncode>?,
         sender: ICPSigningPrincipal?,
         pollingValues: PollingValues
-    ): Result<CandidValue> {
+    ): Result<List<CandidValue>> {
         val icpMethod = ICPMethod(
             canister = canister,
             methodName = methodName,
-            args = args?.map { CandidEncoder(it) }
+            args = values?.map { CandidEncoder(it) }
         )
         val requestId = canisterRepository.call(
             method = icpMethod,

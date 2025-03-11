@@ -36,8 +36,14 @@ fun AppFeatures(
         MainButton(text = "ICP Tokens") {
             navController.navigate(Screen.ICPTokens.route)
         }
+        MainButton(text = "Account ICP Tokens Balance") {
+            navController.navigate(Screen.AccountBalance.route)
+        }
         MainButton(text = "ICP NFTs") {
             navController.navigate(Screen.ICPNFTs.route)
+        }
+        MainButton(text = "Account NFT holdings") {
+            navController.navigate(Screen.NFTHoldings.route)
         }
     }
 }
@@ -50,10 +56,13 @@ private fun MainButton(
 ) {
     Button(
         modifier = modifier
-            .width(150.dp),
+            .width(180.dp),
         onClick = { onClick() }
     ) {
-        Text(text = text)
+        Text(
+            textAlign = TextAlign.Center,
+            text = text
+        )
     }
 }
 
@@ -61,7 +70,7 @@ private fun MainButton(
 @Preview(showBackground = true)
 fun PreviewMainButton() {
     MainButton(
-        text = "ICP Tokens",
+        text = "Account Balance",
         onClick = { }
     )
 }

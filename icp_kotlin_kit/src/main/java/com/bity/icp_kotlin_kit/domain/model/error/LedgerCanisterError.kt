@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model.error
 
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.Tokens
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister.Tokens
 
 sealed class LedgerCanisterError(msg: String? = null): Error(msg)
 

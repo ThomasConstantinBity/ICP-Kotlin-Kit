@@ -26,16 +26,9 @@ developers to focus on the real functionality of their app and bootstrapping the
 - CBOR serialisation
 - Basic ICP Models for transactions, accounts, self-authenticating principals etc.
 - `CandidEncoder` and `CandidDecoder` for converting any kotlin class/values to a CandidValue
-- This library provides a set of pre-generated files: 
-  - `DIP20.kt` 
-  - `ICRC1.kt`
-  - `ICRC1IndexCanister.kt`
-  - `LedgerCanister.kt`
-  - `NNS_SNS_W.kt`
-  - `NNSICPIndexCanister.kt`
-  - `Tokens.kt`
+- This library provides a set of pre-generated files inside `data/generated_file`
 
-This files can be directly used to interact with canisters on the Internet Computer. These files include the most 
+This files can be directly used to interact with canisters. These files include the most 
 commonly needed functionality for operations such as fetching balances, sending ICP or ICP tokens, 
 and retrieving NFT information.
 
@@ -168,13 +161,20 @@ tasks.register("parseCandidFiles") {
     require(inputFolder.isDirectory)
     inputFolder.listFiles { it -> it.extension == "did" }?.forEach { file ->
         val fileName = file.name.removeSuffix(".did")
-        val kotlinFileGenerator = KotlinFileGenerator(
+        val kotlinFile = KotlinFileGeneratorService.parseAndGetKotlinFile(
+            candidFileText = file.readText(Charsets.UTF_8),
             fileName = fileName,
-            packageName = "com.your.package.name",
-            didFileContent = file.readText(Charsets.UTF_8)
+            packageName = "com.your.package.name"
         )
         val outputFile = file("./src/main/path/to/your/folder/${fileName}.kt")
-        outputFile.writeText(kotlinFileGenerator.generateKotlinFile())
+        outputFile.writeText(kotlinFile)
     }
 }
 ```
+
+### NFT Support
+The library, in the `DataModule` file, provides an `nftRepository` object that implements the `NFTRepository` interface. The interface implementation can be used to fetch all the required NFT information. If you want to handle a collection with a custom implementation, you can call `NFTServiceUtil.setNFTService`. You can check `ChainFusionToonisNFTService` for an example.
+
+### Logger
+
+To enhance tracking and debugging, you can set a custom logger by calling `ICPKitLogger.setLogger`. Simply provide an implementation of `ICPKitLogHandler` and override only the necessary functions. All methods with custom behavior have an empty body by default, allowing for flexible customization.  

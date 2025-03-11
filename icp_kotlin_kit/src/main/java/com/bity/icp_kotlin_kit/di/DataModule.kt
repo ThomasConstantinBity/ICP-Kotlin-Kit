@@ -1,26 +1,33 @@
 package com.bity.icp_kotlin_kit.di
 
 import com.bity.icp_kotlin_kit.data.datasource.api.service.ICPRetrofitService
-import com.bity.icp_kotlin_kit.data.factory.TokenActorFactoryImpl
-import com.bity.icp_kotlin_kit.data.factory.TransactionProviderFactoryImpl
+import com.bity.icp_kotlin_kit.data.factory.NFTRepositoryFactoryImpl
+import com.bity.icp_kotlin_kit.data.factory.TokenRepositoryFactoryImpl
+import com.bity.icp_kotlin_kit.data.factory.TransactionRepositoryFactoryImpl
 import com.bity.icp_kotlin_kit.data.repository.ICPCanisterRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.LedgerCanisterRepositoryImpl
-import com.bity.icp_kotlin_kit.data.repository.NFTRepositoryImpl
-import com.bity.icp_kotlin_kit.data.repository.SNSCachedServiceImpl
-import com.bity.icp_kotlin_kit.data.repository.TokenRepositoryImpl
-import com.bity.icp_kotlin_kit.domain.factory.TokenActorFactory
-import com.bity.icp_kotlin_kit.domain.factory.TransactionProviderFactory
-import com.bity.icp_kotlin_kit.domain.generated_file.DABNFT
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.NNSICPIndexCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.NNS_SNS_W
-import com.bity.icp_kotlin_kit.domain.generated_file.TokensService
+import com.bity.icp_kotlin_kit.data.repository.NFTCachedRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.SNSCachedRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.TokenCachedRepositoryImpl
+import com.bity.icp_kotlin_kit.data.repository.transaction.ICPTransactionRepositoryImpl
+import com.bity.icp_kotlin_kit.data.service.nft.NFTCollectionIdServiceImpl
+import com.bity.icp_kotlin_kit.di.icpTransactionRepository
+import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
+import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
+import com.bity.icp_kotlin_kit.domain.factory.TransactionRepositoryFactory
+import com.bity.icp_kotlin_kit.data.generated_file.DABNFT
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
+import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
+import com.bity.icp_kotlin_kit.data.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
+import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
-import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
-import com.bity.icp_kotlin_kit.domain.repository.SNSCachedService
-import com.bity.icp_kotlin_kit.domain.repository.TokenRepository
+import com.bity.icp_kotlin_kit.domain.repository.NFTCachedRepository
+import com.bity.icp_kotlin_kit.domain.repository.SNSCachedRepository
+import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
+import com.bity.icp_kotlin_kit.domain.repository.TokenCachedRepository
 import com.bity.icp_kotlin_kit.util.jackson.CborConverterFactory
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -58,40 +65,19 @@ internal val ledgerCanisterRepository: LedgerCanisterRepository by lazy {
     )
 }
 
-internal val nftRepository: NFTRepository by lazy {
-    NFTRepositoryImpl(
-        nftService = dabNFTService
-    )
-}
-
-internal val tokenRepository: TokenRepository by lazy {
-    TokenRepositoryImpl(
-        tokensService = tokenService,
-        actorFactory = tokenActorFactory
-    )
-}
-
 /**
  * Service
  */
-private val ledgerCanisterService: LedgerCanister.LedgerCanisterService by lazy {
-    LedgerCanister.LedgerCanisterService(
-        canister = ICPSystemCanisters.Ledger.icpPrincipal
-    )
+val nftCollectionIdService: NFTCollectionIdService by lazy {
+    NFTCollectionIdServiceImpl()
 }
-private val dabNFTService: DABNFT.DABNFTService by lazy {
-    DABNFT.DABNFTService(
-        canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
-    )
-}
-private val tokenService: TokensService by lazy {
-    TokensService(
-        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
-    )
-}
-private val snsCachedService: SNSCachedService by lazy {
-    SNSCachedServiceImpl(
-        service = nnsSNSWService
+
+/**
+* Canister from generated file
+ */
+private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by lazy {
+    NNSICPIndexCanister.NNSICPIndexCanisterService(
+        canister = ICPSystemCanisters.Index.icpPrincipal
     )
 }
 
@@ -101,22 +87,67 @@ internal val nnsSNSWService: NNS_SNS_W.nns_sns_wService by lazy {
     )
 }
 
-private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by lazy {
-    NNSICPIndexCanister.NNSICPIndexCanisterService(
-        canister = ICPSystemCanisters.Index.icpPrincipal
+private val snsCachedRepository: SNSCachedRepository by lazy {
+    SNSCachedRepositoryImpl(
+        canister = nnsSNSWService
+    )
+}
+
+private val tokensService: TokensService by lazy {
+    TokensService(
+        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
+    )
+}
+
+private val dabNFTService: DABNFT.DABNFTService by lazy {
+    DABNFT.DABNFTService(
+        canister = ICPSystemCanisters.NFTRegistry.icpPrincipal
+    )
+}
+
+private val ledgerCanisterService: LedgerCanister.LedgerCanisterService by lazy {
+    LedgerCanister.LedgerCanisterService(
+        canister = ICPSystemCanisters.Ledger.icpPrincipal
     )
 }
 
 /**
  * Factory
  */
-internal val tokenActorFactory: TokenActorFactory by lazy {
-    TokenActorFactoryImpl()
+private val tokenRepositoryFactory: TokenRepositoryFactory by lazy {
+    TokenRepositoryFactoryImpl()
 }
 
-internal val transactionProviderFactory: TransactionProviderFactory by lazy {
-    TransactionProviderFactoryImpl(
-        snsService = snsCachedService,
+internal val transactionRepositoryFactory: TransactionRepositoryFactory by lazy {
+    TransactionRepositoryFactoryImpl(
+        snsService = snsCachedRepository,
         indexService = icpIndexService
+    )
+}
+
+internal val nftRepositoryFactory: NFTRepositoryFactory by lazy {
+    NFTRepositoryFactoryImpl()
+}
+
+internal val icpTransactionRepository: ICPTransactionRepository by lazy {
+    ICPTransactionRepositoryImpl(
+        transactionRepositoryFactory = transactionRepositoryFactory
+    )
+}
+
+/**
+ * Repository
+ */
+internal val nftCachedRepository: NFTCachedRepository by lazy {
+    NFTCachedRepositoryImpl(
+        dabCanister = dabNFTService,
+        nftRepositoryFactory = nftRepositoryFactory
+    )
+}
+
+internal val tokenCachedRepository: TokenCachedRepository by lazy {
+    TokenCachedRepositoryImpl(
+        canister = tokensService,
+        tokenRepositoryFactory = tokenRepositoryFactory
     )
 }

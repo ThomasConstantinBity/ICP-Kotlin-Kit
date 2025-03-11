@@ -2,6 +2,7 @@ package com.bity.icp_kotlin_kit.data.model.candid
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidKey
+import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
@@ -13,8 +14,10 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.KType
+import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
+import kotlin.reflect.jvm.jvmErasure
 
 object CandidDecoder {
 
@@ -41,10 +44,10 @@ object CandidDecoder {
             is CandidValue.Natural32 -> candidValue.uInt32
             is CandidValue.Natural64 -> candidValue.uInt64
             is CandidValue.Natural8 -> candidValue.uInt8
-            CandidValue.Null -> TODO()
+            CandidValue.Null -> return null
             is CandidValue.Option -> getOptionValue(
                 candidValue = candidValue.option.value,
-                constructor = T::class.constructors.firstOrNull()
+                componentType = T::class
             )
             is CandidValue.Record -> {
                 val kClass: KClass<T> = T::class
@@ -80,7 +83,7 @@ object CandidDecoder {
 
     fun getOptionValue(
         candidValue: CandidValue?,
-        constructor: KFunction<*>?
+        componentType: KClass<*>?
     ): Any? {
         candidValue ?: return null
         return when(candidValue) {
@@ -101,14 +104,29 @@ object CandidDecoder {
             is CandidValue.Natural64 -> candidValue.uInt64
             is CandidValue.Natural8 -> candidValue.uInt8
             CandidValue.Null -> null
-            is CandidValue.Option -> candidValue.option.value?.let { value -> getOptionValue(value, constructor) }
+            is CandidValue.Option ->
+                candidValue.option.value?.let { value -> getOptionValue(value, componentType) }
             is CandidValue.Principal -> TODO()
-            is CandidValue.Record -> TODO()
+            is CandidValue.Record -> {
+                requireNotNull(componentType)
+                val constructor = componentType.primaryConstructor
+                requireNotNull(constructor)
+                buildObject(
+                    candidRecord = candidValue.record,
+                    constructor = constructor
+                )
+            }
             CandidValue.Reserved -> TODO()
             is CandidValue.Service -> TODO()
             is CandidValue.Text -> candidValue.string
             is CandidValue.Variant -> TODO()
-            is CandidValue.Vector -> TODO()
+            is CandidValue.Vector -> {
+                requireNotNull(componentType)
+                buildArray(
+                    candidVector = candidValue.vector,
+                    componentType = componentType
+                )
+            }
         }
     }
 
@@ -285,7 +303,22 @@ object CandidDecoder {
                     )
                 )
             }
-            is CandidValue.Vector -> TODO()
+            is CandidValue.Vector -> {
+                val candidValue = candidVariant.value
+                require(candidValue is CandidValue.Vector)
+                val componentType = targetClass
+                    .memberProperties.first()
+                    .returnType
+                    .arguments.first()
+                    .type
+                    ?.jvmErasure
+                requireNotNull(componentType)
+                val array = buildArray(
+                    candidVector = candidValue.vector,
+                    componentType = componentType
+                )
+                targetClass.primaryConstructor?.call(array)!!
+            }
         }
     }
 
@@ -391,11 +424,15 @@ object CandidDecoder {
             val key = it.name
             requireNotNull(key)
             val candidValue = candidRecord[key]
-            requireNotNull(candidValue)
-            decode(
-                candidValue = candidValue,
-                type = it.type
-            )
+            /*requireNotNull(candidValue) {
+                "Missing value for parameter: ${it.name}"
+            }*/
+            candidValue?.let { cv ->
+                decode(
+                    candidValue = cv,
+                    type = it.type
+                )
+            }
         }
         return constructor.callBy(params)
     }
@@ -430,11 +467,30 @@ object CandidDecoder {
                     is CandidValue.Natural64 -> value.uInt64
                     is CandidValue.Natural8 -> value
                     CandidValue.Null -> null
-                    is CandidValue.Option -> TODO()
+                    is CandidValue.Option -> {
+                        when(value.option) {
+                            is CandidOption.None -> null
+                            is CandidOption.Some -> {
+                                if(componentType.java.isArray) {
+                                    getOptionValue(
+                                        candidValue = value.option.value,
+                                        componentType = componentType.java.componentType.kotlin
+                                    )
+                                } else {
+                                    getOptionValue(
+                                        candidValue = value.option.value,
+                                        componentType = componentType
+                                    )
+                                }
+                            }
+
+                        }
+                    }
                     is CandidValue.Record -> {
+                        val constructor = componentType.constructors.first()
                         buildObject(
                             candidRecord = value.record,
-                            constructor = componentType.constructors.first()
+                            constructor = constructor
                         )
                     }
                     CandidValue.Reserved -> TODO()

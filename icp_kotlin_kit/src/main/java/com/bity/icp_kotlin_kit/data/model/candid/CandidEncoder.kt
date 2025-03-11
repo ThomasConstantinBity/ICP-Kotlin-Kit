@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.data.model.candid
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
+import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidOption
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrincipal
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
@@ -15,22 +16,24 @@ import kotlin.reflect.jvm.jvmErasure
 
 internal object CandidEncoder {
 
-    operator fun invoke(
-        arg: Any?,
-        expectedClass: KClass<*>? = null,
-        expectedClassNullable: Boolean = false
-    ): CandidValue {
+    private fun encodeSealedClass(valueToEncode: ValueToEncode): CandidValue {
+        TODO()
+    }
 
-        if(arg == null) {
-            requireNotNull(expectedClass)
+    operator fun invoke(valueToEncode: ValueToEncode): CandidValue {
+
+        if(valueToEncode.arg == null) {
             return CandidValue.Option(
                 option = CandidOption.None(
-                    type = candidPrimitiveTypeForClass(expectedClass)
+                    type = candidPrimitiveTypeForClass(valueToEncode.expectedClass)
                 )
             )
         }
 
-        val candidValue = when(arg) {
+        if(valueToEncode.expectedClass.isSealed)
+            return encodeSealedClass(valueToEncode)
+
+        val candidValue = when(val arg = valueToEncode.arg) {
 
             // Unsigned value
             is UByte -> CandidValue.Natural8(arg)
@@ -53,15 +56,32 @@ internal object CandidEncoder {
             is ByteArray -> CandidValue.Blob(arg)
 
             is Array<*> -> {
-                val firstArg = arg.first()
-                if(firstArg != null) {
+                // TODO: could join if/else
+                if(arg.isNotEmpty()) {
+                    val firstArg = arg.first()
+                    requireNotNull(firstArg)
                     CandidValue.Vector(
                         CandidVector(
-                            values = arg.map { CandidEncoder(it) },
+                            values = arg.map { CandidEncoder(
+                                 ValueToEncode(
+                                    arg = it!!,
+                                    arrayType = valueToEncode.arrayType,
+                                     arrayTypeNullable = valueToEncode.arrayTypeNullable
+                                )
+                            ) },
                             containedType = candidPrimitiveTypeForClass(firstArg::class)
                         )
                     )
-                } else TODO()
+                } else {
+                    val arrayType = valueToEncode.arrayType
+                    requireNotNull(arrayType)
+                    CandidValue.Vector(
+                        CandidVector(
+                            values = emptyList(),
+                            containedType = candidPrimitiveTypeForClass(arrayType)
+                        )
+                    )
+                }
             }
 
             is ICPPrincipalApiModel -> CandidValue.Principal(
@@ -76,15 +96,17 @@ internal object CandidEncoder {
                     // Required if obfuscation is enabled
                     it.isAccessible = true
                     it.name to CandidEncoder(
-                        arg = it.getter.call(arg),
-                        expectedClass = it.returnType.jvmErasure,
-                        expectedClassNullable = it.returnType.isMarkedNullable
+                        ValueToEncode(
+                            arg = it.getter.call(arg),
+                            expectedClass = it.returnType.jvmErasure,
+                            expectedClassNullable = it.returnType.isMarkedNullable
+                        )
                     )
                 }.toMap()
                 CandidValue.Record(CandidRecord.init(dictionary))
             }
         }
-        return if(expectedClassNullable)
+        return if(valueToEncode.expectedClassNullable)
             CandidValue.Option(CandidOption.Some(candidValue))
         else
             candidValue
@@ -94,33 +116,23 @@ internal object CandidEncoder {
     private fun candidPrimitiveTypeForClass(clazz: KClass<*>): CandidType {
         return when(clazz) {
 
-            Byte::class -> CandidType.Integer8
             BigInteger::class -> CandidType.Natural
+            Float::class -> CandidType.Float32
+            Double::class -> CandidType.Float64
+
+            Byte::class-> CandidType.Integer8
+            Short::class -> CandidType.Integer16
+            Int::class -> CandidType.Integer32
+            Long::class -> CandidType.Integer64
 
             UByte::class -> CandidType.Natural8
+            UShort::class -> CandidType.Natural16
+            UInt::class -> CandidType.Natural32
             ULong::class -> CandidType.Natural64
 
+            String::class -> CandidType.Text
+            Boolean::class -> CandidType.Bool
             ByteArray::class -> CandidType.Vector(CandidType.Integer8)
-
-            /**
-            // Unsigned Value
-            UByte::class.java-> CandidType.Primitive(CandidPrimitiveType.NATURAL8)
-            UShort::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL16)
-            UInt::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL32)
-            ULong::class.java -> CandidType.Primitive(CandidPrimitiveType.NATURAL64)
-
-            // Signed Value
-            Byte::class.java-> CandidType.Primitive(CandidPrimitiveType.INTEGER8)
-            Short::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER16)
-            Int::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER32)
-            Long::class.java -> CandidType.Primitive(CandidPrimitiveType.INTEGER64)
-
-            Float::class.java -> CandidType.Primitive(CandidPrimitiveType.FLOAT32)
-            Double::class.java -> CandidType.Primitive(CandidPrimitiveType.FLOAT64)
-
-            Boolean::class.java -> CandidType.Primitive(CandidPrimitiveType.BOOL)
-            String::class.java -> CandidType.Primitive(CandidPrimitiveType.TEXT)
-            **/
 
             else -> TODO("not implemented for $clazz")
         }

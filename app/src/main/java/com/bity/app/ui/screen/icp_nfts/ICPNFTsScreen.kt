@@ -26,20 +26,23 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ICPNFTsScreen(
     modifier: Modifier = Modifier,
-    viewModel: ICPNFTsViewModel = koinViewModel()
+    viewModel: ICPNFTsViewModel = koinViewModel(),
+    onNFTClick: (String) -> Unit
 ) {
     val state = viewModel.state
     if(state.isLoading) LoadingDialog()
     else NFTCollectionsList(
         modifier = modifier,
-        nftCollections = state.nftCollections
+        nftCollections = state.nftCollections,
+        onClick = onNFTClick
     )
 }
 
 @Composable
 private fun NFTCollectionsList(
     modifier: Modifier = Modifier,
-    nftCollections: List<ICPNftCollection>
+    nftCollections: List<ICPNftCollection>,
+    onClick: (String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -47,7 +50,8 @@ private fun NFTCollectionsList(
         items(nftCollections) {
             NFTCard(
                 modifier = Modifier.padding(8.dp),
-                nft = it
+                nft = it,
+                onClick = { onClick(it.canister.string) }
             )
         }
     }
@@ -56,9 +60,11 @@ private fun NFTCollectionsList(
 @Composable
 fun NFTCard(
     modifier: Modifier = Modifier,
-    nft: ICPNftCollection
+    nft: ICPNftCollection,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 10.dp,
         ),
@@ -81,7 +87,7 @@ fun NFTCard(
             )
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                text = nft.name,
+                text = "[${nft.standard.name}] - ${nft.name}",
                 style = MaterialTheme.typography.titleMedium
             )
         }

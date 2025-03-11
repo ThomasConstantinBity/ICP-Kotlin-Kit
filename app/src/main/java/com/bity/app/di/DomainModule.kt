@@ -1,13 +1,16 @@
 package com.bity.app.di
 
-import com.bity.icp_kotlin_kit.domain.usecase.nft.GetAllNFTCollectionsUseCase
-import com.bity.icp_kotlin_kit.domain.usecase.token.GetAllTokensUseCase
-import com.bity.icp_kotlin_kit.domain.usecase.token.GetTokenBalanceUseCase
-import org.koin.core.module.dsl.singleOf
+import com.bity.icp_kotlin_kit.di.*
 import org.koin.dsl.module
 
 val domainModule = module {
-    singleOf(::GetAllNFTCollectionsUseCase)
-    singleOf(::GetAllTokensUseCase)
-    singleOf(::GetTokenBalanceUseCase)
+    single { fetchAllNFTCollections }
+    single { fetchNFTCollection }
+    single { fetchNFTCollectionTokens }
+    single { fetchNFTCollectionTokenOwner }
+    single { fetchUserNFTTokensHolding }
+    single { fetchTokensBalance }
+    single { fetchAllTokens }
+    single { getTransactionExplorerUrl }
+    single { fetchTokenTransactions }
 }

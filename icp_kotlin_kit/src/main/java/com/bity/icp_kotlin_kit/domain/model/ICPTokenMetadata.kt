@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model
 
-import com.bity.icp_kotlin_kit.domain.generated_file.DIP20
+import com.bity.icp_kotlin_kit.data.generated_file.DIP20
 import java.math.BigInteger
 
 internal data class ICPTokenMetadata(

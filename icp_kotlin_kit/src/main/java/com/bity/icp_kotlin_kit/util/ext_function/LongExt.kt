@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
 import java.io.InputStream
+import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 

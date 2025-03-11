@@ -1,16 +1,15 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.ArchivedBlocksRange
-import com.bity.icp_kotlin_kit.domain.generated_file.LedgerCanister.GetBlocksArgs
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister.ArchivedBlocksRange
+import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister.GetBlocksArgs
 import com.bity.icp_kotlin_kit.domain.model.error.QueryBlockError
 import com.bity.icp_kotlin_kit.domain.model.error.TransferError
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlock
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransaction
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransactionOperation
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
-import com.bity.icp_kotlin_kit.domain.request.TransferICPRequest
-import com.bity.icp_kotlin_kit.util.ext_function.timestampNanosToDate
+import com.bity.icp_kotlin_kit.domain.model.request.TransferICPRequest
 import com.bity.icp_kotlin_kit.util.icpTimestampNow
 import java.math.BigInteger
 

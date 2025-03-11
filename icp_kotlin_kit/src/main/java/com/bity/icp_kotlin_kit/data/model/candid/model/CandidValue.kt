@@ -84,7 +84,9 @@ sealed class CandidValue(
 
     data class Text(val string: String) : CandidValue(
         candidType = CandidType.Text
-    )
+    ) {
+        override fun toString(): String = "Text = \"$string\""
+    }
 
     data class Blob(val data: ByteArray) : CandidValue(
         candidType = CandidType.Vector(CandidType.Natural8)

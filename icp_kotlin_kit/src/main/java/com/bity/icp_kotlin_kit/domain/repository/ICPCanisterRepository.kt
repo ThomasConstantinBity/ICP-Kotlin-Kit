@@ -9,7 +9,7 @@ internal interface ICPCanisterRepository {
 
     suspend fun query(
         method: ICPMethod,
-    ): Result<CandidValue>
+    ): Result<List<CandidValue>>
 
     /**
      * @return requestId of the request
@@ -26,5 +26,5 @@ internal interface ICPCanisterRepository {
         sender: ICPSigningPrincipal? = null,
         durationSeconds: Long,
         waitDurationSeconds: Long
-    ): Result<CandidValue>
+    ): Result<List<CandidValue>>
 }

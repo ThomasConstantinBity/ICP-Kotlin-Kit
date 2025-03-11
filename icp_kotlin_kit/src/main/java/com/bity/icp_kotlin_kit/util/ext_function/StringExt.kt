@@ -1,5 +1,18 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
+internal fun String.idToClassName(): String =
+    split("_")
+        .joinToString("") { splitName ->
+            splitName.replaceFirstChar { it.uppercase() }
+        }
+
+internal fun String.idToVariableName(): String =
+    split("_")
+        .joinToString("") { splitName ->
+            splitName.replaceFirstChar { it.uppercase() }
+        }
+        .replaceFirstChar { it.lowercase() }
+
 internal fun String.grouped(separator: String, groupLength: Int): String {
     val stringBuilder = StringBuilder()
     forEachIndexed { index, char ->
@@ -17,6 +30,7 @@ internal fun String.fromHex(): ByteArray? {
     }
     return getByteArray()
 }
+
 @Throws(NumberFormatException::class)
 internal fun String.getByteArray(): ByteArray {
     var hexWithoutPrefix = this.stripHexPrefix()

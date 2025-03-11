@@ -3,6 +3,7 @@ package com.bity.icp_kotlin_kit.data.model.candid.model
 import com.bity.icp_kotlin_kit.data.model.error.CandidVariantError
 
 class CandidVariant {
+
     val value: CandidValue
     val valueIndex: ULong
     val candidTypes: List<CandidKeyedType>
@@ -35,25 +36,5 @@ class CandidVariant {
         this.value = value.second
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as CandidVariant
-
-        if (value != other.value) return false
-        if (valueIndex != other.valueIndex) return false
-        if (candidTypes != other.candidTypes) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = value.hashCode()
-        result = 31 * result + valueIndex.hashCode()
-        result = 31 * result + candidTypes.hashCode()
-        return result
-    }
-
-
+    override fun toString(): String = "variant { $value }"
 }
