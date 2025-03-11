@@ -1,13 +1,14 @@
 package com.bity.icp_kotlin_kit.di
 
-import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
 import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchAllNFTCollections
 import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchNFTCollection
 import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchNFTCollectionTokenOwner
 import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchNFTCollectionTokens
 import com.bity.icp_kotlin_kit.domain.use_case.nft.FetchUserNFTTokensHolding
 import com.bity.icp_kotlin_kit.domain.use_case.token.FetchAllTokens
+import com.bity.icp_kotlin_kit.domain.use_case.token.FetchTokenTransactionFee
 import com.bity.icp_kotlin_kit.domain.use_case.token.FetchTokensBalance
+import com.bity.icp_kotlin_kit.domain.use_case.token.SendToken
 import com.bity.icp_kotlin_kit.domain.use_case.transaction.FetchTokenTransactions
 import com.bity.icp_kotlin_kit.domain.use_case.transaction.GetTransactionExplorerUrl
 
@@ -55,6 +56,18 @@ val fetchTokensBalance by lazy {
 
 val fetchAllTokens by lazy {
     FetchAllTokens(
+        tokenRepository = tokenCachedRepository
+    )
+}
+
+val fetchTokenTransactionFee by lazy {
+    FetchTokenTransactionFee(
+        tokenRepository = tokenCachedRepository
+    )
+}
+
+val sendToken by lazy {
+    SendToken(
         tokenRepository = tokenCachedRepository
     )
 }
