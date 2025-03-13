@@ -11,15 +11,14 @@ import com.bity.icp_kotlin_kit.data.repository.SNSCachedRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.TokenCachedRepositoryImpl
 import com.bity.icp_kotlin_kit.data.repository.transaction.ICPTransactionRepositoryImpl
 import com.bity.icp_kotlin_kit.data.service.nft.NFTCollectionIdServiceImpl
-import com.bity.icp_kotlin_kit.di.icpTransactionRepository
 import com.bity.icp_kotlin_kit.domain.factory.NFTRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.factory.TransactionRepositoryFactory
 import com.bity.icp_kotlin_kit.data.generated_file.DABNFT
+import com.bity.icp_kotlin_kit.data.generated_file.ICRC1Oracle
 import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
 import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
-import com.bity.icp_kotlin_kit.data.generated_file.TokensService
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
@@ -75,6 +74,10 @@ val nftCollectionIdService: NFTCollectionIdService by lazy {
 /**
 * Canister from generated file
  */
+private val icrc1OracleCanister = ICRC1Oracle.ICRC1OracleCanister(
+    canister = ICPSystemCanisters.ICRC1Oracle.icpPrincipal
+)
+
 private val icpIndexService: NNSICPIndexCanister.NNSICPIndexCanisterService by lazy {
     NNSICPIndexCanister.NNSICPIndexCanisterService(
         canister = ICPSystemCanisters.Index.icpPrincipal
@@ -90,12 +93,6 @@ internal val nnsSNSWService: NNS_SNS_W.nns_sns_wService by lazy {
 private val snsCachedRepository: SNSCachedRepository by lazy {
     SNSCachedRepositoryImpl(
         canister = nnsSNSWService
-    )
-}
-
-private val tokensService: TokensService by lazy {
-    TokensService(
-        canister = ICPSystemCanisters.TokenRegistry.icpPrincipal
     )
 }
 
@@ -147,7 +144,7 @@ internal val nftCachedRepository: NFTCachedRepository by lazy {
 
 internal val tokenCachedRepository: TokenCachedRepository by lazy {
     TokenCachedRepositoryImpl(
-        canister = tokensService,
-        tokenRepositoryFactory = tokenRepositoryFactory
+        canister = icrc1OracleCanister,
+        tokenRepositoryFactory = tokenRepositoryFactory,
     )
 }

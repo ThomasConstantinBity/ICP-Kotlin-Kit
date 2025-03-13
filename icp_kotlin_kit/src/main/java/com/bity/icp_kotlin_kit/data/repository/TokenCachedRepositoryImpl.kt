@@ -1,10 +1,6 @@
 package com.bity.icp_kotlin_kit.data.repository
 
-import com.bity.icp_kotlin_kit.data.datasource.api.model.toDomainModel
-import com.bity.icp_kotlin_kit.data.generated_file.TokensService
-import com.bity.icp_kotlin_kit.data.generated_file.detail_value
-import com.bity.icp_kotlin_kit.data.generated_file.token
-import com.bity.icp_kotlin_kit.data.model.error.DABTokenException
+import com.bity.icp_kotlin_kit.data.generated_file.*
 import com.bity.icp_kotlin_kit.data.model.error.RemoteClientError
 import com.bity.icp_kotlin_kit.domain.exception.ICPKitException
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
@@ -13,33 +9,45 @@ import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenBalance
 import com.bity.icp_kotlin_kit.domain.model.ICPTokenTransfer
 import com.bity.icp_kotlin_kit.domain.model.arg.ICPTokenTransferArgs
-import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 import com.bity.icp_kotlin_kit.domain.repository.TokenCachedRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import java.math.BigInteger
 
 internal class TokenCachedRepositoryImpl(
-    private val canister: TokensService,
+    private val canister: ICRC1Oracle.ICRC1OracleCanister,
     private val tokenRepositoryFactory: TokenRepositoryFactory
 ): TokenCachedRepository {
 
     private var cachedTokens: List<ICPToken>? = null
 
-    override suspend fun fetchAllTokens(): List<ICPToken> = coroutineScope {
-        cachedTokens?.let { return@coroutineScope it }
-        val tokensDeferred = async {
-            this@TokenCachedRepositoryImpl.canister.get_all()
-                .map { it.toICPToken() }
+    override suspend fun fetchAllTokens(): List<ICPToken> {
+        cachedTokens?.let { return it }
+
+        val canisterCount = canister.count_icrc1_canisters()
+        val pages = canisterCount / PAGE_SIZE + 1UL
+
+        val canisters =  coroutineScope {
+            (0UL..pages).map { index ->
+                val startAt = index * PAGE_SIZE
+                async {
+                    try {
+                        canister.get_icrc1_paginated(
+                            startAt = startAt,
+                            pageSize = PAGE_SIZE
+                        ).toList()
+                    } catch (t: Throwable) {
+                        ICPKitLogger.logError(throwable = t)
+                        emptyList()
+                    }
+                }
+            }.awaitAll()
+                .flatten()
         }
-        val icpTokenDeferred = async {
-            getICPToken()
-        }
-        val tokens = tokensDeferred.await() + listOf(icpTokenDeferred.await())
-        cachedTokens = tokens
-        return@coroutineScope tokens
+        return canisters.map { it.toDomainModel() }
     }
 
     override suspend fun fetchAccountTokensBalance(
@@ -102,68 +110,31 @@ internal class TokenCachedRepositoryImpl(
         return repository.transfer(transferArgs)
     }
 
-    private suspend fun getICPToken(): ICPToken {
-        val standard = ICPTokenStandard.ICP
-        val canister = ICPSystemCanisters.Ledger.icpPrincipal
-        val repository = tokenRepositoryFactory.createRepository(
-            standard = standard,
-            canister = canister
-        )
-        val metadata = repository.fetchMetadata()
-        return ICPToken(
-            standard = standard,
-            canister = canister,
-            description = "Internet Computer Protocol",
-            metadata = metadata
-        )
+    companion object {
+        private const val PAGE_SIZE = 10UL
     }
+
 }
 
-private fun token.toICPToken(): ICPToken =
+private fun ICRC1Oracle.ICRC1.toDomainModel(): ICPToken =
     ICPToken(
-        standard = standard,
-        canister = principal_id.toDomainModel(),
+        standard = category.toDomainModel(),
+        canister = ICPPrincipal(ledger),
         name = name,
-        decimals = decimals,
+        decimals = decimals.toInt(),
         symbol = symbol,
-        description = description,
-        totalSupply = BigInteger(totalSupply.toString()),
-        verified = verified,
-        logoUrl = thumbnail,
-        websiteUrl = frontend
+        spam = category.isSpam(),
+        logo = logo,
     )
 
-private fun token.textValue(key: String): String =
-    (details.find { it.string == key }?.detail_value as? detail_value.Text)
-        ?.string
-        ?: throw DABTokenException.InvalidType(key)
-
-private fun token.uLongValue(key: String): ULong =
-    (details.find { it.string == key }?.detail_value as? detail_value.U64)
-        ?.uLong
-        ?: throw DABTokenException.InvalidType("decimals")
-
-private val token.standard: ICPTokenStandard
-    get() {
-        val stringValue = textValue("standard")
-        return ICPTokenStandard.valueFromString(stringValue)
+private fun ICRC1Oracle.Category.toDomainModel(): ICPTokenStandard =
+    when(this) {
+        ICRC1Oracle.Category.Native -> ICPTokenStandard.ICP
+        else -> ICPTokenStandard.ICRC1
     }
 
-private val token.symbol: String
-    get() = textValue("symbol")
-
-private val token.decimals: Int
-    get() = uLongValue("decimals").toInt()
-
-private val token.totalSupply: ULong
-    get() = uLongValue("total_supply")
-
-private val token.verified: Boolean
-    get() {
-        val detailValue = details.find { it.string == "verified" }?.detail_value
-        return when(detailValue) {
-            detail_value.True -> true
-            detail_value.False -> false
-            else -> throw DABTokenException.InvalidType("verified")
-        }
+private fun ICRC1Oracle.Category.isSpam(): Boolean =
+    when(this) {
+        ICRC1Oracle.Category.Spam -> true
+        else -> false
     }

@@ -114,7 +114,7 @@ fun TokenBalanceRow(tokenWithBalanceModel: ICPTokenBalance) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(tokenWithBalanceModel.token.logoUrl)
+                        .data(tokenWithBalanceModel.token.logo)
                         .crossfade(true)
                         .build(),
                     placeholder = null,

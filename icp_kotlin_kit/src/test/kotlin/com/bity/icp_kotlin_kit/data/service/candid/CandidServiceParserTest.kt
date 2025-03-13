@@ -11,8 +11,6 @@ import kotlin.test.assertNotNull
 
 class CandidServiceParserTest {
 
-    private val candidTypeParserService = CandidTypeParserServiceImpl { {} }
-
     @Test
     fun origynNFTService() {
         val serviceDeclaration =
@@ -195,7 +193,7 @@ class CandidServiceParserTest {
                   whoami : () -> (principal) query;
                 };
             """.trimIndent()
-        val candidTypeService = candidTypeParserService.parseCandidType(serviceDeclaration) as? CandidTypeService
+        val candidTypeService = CandidTypeParserService.parseCandidType(serviceDeclaration) as? CandidTypeService
         assertNotNull(candidTypeService)
         println(candidTypeService.getServiceDefinition())
     }
@@ -206,7 +204,7 @@ class CandidServiceParserTest {
         typeDefinition: String,
         expectedGeneratedClass: String
     ) {
-        val candidTypeDefinition = candidTypeParserService
+        val candidTypeDefinition = CandidTypeParserService
             .parseCandidType(typeDefinition) as? CandidTypeService
         assertNotNull(candidTypeDefinition)
         assertFalse(candidTypeDefinition.isTypeAlias)
@@ -228,6 +226,125 @@ class CandidServiceParserTest {
 
         @JvmStatic
         private fun candidService() = listOf(
+
+            Arguments.of(
+                """
+                    service : {
+                        count_icrc1_canisters : () -> (nat64) query;
+                        get_all_icrc1_canisters : () -> (vec ICRC1) query;
+                        get_icrc1_paginated : (nat64, nat64) -> (vec ICRC1) query;
+                        replace_icrc1_canisters : (vec ICRC1) -> ();
+                        set_operator : (principal) -> ();
+                        store_icrc1_canister : (ICRC1Request) -> ();
+                        store_new_icrc1_canisters : (vec ICRC1) -> ();
+                    }
+                """.trimIndent(),
+                """
+                    class Service(
+                        private val canister: ICPPrincipal
+                    ) { 
+                        suspend fun count_icrc1_canisters(): ULong { 
+                            val icpQuery = ICPQuery(
+                                methodName = "count_icrc1_canisters",
+                                canister = canister
+                            ) 
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow() 
+                            return CandidDecoder.decodeNotNull(result.first()) 
+                        } 
+                        
+                        suspend fun get_all_icrc1_canisters(): kotlin.Array<ICRC1> { 
+                            val icpQuery = ICPQuery(
+                                methodName = "get_all_icrc1_canisters",
+                                canister = canister
+                            ) 
+                            val result = icpQuery.invoke(
+                                values = listOf()
+                            ).getOrThrow() 
+                            return CandidDecoder.decodeNotNull(result.first())
+                        } 
+                        
+                        suspend fun get_icrc1_paginated(
+                            nat64Value: ULong,
+                            nat64Value: ULong
+                        ): kotlin.Array<ICRC1> { 
+                            val icpQuery = ICPQuery(
+                                methodName = "get_icrc1_paginated",
+                                canister = canister 
+                            ) 
+                            val result = icpQuery.invoke(
+                                values = listOf(nat64Value, nat64Value)
+                            ).getOrThrow() 
+                            return CandidDecoder.decodeNotNull(result.first()) 
+                        } 
+                        
+                        suspend fun replace_icrc1_canisters(
+                            array: kotlin.Array<ICRC1>, 
+                            sender: ICPSigningPrincipal, 
+                            pollingValues: PollingValues = PollingValues()
+                        ) { 
+                            val icpQuery = ICPQuery( 
+                                methodName = "replace_icrc1_canisters", 
+                                canister = canister
+                            ) 
+                            val result = icpQuery.callAndPoll(
+                                values = listOf(array), 
+                                sender = sender,
+                                pollingValues = pollingValues
+                            ).getOrThrow() 
+                        } 
+                        
+                        suspend fun set_operator(
+                            icpPrincipalApiModel: ICPPrincipalApiModel,
+                            sender: ICPSigningPrincipal,
+                            pollingValues: PollingValues = PollingValues()
+                        ) { 
+                            val icpQuery = ICPQuery(
+                                methodName = "set_operator",
+                                canister = canister
+                            )
+                            val result = icpQuery.callAndPoll(
+                                values = listOf(icpPrincipalApiModel),
+                                sender = sender,
+                                pollingValues = pollingValues
+                            ).getOrThrow()
+                        } 
+                        
+                        suspend fun store_icrc1_canister(
+                            request: ICRC1Request,
+                            sender: ICPSigningPrincipal, 
+                            pollingValues: PollingValues = PollingValues()
+                        ) { 
+                            val icpQuery = ICPQuery(
+                                methodName = "store_icrc1_canister",
+                                canister = canister
+                            ) 
+                            val result = icpQuery.callAndPoll(
+                                values = listOf(request),
+                                sender = sender,
+                                pollingValues = pollingValues
+                            ).getOrThrow() 
+                        } 
+                        
+                        suspend fun store_new_icrc1_canisters(
+                            array: kotlin.Array<ICRC1>,
+                            sender: ICPSigningPrincipal,
+                            pollingValues: PollingValues = PollingValues()
+                        ) { 
+                            val icpQuery = ICPQuery(
+                                methodName = "store_new_icrc1_canisters",
+                                canister = canister
+                            ) 
+                            val result = icpQuery.callAndPoll(
+                                values = listOf(array),
+                                sender = sender,
+                                pollingValues = pollingValues
+                            ).getOrThrow()
+                        } 
+                    }
+                """.trimIndent()
+            ),
 
             Arguments.of(
                 """

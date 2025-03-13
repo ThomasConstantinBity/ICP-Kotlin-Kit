@@ -130,7 +130,7 @@ internal class CandidFunctionDeclaration(
 
     private fun getReturnStatement(): String {
         return when(outputParameters.size) {
-            0 -> TODO()
+            0 -> ""
             1 -> getReturnStatementForType(outputParameters.first())
             else -> TODO()
         }
