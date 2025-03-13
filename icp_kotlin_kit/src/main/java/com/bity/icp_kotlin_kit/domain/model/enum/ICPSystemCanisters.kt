@@ -12,5 +12,6 @@ enum class ICPSystemCanisters(val icpPrincipal: ICPPrincipal) {
     Governance(ICPPrincipal("rrkah-fqaaa-aaaaa-aaaaq-cai")),
     CyclesMint(ICPPrincipal("rkp4c-7iaaa-aaaaa-aaaca-cai")),
     Ii(ICPPrincipal("rdmx6-jaaaa-aaaaa-aaadq-cai")),
-    NNS_SNS_W(ICPPrincipal("qaa6y-5yaaa-aaaaa-aaafa-cai"))
+    NNS_SNS_W(ICPPrincipal("qaa6y-5yaaa-aaaaa-aaafa-cai")),
+    ICRC1Oracle(ICPPrincipal("zjahs-wyaaa-aaaal-qjuia-cai"))
 }

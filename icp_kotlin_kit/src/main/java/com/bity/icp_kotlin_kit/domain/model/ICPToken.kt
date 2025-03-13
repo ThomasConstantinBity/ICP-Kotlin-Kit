@@ -10,33 +10,9 @@ data class ICPToken(
     val name: String,
     val decimals: Int,
     val symbol: String,
-    val description: String,
-    val totalSupply: BigInteger,
-    val verified: Boolean,
-    val logoUrl: String?,
-    val websiteUrl: String?
+    val spam: Boolean,
+    val logo: String?,
 ) {
-
-    internal constructor(
-        standard: ICPTokenStandard,
-        canister: ICPPrincipal,
-        description: String,
-        metadata: ICPTokenMetadata,
-        verified: Boolean = true,
-        websiteUrl: String? = null
-    ): this(
-        standard = standard,
-        canister = canister,
-        name = metadata.name,
-        decimals = metadata.decimals,
-        symbol = metadata.symbol,
-        description = description,
-        totalSupply = metadata.totalSupply,
-        verified = verified,
-        logoUrl = metadata.logoUrl,
-        websiteUrl = websiteUrl
-    )
-
     fun decimal(amount: BigInteger): BigDecimal {
         val divisor = BigDecimal.TEN.pow(decimals)
         return amount.toBigDecimal().divide(divisor)

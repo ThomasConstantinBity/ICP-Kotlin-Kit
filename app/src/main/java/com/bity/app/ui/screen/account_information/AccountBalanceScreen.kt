@@ -152,7 +152,7 @@ fun TokenBalance(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(tokenBalance.token.logoUrl)
+                    .data(tokenBalance.token.logo)
                     .crossfade(true)
                     .build(),
                 placeholder = null,
@@ -255,11 +255,8 @@ private val tokenBalance = ICPTokenBalance(
         name = "Internet Computer",
         decimals = 8,
         symbol = "ICP",
-        description = "",
-        totalSupply = BigInteger.ONE,
-        verified = true,
-        logoUrl = null,
-        websiteUrl = null
+        spam = true,
+        logo = null
     ),
     balance = BigInteger("5432434")
 )

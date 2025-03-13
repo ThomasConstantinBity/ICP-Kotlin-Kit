@@ -599,24 +599,6 @@ internal object CandidTypeParserService {
                     }
                 }
             }
-
-            /* either {
-                expect(Token.Id) storeIn CandidTypeNat16::typeId
-                expect(Token.Colon)
-                optional {
-                    either {
-                        expect(Token.Opt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
-                    } or {
-                        expect(Token.DoubleOpt)
-                        emit(OptionalType.Optional) storeIn CandidTypeNat16::optionalType
-                    }
-                }
-                expect(Token.Nat16)
-            } or {
-                optional {
-
-            }*/
         }
 
         CandidTypeNat32 {
@@ -707,6 +689,8 @@ internal object CandidTypeParserService {
                         expect(TokenLexer.RParen)
                     } or {
                         expect(TokenLexer.Semi)
+                    } or {
+                        expect(TokenLexer.Comma)
                     }
                 }
             }
@@ -919,9 +903,9 @@ internal object CandidTypeParserService {
     }
 
     fun parseCandidType(candidType: String): CandidType {
-         /*fileLexer.tokenize(candidType).forEachIndexed { i, t ->
+         fileLexer.tokenize(candidType).forEachIndexed { i, t ->
             println("[${i}] -> ${t.tokenType}(${t.string})")
-        }*/
+        }
         /*typeParser.parseWithDebugger(fileLexer.tokenize(candidType))
             .debuggerResult.apply { println(this) }*/
         return typeParser.parse(fileLexer.tokenize(candidType))
