@@ -1,5 +1,5 @@
 [versions]
-bouncycastle-version = "1.70"
+bouncycastle-version = "1.80"
 coilCompose = "2.4.0"
 guava = "32.0.1-jre"
 kotlin-reflect = "2.0.0"
@@ -35,7 +35,7 @@ navigationComposeVersion = "2.8.5"
 navigationRuntime = "2.8.5"
 
 [libraries]
-bouncycastle = { module = "org.bouncycastle:bcpkix-jdk15on", version.ref = "bouncycastle-version" }
+bouncycastle = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle-version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
