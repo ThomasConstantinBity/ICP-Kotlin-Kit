@@ -19,6 +19,7 @@ import com.bity.icp_kotlin_kit.data.generated_file.ICRC1Oracle
 import com.bity.icp_kotlin_kit.data.generated_file.LedgerCanister
 import com.bity.icp_kotlin_kit.data.generated_file.NNSICPIndexCanister
 import com.bity.icp_kotlin_kit.data.generated_file.NNS_SNS_W
+import com.bity.icp_kotlin_kit.data.generated_file.OrigynNFT
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPSystemCanisters
 import com.bity.icp_kotlin_kit.domain.repository.ICPCanisterRepository
 import com.bity.icp_kotlin_kit.domain.repository.ICPTransactionRepository
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.cbor.CBORFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 
 private const val BASE_URL: String = "https://icp-api.io/api/v2/canister/"
 private val objectMapper = ObjectMapper(CBORFactory())
@@ -41,7 +43,11 @@ private val cborConverterFactory = CborConverterFactory.create(
         configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
 )
-private val httpClient = OkHttpClient().newBuilder().build()
+private val httpClient = OkHttpClient()
+    .newBuilder()
+    .readTimeout(60, TimeUnit.SECONDS)
+    .writeTimeout(60, TimeUnit.SECONDS)
+    .build()
 
 private val icpRetrofitService: ICPRetrofitService =
     Retrofit
